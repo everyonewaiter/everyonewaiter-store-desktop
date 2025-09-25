@@ -1,0 +1,4 @@
+provider: github
+owner: everyonewaiter
+repo: everyonewaiter-store-desktop
+updaterCacheDirName: everyonewaiter-store-desktop-updater
