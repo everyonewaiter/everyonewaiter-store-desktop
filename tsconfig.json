@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "composite": true,
+    "types": ["node"],
+    "moduleResolution": "node",
+    "module": "esnext"
+  },
   "files": [],
   "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
 }
