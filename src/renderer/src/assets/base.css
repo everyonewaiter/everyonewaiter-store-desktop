@@ -1,26 +1,26 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @font-face {
-  font-family: 'Pretendard';
-  src: url('./fonts/Pretendard-Regular.woff2') format('woff2');
+  font-family: "Pretendard";
+  src: url("./fonts/Pretendard-Regular.woff2") format("woff2");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'Pretendard';
-  src: url('./fonts/Pretendard-Medium.woff2') format('woff2');
+  font-family: "Pretendard";
+  src: url("./fonts/Pretendard-Medium.woff2") format("woff2");
   font-weight: 500;
 }
 
 @font-face {
-  font-family: 'Pretendard';
-  src: url('./fonts/Pretendard-SemiBold.woff2') format('woff2');
+  font-family: "Pretendard";
+  src: url("./fonts/Pretendard-SemiBold.woff2") format("woff2");
   font-weight: 600;
 }
 
 @font-face {
-  font-family: 'Pretendard';
-  src: url('./fonts/Pretendard-Bold.woff2') format('woff2');
+  font-family: "Pretendard";
+  src: url("./fonts/Pretendard-Bold.woff2") format("woff2");
   font-weight: 700;
 }
 
@@ -40,10 +40,10 @@ body {
   min-height: 100dvh;
   line-height: 1.6;
   font-family:
-    'Pretendard',
+    "Pretendard",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     Roboto,
     sans-serif;
   text-rendering: optimizeLegibility;
