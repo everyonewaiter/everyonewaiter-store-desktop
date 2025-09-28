@@ -26,6 +26,7 @@ export default defineConfig(
     rules: {
       ...eslintPluginReactHooks.configs.recommended.rules,
       ...eslintPluginReactRefresh.configs.vite.rules,
+      "@typescript-eslint/explicit-function-return-type": "off",
     },
   },
   eslintPluginPrettierRecommended
