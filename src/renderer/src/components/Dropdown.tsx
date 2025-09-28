@@ -1,7 +1,7 @@
 import { PropsWithChildren, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import ChevronDownIcon from "../assets/icons/chevron-down.svg?react";
-import cn from "../utils/cn";
+import ChevronDownIcon from "@renderer/assets/icons/chevron-down.svg?react";
+import cn from "@renderer/utils/cn";
 
 interface DropdownProps extends PropsWithChildren {
   data: { id: string; name: string }[];

@@ -10,5 +10,6 @@
   },
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }
