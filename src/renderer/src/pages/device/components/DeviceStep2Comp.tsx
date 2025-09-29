@@ -4,44 +4,28 @@ function FlowPage2() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-row md:gap-2 lg:gap-3">
-        <Button
-          variant="outline"
-          color="grey"
-          responsive
-          responsiveButtons={{
-            sm: { buttonSize: "sm", className: "" },
-            md: {
-              buttonSize: "custom",
-              className: "w-full h-10 rounded-xl text-s font-medium",
-            },
-            lg: {
-              buttonSize: "custom",
-              className: "w-full h-20 rounded-2xl border-gray-600 text-base font-medium",
-            },
-          }}
-        >
-          홀 관리
-        </Button>
-        <Button
-          variant="outline"
-          color="grey"
-          responsive
-          responsiveButtons={{
-            sm: { buttonSize: "sm", className: "" },
-            md: {
-              buttonSize: "custom",
-              className: "w-full h-10 rounded-xl text-s font-medium",
-            },
-            lg: {
-              buttonSize: "custom",
-              className: "w-full h-20 rounded-2xl border-gray-600 text-base font-medium",
-            },
-          }}
-        >
-          POS
-        </Button>
+        {["홀 관리", "POS"].map((item) => (
+          <Button
+            key={item}
+            variant="outline"
+            color="grey"
+            responsive
+            responsiveButtons={{
+              md: {
+                buttonSize: "custom",
+                className: "w-full h-10 rounded-xl border-gray-600 text-s font-medium",
+              },
+              lg: {
+                buttonSize: "custom",
+                className: "w-full h-20 rounded-2xl border-gray-600 text-base font-medium",
+              },
+            }}
+          >
+            {item}
+          </Button>
+        ))}
       </div>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col md:gap-6 lg:gap-8">
         <div className="flex flex-col gap-1">
           <Label>기기 이름</Label>
           <Input placeholder="기기 이름을 입력하세요." />
@@ -51,7 +35,6 @@ function FlowPage2() {
           color="primary"
           responsive
           responsiveButtons={{
-            sm: { buttonSize: "sm", className: "" },
             md: { buttonSize: "sm", className: "" },
             lg: { buttonSize: "lg", className: "" },
           }}
