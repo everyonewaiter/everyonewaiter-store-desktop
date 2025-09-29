@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 import cn from "../utils/cn";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none cursor-pointer border",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors disabled:pointer-events-none cursor-pointer border",
   {
     variants: {
       variant: {
@@ -160,8 +160,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
       responsiveButtons,
       commonClassName,
       variant,
-      color = "primary",
       disabled,
+      color = "primary",
       asChild = false,
       children,
       ...buttonProps

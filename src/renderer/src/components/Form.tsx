@@ -79,20 +79,37 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
 
 function FormLabel({
   className,
-  labelDisabled,
+  disabled,
   ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root> & {
-  labelDisabled?: boolean;
-}) {
+}: React.ComponentProps<typeof LabelPrimitive.Root> & { disabled?: boolean }) {
   const { error, formItemId } = useFormField();
 
   return (
     <Label
       data-slot="form-label"
       data-error={!!error}
-      className={cn("data-[error=true]:text-destructive mb-1", className)}
+      className={cn("mb-1", className)}
       htmlFor={formItemId}
-      disabled={labelDisabled}
+      disabled={disabled}
+      {...props}
+    />
+  );
+}
+
+function FormInput({ className, ...props }: React.ComponentProps<"input">) {
+  const { error, formItemId } = useFormField();
+
+  return (
+    <input
+      data-slot="form-input"
+      data-error={!!error}
+      id={formItemId}
+      aria-invalid={!!error}
+      className={cn(
+        "text-gray-0 md:text-s font-regular w-full border py-2.5 pl-3 outline-none placeholder:text-gray-300 disabled:border-gray-500 disabled:bg-gray-700 disabled:text-gray-300 disabled:placeholder:text-gray-400 md:h-9 md:rounded-lg md:pr-3 lg:h-12 lg:rounded-xl lg:pr-3 lg:text-[15px]",
+        error ? "border-status-error" : "border-gray-600",
+        className
+      )}
       {...props}
     />
   );
@@ -128,23 +145,34 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 function FormMessage({ ...props }: React.ComponentProps<"p">) {
   const { formMessageId, error } = useFormField();
 
-  if (!props.children) {
+  const body = error ? String(error?.message) : props.children;
+
+  if (!body) {
     return null;
   }
 
   return (
     <div
-      className="mt-2 flex flex-row items-center gap-1"
+      className="flex flex-row items-center gap-1"
       data-slot="form-message"
       id={formMessageId}
       {...props}
     >
       <InfoIcon className={cn("h-4 w-4", error ? "text-status-error" : "text-gray-100")} />
-      <span className={cn("text-s", error ? "text-status-error" : "text-gray-100")}>
-        {props.children}
+      <span className={cn("lg:text-s text-xs", error ? "text-status-error" : "text-gray-100")}>
+        {body}
       </span>
     </div>
   );
 }
 
-export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage };
+export {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormInput,
+  FormItem,
+  FormLabel,
+  FormMessage,
+};
