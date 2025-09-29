@@ -1,5 +1,5 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import cn from "../utils/cn";
+import cn from "@renderer/utils/cn";
 
 interface CheckboxProps extends CheckboxPrimitive.CheckboxProps {
   hasError?: boolean;

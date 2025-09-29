@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from "react";
-import cn from "../utils/cn";
+import cn from "@renderer/utils/cn";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   hasError?: boolean;
