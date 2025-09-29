@@ -3,14 +3,17 @@ import { LogoIcon, LogoSquaredIcon, LogoTextIcon } from "@renderer/assets/logos"
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-dvh w-dvw bg-gray-700">
-      <header className="flex w-full flex-col gap-6 px-15 pt-7">
-        <button type="button" className="flex h-15 w-fit cursor-pointer items-center gap-3">
-          <LogoIcon className="h-15 w-15" />
-          <LogoTextIcon className="h-[25px]" />
+      <header className="flex w-full flex-col md:gap-3 md:px-7.5 md:pt-5 lg:gap-6 lg:px-15 lg:pt-7">
+        <button
+          type="button"
+          className="flex w-fit cursor-pointer items-center gap-3 md:h-10 lg:h-15"
+        >
+          <LogoIcon className="md:h-10 md:w-10 lg:h-15 lg:w-15" />
+          <LogoTextIcon className="md:h-[19px] lg:h-[25px]" />
         </button>
         <div className="h-[1px] w-full bg-gray-500" />
       </header>
-      <div className="flex h-[calc(100dvh-113px)] items-center justify-center">
+      <div className="flex items-center justify-center md:h-[calc(100dvh-73px)] lg:h-[calc(100dvh-113px)]">
         <div className="flex flex-col bg-white md:w-[364px] md:gap-6 md:rounded-3xl md:p-5 lg:w-[544px] lg:gap-12 lg:rounded-4xl lg:p-8">
           <div className="flex flex-col md:gap-4 lg:gap-10">
             <LogoSquaredIcon className="md:h-15 md:w-15 lg:h-22.5 lg:w-22.5" />
