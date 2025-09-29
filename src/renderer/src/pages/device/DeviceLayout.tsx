@@ -1,6 +1,6 @@
-import { LogoIcon, LogoSquaredIcon, LogoTextIcon } from "@renderer/assets/logos/index";
+import { LogoIcon, LogoSquaredIcon, LogoTextIcon } from "@renderer/assets/logos";
 
-function DeviceLayout({ children }: { children: React.ReactNode }) {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-dvh w-dvw bg-gray-700">
       <header className="flex w-full flex-col gap-6 px-15 pt-7">
@@ -33,4 +33,4 @@ function DeviceLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default DeviceLayout;
+export default Layout;

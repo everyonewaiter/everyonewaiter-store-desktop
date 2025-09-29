@@ -11,6 +11,7 @@ import {
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import InfoIcon from "@renderer/assets/icons/info.svg?react";
+import Input from "@renderer/components/Input";
 import Label from "@renderer/components/Label";
 import cn from "@renderer/utils/cn";
 
@@ -99,20 +100,7 @@ function FormLabel({
 function FormInput({ className, ...props }: React.ComponentProps<"input">) {
   const { error, formItemId } = useFormField();
 
-  return (
-    <input
-      data-slot="form-input"
-      data-error={!!error}
-      id={formItemId}
-      aria-invalid={!!error}
-      className={cn(
-        "text-gray-0 md:text-s font-regular w-full border py-2.5 pl-3 outline-none placeholder:text-gray-300 disabled:border-gray-500 disabled:bg-gray-700 disabled:text-gray-300 disabled:placeholder:text-gray-400 md:h-9 md:rounded-lg md:pr-3 lg:h-12 lg:rounded-xl lg:pr-3 lg:text-[15px]",
-        error ? "border-status-error" : "border-gray-600",
-        className
-      )}
-      {...props}
-    />
-  );
+  return <Input className={className} hasError={!!error} {...props} id={formItemId} />;
 }
 
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {

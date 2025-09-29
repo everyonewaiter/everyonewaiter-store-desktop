@@ -12,7 +12,7 @@ interface DropdownProps extends DropdownMenu.DropdownMenuProps {
   onChange?: (item: { id: string; name: string }) => void;
 }
 
-export default function Dropdown({
+function Dropdown({
   data,
   hasError,
   type = "default",
@@ -74,3 +74,5 @@ export default function Dropdown({
     </div>
   );
 }
+
+export default Dropdown;
