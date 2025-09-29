@@ -13,11 +13,13 @@ function FlowPage2() {
             responsiveButtons={{
               md: {
                 buttonSize: "custom",
-                className: "w-full h-10 rounded-xl border-gray-600 text-s font-medium",
+                className:
+                  "w-full h-10 rounded-xl border-gray-600 text-s font-medium focus:bg-primary/4 focus:border-primary focus:text-primary",
               },
               lg: {
                 buttonSize: "custom",
-                className: "w-full h-20 rounded-2xl border-gray-600 text-base font-medium",
+                className:
+                  "w-full h-20 rounded-2xl border-gray-600 text-base font-medium focus:bg-primary/4 focus:border-primary focus:text-primary",
               },
             }}
           >

@@ -26,7 +26,7 @@ function FlowPage1({ onNextStep }: IProps) {
           </div>
         </div>
         <div className="flex md:gap-2 lg:gap-3">
-          <Input placeholder="인증번호를 입력해주세요." />
+          <Input placeholder="인증번호를 입력해주세요." disabled />
           <Button
             responsive
             type="button"
@@ -35,6 +35,7 @@ function FlowPage1({ onNextStep }: IProps) {
               md: { buttonSize: "sm", className: "!min-w-[77px] !px-0" },
               lg: { buttonSize: "lg", className: "!min-w-[90px] !px-0" },
             }}
+            disabled
           >
             확인
           </Button>
