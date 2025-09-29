@@ -73,8 +73,8 @@ export default function FlowPage1({ onNextStep }: IProps) {
                       form.setError("phone", { message: "휴대폰 번호를 입력해주세요." });
                       dispatch({ type: "FAILED_PHONE" });
                     } else {
-                      dispatch({ type: "SUCCESS_PHONE" });
                       form.clearErrors("phone");
+                      // TODO: 휴대폰 인증 요청
                     }
                   }}
                 >
@@ -114,8 +114,8 @@ export default function FlowPage1({ onNextStep }: IProps) {
                       form.setError("authNumber", { message: "인증번호를 입력해주세요." });
                       dispatch({ type: "FAILED_AUTH_NUMBER" });
                     } else {
-                      dispatch({ type: "SUCCESS_AUTH_NUMBER" });
                       form.clearErrors("authNumber");
+                      // TODO: 인증 번호 일치 확인
                     }
                   }}
                 >
