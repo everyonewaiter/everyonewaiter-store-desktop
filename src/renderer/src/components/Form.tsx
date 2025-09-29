@@ -10,9 +10,9 @@ import {
 } from "react-hook-form";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
-import InfoIcon from "../assets/icons/info.svg?react";
-import cn from "../utils/cn";
-import Label from "./Label";
+import InfoIcon from "@renderer/assets/icons/info.svg?react";
+import Label from "@renderer/components/Label";
+import cn from "@renderer/utils/cn";
 
 const Form = FormProvider;
 
