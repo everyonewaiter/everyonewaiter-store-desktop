@@ -1,6 +1,6 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
 import AuthLayout from "@renderer/components/layouts/AuthLayout";
-import DevicePage from "./pages/device/DevicePage";
+import DevicePage from "@renderer/pages/device/DevicePage";
 
 function App() {
   return (

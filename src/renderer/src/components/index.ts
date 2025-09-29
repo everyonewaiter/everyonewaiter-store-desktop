@@ -1,6 +1,6 @@
-export { default as Button, type ButtonProps } from "./Button";
-export { default as Checkbox } from "./Checkbox";
-export { default as Dropdown } from "./Dropdown";
+export { default as Button, type ButtonProps } from "@renderer/components/Button";
+export { default as Checkbox } from "@renderer/components/Checkbox";
+export { default as Dropdown } from "@renderer/components/Dropdown";
 export {
   Form,
   FormControl,
@@ -10,6 +10,6 @@ export {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./Form";
-export { default as Label } from "./Label";
-export { default as Spinner } from "./Spinner";
+} from "@renderer/components/Form";
+export { default as Label } from "@renderer/components/Label";
+export { default as Spinner } from "@renderer/components/Spinner";
