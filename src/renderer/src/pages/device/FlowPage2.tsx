@@ -80,7 +80,7 @@ export default function FlowPage2() {
             control={form.control}
             name="deviceName"
             render={({ field }) => (
-              <div className="flex flex-col md:gap-1 lg:gap-2">
+              <div className="flex flex-col gap-1">
                 <FormLabel>기기 이름</FormLabel>
                 <FormInput {...field} placeholder="기기 이름을 입력하세요." />
                 <FormMessage />
@@ -95,7 +95,7 @@ export default function FlowPage2() {
           responsiveButtons={{
             sm: { buttonSize: "sm", className: "" },
             md: { buttonSize: "sm", className: "" },
-            lg: { buttonSize: "lg", className: "" },
+            lg: { buttonSize: "lg", className: "mt-2" },
           }}
         >
           등록하기
