@@ -1,4 +1,5 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
+import AuthLayout from "@renderer/components/layouts/AuthLayout";
 import DevicePage from "./pages/device/DevicePage";
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <HashRouter>
       <Routes>
         <Route path="/" element={<DevicePage />} />
+        <Route element={<AuthLayout />}>{/* pos, hall, waiting pages */}</Route>
       </Routes>
     </HashRouter>
   );
