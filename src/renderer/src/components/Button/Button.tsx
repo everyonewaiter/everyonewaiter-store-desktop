@@ -5,9 +5,7 @@ import SimpleButton from "@renderer/components/Button/SimpleButton";
 
 export type ButtonProps = ResponsiveButtonProps | SimpleButtonProps;
 
-function Button(props: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) {
-  const { responsive } = props;
-
+function Button({ responsive, ...props }: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) {
   if (responsive) {
     return <ResponsiveButton ref={ref} {...(props as ResponsiveButtonProps)} />;
   } else {
