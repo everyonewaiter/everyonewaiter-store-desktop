@@ -1,10 +1,10 @@
 import { Button, Dropdown, Input, Label } from "@renderer/components";
 
-interface IProps {
+interface DeviceStep1CompProps {
   onNextStep: () => void;
 }
 
-function FlowPage1({ onNextStep }: IProps) {
+function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
   return (
     <form onSubmit={onNextStep} className="flex flex-col md:gap-5 lg:gap-8">
       <div className="flex flex-col md:gap-3 lg:gap-4">
@@ -42,7 +42,13 @@ function FlowPage1({ onNextStep }: IProps) {
         </div>
         <div className="flex flex-col gap-1">
           <Label>매장 선택</Label>
-          <Dropdown data={[]} defaultText="기기 종류를 선택해주세요." />
+          <Dropdown
+            data={[
+              { id: "1", name: "매장 1" },
+              { id: "2", name: "매장 2" },
+            ]}
+            defaultText="매장을 선택해주세요."
+          />
         </div>
       </div>
       <Button
@@ -61,4 +67,4 @@ function FlowPage1({ onNextStep }: IProps) {
   );
 }
 
-export default FlowPage1;
+export default DeviceStep1Comp;

@@ -1,6 +1,6 @@
 import { Button, Input, Label } from "@renderer/components";
 
-function FlowPage2() {
+function DeviceStep2Comp() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-row md:gap-2 lg:gap-3">
@@ -48,4 +48,4 @@ function FlowPage2() {
   );
 }
 
-export default FlowPage2;
+export default DeviceStep2Comp;
