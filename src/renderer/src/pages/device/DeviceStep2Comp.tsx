@@ -38,8 +38,8 @@ function DeviceStep2Comp() {
           color={ColorName.PRIMARY}
           responsive
           responsiveButtons={{
-            md: { buttonSize: "sm", className: "" },
-            lg: { buttonSize: "lg", className: "" },
+            md: { buttonSize: "sm" },
+            lg: { buttonSize: "lg" },
           }}
         >
           등록하기

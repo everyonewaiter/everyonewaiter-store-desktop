@@ -57,9 +57,8 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
         color={ColorName.PRIMARY}
         responsive
         responsiveButtons={{
-          sm: { buttonSize: "sm", className: "" },
-          md: { buttonSize: "sm", className: "" },
-          lg: { buttonSize: "lg", className: "" },
+          md: { buttonSize: "sm" },
+          lg: { buttonSize: "lg" },
         }}
       >
         다음
