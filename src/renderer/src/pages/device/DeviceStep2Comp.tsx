@@ -1,5 +1,5 @@
 import { Button, Input, Label } from "@renderer/components";
-import { DeviceSupport } from "@renderer/constants";
+import { ColorName, DeviceSupport } from "@renderer/constants";
 
 function DeviceStep2Comp() {
   return (
@@ -9,7 +9,7 @@ function DeviceStep2Comp() {
           <Button
             key={key}
             variant="outline"
-            color="grey"
+            color={ColorName.GREY}
             responsive
             responsiveButtons={{
               md: {
@@ -35,7 +35,7 @@ function DeviceStep2Comp() {
         </div>
         <Button
           type="button"
-          color="primary"
+          color={ColorName.PRIMARY}
           responsive
           responsiveButtons={{
             md: { buttonSize: "sm", className: "" },

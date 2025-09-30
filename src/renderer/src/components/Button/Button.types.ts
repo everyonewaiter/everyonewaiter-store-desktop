@@ -1,19 +1,18 @@
 import { buttonVariants } from "@renderer/components/Button/Button.styles";
+import { ColorName } from "@renderer/constants";
+import { valueOf } from "@renderer/utils";
 import { type VariantProps } from "class-variance-authority";
 
 type ScreenSize = "sm" | "md" | "lg";
 
 type ButtonSize = "sm" | "md" | "lg" | "xl" | "custom";
 
-type ButtonColor =
-  | "primary"
-  | "approve"
-  | "black"
-  | "grey"
-  | "apply"
-  | "reject"
-  | "reapply"
-  | undefined;
+type ColorNameValue = valueOf<typeof ColorName>;
+
+type ButtonColor = Extract<
+  ColorNameValue,
+  "primary" | "approve" | "black" | "grey" | "apply" | "reject" | "reapply"
+>;
 
 type ButtonVariant = VariantProps<typeof buttonVariants>;
 
@@ -43,8 +42,8 @@ interface ResponsiveButtonProps extends BaseButtonProps {
       {
         buttonSize: ButtonSize;
         className?: string;
-        color?: string;
-        variant?: string;
+        color?: ButtonColor;
+        variant?: ButtonVariant["variant"];
       }
     >
   >;

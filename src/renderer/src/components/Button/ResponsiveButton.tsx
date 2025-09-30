@@ -2,12 +2,11 @@ import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { buttonVariants } from "@renderer/components/Button/Button.styles";
 import {
-  ButtonColor,
   ButtonSize,
-  ButtonVariant,
   ResponsiveButtonProps,
   ScreenSize,
 } from "@renderer/components/Button/Button.types";
+import { ColorName } from "@renderer/constants";
 import cn from "@renderer/utils/cn";
 
 function ResponsiveButton(
@@ -65,8 +64,8 @@ function ResponsiveButton(
             ref={ref}
             className={cn(
               buttonVariants({
-                variant: (variant || buttonConfig?.variant) as ButtonVariant["variant"],
-                color: disabled ? "grey" : ((color || buttonConfig?.color) as ButtonColor),
+                variant: variant || buttonConfig?.variant,
+                color: disabled ? ColorName.GREY : color || buttonConfig?.color,
               }),
               hideButton(screenSize as ScreenSize),
               buttonStyle(buttonConfig?.buttonSize ?? "md", buttonConfig?.className ?? ""),

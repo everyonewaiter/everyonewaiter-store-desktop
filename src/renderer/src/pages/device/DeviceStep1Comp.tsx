@@ -1,4 +1,5 @@
 import { Button, Dropdown, Input, Label } from "@renderer/components";
+import { ColorName } from "@renderer/constants";
 
 interface DeviceStep1CompProps {
   onNextStep: () => void;
@@ -15,7 +16,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
             <Button
               responsive
               type="button"
-              color="black"
+              color={ColorName.BLACK}
               responsiveButtons={{
                 md: { buttonSize: "sm", className: "!min-w-[77px] !px-0" },
                 lg: { buttonSize: "lg", className: "!min-w-[90px] !px-0" },
@@ -30,7 +31,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
           <Button
             responsive
             type="button"
-            color="black"
+            color={ColorName.BLACK}
             responsiveButtons={{
               md: { buttonSize: "sm", className: "!min-w-[77px] !px-0" },
               lg: { buttonSize: "lg", className: "!min-w-[90px] !px-0" },
@@ -53,7 +54,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
       </div>
       <Button
         type="submit"
-        color="primary"
+        color={ColorName.PRIMARY}
         responsive
         responsiveButtons={{
           sm: { buttonSize: "sm", className: "" },
