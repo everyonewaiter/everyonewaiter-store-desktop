@@ -27,7 +27,12 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
           </div>
         </div>
         <div className="flex md:gap-2 lg:gap-3">
-          <Input placeholder="인증번호를 입력해주세요." disabled />
+          <div className="group relative w-full md:h-9 lg:h-12">
+            <Input placeholder="인증번호를 입력해주세요." className="!pr-14" />
+            <span className="md:text-s font-regular absolute top-1/2 right-3 -translate-y-1/2 text-gray-200 disabled:hidden lg:text-[15px]">
+              01:00
+            </span>
+          </div>
           <Button
             responsive
             type="button"
@@ -36,7 +41,6 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
               md: { buttonSize: "sm", className: "!min-w-[77px] !px-0" },
               lg: { buttonSize: "lg", className: "!min-w-[90px] !px-0" },
             }}
-            disabled
           >
             확인
           </Button>
@@ -57,8 +61,9 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
         color={ColorName.PRIMARY}
         responsive
         responsiveButtons={{
-          md: { buttonSize: "sm" },
-          lg: { buttonSize: "lg" },
+          sm: { buttonSize: "sm", className: "" },
+          md: { buttonSize: "sm", className: "" },
+          lg: { buttonSize: "lg", className: "" },
         }}
       >
         다음
