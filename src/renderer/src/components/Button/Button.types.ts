@@ -1,11 +1,12 @@
 import { buttonVariants } from "@renderer/components/Button/Button.styles";
 import { ColorName } from "@renderer/constants";
+import { BaseSize } from "@renderer/types";
 import { valueOf } from "@renderer/utils";
 import { type VariantProps } from "class-variance-authority";
 
-type ScreenSize = "sm" | "md" | "lg";
+type ScreenSize = BaseSize;
 
-type ButtonSize = "sm" | "md" | "lg" | "xl" | "custom";
+type ButtonSize = BaseSize | "xl" | "custom";
 
 type ColorNameValue = valueOf<typeof ColorName>;
 
