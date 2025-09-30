@@ -1,5 +1,14 @@
+import { HashRouter, Route, Routes } from "react-router-dom";
+import DevicePage from "@renderer/pages/device/DevicePage";
+
 function App() {
-  return <div className="min-h-dvh w-dvw">hi</div>;
+  return (
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<DevicePage />} />
+      </Routes>
+    </HashRouter>
+  );
 }
 
 export default App;

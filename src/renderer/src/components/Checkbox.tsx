@@ -5,7 +5,7 @@ interface CheckboxProps extends CheckboxPrimitive.CheckboxProps {
   hasError?: boolean;
 }
 
-export default function Checkbox({ hasError, ...props }: CheckboxProps) {
+function Checkbox({ hasError, ...props }: CheckboxProps) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
@@ -38,3 +38,5 @@ export default function Checkbox({ hasError, ...props }: CheckboxProps) {
     </CheckboxPrimitive.Root>
   );
 }
+
+export default Checkbox;
