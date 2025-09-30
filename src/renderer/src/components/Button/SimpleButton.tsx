@@ -2,13 +2,14 @@ import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { buttonVariants } from "@renderer/components/Button/Button.styles";
 import { SimpleButtonProps } from "@renderer/components/Button/Button.types";
+import { ColorName } from "@renderer/constants";
 import cn from "@renderer/utils/cn";
 
 function SimpleButton(
   {
     className,
     variant,
-    color = "primary",
+    color = ColorName.PRIMARY,
     disabled,
     asChild = false,
     ...buttonProps
@@ -22,7 +23,7 @@ function SimpleButton(
       className={cn(
         buttonVariants({
           variant,
-          color: disabled ? "grey" : color,
+          color: disabled ? ColorName.GREY : color,
         }),
         className
       )}

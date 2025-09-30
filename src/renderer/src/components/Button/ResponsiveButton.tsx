@@ -15,7 +15,7 @@ function ResponsiveButton(
     commonClassName,
     variant,
     disabled,
-    color = "primary",
+    color = ColorName.PRIMARY,
     asChild = false,
     children,
     ...buttonProps
