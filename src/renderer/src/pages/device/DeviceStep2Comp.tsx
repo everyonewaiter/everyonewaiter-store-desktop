@@ -1,12 +1,13 @@
 import { Button, Input, Label } from "@renderer/components";
+import { DeviceSupport } from "@renderer/constants";
 
 function DeviceStep2Comp() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-row md:gap-2 lg:gap-3">
-        {["홀 관리", "POS"].map((item) => (
+        {Object.entries(DeviceSupport).map(([key, item]) => (
           <Button
-            key={item}
+            key={key}
             variant="outline"
             color="grey"
             responsive
