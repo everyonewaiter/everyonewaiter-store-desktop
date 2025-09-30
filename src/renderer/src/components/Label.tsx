@@ -2,11 +2,13 @@ import { ComponentProps } from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import cn from "@renderer/utils/cn";
 
-function Label({
-  className,
-  disabled,
-  ...props
-}: ComponentProps<typeof LabelPrimitive.Root> & { disabled?: boolean }) {
+interface LabelProps {
+  disabled?: boolean;
+}
+
+type CombineLabelProps = ComponentProps<typeof LabelPrimitive.Root> & LabelProps;
+
+function Label({ className, disabled, ...props }: CombineLabelProps) {
   return (
     <LabelPrimitive.Root
       data-slot="label"

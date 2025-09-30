@@ -1,10 +1,12 @@
 import cn from "@renderer/utils/cn";
 
-function Input({
-  className,
-  hasError,
-  ...props
-}: React.ComponentProps<"input"> & { hasError?: boolean }) {
+interface InputProps {
+  hasError?: boolean;
+}
+
+type CombineInputProps = React.ComponentProps<"input"> & InputProps;
+
+function Input({ className, hasError, ...props }: CombineInputProps) {
   return (
     <input
       data-slot="form-input"

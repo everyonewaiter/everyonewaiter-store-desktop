@@ -3,13 +3,18 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import ChevronDownIcon from "@renderer/assets/icons/chevron-down.svg?react";
 import cn from "@renderer/utils/cn";
 
+interface DropdownItem {
+  id: string;
+  name: string;
+}
+
 interface DropdownProps extends DropdownMenu.DropdownMenuProps {
-  data: { id: string; name: string }[];
+  data: DropdownItem[];
   hasError?: boolean;
   type?: "default" | "chip";
   defaultText: string;
   disabled?: boolean;
-  onChange?: (item: { id: string; name: string }) => void;
+  onChange?: (item: DropdownItem) => void;
 }
 
 function Dropdown({
@@ -22,7 +27,7 @@ function Dropdown({
   ...props
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<{ id: string; name: string } | null>(null);
+  const [selectedItem, setSelectedItem] = useState<DropdownItem | null>(null);
 
   return (
     <div className="w-full">
@@ -54,18 +59,18 @@ function Dropdown({
             )}
             style={{ minWidth: "var(--radix-dropdown-menu-trigger-width)" }}
           >
-            {data.map((el) => (
+            {data.map((item) => (
               <DropdownMenu.Item
-                key={el.id}
+                key={item.id}
                 className="font-regular text-gray-0 text-s flex h-9 min-w-full cursor-pointer items-center px-3 outline-none focus:bg-gray-700 md:rounded-lg lg:rounded-xl lg:text-sm"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setSelectedItem(el);
-                  onChange?.(el);
+                  setSelectedItem(item);
+                  onChange?.(item);
                   setIsOpen(false);
                 }}
               >
-                {el.name}
+                {item.name}
               </DropdownMenu.Item>
             ))}
           </DropdownMenu.Content>
