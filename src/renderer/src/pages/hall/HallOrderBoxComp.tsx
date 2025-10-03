@@ -1,13 +1,18 @@
-import { PlusIcon } from "@renderer/assets/icons";
 import { Button } from "@renderer/components";
+import HallOrderOptionComp from "@renderer/pages/hall/HallOrderOptionComp";
+import { OrderMenu } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
 interface HallOrderBoxCompProps {
-  isServed?: boolean;
+  orderMenu: OrderMenu;
   isCompleted?: boolean;
 }
 
-function HallOrderBoxComp({ isServed = false, isCompleted = false }: HallOrderBoxCompProps) {
+function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompProps) {
+  // TODO: false인 경우 레이아웃 깨짐 현상 해결 필요
+  const showImage = true;
+  const isServed = orderMenu.served;
+
   return (
     <div
       className={cn(
@@ -16,14 +21,11 @@ function HallOrderBoxComp({ isServed = false, isCompleted = false }: HallOrderBo
       )}
     >
       <div className="flex flex-col gap-6">
-        {!isCompleted && (
+        {showImage && (
           <div className="relative h-[130px] w-[130px] overflow-hidden rounded-xl">
             <div className="absolute inset-0 bg-[#F1F1F1] opacity-50" />
             {/* TODO: 테스트용 이미지 교체 필요 */}
-            <img
-              src="https://img.danawa.com/prod_img/500000/081/850/img/13850081_1.jpg?shrink=330:*&_v=20220315174531"
-              alt="메뉴 이미지"
-            />
+            <img src={orderMenu.image} alt={orderMenu.name} />
           </div>
         )}
         <div className="flex w-full flex-col gap-2">
@@ -34,28 +36,24 @@ function HallOrderBoxComp({ isServed = false, isCompleted = false }: HallOrderBo
                 isServed ? "text-gray-300 line-through" : "text-gray-100"
               )}
             >
-              스노우치즈폭립
+              {orderMenu.name}
             </span>
             <span
               className={cn("text-xl font-semibold", isServed ? "text-gray-300" : "text-gray-100")}
             >
-              1개
+              {orderMenu.quantity}개
             </span>
           </div>
-          <div className="flex flex-col gap-1">
-            <div
-              className={cn(
-                "flex items-center justify-between",
-                isServed ? "text-gray-300" : "text-[#2E7BB3]"
-              )}
-            >
-              <div className="flex items-center">
-                <PlusIcon className="size-6" />
-                매운맛
-              </div>
-              1개
+          {orderMenu.orderOptionGroups.length > 0 && (
+            <div className="flex flex-col gap-1">
+              {orderMenu.orderOptionGroups
+                .flatMap((orderOptionGroup) => orderOptionGroup.orderOptions)
+                .map((orderOption, index) => (
+                  // TODO: key로 index 사용 지양, orderOptionId가 없으므로 대안 고민 필요
+                  <HallOrderOptionComp key={index} orderOption={orderOption} isServed={isServed} />
+                ))}
             </div>
-          </div>
+          )}
         </div>
       </div>
       {!isCompleted && (

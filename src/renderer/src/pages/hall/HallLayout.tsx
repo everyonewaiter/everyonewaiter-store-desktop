@@ -11,7 +11,7 @@ function HallLayout({ children }: { children: React.ReactNode }) {
         </button>
         <div className="relative">
           <Button color="grey" className="button-xl !bg-gray-300 !text-white">
-            홀 화면 이동
+            웨이팅 관리 이동
           </Button>
           <div className="bg-primary absolute -top-5 -right-5 flex h-10 w-10 items-center justify-center rounded-full text-xl font-semibold text-white">
             4
