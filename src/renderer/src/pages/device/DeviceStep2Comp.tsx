@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import { Button, Input, Label } from "@renderer/components";
 import { ColorName, DeviceSupport } from "@renderer/constants";
 
 function DeviceStep2Comp() {
-  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-row md:gap-2 lg:gap-3">
@@ -42,9 +40,6 @@ function DeviceStep2Comp() {
           responsiveButtons={{
             md: { buttonSize: "sm" },
             lg: { buttonSize: "lg" },
-          }}
-          onClick={() => {
-            navigate("/hall");
           }}
         >
           등록하기
