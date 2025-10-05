@@ -53,23 +53,13 @@ function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompPr
           </div>
           {orderMenu.orderOptionGroups.length > 0 && (
             <div className="flex flex-col gap-1">
-              {orderOptions.slice(0, 2).map((orderOption) => (
+              {orderOptions.map((orderOption) => (
                 <HallOrderOptionComp
                   key={`${orderOption.orderOptionGroupId}-${orderOption.name}`}
                   orderOption={orderOption}
                   isServed={isServed}
                 />
               ))}
-              {orderOptions.length > 2 && (
-                <div
-                  className={cn(
-                    "flex items-center justify-between",
-                    isServed ? "text-gray-300" : "text-[#2E7BB3]"
-                  )}
-                >
-                  <div className="pl-2">...</div>
-                </div>
-              )}
             </div>
           )}
         </div>
