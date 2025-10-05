@@ -29,10 +29,9 @@ function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompPr
       )}
     >
       <div className="flex flex-col gap-6">
-        {showImage && !isServed && (
+        {showImage && (
           <div className="relative h-[130px] w-[130px] overflow-hidden rounded-xl">
             <div className="absolute inset-0 bg-[#F1F1F1] opacity-50" />
-            {/* TODO: 테스트용 이미지 교체 필요 */}
             <img src={orderMenu.image} alt={orderMenu.name} />
           </div>
         )}
