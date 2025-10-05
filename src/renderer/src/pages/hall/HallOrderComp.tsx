@@ -14,8 +14,13 @@ function HallOrderComp({ order }: HallOrderCompProps) {
   return (
     <div className="flex h-full w-full flex-row gap-6">
       <div className="flex flex-[0.2] flex-col rounded-3xl border border-gray-600 p-6">
-        <div className="relative flex h-full w-full flex-col items-center justify-center gap-3">
-          <div className="absolute top-0 flex w-full flex-col gap-2.5">
+        <div
+          className={cn(
+            "relative flex h-full w-full flex-col items-center gap-3",
+            isCompleted ? "" : "justify-center"
+          )}
+        >
+          <div className={cn("flex w-full flex-col gap-2.5", isCompleted ? "" : "absolute top-0")}>
             <div className="flex h-[51px] w-full items-center justify-center rounded-xl border border-gray-600">
               주문 시간 {getFormattedTime(order.createdAt)}
             </div>
@@ -25,8 +30,15 @@ function HallOrderComp({ order }: HallOrderCompProps) {
               </div>
             )}
           </div>
-          <div className="flex flex-col items-center">
-            {!isCompleted && (
+          {isCompleted ? (
+            <div className="flex h-full flex-col items-center justify-center">
+              <span className="text-gray-0 text-lg font-medium">테이블 번호</span>
+              <strong className="text-gray-0 pt-3 text-4xl font-bold">
+                {String(order.tableNo).padStart(2, "0")}
+              </strong>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center">
               <Button
                 variant="outline"
                 className={cn(
@@ -36,16 +48,14 @@ function HallOrderComp({ order }: HallOrderCompProps) {
               >
                 {order.category === "INITIAL" ? "주문" : "추가"}
               </Button>
-            )}
-            <span className="text-gray-0 pt-6 text-lg font-medium">테이블 번호</span>
-            <strong className="text-gray-0 pt-3 text-4xl font-bold">
-              {String(order.tableNo).padStart(2, "0")}
-            </strong>
-          </div>
-          {!isCompleted && (
-            <Button color="black" className="button-lg absolute bottom-0 w-full">
-              전체 완료
-            </Button>
+              <span className="text-gray-0 pt-6 text-lg font-medium">테이블 번호</span>
+              <strong className="text-gray-0 pt-3 text-4xl font-bold">
+                {String(order.tableNo).padStart(2, "0")}
+              </strong>
+              <Button color="black" className="button-lg absolute bottom-0 w-full">
+                전체 완료
+              </Button>
+            </div>
           )}
         </div>
       </div>
