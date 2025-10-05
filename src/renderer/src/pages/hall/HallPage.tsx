@@ -5,24 +5,28 @@ import HallOrderComp from "@renderer/pages/hall/HallOrderComp";
 import HallStaffCallComp from "@renderer/pages/hall/HallStaffCallComp";
 import MOCK from "@renderer/pages/hall/mock";
 
+const tabs = [
+  { isServed: false, label: "주문", count: MOCK.unserved.length },
+  { isServed: true, label: "완료", count: MOCK.served.length },
+];
+
 function HallPage() {
   const [served, setServed] = useState(false);
 
   return (
     <HallLayout>
       <section className="flex flex-row gap-3 rounded-2xl bg-white px-4 py-3">
-        {/* TODO: 주문/완료 상태에 따라 버튼 스타일 관리 */}
-        <Button color="black" className="button-xl !px-8" onClick={() => setServed(false)}>
-          주문 {MOCK.unserved.length}건
-        </Button>
-        <Button
-          color="grey"
-          variant="outline"
-          className="button-xl !border-gray-500 !px-8"
-          onClick={() => setServed(true)}
-        >
-          완료 {MOCK.served.length}건
-        </Button>
+        {tabs.map((tab) => (
+          <Button
+            key={tab.label}
+            color={served === tab.isServed ? "black" : "grey"}
+            variant={served === tab.isServed ? "default" : "outline"}
+            className="button-xl !px-8 not-focus:!border-gray-500"
+            onClick={() => setServed(tab.isServed)}
+          >
+            {tab.label} {tab.count}건
+          </Button>
+        ))}
       </section>
       {!served && MOCK.staffCalls.length > 0 && (
         <section className="flex flex-col gap-6 rounded-2xl border border-gray-600 bg-white p-6">
