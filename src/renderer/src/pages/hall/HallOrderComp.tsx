@@ -1,6 +1,8 @@
 import { Button } from "@renderer/components";
 import HallOrderBoxComp from "@renderer/pages/hall/HallOrderBoxComp";
 import { Order } from "@renderer/types/domain";
+import cn from "@renderer/utils/cn";
+import { getFormattedTime } from "@renderer/utils/format";
 
 interface HallOrderCompProps {
   order: Order;
@@ -15,13 +17,11 @@ function HallOrderComp({ order }: HallOrderCompProps) {
         <div className="relative flex h-full w-full flex-col items-center justify-center gap-3">
           <div className="absolute top-0 flex w-full flex-col gap-2.5">
             <div className="flex h-[51px] w-full items-center justify-center rounded-xl border border-gray-600">
-              {/* TODO: order.createdAt */}
-              주문 시간 PM 02:23
+              주문 시간 {getFormattedTime(order.createdAt)}
             </div>
             {isCompleted && (
               <div className="flex h-[51px] w-full items-center justify-center rounded-xl border border-gray-600">
-                {/* TODO: order.servedTime */}
-                완료 시간 PM 02:23
+                완료 시간 {getFormattedTime(order.servedTime)}
               </div>
             )}
           </div>
@@ -29,9 +29,11 @@ function HallOrderComp({ order }: HallOrderCompProps) {
             {!isCompleted && (
               <Button
                 variant="outline"
-                className="button-sm pointer-events-none !rounded-4xl !text-sm"
+                className={cn(
+                  "button-sm pointer-events-none !rounded-4xl !text-sm",
+                  order.category === "INITIAL" ? "" : "!border-[#00B603] !text-[#00B603]"
+                )}
               >
-                {/* TODO: 추가 주문인 경우 스타일 변경 */}
                 {order.category === "INITIAL" ? "주문" : "추가"}
               </Button>
             )}
@@ -55,14 +57,16 @@ function HallOrderComp({ order }: HallOrderCompProps) {
             </div>
           )}
           {order.orderMenus.length > 0 && (
-            <div className="grid w-full gap-x-2.5 gap-y-4 md:grid-cols-3 lg:grid-cols-4">
-              {order.orderMenus.map((orderMenu) => (
-                <HallOrderBoxComp
-                  key={orderMenu.orderMenuId}
-                  orderMenu={orderMenu}
-                  isCompleted={isCompleted}
-                />
-              ))}
+            <div className="grid-auto-rows-[1fr] grid w-full gap-x-2.5 gap-y-4 md:grid-cols-3 lg:grid-cols-4">
+              {order.orderMenus
+                .sort((a, b) => Number(a.served) - Number(b.served))
+                .map((orderMenu) => (
+                  <HallOrderBoxComp
+                    key={orderMenu.orderMenuId}
+                    orderMenu={orderMenu}
+                    isCompleted={isCompleted}
+                  />
+                ))}
             </div>
           )}
         </div>
