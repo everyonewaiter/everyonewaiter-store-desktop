@@ -52,3 +52,15 @@ export interface StaffCall {
   completeTime: string;
   createdAt: string;
 }
+
+export interface Waiting {
+  waitingId: string;
+  phoneNumber: string;
+  adult: number;
+  infant: number;
+  number: number;
+  callCount: number;
+  lastCallTime: string;
+  state: string;
+  createdAt: string;
+}
