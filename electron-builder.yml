@@ -1,5 +1,5 @@
 appId: com.everyonewaiter
-productName: everyonewaiter-store-desktop
+productName: 모두의 웨이터 매장
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: everyonewaiter-store-desktop
+  executableName: 모두의 웨이터 매장
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
