@@ -6,9 +6,19 @@ import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
   main: {
+    resolve: {
+      alias: {
+        "@main": resolve("src/main"),
+      },
+    },
     plugins: [externalizeDepsPlugin()],
   },
   preload: {
+    resolve: {
+      alias: {
+        "@preload": resolve("src/preload"),
+      },
+    },
     plugins: [externalizeDepsPlugin()],
   },
   renderer: {
