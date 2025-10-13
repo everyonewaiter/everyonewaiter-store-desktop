@@ -5,14 +5,13 @@ import cn from "@renderer/utils/cn";
 
 function PosTablesBoxComp(props: PosTableMockType) {
   return (
-    <button
-      type="button"
+    <article
       className={cn(
         "flex aspect-[432/320] cursor-pointer flex-col items-start justify-between rounded-3xl border-2 p-7",
         props.hasOrder ? "border-primary" : "border-gray-500"
       )}
     >
-      <div className="flex w-full items-center justify-between">
+      <header className="flex w-full items-center justify-between">
         <div
           className={cn(
             "flex h-9 items-center justify-center rounded-3xl bg-gray-700 px-4 py-1 text-[15px] font-normal text-gray-300",
@@ -23,34 +22,32 @@ function PosTablesBoxComp(props: PosTableMockType) {
           {props.hasOrder ? ORDER_TYPE_TEXT[props.orderType] : "대기"}
         </div>
         <div className="flex items-center gap-2">
-          <div className="text-gray-0 flex h-9 items-center justify-center gap-1.5 rounded-3xl bg-gray-700 px-4 py-1 text-[15px] font-normal">
+          <time className="text-gray-0 flex h-9 items-center justify-center gap-1.5 rounded-3xl bg-gray-700 px-4 py-1 text-[15px] font-normal">
             <AlarmIcon width={20} height={20} color="#222222" />
             {props.orderedAt ?? "00:00"}
-          </div>
-          <div className="text-gray-0 flex h-9 items-center justify-center gap-1.5 rounded-3xl bg-gray-700 px-4 py-1 text-[15px] font-normal">
+          </time>
+          <time className="text-gray-0 flex h-9 items-center justify-center gap-1.5 rounded-3xl bg-gray-700 px-4 py-1 text-[15px] font-normal">
             <StopwatchIcon width={20} height={20} color="#222222" />
             {props.orderedAt ?? "00:00"}
-          </div>
+          </time>
         </div>
-      </div>
-      <strong className="text-gray-0 items-center font-bold md:text-3xl lg:text-4xl">
+      </header>
+      <h2 className="text-gray-0 items-center font-bold md:text-3xl lg:text-4xl">
         {props.tableNo}번 테이블
-      </strong>
-      <div className="flex w-full flex-row items-start gap-8">
+      </h2>
+      <section className="flex w-full flex-row items-start gap-8">
         <div className="flex flex-1 flex-col items-start gap-[11px]">
           <span className="text-gray-0 text-sm font-normal">주문한 메뉴</span>
-          <strong className="text-gray-0 text-xl font-semibold">
-            {props.orderMenuName ?? "-"}
-          </strong>
+          <p className="text-gray-0 text-xl font-semibold">{props.orderMenuName ?? "-"}</p>
         </div>
         <div className="flex w-[140px] flex-col items-start gap-[11px]">
           <span className="text-gray-0 text-sm font-normal">총 주문금액</span>
-          <strong className="text-gray-0 text-xl font-semibold">
+          <p className="text-gray-0 text-xl font-semibold">
             {props.totalOrderPrice ? `${props.totalOrderPrice?.toLocaleString()}원` : "-"}
-          </strong>
+          </p>
         </div>
-      </div>
-    </button>
+      </section>
+    </article>
   );
 }
 
