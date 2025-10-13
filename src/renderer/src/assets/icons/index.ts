@@ -1,6 +1,7 @@
 export { default as AlarmIcon } from "@renderer/assets/icons/alarm.svg?react";
 export { default as BabyIcon } from "@renderer/assets/icons/baby.svg?react";
 export { default as BellRingingIcon } from "@renderer/assets/icons/bell-ringing.svg?react";
+export { default as CalendarIcon } from "@renderer/assets/icons/calendar.svg?react";
 export { default as ChevronDownIcon } from "@renderer/assets/icons/chevron-down.svg?react";
 export { default as ChevronLeftIcon } from "@renderer/assets/icons/chevron-left.svg?react";
 export { default as ChevronRightIcon } from "@renderer/assets/icons/chevron-right.svg?react";
