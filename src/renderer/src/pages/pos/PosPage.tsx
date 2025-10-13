@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import posBgImage from "@renderer/assets/images/pos-bg.jpg";
 import { Button } from "@renderer/components";
 
-export default function PosPage() {
+function PosPage() {
   const navigate = useNavigate();
 
   return (
@@ -50,3 +50,5 @@ export default function PosPage() {
     </div>
   );
 }
+
+export default PosPage;

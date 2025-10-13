@@ -1,6 +1,6 @@
 import { Dialog } from "@renderer/components/Dialog";
 
-export default function PosPaymentsPrintReceiptModalComp() {
+function PosPaymentsPrintReceiptModalComp() {
   return (
     <Dialog open={true}>
       <Dialog.Wrapper gap={32}>
@@ -13,3 +13,5 @@ export default function PosPaymentsPrintReceiptModalComp() {
     </Dialog>
   );
 }
+
+export default PosPaymentsPrintReceiptModalComp;

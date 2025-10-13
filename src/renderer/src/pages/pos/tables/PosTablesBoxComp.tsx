@@ -3,7 +3,7 @@ import { ORDER_TYPE_TEXT } from "@renderer/constants/pos";
 import { PosTableMockType } from "@renderer/pages/pos/mock";
 import cn from "@renderer/utils/cn";
 
-export default function PosTablesBoxComp(props: PosTableMockType) {
+function PosTablesBoxComp(props: PosTableMockType) {
   return (
     <button
       type="button"
@@ -53,3 +53,5 @@ export default function PosTablesBoxComp(props: PosTableMockType) {
     </button>
   );
 }
+
+export default PosTablesBoxComp;

@@ -1,6 +1,6 @@
 import { Dialog } from "@renderer/components/Dialog";
 
-export default function PosPaymentsCancelPayModalComp() {
+function PosPaymentsCancelPayModalComp() {
   return (
     <Dialog open={true}>
       <Dialog.Wrapper gap={32}>
@@ -15,3 +15,5 @@ export default function PosPaymentsCancelPayModalComp() {
     </Dialog>
   );
 }
+
+export default PosPaymentsCancelPayModalComp;

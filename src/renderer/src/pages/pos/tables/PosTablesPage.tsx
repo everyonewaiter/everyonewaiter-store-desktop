@@ -2,7 +2,7 @@ import { MOCK } from "@renderer/pages/pos/mock";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import PosTablesBoxComp from "@renderer/pages/pos/tables/PosTablesBoxComp";
 
-export default function PosTablesPage() {
+function PosTablesPage() {
   return (
     <div className="flex flex-col">
       <PosHeaderComp />
@@ -16,3 +16,5 @@ export default function PosTablesPage() {
     </div>
   );
 }
+
+export default PosTablesPage;

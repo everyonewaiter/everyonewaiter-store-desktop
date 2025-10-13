@@ -3,7 +3,7 @@ import { PosOrderType } from "@renderer/pages/pos/mock";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import cn from "@renderer/utils/cn";
 
-export default function PosPaymentsSideComp({ data }: { data: PosOrderType }) {
+function PosPaymentsSideComp({ data }: { data: PosOrderType }) {
   return (
     <aside
       className="sticky top-0 right-0 flex h-[calc(100dvh-133px)] flex-[0.3375] flex-col gap-8 overflow-y-hidden rounded-tl-[40px] rounded-bl-[40px] px-8 pt-10 pb-8"
@@ -59,3 +59,5 @@ export default function PosPaymentsSideComp({ data }: { data: PosOrderType }) {
     </aside>
   );
 }
+
+export default PosPaymentsSideComp;

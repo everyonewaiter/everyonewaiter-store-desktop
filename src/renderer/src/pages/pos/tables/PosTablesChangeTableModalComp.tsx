@@ -1,7 +1,7 @@
 import { DoubleArrowIcon } from "@renderer/assets/icons";
 import { Dialog } from "@renderer/components/Dialog";
 
-export default function PosTablesChangeTableModalComp() {
+function PosTablesChangeTableModalComp() {
   return (
     <Dialog open={true}>
       <Dialog.Wrapper gap={32}>
@@ -26,3 +26,5 @@ export default function PosTablesChangeTableModalComp() {
     </Dialog>
   );
 }
+
+export default PosTablesChangeTableModalComp;

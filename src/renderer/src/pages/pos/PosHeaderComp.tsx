@@ -3,7 +3,7 @@ import { FileCheckIcon } from "@renderer/assets/icons";
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 
-export default function PosHeaderComp() {
+function PosHeaderComp() {
   const navigate = useNavigate();
 
   return (
@@ -34,3 +34,5 @@ export default function PosHeaderComp() {
     </div>
   );
 }
+
+export default PosHeaderComp;

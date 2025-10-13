@@ -4,7 +4,7 @@ interface PosStoreCloseModalCompProps {
   type: "open" | "cancel";
 }
 
-export default function PosStoreCloseModalComp({ type }: PosStoreCloseModalCompProps) {
+function PosStoreCloseModalComp({ type }: PosStoreCloseModalCompProps) {
   const statusText = type === "open" ? "오픈" : "마감";
 
   return (
@@ -26,3 +26,5 @@ export default function PosStoreCloseModalComp({ type }: PosStoreCloseModalCompP
     </Dialog>
   );
 }
+
+export default PosStoreCloseModalComp;

@@ -10,7 +10,7 @@ interface IProps {
   onSetDate: (value: Date | null) => void;
 }
 
-export default function DatePicker({ date, onSetDate }: IProps) {
+function DatePicker({ date, onSetDate }: IProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -71,3 +71,5 @@ export default function DatePicker({ date, onSetDate }: IProps) {
     </Popover>
   );
 }
+
+export default DatePicker;

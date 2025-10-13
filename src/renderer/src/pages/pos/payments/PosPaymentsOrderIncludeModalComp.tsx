@@ -1,6 +1,6 @@
 import { Dialog } from "@renderer/components/Dialog";
 
-export default function PosPaymentsOrderIncludeModalComp() {
+function PosPaymentsOrderIncludeModalComp() {
   return (
     <Dialog open={true}>
       <Dialog.Wrapper gap={32}>
@@ -17,3 +17,5 @@ export default function PosPaymentsOrderIncludeModalComp() {
     </Dialog>
   );
 }
+
+export default PosPaymentsOrderIncludeModalComp;

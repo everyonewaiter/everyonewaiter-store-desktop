@@ -3,7 +3,7 @@ import { PlusIcon } from "@renderer/assets/icons";
 import { Checkbox } from "@renderer/components";
 import { PosOrderMockType } from "@renderer/pages/pos/mock";
 
-export default function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
+function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>;
 }
 
@@ -55,3 +55,5 @@ PosPaymentsOrderBoxComp.Divider = function Divider() {
     </div>
   );
 };
+
+export default PosPaymentsOrderBoxComp;

@@ -12,7 +12,7 @@ const COLUMN_WIDTHS = {
   createdAt: "flex-[1.8]",
 };
 
-export default function PosPaymentsPage() {
+function PosPaymentsPage() {
   return (
     <div className="flex min-h-dvh flex-col overflow-y-hidden">
       <PosHeaderComp />
@@ -65,3 +65,5 @@ export default function PosPaymentsPage() {
     </div>
   );
 }
+
+export default PosPaymentsPage;
