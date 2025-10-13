@@ -25,6 +25,7 @@ function SimpleButton(
           variant,
           color: disabled ? ColorName.GREY : color,
         }),
+        "cursor-pointer",
         className
       )}
       ref={ref}

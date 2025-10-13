@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import Button from "@renderer/components/Button/Button";
+import { ButtonColor, ButtonSize } from "@renderer/components/Button/Button.types";
 import cn from "@renderer/utils/cn";
 
 function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
@@ -74,8 +75,24 @@ Dialog.Header = function DialogHeader({ className, ...props }: React.ComponentPr
 Dialog.Footer = function DialogFooter({
   className,
   children,
+  layout = "balanced",
+  buttonClassName,
+  primaryButton,
+  buttonSize = "lg",
   ...props
-}: React.ComponentProps<"div"> & { children?: React.ReactNode }) {
+}: React.ComponentProps<"div"> & {
+  children?: React.ReactNode;
+  layout?: "balanced" | "unbalanced";
+  buttonClassName?: string;
+  primaryButton?: {
+    color?: ButtonColor;
+    className?: string;
+    text?: string;
+  };
+  buttonSize?: ButtonSize;
+}) {
+  const getButtonSize = () => `button-${buttonSize}`;
+
   return (
     <div
       data-slot="dialog-footer"
@@ -84,11 +101,21 @@ Dialog.Footer = function DialogFooter({
     >
       {children || (
         <>
-          <Button color="grey" className="button-lg w-[120px]">
+          <Button
+            color="grey"
+            className={cn(
+              getButtonSize(),
+              layout === "balanced" ? "w-full" : "w-[120px]",
+              buttonClassName
+            )}
+          >
             닫기
           </Button>
-          <Button color="black" className="button-lg w-full">
-            확인
+          <Button
+            color={primaryButton?.color ?? "black"}
+            className={cn(getButtonSize(), "w-full", primaryButton?.className ?? "")}
+          >
+            {primaryButton?.text ?? "확인"}
           </Button>
         </>
       )}
