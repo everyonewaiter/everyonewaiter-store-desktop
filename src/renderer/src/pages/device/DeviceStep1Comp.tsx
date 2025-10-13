@@ -29,7 +29,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
         <div className="flex md:gap-2 lg:gap-3">
           <div className="group relative w-full md:h-9 lg:h-12">
             <Input placeholder="인증번호를 입력해주세요." className="!pr-14" />
-            <span className="md:text-s font-regular absolute top-1/2 right-3 -translate-y-1/2 text-gray-200 disabled:hidden lg:text-[15px]">
+            <span className="md:text-s absolute top-1/2 right-3 -translate-y-1/2 font-normal text-gray-200 disabled:hidden lg:text-[15px]">
               01:00
             </span>
           </div>

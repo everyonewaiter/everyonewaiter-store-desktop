@@ -33,7 +33,7 @@ function WaitingModalComp({ type, waiting }: WaitingModalCompProps) {
             </div>
           )}
         </div>
-        <div className="text-gray-0 font-regular py-3 text-center text-xl whitespace-pre-line">
+        <div className="text-gray-0 py-3 text-center text-xl font-normal whitespace-pre-line">
           {type === "call" && `호출하시겠습니까?`}
           {type === "enter" &&
             `위 손님이 입장하셨나요?\n입장하셨다면 입장 버튼을 눌러 상태를 바꿔주세요.`}

@@ -20,10 +20,10 @@ function DeviceLayout({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col md:gap-2 lg:gap-3">
               <h1 className="text-gray-0 font-bold md:text-2xl lg:text-4xl">기기 등록</h1>
               <div className="flex flex-col">
-                <span className="font-regular md:text-s text-gray-300 lg:text-[15px]">
+                <span className="md:text-s font-normal text-gray-300 lg:text-[15px]">
                   첫 매장을 등록해볼까요?
                 </span>
-                <span className="font-regular md:text-s text-gray-300 lg:text-[15px]">
+                <span className="md:text-s font-normal text-gray-300 lg:text-[15px]">
                   간단한 정보만 입력하면 바로 시작할 수 있어요!
                 </span>
               </div>
