@@ -17,9 +17,9 @@ importers:
       electron-updater:
         specifier: ^6.6.2
         version: 6.6.2
-      ffi-rs:
-        specifier: ^1.3.0
-        version: 1.3.0
+      koffi:
+        specifier: ^2.14.1
+        version: 2.14.1
     devDependencies:
       '@commitlint/cli':
         specifier: ^20.0.0
@@ -1442,72 +1442,6 @@ packages:
     resolution: {integrity: sha512-cQzWCtO6C8TQiYl1ruKNn2U6Ao4o4WBBcbL61yJl84x+j5sOWWFU9X7DpND8XZG3daDppSsigMdfAIl2upQBRw==}
     engines: {node: '>=10.0.0'}
 
-  '@yuuang/ffi-rs-android-arm64@1.3.0':
-    resolution: {integrity: sha512-1kO6gmoDwZVlEzqbWXkQke8WLGAECOAAjTNBjphPN1sn+ICdUGBfR7TKHMbygspGXpFUFFI7/H75l3Gt8QsaLQ==}
-    engines: {node: '>= 12'}
-    cpu: [arm64]
-    os: [android]
-
-  '@yuuang/ffi-rs-darwin-arm64@1.3.0':
-    resolution: {integrity: sha512-JJOG1MXNV04FN0SWNUSK1i3LJVn76XF15+OcRYl0bWgjYnfsBzXzeIQdAp3wIlDTPPQQ+Z3Fxbb+b7wuf7uIDA==}
-    engines: {node: '>= 12'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@yuuang/ffi-rs-darwin-x64@1.3.0':
-    resolution: {integrity: sha512-YAagzuM6LNqbcFhXMfUFmTT0F+RD6qV59Qe7L20mb5Xf9luipieqs2fEUVU+MAkgXk1gXRj7HczWkI97+qa3Mg==}
-    engines: {node: '>= 12'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@yuuang/ffi-rs-linux-arm-gnueabihf@1.3.0':
-    resolution: {integrity: sha512-RZOU9PcYpaE920dDoDSEL+UQ19CU9MEf9Gm3kKSpb161TPeKzqMZPUEMpbRaww18pPBN1aWbe2BHiyKAO6tTcg==}
-    engines: {node: '>= 12'}
-    cpu: [arm]
-    os: [linux]
-
-  '@yuuang/ffi-rs-linux-arm64-gnu@1.3.0':
-    resolution: {integrity: sha512-US8XxQUja+dK4WTZWy9RD2/N/c4bLpFoH7sNYO+ENEpmfMbrB7Nw2bKvCk/I0OptuV4P3pScRgDD5xk4ztXgEA==}
-    engines: {node: '>= 12'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@yuuang/ffi-rs-linux-arm64-musl@1.3.0':
-    resolution: {integrity: sha512-DQ++kgJ6hks90wnDoY3PSkoxX2DmNI4e/H/gKFLKoOm+3K++se/ZyONwlVvDmOWKt2yTt6SyrxoIO7atr5LQmQ==}
-    engines: {node: '>= 12'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@yuuang/ffi-rs-linux-x64-gnu@1.3.0':
-    resolution: {integrity: sha512-HTk+RUDozycipfL97TsmVhZpJKK3ciTY4gIC6Wlg9dFpwcCscUVH5B6DKctbV/KmCV7r3FMB2eJxQBuLRH1JFg==}
-    engines: {node: '>= 12'}
-    cpu: [x64]
-    os: [linux]
-
-  '@yuuang/ffi-rs-linux-x64-musl@1.3.0':
-    resolution: {integrity: sha512-qpcPQW2AIeuS/CCBZhKEI07JxfoVulFQUHjsx6rhoAC5SVb2V+wcf8X5CkIvwhiRzydelw/uRml5vY0z+ieh1w==}
-    engines: {node: '>= 12'}
-    cpu: [x64]
-    os: [linux]
-
-  '@yuuang/ffi-rs-win32-arm64-msvc@1.3.0':
-    resolution: {integrity: sha512-Dflhd43LH4Y4pcWp3opozPp0b+8xAvxWq8ZyIWf/HhTMYIvWWjBoGo3LvLgzx8R2CdELKMO17dni76qCgJfv1A==}
-    engines: {node: '>= 12'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@yuuang/ffi-rs-win32-ia32-msvc@1.3.0':
-    resolution: {integrity: sha512-auc7WR0fKArxxt2m9HaHWrgJMlkwVg94+AN5TGGwT0RIAJTfc7juExXHwpRcWifDTykooXyGvJdTY351L1BVww==}
-    engines: {node: '>= 12'}
-    cpu: [x64, ia32]
-    os: [win32]
-
-  '@yuuang/ffi-rs-win32-x64-msvc@1.3.0':
-    resolution: {integrity: sha512-GL9q9cyuZXkNomr3DmkwSaTKpRInY8y4efcCLvv8J4oiIRkrUzKUQ9//l26uqGmPGYGtSJ5rjLBX9uDmkhhZjQ==}
-    engines: {node: '>= 12'}
-    cpu: [x64]
-    os: [win32]
-
   JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
     hasBin: true
@@ -2356,9 +2290,6 @@ packages:
       picomatch:
         optional: true
 
-  ffi-rs@1.3.0:
-    resolution: {integrity: sha512-xdyaooHKShKvNZE9X7PDn4KdNtZaX8cPPJkIqwsx2b7u4UFk6m1VdzsmCSc6eQDFCbk7LyygU1VDl9VRbmPXEg==}
-
   file-entry-cache@8.0.0:
     resolution: {integrity: sha512-XXTUwCvisa5oacNGRP9SfNtYBNAMi+RPwBFmblZEF7N7swHYQS6/Zfk7SRwx4D5j3CH211YNRco1DEMNVfZCnQ==}
     engines: {node: '>=16.0.0'}
@@ -2882,6 +2813,9 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
+
+  koffi@2.14.1:
+    resolution: {integrity: sha512-IMFL3IbRDXacSIjs7pPbPxgNlJ2hUtawQXU2QPdr6iw38jmv5AesAUG8HPX00xl0PPA2BbEa3noTw1YdHY+gHg==}
 
   lazy-val@1.0.5:
     resolution: {integrity: sha512-0/BnGCCfyUMkBpeDgWihanIAF9JmZhHBgUhEqzvf+adhNGLoP6TaiI5oF8oyb3I45P+PcnrqihSf01M0l0G5+Q==}
@@ -5509,39 +5443,6 @@ snapshots:
 
   '@xmldom/xmldom@0.8.11': {}
 
-  '@yuuang/ffi-rs-android-arm64@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-darwin-arm64@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-darwin-x64@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-linux-arm-gnueabihf@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-linux-arm64-gnu@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-linux-arm64-musl@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-linux-x64-gnu@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-linux-x64-musl@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-win32-arm64-msvc@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-win32-ia32-msvc@1.3.0':
-    optional: true
-
-  '@yuuang/ffi-rs-win32-x64-msvc@1.3.0':
-    optional: true
-
   JSONStream@1.3.5:
     dependencies:
       jsonparse: 1.3.1
@@ -6678,20 +6579,6 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.3
 
-  ffi-rs@1.3.0:
-    optionalDependencies:
-      '@yuuang/ffi-rs-android-arm64': 1.3.0
-      '@yuuang/ffi-rs-darwin-arm64': 1.3.0
-      '@yuuang/ffi-rs-darwin-x64': 1.3.0
-      '@yuuang/ffi-rs-linux-arm-gnueabihf': 1.3.0
-      '@yuuang/ffi-rs-linux-arm64-gnu': 1.3.0
-      '@yuuang/ffi-rs-linux-arm64-musl': 1.3.0
-      '@yuuang/ffi-rs-linux-x64-gnu': 1.3.0
-      '@yuuang/ffi-rs-linux-x64-musl': 1.3.0
-      '@yuuang/ffi-rs-win32-arm64-msvc': 1.3.0
-      '@yuuang/ffi-rs-win32-ia32-msvc': 1.3.0
-      '@yuuang/ffi-rs-win32-x64-msvc': 1.3.0
-
   file-entry-cache@8.0.0:
     dependencies:
       flat-cache: 4.0.1
@@ -7250,6 +7137,8 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+
+  koffi@2.14.1: {}
 
   lazy-val@1.0.5: {}
 
