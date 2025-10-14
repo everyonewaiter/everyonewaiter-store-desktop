@@ -9,6 +9,7 @@ export default defineConfig({
     resolve: {
       alias: {
         "@main": resolve("src/main"),
+        "@resources": resolve("resources"),
       },
     },
     plugins: [externalizeDepsPlugin()],
@@ -17,6 +18,7 @@ export default defineConfig({
     resolve: {
       alias: {
         "@preload": resolve("src/preload"),
+        "@resources": resolve("resources"),
       },
     },
     plugins: [externalizeDepsPlugin()],

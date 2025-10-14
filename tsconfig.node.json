@@ -6,6 +6,9 @@
     "types": ["electron-vite/node"],
     "baseUrl": ".",
     "paths": {
+      "@resources/*": [
+        "resources/*"
+      ],
       "@main/*": [
         "src/main/*"
       ],
