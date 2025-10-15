@@ -34,12 +34,13 @@ interface PrinterApi {
     text: string,
     alignment: ValueOf<typeof TextAlign>,
     attribute: number,
-    size: number
-  ) => Promise<number>;
+    size: number,
+    codePage?: number
+  ) => void;
 
-  lineFeed: (feed?: number) => Promise<number>;
+  lineFeed: (feed?: number) => void;
 
-  cutPaper: () => Promise<number>;
+  cutPaper: () => void;
 }
 
 export type { PrinterApi };

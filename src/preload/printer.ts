@@ -1,5 +1,6 @@
 import printerChannel from "@shared/printer/channel";
 import { PrinterApi } from "@shared/printer/interface";
+import { CodePage } from "@shared/printer/options";
 import { ipcRenderer } from "electron";
 
 const printer: PrinterApi = {
@@ -37,8 +38,8 @@ const printer: PrinterApi = {
   transactionEnd: (sendCompleteCheck = true, timeout = 3000) =>
     ipcRenderer.invoke(printerChannel.TRANSACTION_END, sendCompleteCheck, timeout),
 
-  printText: (text, alignment, attribute, size) =>
-    ipcRenderer.invoke(printerChannel.PRINT_TEXT, text, alignment, attribute, size),
+  printText: (text, alignment, attribute, size, codePage = CodePage.KS5601) =>
+    ipcRenderer.invoke(printerChannel.PRINT_TEXT, text, alignment, attribute, size, codePage),
 
   lineFeed: (feed = 1) => ipcRenderer.invoke(printerChannel.LINE_FEED, feed),
 

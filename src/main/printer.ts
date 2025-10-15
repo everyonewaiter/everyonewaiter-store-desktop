@@ -38,7 +38,7 @@ const TransactionStart = lib?.func("TransactionStart", "int64", []);
 
 const TransactionEnd = lib?.func("TransactionEnd", "int64", ["bool", "int64"]);
 
-const PrintText = lib?.func("PrintText", "int64", ["string", "int64", "int64", "int64"]);
+const PrintTextW = lib?.func("PrintTextW", "int64", ["str16", "int64", "int64", "int64", "int64"]);
 
 const LineFeed = lib?.func("LineFeed", "int64", ["int32"]);
 
@@ -92,8 +92,14 @@ function transactionEnd(sendCompleteCheck: boolean, timeout: number): number {
   return TransactionEnd ? TransactionEnd(sendCompleteCheck, timeout) : NOT_SUPPORTED_OS;
 }
 
-function printText(text: string, alignment: number, attribute: number, size: number): number {
-  return PrintText ? PrintText(text, alignment, attribute, size) : NOT_SUPPORTED_OS;
+function printText(
+  text: string,
+  alignment: number,
+  attribute: number,
+  size: number,
+  codePage: number
+): number {
+  return PrintTextW ? PrintTextW(text, alignment, attribute, size, codePage) : NOT_SUPPORTED_OS;
 }
 
 function lineFeed(feed: number): number {
