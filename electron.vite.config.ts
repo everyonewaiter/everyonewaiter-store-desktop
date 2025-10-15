@@ -8,6 +8,7 @@ export default defineConfig({
   main: {
     resolve: {
       alias: {
+        "@shared": resolve("src/shared"),
         "@main": resolve("src/main"),
         "@resources": resolve("resources"),
       },
@@ -17,6 +18,7 @@ export default defineConfig({
   preload: {
     resolve: {
       alias: {
+        "@shared": resolve("src/shared"),
         "@preload": resolve("src/preload"),
         "@resources": resolve("resources"),
       },
@@ -26,6 +28,7 @@ export default defineConfig({
   renderer: {
     resolve: {
       alias: {
+        "@shared": resolve("src/shared"),
         "@renderer": resolve("src/renderer/src"),
       },
     },

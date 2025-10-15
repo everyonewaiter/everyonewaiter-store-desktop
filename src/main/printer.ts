@@ -16,7 +16,7 @@ function loadLibrary() {
 
 const lib = loadLibrary();
 
-export const printerOpen = lib?.func("PrinterOpen", "int64", [
+const PrinterOpen = lib?.func("PrinterOpen", "int64", [
   "int32",
   "string",
   "int32",
@@ -26,20 +26,93 @@ export const printerOpen = lib?.func("PrinterOpen", "int64", [
   "int32",
 ]);
 
-export const printerClose = lib?.func("PrinterClose", "int64", []);
+const PrinterClose = lib?.func("PrinterClose", "int64", []);
 
-export const initializePrinter = lib?.func("InitializePrinter", "int64", []);
+const InitializePrinter = lib?.func("InitializePrinter", "int64", []);
 
-export const getPrinterCurrentStatus = lib?.func("GetPrinterCurrentStatus", "int64", []);
+const GetPrinterCurrentStatus = lib?.func("GetPrinterCurrentStatus", "int64", []);
 
-export const setInternationalCharacterSet = lib?.func("SetInterChrSet", "int64", ["int64"]);
+const SetInternationalCharacterSet = lib?.func("SetInterChrSet", "int64", ["int64"]);
 
-export const transactionStart = lib?.func("TransactionStart", "int64", []);
+const TransactionStart = lib?.func("TransactionStart", "int64", []);
 
-export const transactionEnd = lib?.func("TransactionEnd", "int64", ["bool", "int64"]);
+const TransactionEnd = lib?.func("TransactionEnd", "int64", ["bool", "int64"]);
 
-export const printText = lib?.func("PrintText", "int64", ["string", "int64", "int64", "int64"]);
+const PrintText = lib?.func("PrintText", "int64", ["string", "int64", "int64", "int64"]);
 
-export const lineFeed = lib?.func("LineFeed", "int64", ["int32"]);
+const LineFeed = lib?.func("LineFeed", "int64", ["int32"]);
 
-export const cutPaper = lib?.func("CutPaper", "int64", []);
+const CutPaper = lib?.func("CutPaper", "int64", []);
+
+const NOT_SUPPORTED_OS = -9999;
+
+function openPrinter(
+  communicationInterface: number,
+  portName: string,
+  baudRate: number,
+  dataBits: number,
+  parity: number,
+  stopBits: number,
+  flowControl: number
+): number {
+  return PrinterOpen
+    ? PrinterOpen(
+        communicationInterface,
+        portName,
+        baudRate,
+        dataBits,
+        parity,
+        stopBits,
+        flowControl
+      )
+    : NOT_SUPPORTED_OS;
+}
+
+function closePrinter(): number {
+  return PrinterClose ? PrinterClose() : NOT_SUPPORTED_OS;
+}
+
+function initializePrinter(): number {
+  return InitializePrinter ? InitializePrinter() : NOT_SUPPORTED_OS;
+}
+
+function getCurrentStatus(): number {
+  return GetPrinterCurrentStatus ? GetPrinterCurrentStatus() : NOT_SUPPORTED_OS;
+}
+
+function setInternationalCharacterSet(code: number): number {
+  return SetInternationalCharacterSet ? SetInternationalCharacterSet(code) : NOT_SUPPORTED_OS;
+}
+
+function transactionStart(): number {
+  return TransactionStart ? TransactionStart() : NOT_SUPPORTED_OS;
+}
+
+function transactionEnd(sendCompleteCheck: boolean, timeout: number): number {
+  return TransactionEnd ? TransactionEnd(sendCompleteCheck, timeout) : NOT_SUPPORTED_OS;
+}
+
+function printText(text: string, alignment: number, attribute: number, size: number): number {
+  return PrintText ? PrintText(text, alignment, attribute, size) : NOT_SUPPORTED_OS;
+}
+
+function lineFeed(feed: number): number {
+  return LineFeed ? LineFeed(feed) : NOT_SUPPORTED_OS;
+}
+
+function cutPaper(): number {
+  return CutPaper ? CutPaper() : NOT_SUPPORTED_OS;
+}
+
+export {
+  closePrinter,
+  cutPaper,
+  getCurrentStatus,
+  initializePrinter,
+  lineFeed,
+  openPrinter,
+  printText,
+  setInternationalCharacterSet,
+  transactionEnd,
+  transactionStart,
+};

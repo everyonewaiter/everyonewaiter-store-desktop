@@ -1,4 +1,4 @@
-export const Interface = {
+export const PrinterInterface = {
   SERIAL: 0,
   PARALLEL: 1,
   USB: 2,
