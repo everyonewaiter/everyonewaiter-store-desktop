@@ -1,4 +1,5 @@
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
+import registerIpcHandlers from "@main/ipcHandlers";
 import { app, BrowserWindow, shell } from "electron";
 import { join } from "path";
 
@@ -37,6 +38,8 @@ app.whenReady().then(() => {
   app.on("browser-window-created", (_, window) => {
     optimizer.watchWindowShortcuts(window);
   });
+
+  registerIpcHandlers();
 
   createWindow();
 
