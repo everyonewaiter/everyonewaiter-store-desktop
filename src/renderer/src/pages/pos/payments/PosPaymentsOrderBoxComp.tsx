@@ -1,13 +1,13 @@
 import { Fragment } from "react/jsx-runtime";
 import { PlusIcon } from "@renderer/assets/icons";
 import { Checkbox } from "@renderer/components";
-import { PosOrderMockType } from "@renderer/pages/pos/mock";
+import { OrderMenu } from "@renderer/types/domain";
 
 function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>;
 }
 
-PosPaymentsOrderBoxComp.Order = function Order({ order }: { order: PosOrderMockType }) {
+PosPaymentsOrderBoxComp.Order = function Order({ order }: { order: OrderMenu }) {
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-gray-600 p-4">
       <div className="flex items-center justify-between">

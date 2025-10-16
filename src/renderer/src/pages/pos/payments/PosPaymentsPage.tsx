@@ -31,29 +31,29 @@ function PosPaymentsPage() {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {PAYMENTS_MOCK.map((item) => (
-                <Table.Row className="flex w-full" key={item.posTableActivityId}>
-                  <Table.Cell className={COLUMN_WIDTHS.number}>{item.number}</Table.Cell>
+              {PAYMENTS_MOCK.map((payment, index, arr) => (
+                <Table.Row className="flex w-full" key={payment.orderPaymentId}>
+                  <Table.Cell className={COLUMN_WIDTHS.number}>{arr.length - index}</Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.cash}>
-                    {`${item.cash.toLocaleString()} 원`}
+                    {payment.method === "CASH" ? `${payment.amount.toLocaleString()}원` : "-"}
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.card}>
-                    {`${item.card.toLocaleString()} 원`}
+                    {payment.method === "CARD" ? `${payment.amount.toLocaleString()}원` : "-"}
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.total}>
-                    {`${item.total.toLocaleString()} 원`}
+                    {payment.amount.toLocaleString()}원
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.status}>
                     <Button
-                      color={item.status === "APPROVE" ? "approve" : "reject"}
+                      color={payment.state === "APPROVE" ? "approve" : "reject"}
                       className="button-sm"
                     >
-                      {item.status === "APPROVE" ? "승인" : "취소"}
+                      {payment.state === "APPROVE" ? "승인" : "취소"}
                     </Button>
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.createdAt}>
-                    {item.createdAt.split(":")[0]}시 {item.createdAt.split(":")[1]}분{" "}
-                    {item.createdAt.split(":")[2]}초
+                    {payment.createdAt.split(":")[0]}시 {payment.createdAt.split(":")[1]}분{" "}
+                    {payment.createdAt.split(":")[2]}초
                   </Table.Cell>
                 </Table.Row>
               ))}
