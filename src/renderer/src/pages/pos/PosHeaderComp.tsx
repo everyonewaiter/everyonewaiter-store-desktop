@@ -6,8 +6,6 @@ import { Button } from "@renderer/components";
 function PosHeaderComp() {
   const { pathname } = useLocation();
 
-  console.log(pathname);
-
   return (
     <header className="flex w-full flex-col gap-8 px-15 pt-10">
       <div className="flex w-full items-center justify-between">
