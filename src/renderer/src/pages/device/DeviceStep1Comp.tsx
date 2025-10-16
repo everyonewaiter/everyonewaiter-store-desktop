@@ -48,7 +48,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
         <div className="flex flex-col gap-1">
           <Label>매장 선택</Label>
           <Dropdown
-            data={[
+            dropdownItems={[
               { id: "1", name: "매장 1" },
               { id: "2", name: "매장 2" },
             ]}

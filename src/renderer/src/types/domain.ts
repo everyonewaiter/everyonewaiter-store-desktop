@@ -2,14 +2,14 @@ export type OrderCategory = "INITIAL" | "ADDITIONAL";
 export type PaymentType = "PREPAID" | "POSTPAID";
 export type OrderState = "ORDER" | "CANCEL";
 
-export interface Tables {
+export interface Table {
   posTableId: string;
   storeId: string;
   tableNo: number;
   hasOrder: boolean;
   orderType: "POSTPAID" | "PREPAID" | null;
-  orderedAt: string;
-  orderMenuName: string;
+  orderedAt: string | null;
+  orderMenuName: string | null;
   orderMenuCount: number;
   totalOrderPrice: number;
   discount: number;
@@ -82,7 +82,7 @@ type OrderPaymentState = "APPROVE" | "CANCEL";
 type OrderPaymentMethod = "CASH" | "CARD";
 type OrderReceiptType = "NONE" | "DEDUCTION" | "PROOF";
 
-interface OrderPayments {
+interface OrderPayment {
   method: OrderPaymentMethod;
   amount: number;
   approvalNo: string;
@@ -99,7 +99,7 @@ interface OrderPayments {
   cashReceiptType: OrderReceiptType;
 }
 
-export interface OrderPaymentsList extends OrderPayments {
+export interface OrderPaymentsList extends OrderPayment {
   orderPaymentId: string;
   posTableActivityId: string;
   storeId: string;

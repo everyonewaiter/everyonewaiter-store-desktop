@@ -9,7 +9,7 @@ interface DropdownItem {
 }
 
 interface DropdownProps extends DropdownMenu.DropdownMenuProps {
-  data: DropdownItem[];
+  dropdownItems: DropdownItem[];
   hasError?: boolean;
   type?: "default" | "chip";
   defaultText: string;
@@ -18,7 +18,7 @@ interface DropdownProps extends DropdownMenu.DropdownMenuProps {
 }
 
 function Dropdown({
-  data,
+  dropdownItems,
   hasError,
   type = "default",
   defaultText,
@@ -59,18 +59,18 @@ function Dropdown({
             )}
             style={{ minWidth: "var(--radix-dropdown-menu-trigger-width)" }}
           >
-            {data.map((item) => (
+            {dropdownItems.map((dropdownItem) => (
               <DropdownMenu.Item
-                key={item.id}
+                key={dropdownItem.id}
                 className="text-gray-0 text-s flex h-9 min-w-full cursor-pointer items-center px-3 font-normal outline-none focus:bg-gray-700 md:rounded-lg lg:rounded-xl lg:text-sm"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setSelectedItem(item);
-                  onChange?.(item);
+                  setSelectedItem(dropdownItem);
+                  onChange?.(dropdownItem);
                   setIsOpen(false);
                 }}
               >
-                {item.name}
+                {dropdownItem.name}
               </DropdownMenu.Item>
             ))}
           </DropdownMenu.Content>

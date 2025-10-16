@@ -7,21 +7,21 @@ function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>;
 }
 
-PosPaymentsOrderBoxComp.Order = function Order({ order }: { order: OrderMenu }) {
+PosPaymentsOrderBoxComp.Order = function Order({ orderMenu }: { orderMenu: OrderMenu }) {
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-gray-600 p-4">
       <div className="flex items-center justify-between">
-        <span className="text-lg font-medium text-gray-100">{order.name}</span>
-        <span className="text-lg font-medium text-gray-100">{order.quantity}개</span>
+        <span className="text-lg font-medium text-gray-100">{orderMenu.name}</span>
+        <span className="text-lg font-medium text-gray-100">{orderMenu.quantity}개</span>
       </div>
       <div className="flex flex-col gap-1">
-        {order.orderOptionGroups.map((group) =>
-          group.orderOptions.map((option) => (
-            <div key={group.orderOptionGroupId} className="flex items-center justify-between">
+        {orderMenu.orderOptionGroups.map((optionGroup) =>
+          optionGroup.orderOptions.map((option) => (
+            <div key={optionGroup.orderOptionGroupId} className="flex items-center justify-between">
               <Fragment>
                 <span className="flex text-base font-medium text-[#2E7BB3]">
                   <PlusIcon width={24} height={24} color="#2E7BB3" />
-                  {group.name}
+                  {optionGroup.name}
                 </span>
                 <span className="flex text-base font-medium text-[#2E7BB3]">{option.name}</span>
               </Fragment>

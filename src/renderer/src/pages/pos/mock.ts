@@ -1,6 +1,6 @@
-import { Order, OrderPaymentsList, Tables } from "@renderer/types/domain";
+import { Order, OrderPaymentsList, Table } from "@renderer/types/domain";
 
-export const MOCK: Tables[] = [
+export const MOCK: Table[] = [
   {
     posTableId: "1",
     storeId: "A001",

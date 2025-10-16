@@ -60,7 +60,7 @@ function PosPaymentsPage() {
             </Table.Body>
           </Table>
         </div>
-        <PosPaymentsSideComp data={POS_ORDER_MOCK} />
+        <PosPaymentsSideComp order={POS_ORDER_MOCK} />
       </div>
     </div>
   );

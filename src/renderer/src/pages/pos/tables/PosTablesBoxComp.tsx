@@ -1,9 +1,9 @@
 import { AlarmIcon, StopwatchIcon } from "@renderer/assets/icons";
 import { ORDER_TYPE_TEXT } from "@renderer/constants/pos";
-import { Tables } from "@renderer/types/domain";
+import { Table } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
-function PosTablesBoxComp(props: Tables) {
+function PosTablesBoxComp(props: Table) {
   return (
     <article
       className={cn(
