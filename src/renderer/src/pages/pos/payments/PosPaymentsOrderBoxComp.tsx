@@ -15,13 +15,13 @@ PosPaymentsOrderBoxComp.Order = function Order({ order }: { order: OrderMenu }) 
         <span className="text-lg font-medium text-gray-100">{order.quantity}개</span>
       </div>
       <div className="flex flex-col gap-1">
-        {order.orderOptionGroups.map((item) =>
-          item.orderOptions.map((option) => (
-            <div key={item.orderOptionGroupId} className="flex items-center justify-between">
+        {order.orderOptionGroups.map((group) =>
+          group.orderOptions.map((option) => (
+            <div key={group.orderOptionGroupId} className="flex items-center justify-between">
               <Fragment>
                 <span className="flex text-base font-medium text-[#2E7BB3]">
                   <PlusIcon width={24} height={24} color="#2E7BB3" />
-                  {item.name}
+                  {group.name}
                 </span>
                 <span className="flex text-base font-medium text-[#2E7BB3]">{option.name}</span>
               </Fragment>

@@ -8,8 +8,8 @@ function PosTablesPage() {
       <PosHeaderComp />
       <div className="flex flex-col gap-6 px-15 py-8">
         <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4">
-          {MOCK.map((item) => (
-            <PosTablesBoxComp key={item.posTableId} {...item} />
+          {MOCK.map((table) => (
+            <PosTablesBoxComp key={table.posTableId} {...table} />
           ))}
         </div>
       </div>

@@ -1,9 +1,9 @@
 import { Button } from "@renderer/components";
-import { PosOrderType } from "@renderer/pages/pos/mock";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
+import { Order } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
-function PosPaymentsSideComp({ data }: { data: PosOrderType }) {
+function PosPaymentsSideComp({ data }: { data: Order }) {
   return (
     <aside
       className="sticky top-0 right-0 flex h-[calc(100dvh-133px)] flex-[0.3375] flex-col gap-8 overflow-y-hidden rounded-tl-[40px] rounded-bl-[40px] px-8 pt-10 pb-8"
@@ -23,11 +23,11 @@ function PosPaymentsSideComp({ data }: { data: PosOrderType }) {
         <h2 className="text-gray-0 text-[28px] font-bold">주문 내역</h2>
       </header>
       <section className="flex h-[calc(100%-8px-8px-24px-62px)] flex-col gap-4 overflow-y-auto">
-        {data.orderMenus.map((item, index, arr) => (
-          <article key={item.orderMenuId}>
+        {data.orderMenus.map((menu, index, arr) => (
+          <article key={menu.orderMenuId}>
             <PosPaymentsOrderBoxComp>
               <PosPaymentsOrderBoxComp.Index index={index} hasCheckbox />
-              <PosPaymentsOrderBoxComp.Order order={item} />
+              <PosPaymentsOrderBoxComp.Order order={menu} />
               {index !== arr.length - 1 && <PosPaymentsOrderBoxComp.Divider />}
             </PosPaymentsOrderBoxComp>
           </article>
