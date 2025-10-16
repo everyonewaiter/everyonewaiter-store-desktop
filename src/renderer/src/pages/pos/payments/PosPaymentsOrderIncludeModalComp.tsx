@@ -1,4 +1,5 @@
 import { Dialog } from "@renderer/components/Dialog";
+import { ColorName } from "@renderer/constants";
 
 function PosPaymentsOrderIncludeModalComp() {
   return (
@@ -10,8 +11,8 @@ function PosPaymentsOrderIncludeModalComp() {
         </div>
         <Dialog.Footer
           buttonSize="xl"
-          secondaryButton={{ color: "black", text: "미포함" }}
-          primaryButton={{ color: "primary", text: "포함" }}
+          secondaryButton={{ color: ColorName.BLACK, text: "미포함" }}
+          primaryButton={{ color: ColorName.PRIMARY, text: "포함" }}
         />
       </Dialog.Wrapper>
     </Dialog>

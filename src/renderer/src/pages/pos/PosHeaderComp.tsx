@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { FileCheckIcon, MoneyCoinIcon, ReturnIcon } from "@renderer/assets/icons";
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
+import { ColorName } from "@renderer/constants";
 
 function PosHeaderComp() {
   const { pathname } = useLocation();
@@ -38,7 +39,7 @@ function PosHeaderComp() {
           {pathname === "/pos/tables" && (
             <Button
               variant="outline"
-              color="grey"
+              color={ColorName.GREY}
               className="text-gray-0 flex items-center gap-2.5 rounded-xl border-gray-600 px-4 py-3 text-lg font-normal"
             >
               <FileCheckIcon className="text-gray-0 h-7 w-7" />

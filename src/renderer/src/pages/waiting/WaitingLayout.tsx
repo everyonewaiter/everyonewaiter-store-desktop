@@ -1,4 +1,5 @@
 import { Button } from "@renderer/components";
+import { ColorName } from "@renderer/constants";
 
 function WaitingLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,7 +8,7 @@ function WaitingLayout({ children }: { children: React.ReactNode }) {
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-3xl font-bold text-black">웨이팅 관리</h1>
           <div className="relative">
-            <Button color="grey" className="button-xl !bg-gray-300 !text-white">
+            <Button color={ColorName.GREY} className="button-xl !bg-gray-300 !text-white">
               홀 관리 이동
             </Button>
             <div className="bg-primary absolute -top-5 -right-5 flex h-10 w-10 items-center justify-center rounded-full text-xl font-semibold text-white">
