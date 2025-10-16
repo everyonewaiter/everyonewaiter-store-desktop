@@ -25,9 +25,10 @@ function Calendar({
       style={{ boxShadow: "0px 2px 20px rgba(0, 0, 0, 0.08)" }}
       captionLayout={captionLayout}
       formatters={{
-        formatMonthDropdown: (date) => date.toLocaleString("default", { month: "short" }),
+        formatMonthDropdown: (date) => date.toLocaleString("ko-KR", { month: "long" }),
+        formatCaption: (date) => `${date.getFullYear()}년 ${date.getMonth() + 1}월`,
         formatWeekdayName: (weekday) =>
-          ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][weekday.getDay()],
+          ["일", "월", "화", "수", "목", "금", "토"][weekday.getDay()],
         ...formatters,
       }}
       classNames={{
