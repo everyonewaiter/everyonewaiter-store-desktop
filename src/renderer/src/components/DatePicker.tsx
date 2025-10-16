@@ -5,12 +5,12 @@ import { Calendar } from "@renderer/components/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@renderer/components/Popover";
 import cn from "@renderer/utils/cn";
 
-interface IProps {
+interface DatePickerProps {
   date: Date | null;
   onSetDate: (value: Date | null) => void;
 }
 
-function DatePicker({ date, onSetDate }: IProps) {
+function DatePicker({ date, onSetDate }: DatePickerProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (newOpen: boolean) => {
