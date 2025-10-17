@@ -1,4 +1,5 @@
 import { Button } from "@renderer/components";
+import { ColorName } from "@renderer/constants";
 import HallOrderBoxComp from "@renderer/pages/hall/HallOrderBoxComp";
 import { Order } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
@@ -52,7 +53,7 @@ function HallOrderComp({ order }: HallOrderCompProps) {
               <strong className="text-gray-0 pt-3 text-4xl font-bold">
                 {String(order.tableNo).padStart(2, "0")}
               </strong>
-              <Button color="black" className="button-lg absolute bottom-0 w-full">
+              <Button color={ColorName.BLACK} className="button-lg absolute bottom-0 w-full">
                 전체 완료
               </Button>
             </div>

@@ -9,7 +9,7 @@ interface DropdownItem {
 }
 
 interface DropdownProps extends DropdownMenu.DropdownMenuProps {
-  data: DropdownItem[];
+  dropdownItems: DropdownItem[];
   hasError?: boolean;
   type?: "default" | "chip";
   defaultText: string;
@@ -18,7 +18,7 @@ interface DropdownProps extends DropdownMenu.DropdownMenuProps {
 }
 
 function Dropdown({
-  data,
+  dropdownItems,
   hasError,
   type = "default",
   defaultText,
@@ -34,7 +34,7 @@ function Dropdown({
       <DropdownMenu.Root open={isOpen} onOpenChange={disabled ? undefined : setIsOpen} {...props}>
         <DropdownMenu.Trigger
           className={cn(
-            "font-regular md:text-s flex flex-row items-center border border-gray-600 pr-3 transition-colors hover:border-gray-500 focus:outline-none disabled:border-gray-600 disabled:bg-gray-700 disabled:text-gray-300 md:h-9 md:pl-3 lg:h-12 lg:pl-4 lg:text-sm",
+            "md:text-s flex flex-row items-center border border-gray-600 pr-3 font-normal transition-colors hover:border-gray-500 focus:outline-none disabled:border-gray-600 disabled:bg-gray-700 disabled:text-gray-300 md:h-9 md:pl-3 lg:h-12 lg:pl-4 lg:text-sm",
             hasError && "border-status-error",
             type === "chip"
               ? "w-fit justify-center gap-2.5 rounded-[40px] md:h-8 md:pr-2 lg:h-9.5"
@@ -59,18 +59,18 @@ function Dropdown({
             )}
             style={{ minWidth: "var(--radix-dropdown-menu-trigger-width)" }}
           >
-            {data.map((item) => (
+            {dropdownItems.map((dropdownItem) => (
               <DropdownMenu.Item
-                key={item.id}
-                className="font-regular text-gray-0 text-s flex h-9 min-w-full cursor-pointer items-center px-3 outline-none focus:bg-gray-700 md:rounded-lg lg:rounded-xl lg:text-sm"
+                key={dropdownItem.id}
+                className="text-gray-0 text-s flex h-9 min-w-full cursor-pointer items-center px-3 font-normal outline-none focus:bg-gray-700 md:rounded-lg lg:rounded-xl lg:text-sm"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setSelectedItem(item);
-                  onChange?.(item);
+                  setSelectedItem(dropdownItem);
+                  onChange?.(dropdownItem);
                   setIsOpen(false);
                 }}
               >
-                {item.name}
+                {dropdownItem.name}
               </DropdownMenu.Item>
             ))}
           </DropdownMenu.Content>

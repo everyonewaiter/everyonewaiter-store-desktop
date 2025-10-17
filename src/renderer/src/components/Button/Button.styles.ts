@@ -8,6 +8,7 @@ export const buttonVariants = cva(
       variant: {
         default: "",
         outline: "bg-transparent",
+        ghost: "bg-transparent",
       },
       color: {
         primary: "",
@@ -94,6 +95,43 @@ export const buttonVariants = cva(
         variant: "outline",
         color: ColorName.REAPPLY,
         class: "text-[#FFAB45] border-[#FFAB45] hover:bg-[#FFAB45] hover:text-white",
+      },
+      {
+        variant: "ghost",
+        color: ColorName.PRIMARY,
+        class: "text-primary border-none",
+      },
+      {
+        variant: "ghost",
+        color: ColorName.BLACK,
+        class: "text-black border-none",
+      },
+
+      {
+        variant: "ghost",
+        color: ColorName.GREY,
+        class: "text-gray-300 border-none",
+      },
+
+      {
+        variant: "ghost",
+        color: ColorName.APPLY,
+        class: "text-gray-400 border-none",
+      },
+      {
+        variant: "ghost",
+        color: ColorName.REJECT,
+        class: "text-[#FF5555] border-none",
+      },
+      {
+        variant: "ghost",
+        color: ColorName.APPROVE,
+        class: "text-[#2E8CFF] border-none",
+      },
+      {
+        variant: "ghost",
+        color: ColorName.REAPPLY,
+        class: "text-[#FFAB45] border-none",
       },
     ],
   }

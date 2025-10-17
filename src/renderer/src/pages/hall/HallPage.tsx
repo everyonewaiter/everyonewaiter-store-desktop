@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@renderer/components";
+import { ColorName } from "@renderer/constants";
 import HallLayout from "@renderer/pages/hall/HallLayout";
 import HallOrderComp from "@renderer/pages/hall/HallOrderComp";
 import HallStaffCallComp from "@renderer/pages/hall/HallStaffCallComp";
@@ -19,7 +20,7 @@ function HallPage() {
         {tabs.map((tab) => (
           <Button
             key={tab.label}
-            color={served === tab.isServed ? "black" : "grey"}
+            color={served === tab.isServed ? ColorName.BLACK : ColorName.GREY}
             variant={served === tab.isServed ? "default" : "outline"}
             className="button-xl !px-8 not-focus:!border-gray-500"
             onClick={() => setServed(tab.isServed)}

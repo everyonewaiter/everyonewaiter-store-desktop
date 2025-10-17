@@ -1,4 +1,5 @@
 import { Button } from "@renderer/components";
+import { ColorName } from "@renderer/constants";
 import HallOrderOptionComp from "@renderer/pages/hall/HallOrderOptionComp";
 import { OrderMenu, OrderOption } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
@@ -66,7 +67,7 @@ function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompPr
       </div>
       {!isCompleted && (
         <Button
-          color="black"
+          color={ColorName.BLACK}
           variant="outline"
           className={cn(
             "button-lg w-full !text-lg !font-medium",

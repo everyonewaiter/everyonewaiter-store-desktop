@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import Button from "@renderer/components/Button/Button";
+import { ButtonColor, ButtonSize } from "@renderer/components/Button/Button.types";
 import cn from "@renderer/utils/cn";
 
 function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
@@ -42,17 +43,21 @@ function DialogOverlay({
 Dialog.Wrapper = function DialogWrapper({
   className,
   children,
+  gap,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>) {
+}: React.ComponentProps<typeof DialogPrimitive.Content> & {
+  gap?: number;
+}) {
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 flex w-[544px] translate-x-[-50%] translate-y-[-50%] flex-col gap-6 rounded-[30px] bg-white p-8 duration-200",
+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 flex w-[544px] translate-x-[-50%] translate-y-[-50%] flex-col rounded-[30px] bg-white p-8 duration-200",
           className
         )}
+        style={{ gap: gap || 24 }}
         {...props}
       >
         {children}
@@ -74,8 +79,30 @@ Dialog.Header = function DialogHeader({ className, ...props }: React.ComponentPr
 Dialog.Footer = function DialogFooter({
   className,
   children,
+  layout = "balanced",
+  buttonClassName,
+  primaryButton,
+  secondaryButton,
+  buttonSize = "lg",
   ...props
-}: React.ComponentProps<"div"> & { children?: React.ReactNode }) {
+}: React.ComponentProps<"div"> & {
+  children?: React.ReactNode;
+  layout?: "balanced" | "unbalanced";
+  buttonClassName?: string;
+  primaryButton?: {
+    color?: ButtonColor;
+    className?: string;
+    text?: string;
+  };
+  secondaryButton?: {
+    color?: ButtonColor;
+    className?: string;
+    text?: string;
+  };
+  buttonSize?: ButtonSize;
+}) {
+  const getButtonSize = () => `button-${buttonSize}`;
+
   return (
     <div
       data-slot="dialog-footer"
@@ -84,11 +111,22 @@ Dialog.Footer = function DialogFooter({
     >
       {children || (
         <>
-          <Button color="grey" className="button-lg w-[120px]">
-            닫기
+          <Button
+            color={secondaryButton?.color ?? "grey"}
+            className={cn(
+              getButtonSize(),
+              layout === "balanced" ? "w-full" : "w-[120px]",
+              buttonClassName,
+              secondaryButton?.className ?? ""
+            )}
+          >
+            {secondaryButton?.text ?? "닫기"}
           </Button>
-          <Button color="black" className="button-lg w-full">
-            확인
+          <Button
+            color={primaryButton?.color ?? "black"}
+            className={cn(getButtonSize(), "w-full", primaryButton?.className ?? "")}
+          >
+            {primaryButton?.text ?? "확인"}
           </Button>
         </>
       )}

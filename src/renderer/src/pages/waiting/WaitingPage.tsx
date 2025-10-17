@@ -12,7 +12,7 @@ function WaitingPage() {
           key={waiting.waitingId}
           className="flex w-full items-center gap-[25px] md:min-h-[260px] lg:min-h-[225px]"
         >
-          <WaitingNumberingComp index={index} data={MOCK} />
+          <WaitingNumberingComp index={index} waitingList={MOCK} />
           <section className="flex h-full flex-1 gap-2">
             <aside className="flex w-40 flex-col items-center justify-center gap-2 rounded-2xl bg-white">
               <span className="text-lg font-medium">대기 번호</span>

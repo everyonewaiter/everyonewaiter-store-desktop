@@ -1,4 +1,5 @@
 import { Button } from "@renderer/components";
+import { ColorName } from "@renderer/constants";
 import { StaffCall } from "@renderer/types/domain";
 
 interface HallStaffCallCompProps {
@@ -19,7 +20,7 @@ function HallStaffCallComp({ staffCall }: HallStaffCallCompProps) {
           {staffCall.name}
         </div>
       </div>
-      <Button color="black" className="button-lg">
+      <Button color={ColorName.BLACK} className="button-lg">
         완료
       </Button>
     </div>
