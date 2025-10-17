@@ -4,7 +4,7 @@ import { ColorName } from "@renderer/constants";
 
 function HallLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-dvh w-dvw bg-gray-700">
+    <div className="min-h-dvh w-full bg-gray-700">
       <header className="flex flex-row items-center justify-between bg-white px-15 pt-10 pb-8">
         <button type="button" className="flex w-fit cursor-pointer items-center gap-5">
           <LogoIcon className="h-15 w-15" />
