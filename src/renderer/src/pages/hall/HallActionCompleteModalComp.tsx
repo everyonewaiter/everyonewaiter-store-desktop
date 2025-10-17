@@ -35,12 +35,10 @@ function HallActionCompleteModalComp({
             )}
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
-            <span className="text-gray-0 text-xl font-semibold">
-              {title}을 완료 처리하시겠습니까?
-            </span>
-            <span className="text-gray-0 text-center text-base font-normal whitespace-pre-line">
+            <h2 className="text-gray-0 text-xl font-semibold">{title}을 완료 처리하시겠습니까?</h2>
+            <p className="text-gray-0 text-center text-base font-normal whitespace-pre-line">
               {subtitle}
-            </span>
+            </p>
           </div>
         </div>
         <Dialog.Footer
