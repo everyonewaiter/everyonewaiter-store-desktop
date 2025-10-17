@@ -1,7 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, externalizeDepsPlugin } from "electron-vite";
-import { resolve } from "path";
+import { resolve } from "node:path";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
@@ -32,6 +32,14 @@ export default defineConfig({
         "@renderer": resolve("src/renderer/src"),
       },
     },
-    plugins: [react(), tailwindcss(), svgr()],
+    plugins: [
+      react({
+        babel: {
+          plugins: ["babel-plugin-react-compiler"],
+        },
+      }),
+      tailwindcss(),
+      svgr(),
+    ],
   },
 });
