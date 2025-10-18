@@ -15,7 +15,7 @@ function PosPage() {
           </div>
         </div>
       </div>
-      <img src={posBgImage} alt="POS 시스템 배경" className="h-full w-full" />
+      <img src={posBgImage} alt="POS 시스템 배경" className="h-full w-full object-cover" />
       <section className="absolute flex flex-col gap-20 text-white">
         <header className="flex flex-col gap-4 text-center">
           <time className="text-2xl font-normal text-white">2025년 02월 27일 목요일</time>
