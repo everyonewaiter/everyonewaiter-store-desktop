@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 
 function HallLayout({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-dvh w-full bg-gray-700">
       <header className="flex flex-row items-center justify-between bg-white px-15 pt-10 pb-8">
@@ -11,7 +14,11 @@ function HallLayout({ children }: { children: React.ReactNode }) {
           <LogoTextIcon className="h-[25px]" />
         </button>
         <div className="relative">
-          <Button color={ColorName.GREY} className="button-xl !bg-gray-300 !text-white">
+          <Button
+            color={ColorName.GREY}
+            className="button-xl !bg-gray-300 !text-white"
+            onClick={() => navigate("/waiting")}
+          >
             웨이팅 관리 이동
           </Button>
           <div className="bg-primary absolute -top-5 -right-5 flex h-10 w-10 items-center justify-center rounded-full text-xl font-semibold text-white">
