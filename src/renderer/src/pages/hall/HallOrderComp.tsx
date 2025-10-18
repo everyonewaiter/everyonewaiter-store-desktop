@@ -4,6 +4,8 @@ import HallOrderBoxComp from "@renderer/pages/hall/HallOrderBoxComp";
 import { Order } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { getFormattedTime } from "@renderer/utils/format";
+import { overlay } from "overlay-kit";
+import HallActionCompleteModalComp from "./HallActionCompleteModalComp";
 
 interface HallOrderCompProps {
   order: Order;
@@ -53,7 +55,19 @@ function HallOrderComp({ order }: HallOrderCompProps) {
               <strong className="text-gray-0 pt-3 text-4xl font-bold">
                 {String(order.tableNo).padStart(2, "0")}
               </strong>
-              <Button color={ColorName.BLACK} className="button-lg absolute bottom-0 w-full">
+              <Button
+                color={ColorName.BLACK}
+                className="button-lg absolute bottom-0 w-full"
+                onClick={() =>
+                  overlay.open((overlayProps) => (
+                    <HallActionCompleteModalComp
+                      type="order"
+                      tableNo={order.tableNo}
+                      {...overlayProps}
+                    />
+                  ))
+                }
+              >
                 전체 완료
               </Button>
             </div>

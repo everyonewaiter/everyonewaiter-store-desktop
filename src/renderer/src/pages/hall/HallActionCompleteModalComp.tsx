@@ -1,6 +1,7 @@
 import { Dialog } from "@renderer/components/Dialog";
+import { ModalProps } from "@renderer/types/overlay";
 
-interface HallActionCompleteModalCompProps {
+interface HallActionCompleteModalCompProps extends ModalProps {
   tableNo: number;
   type: "order" | "call";
   staffCallText?: string;
@@ -10,6 +11,7 @@ function HallActionCompleteModalComp({
   type,
   tableNo,
   staffCallText,
+  ...props
 }: HallActionCompleteModalCompProps) {
   const title = type === "order" ? "모든 주문" : "호출";
   const subtitle =
@@ -18,7 +20,7 @@ function HallActionCompleteModalComp({
       : `손님의 요청이 처리되었는지 다시 한 번 확인해 주세요.\n완료 후에는 호출 기록이 사라집니다.`;
 
   return (
-    <Dialog open={true}>
+    <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper gap={32}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
@@ -43,7 +45,8 @@ function HallActionCompleteModalComp({
         </div>
         <Dialog.Footer
           buttonSize="lg"
-          primaryButton={{ text: type === "call" ? "완료" : "전체 완료" }}
+          primaryButton={{ text: type === "call" ? "완료" : "전체 완료", onClick: () => {} }}
+          secondaryButton={{ onClick: props.close }}
         />
       </Dialog.Wrapper>
     </Dialog>
