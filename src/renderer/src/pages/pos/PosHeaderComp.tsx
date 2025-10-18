@@ -10,7 +10,7 @@ function PosHeaderComp() {
   return (
     <header className="flex w-full flex-col gap-8 px-15 pt-10">
       <div className="flex w-full items-center justify-between">
-        <a href="/#pos/tables" className="flex w-fit cursor-pointer items-center gap-5">
+        <a href="tables" className="flex w-fit cursor-pointer items-center gap-5">
           <LogoIcon className="h-15 w-15" />
           <LogoTextIcon className="h-[25px]" />
         </a>

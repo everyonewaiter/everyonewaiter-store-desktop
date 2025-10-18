@@ -4,9 +4,10 @@ import { StaffCall } from "@renderer/types/domain";
 
 interface HallStaffCallCompProps {
   staffCall: StaffCall;
+  onClick: () => void;
 }
 
-function HallStaffCallComp({ staffCall }: HallStaffCallCompProps) {
+function HallStaffCallComp({ staffCall, onClick }: HallStaffCallCompProps) {
   return (
     <div className="flex w-[308px] flex-shrink-0 flex-col gap-3 rounded-3xl border border-gray-600 p-6">
       <div className="flex flex-col gap-2">
@@ -20,7 +21,7 @@ function HallStaffCallComp({ staffCall }: HallStaffCallCompProps) {
           {staffCall.name}
         </div>
       </div>
-      <Button color={ColorName.BLACK} className="button-lg">
+      <Button color={ColorName.BLACK} className="button-lg" onClick={onClick}>
         완료
       </Button>
     </div>

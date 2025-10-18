@@ -5,6 +5,8 @@ import HallLayout from "@renderer/pages/hall/HallLayout";
 import HallOrderComp from "@renderer/pages/hall/HallOrderComp";
 import HallStaffCallComp from "@renderer/pages/hall/HallStaffCallComp";
 import MOCK from "@renderer/pages/hall/mock";
+import { overlay } from "overlay-kit";
+import HallActionCompleteModalComp from "./HallActionCompleteModalComp";
 
 const tabs = [
   { isServed: false, label: "주문", count: MOCK.unserved.length },
@@ -39,7 +41,20 @@ function HallPage() {
           </div>
           <div className="flex flex-row gap-6 overflow-x-auto">
             {MOCK.staffCalls.map((staffCall) => (
-              <HallStaffCallComp key={staffCall.staffCallId} staffCall={staffCall} />
+              <HallStaffCallComp
+                key={staffCall.staffCallId}
+                staffCall={staffCall}
+                onClick={() =>
+                  overlay.open((overlayProps) => (
+                    <HallActionCompleteModalComp
+                      type="call"
+                      tableNo={staffCall.tableNo}
+                      staffCallText={staffCall.name}
+                      {...overlayProps}
+                    />
+                  ))
+                }
+              />
             ))}
           </div>
         </section>
