@@ -10,10 +10,10 @@ function PosHeaderComp() {
   return (
     <header className="flex w-full flex-col gap-8 px-15 pt-10">
       <div className="flex w-full items-center justify-between">
-        <a href="tables" className="flex w-fit cursor-pointer items-center gap-5">
+        <div className="flex w-fit items-center gap-5">
           <LogoIcon className="h-15 w-15" />
           <LogoTextIcon className="h-[25px]" />
-        </a>
+        </div>
         <time className="text-gray-0 text-2xl font-medium">2025.03.23(금) 18:29</time>
         <nav className="flex items-center gap-6">
           {pathname === "/pos/payments" && (
