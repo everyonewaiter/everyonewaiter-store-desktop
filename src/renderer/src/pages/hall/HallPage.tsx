@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import HallActionCompleteModalComp from "@renderer/pages/hall/HallActionCompleteModalComp";
 import HallLayout from "@renderer/pages/hall/HallLayout";
 import HallOrderComp from "@renderer/pages/hall/HallOrderComp";
 import HallStaffCallComp from "@renderer/pages/hall/HallStaffCallComp";
 import MOCK from "@renderer/pages/hall/mock";
 import { overlay } from "overlay-kit";
-import HallActionCompleteModalComp from "./HallActionCompleteModalComp";
 
 const tabs = [
   { isServed: false, label: "주문", count: MOCK.unserved.length },
