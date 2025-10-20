@@ -22,7 +22,7 @@ function WaitingPage() {
             </aside>
             <main className="flex flex-1 items-center justify-between rounded-2xl bg-white md:px-8 md:py-6 lg:px-10 lg:py-8">
               <WaitingInfoComp waiting={waiting} />
-              <WaitingActionButtons callCount={waiting.callCount} waiting={waiting} />
+              <WaitingActionButtons waiting={waiting} />
             </main>
           </section>
         </article>

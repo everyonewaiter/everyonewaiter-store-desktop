@@ -2,9 +2,9 @@ import { ReactElement } from "react";
 import { BellRingingIcon, DoorOpenIcon, XCircleIcon } from "@renderer/assets/icons";
 import { Button } from "@renderer/components";
 import { ButtonColor, ButtonVariant } from "@renderer/components/Button/Button.types";
+import WaitingModalComp from "@renderer/pages/waiting/WaitingModalComp";
 import { Waiting } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
-import WaitingModalComp from "./WaitingModalComp";
 
 interface WaitingActionType {
   icon: ReactElement<SVGElement>;
@@ -39,11 +39,10 @@ const WAITING_ACTIONS: WaitingActionType[] = [
 ];
 
 interface WaitingActionButtonsCompProps {
-  callCount: number;
   waiting: Waiting;
 }
 
-function WaitingActionButtonsComp({ callCount, waiting }: WaitingActionButtonsCompProps) {
+function WaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
   return (
     <nav className="flex md:w-30 md:flex-col md:gap-3 lg:w-auto lg:flex-row lg:items-center lg:gap-5">
       {WAITING_ACTIONS.map((action, index) => (
@@ -62,15 +61,17 @@ function WaitingActionButtonsComp({ callCount, waiting }: WaitingActionButtonsCo
               type = "cancel";
             }
 
-            overlay.open((o) => <WaitingModalComp type={type} waiting={waiting} {...o} />);
+            overlay.open((overlayProps) => (
+              <WaitingModalComp type={type} waiting={waiting} {...overlayProps} />
+            ));
           }}
         >
           <div className="flex md:flex-row md:items-center md:gap-1 lg:flex-col lg:gap-0.5">
             {action.icon}
             <span className="font-semibold md:text-lg lg:text-xl">{action.label}</span>
           </div>
-          {callCount > 0 && index === 0 && (
-            <span className="text-sm font-medium">총 {callCount}회 · 15분전</span>
+          {waiting.callCount > 0 && index === 0 && (
+            <span className="text-sm font-medium">총 {waiting.callCount}회 · 15분전</span>
           )}
         </Button>
       ))}
