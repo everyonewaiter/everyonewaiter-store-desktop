@@ -2,14 +2,11 @@ import { Dialog } from "@renderer/components/Dialog";
 import { ColorName } from "@renderer/constants";
 import { ModalProps } from "@renderer/types/overlay";
 
-interface PosPaymentsCancelPayModalCompProps {
+interface PosPaymentsCancelPayModalCompProps extends ModalProps {
   price: number;
 }
 
-function PosPaymentsCancelPayModalComp({
-  price,
-  ...props
-}: PosPaymentsCancelPayModalCompProps & ModalProps) {
+function PosPaymentsCancelPayModalComp({ price, ...props }: PosPaymentsCancelPayModalCompProps) {
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper gap={32}>

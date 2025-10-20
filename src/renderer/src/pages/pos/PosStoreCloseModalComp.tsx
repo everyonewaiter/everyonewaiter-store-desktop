@@ -1,11 +1,11 @@
 import { Dialog } from "@renderer/components/Dialog";
 import { ModalProps } from "@renderer/types/overlay";
 
-interface PosStoreCloseModalCompProps {
+interface PosStoreCloseModalCompProps extends ModalProps {
   type: "open" | "cancel";
 }
 
-function PosStoreCloseModalComp({ type, ...props }: PosStoreCloseModalCompProps & ModalProps) {
+function PosStoreCloseModalComp({ type, ...props }: PosStoreCloseModalCompProps) {
   const statusText = type === "open" ? "오픈" : "마감";
 
   return (
