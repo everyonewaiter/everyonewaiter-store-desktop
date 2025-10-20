@@ -45,10 +45,7 @@ function WaitingModalComp({ type, waiting, ...props }: WaitingModalCompProps) {
             ? `입장 완료 처리 하시겠습니까?`
             : `${WAITING_TYPE_TEXT[type.toUpperCase()]}하시겠습니까?`}
         </div>
-        <Dialog.Footer
-          secondaryButton={{ onClick: props.close }}
-          primaryButton={{ onClick: handleClick }}
-        />
+        <Dialog.Footer primaryButton={{ onClick: handleClick }} />
       </Dialog.Wrapper>
     </Dialog>
   );

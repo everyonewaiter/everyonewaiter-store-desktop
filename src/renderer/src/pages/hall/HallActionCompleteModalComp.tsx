@@ -46,7 +46,6 @@ function HallActionCompleteModalComp({
         <Dialog.Footer
           buttonSize="lg"
           primaryButton={{ text: type === "call" ? "완료" : "전체 완료", onClick: () => {} }}
-          secondaryButton={{ onClick: props.close }}
         />
       </Dialog.Wrapper>
     </Dialog>

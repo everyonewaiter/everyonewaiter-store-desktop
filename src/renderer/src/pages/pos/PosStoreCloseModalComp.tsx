@@ -22,9 +22,6 @@ function PosStoreCloseModalComp({ type, ...props }: PosStoreCloseModalCompProps 
             color: "primary",
             text: `${statusText}하기`,
           }}
-          secondaryButton={{
-            onClick: props.close,
-          }}
         />
       </Dialog.Wrapper>
     </Dialog>
