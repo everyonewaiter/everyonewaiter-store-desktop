@@ -42,7 +42,7 @@ PosPaymentsOrderBoxComp.Index = function Number({
 }) {
   return (
     <div className="relative flex items-center gap-3">
-      {hasCheckbox && <Checkbox />}
+      {hasCheckbox && <Checkbox size={24} />}
       <strong className="text-gray-0 text-2xl font-semibold">{index + 1}</strong>
     </div>
   );

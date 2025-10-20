@@ -417,3 +417,85 @@ export const POS_ORDER_MOCK: Order = {
     },
   ],
 };
+
+export const CATEGORY_MOCK = [
+  { category: "메인", categoryId: "CATEGORY-001" },
+  { category: "사이드", categoryId: "CATEGORY-002" },
+  { category: "음료", categoryId: "CATEGORY-003" },
+  { category: "디저트", categoryId: "CATEGORY-004" },
+];
+
+export const POS_DETAIL_ORDER_MOCK: Order[] = [
+  {
+    orderId: "OM-4886",
+    storeId: "A001",
+    category: "INITIAL",
+    type: "POSTPAID",
+    state: "ORDER",
+    tableNo: 1,
+    price: 151000,
+    memo: "",
+    served: false,
+    servedTime: "",
+    createdAt: "2025-10-12T13:15:30Z",
+    updatedAt: "2025-10-12T13:15:30Z",
+    orderMenus: [
+      {
+        orderMenuId: "OM-4886-1",
+        name: "스노우치즈폭탄",
+        price: 151000,
+        quantity: 1,
+        served: false,
+        servedTime: "",
+        printEnabled: true,
+        image: "",
+        orderOptionGroups: [],
+      },
+      {
+        orderMenuId: "OM-4886-2",
+        name: "아메리카노",
+        price: 4500,
+        quantity: 2,
+        served: true,
+        servedTime: "2025-10-12T13:15:30Z",
+        printEnabled: true,
+        image: "",
+        orderOptionGroups: [
+          {
+            orderOptionGroupId: "OOG-2001",
+            name: "온도 선택",
+            printEnabled: true,
+            orderOptions: [{ name: "ICE", price: 500 }],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    orderId: "OM-4887",
+    storeId: "A001",
+    category: "INITIAL",
+    type: "POSTPAID",
+    state: "ORDER",
+    tableNo: 1,
+    price: 151000,
+    memo: "",
+    served: false,
+    servedTime: "",
+    createdAt: "2025-10-12T13:15:30Z",
+    updatedAt: "2025-10-12T13:15:30Z",
+    orderMenus: [
+      {
+        orderMenuId: "OM-4887-1",
+        name: "스노우치즈폭탄",
+        price: 151000,
+        quantity: 1,
+        served: false,
+        servedTime: "",
+        printEnabled: true,
+        image: "",
+        orderOptionGroups: [],
+      },
+    ],
+  },
+];

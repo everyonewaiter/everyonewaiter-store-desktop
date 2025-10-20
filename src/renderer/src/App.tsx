@@ -5,6 +5,7 @@ import PosPaymentsPage from "@renderer/pages/pos/payments/PosPaymentsPage";
 import PosPage from "@renderer/pages/pos/PosPage";
 import PosTablesPage from "@renderer/pages/pos/tables/PosTablesPage";
 import WaitingPage from "@renderer/pages/waiting/WaitingPage";
+import PosTablesDetailPage from "./pages/pos/tables/[id]/PosTablesDetailPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/pos" element={<PosPage />} />
         <Route path="/pos/tables" element={<PosTablesPage />} />
         <Route path="/pos/payments" element={<PosPaymentsPage />} />
+        <Route path="/pos/tables/:id" element={<PosTablesDetailPage />} />
       </Routes>
     </HashRouter>
   );
