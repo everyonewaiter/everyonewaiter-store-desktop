@@ -1,4 +1,4 @@
-import { Order, OrderPaymentsList, Table } from "@renderer/types/domain";
+import { Order, OrderPaymentsList, PosTableActivity, Table } from "@renderer/types/domain";
 
 export const MOCK: Table[] = [
   {
@@ -416,4 +416,19 @@ export const POS_ORDER_MOCK: Order = {
       ],
     },
   ],
+};
+
+export const POS_ACTIVITY_MOCK: PosTableActivity = {
+  posTableActivityId: "PTA-4886",
+  storeId: "A001",
+  posTableId: "T-4886",
+  tableNo: 1,
+  orderType: "POSTPAID",
+  totalOrderPrice: 151000,
+  totalPaymentPrice: 151000,
+  discount: 0,
+  remainingPaymentPrice: 151000,
+  active: true,
+  orders: [POS_ORDER_MOCK],
+  orderPayments: PAYMENTS_MOCK,
 };

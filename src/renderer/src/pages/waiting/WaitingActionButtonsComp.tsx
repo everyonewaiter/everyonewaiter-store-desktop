@@ -2,6 +2,9 @@ import { ReactElement } from "react";
 import { BellRingingIcon, DoorOpenIcon, XCircleIcon } from "@renderer/assets/icons";
 import { Button } from "@renderer/components";
 import { ButtonColor, ButtonVariant } from "@renderer/components/Button/Button.types";
+import WaitingModalComp from "@renderer/pages/waiting/WaitingModalComp";
+import { Waiting } from "@renderer/types/domain";
+import { overlay } from "overlay-kit";
 
 interface WaitingActionType {
   icon: ReactElement<SVGElement>;
@@ -36,10 +39,10 @@ const WAITING_ACTIONS: WaitingActionType[] = [
 ];
 
 interface WaitingActionButtonsCompProps {
-  callCount: number;
+  waiting: Waiting;
 }
 
-function WaitingActionButtonsComp({ callCount }: WaitingActionButtonsCompProps) {
+function WaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
   return (
     <nav className="flex md:w-30 md:flex-col md:gap-3 lg:w-auto lg:flex-row lg:items-center lg:gap-5">
       {WAITING_ACTIONS.map((action, index) => (
@@ -48,13 +51,27 @@ function WaitingActionButtonsComp({ callCount }: WaitingActionButtonsCompProps) 
           className="flex cursor-pointer flex-col gap-0.5 md:min-h-14 md:rounded-2xl md:!px-6 md:!py-4 lg:h-30 lg:min-h-0 lg:w-30 lg:rounded-[20px] lg:!px-0 lg:!py-0"
           style={{ color: action.textColor }}
           {...action}
+          onClick={() => {
+            let type: "call" | "enter" | "cancel";
+            if (action.label === "호출") {
+              type = "call";
+            } else if (action.label === "입장") {
+              type = "enter";
+            } else if (action.label === "취소") {
+              type = "cancel";
+            }
+
+            overlay.open((overlayProps) => (
+              <WaitingModalComp type={type} waiting={waiting} {...overlayProps} />
+            ));
+          }}
         >
           <div className="flex md:flex-row md:items-center md:gap-1 lg:flex-col lg:gap-0.5">
             {action.icon}
             <span className="font-semibold md:text-lg lg:text-xl">{action.label}</span>
           </div>
-          {callCount > 0 && index === 0 && (
-            <span className="text-sm font-medium">총 {callCount}회 · 15분전</span>
+          {waiting.callCount > 0 && index === 0 && (
+            <span className="text-sm font-medium">총 {waiting.callCount}회 · 15분전</span>
           )}
         </Button>
       ))}
