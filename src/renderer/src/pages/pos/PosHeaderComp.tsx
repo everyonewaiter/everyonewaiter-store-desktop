@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FileCheckIcon, MoneyCoinIcon, ReturnIcon } from "@renderer/assets/icons";
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
@@ -8,6 +8,7 @@ import { overlay } from "overlay-kit";
 
 function PosHeaderComp() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   return (
     <header className="flex w-full flex-col gap-8 px-15 pt-10">
@@ -24,6 +25,7 @@ function PosHeaderComp() {
                 variant="outline"
                 color="grey"
                 className="text-gray-0 flex items-center gap-2.5 rounded-xl border-gray-600 px-4 py-3 text-lg font-normal"
+                onClick={() => navigate(-1)}
               >
                 <ReturnIcon width={28} height={28} color="#222222" />
                 돌아가기
@@ -43,6 +45,7 @@ function PosHeaderComp() {
               variant="outline"
               color={ColorName.GREY}
               className="text-gray-0 flex items-center gap-2.5 rounded-xl border-gray-600 px-4 py-3 text-lg font-normal"
+              onClick={() => navigate("/pos/payments")}
             >
               <FileCheckIcon className="text-gray-0 h-7 w-7" />
               결제 내역
