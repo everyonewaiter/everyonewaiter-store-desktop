@@ -3,6 +3,9 @@ import { ColorName } from "@renderer/constants";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import { Order } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
+import { overlay } from "overlay-kit";
+import PosPaymentsCancelPayModalComp from "./PosPaymentsCancelPayModalComp";
+import PosPaymentsOrderIncludeModalComp from "./PosPaymentsOrderIncludeModalComp";
 
 function PosPaymentsSideComp({ order }: { order: Order }) {
   return (
@@ -43,6 +46,11 @@ function PosPaymentsSideComp({ order }: { order: Order }) {
             order.orderId ? "text-gray-200" : "border-gray-500 text-gray-500"
           )}
           disabled={!order.orderId}
+          onClick={() =>
+            overlay.open((overlayProps) => (
+              <PosPaymentsCancelPayModalComp price={order.price} {...overlayProps} />
+            ))
+          }
         >
           결제 취소하기
         </Button>
@@ -53,6 +61,9 @@ function PosPaymentsSideComp({ order }: { order: Order }) {
             order.orderId ? "bg-gray-0" : "bg-gray-500"
           )}
           disabled={!order.orderId}
+          onClick={() =>
+            overlay.open((overlayProps) => <PosPaymentsOrderIncludeModalComp {...overlayProps} />)
+          }
         >
           영수증 출력하기
         </Button>
