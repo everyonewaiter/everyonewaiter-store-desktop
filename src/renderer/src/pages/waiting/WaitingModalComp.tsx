@@ -1,4 +1,5 @@
 import { Dialog } from "@renderer/components/Dialog";
+import { WAITING_TYPE_TEXT } from "@renderer/constants/waiting";
 import WaitingInfoComp from "@renderer/pages/waiting/WaitingInfoComp";
 import { Waiting } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
@@ -14,7 +15,7 @@ function WaitingModalComp({ type, waiting, ...props }: WaitingModalCompProps) {
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
-        <Dialog.Header>웨이팅 손님 호출</Dialog.Header>
+        <Dialog.Header>웨이팅 손님 {WAITING_TYPE_TEXT[type.toUpperCase()]}</Dialog.Header>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-4 rounded-3xl bg-gray-700 p-5">
             <div className="flex flex-1 flex-col items-center gap-3">
@@ -40,10 +41,9 @@ function WaitingModalComp({ type, waiting, ...props }: WaitingModalCompProps) {
           )}
         </div>
         <div className="text-gray-0 py-3 text-center text-xl font-normal whitespace-pre-line">
-          {type === "call" && `호출하시겠습니까?`}
-          {type === "enter" &&
-            `위 손님이 입장하셨나요?\n입장하셨다면 입장 버튼을 눌러 상태를 바꿔주세요.`}
-          {type === "cancel" && `취소하시겠습니까?`}
+          {type === "enter"
+            ? `입장 완료 처리 하시겠습니까?`
+            : `${WAITING_TYPE_TEXT[type.toUpperCase()]}하시겠습니까?`}
         </div>
         <Dialog.Footer
           secondaryButton={{ onClick: props.close }}
