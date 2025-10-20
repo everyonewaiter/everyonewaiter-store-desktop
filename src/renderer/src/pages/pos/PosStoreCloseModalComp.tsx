@@ -1,14 +1,15 @@
 import { Dialog } from "@renderer/components/Dialog";
+import { ModalProps } from "@renderer/types/overlay";
 
 interface PosStoreCloseModalCompProps {
   type: "open" | "cancel";
 }
 
-function PosStoreCloseModalComp({ type }: PosStoreCloseModalCompProps) {
+function PosStoreCloseModalComp({ type, ...props }: PosStoreCloseModalCompProps & ModalProps) {
   const statusText = type === "open" ? "오픈" : "마감";
 
   return (
-    <Dialog open={true}>
+    <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
         <div className="text-gray-0 flex items-center justify-center py-6 text-xl font-semibold">
           매장을 {statusText}하시겠습니까?
@@ -20,6 +21,9 @@ function PosStoreCloseModalComp({ type }: PosStoreCloseModalCompProps) {
           primaryButton={{
             color: "primary",
             text: `${statusText}하기`,
+          }}
+          secondaryButton={{
+            onClick: props.close,
           }}
         />
       </Dialog.Wrapper>

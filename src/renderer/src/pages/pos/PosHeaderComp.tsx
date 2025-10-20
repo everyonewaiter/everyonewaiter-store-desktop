@@ -3,6 +3,8 @@ import { FileCheckIcon, MoneyCoinIcon, ReturnIcon } from "@renderer/assets/icons
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import PosStoreCloseModalComp from "@renderer/pages/pos/PosStoreCloseModalComp";
+import { overlay } from "overlay-kit";
 
 function PosHeaderComp() {
   const { pathname } = useLocation();
@@ -46,7 +48,14 @@ function PosHeaderComp() {
               결제 내역
             </Button>
           )}
-          <Button className="text-gray-0 gap-3 rounded-[40px] border-[#6BD876] bg-[#E1F7E4] py-2.5 pr-4 pl-3 text-base font-normal hover:bg-[#E1F7E4]">
+          <Button
+            className="text-gray-0 gap-3 rounded-[40px] border-[#6BD876] bg-[#E1F7E4] py-2.5 pr-4 pl-3 text-base font-normal hover:bg-[#E1F7E4]"
+            onClick={() =>
+              overlay.open((overlayProps) => (
+                <PosStoreCloseModalComp type="open" {...overlayProps} />
+              ))
+            }
+          >
             <div className="bg-status-success h-[23px] w-[23px] rounded-full" />
             영업 중
           </Button>
