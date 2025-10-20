@@ -1,11 +1,11 @@
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import PosPaymentsCancelPayModalComp from "@renderer/pages/pos/payments/PosPaymentsCancelPayModalComp";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
+import PosPaymentsOrderIncludeModalComp from "@renderer/pages/pos/payments/PosPaymentsOrderIncludeModalComp";
 import { PosTableActivity } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { overlay } from "overlay-kit";
-import PosPaymentsCancelPayModalComp from "./PosPaymentsCancelPayModalComp";
-import PosPaymentsOrderIncludeModalComp from "./PosPaymentsOrderIncludeModalComp";
 
 function PosPaymentsSideComp({ activity }: { activity: PosTableActivity }) {
   return (
