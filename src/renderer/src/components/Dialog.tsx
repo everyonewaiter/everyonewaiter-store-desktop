@@ -93,11 +93,13 @@ Dialog.Footer = function DialogFooter({
     color?: ButtonColor;
     className?: string;
     text?: string;
+    onClick?: () => void;
   };
   secondaryButton?: {
     color?: ButtonColor;
     className?: string;
     text?: string;
+    onClick?: () => void;
   };
   buttonSize?: ButtonSize;
 }) {
@@ -111,20 +113,24 @@ Dialog.Footer = function DialogFooter({
     >
       {children || (
         <>
-          <Button
-            color={secondaryButton?.color ?? "grey"}
-            className={cn(
-              getButtonSize(),
-              layout === "balanced" ? "w-full" : "w-[120px]",
-              buttonClassName,
-              secondaryButton?.className ?? ""
-            )}
-          >
-            {secondaryButton?.text ?? "닫기"}
-          </Button>
+          <Dialog.Close asChild>
+            <Button
+              color={secondaryButton?.color ?? "grey"}
+              className={cn(
+                getButtonSize(),
+                layout === "balanced" ? "w-full" : "w-[120px]",
+                buttonClassName,
+                secondaryButton?.className ?? ""
+              )}
+              onClick={secondaryButton?.onClick}
+            >
+              {secondaryButton?.text ?? "닫기"}
+            </Button>
+          </Dialog.Close>
           <Button
             color={primaryButton?.color ?? "black"}
             className={cn(getButtonSize(), "w-full", primaryButton?.className ?? "")}
+            onClick={primaryButton?.onClick}
           >
             {primaryButton?.text ?? "확인"}
           </Button>

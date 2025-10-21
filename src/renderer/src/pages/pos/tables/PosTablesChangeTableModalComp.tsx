@@ -1,7 +1,8 @@
 import { DoubleArrowIcon } from "@renderer/assets/icons";
 import { Dialog } from "@renderer/components/Dialog";
+import { ModalProps } from "@renderer/types/overlay";
 
-interface PosTablesChangeTableModalCompProps {
+interface PosTablesChangeTableModalCompProps extends ModalProps {
   fromTableNo: number;
   toTableNo: number;
 }
@@ -9,9 +10,10 @@ interface PosTablesChangeTableModalCompProps {
 function PosTablesChangeTableModalComp({
   fromTableNo,
   toTableNo,
+  ...props
 }: PosTablesChangeTableModalCompProps) {
   return (
-    <Dialog open={true}>
+    <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper gap={32}>
         <div className="flex items-center gap-3">
           <div className="text-gray-0 h-20 flex-1 rounded-2xl border border-gray-600 p-6 text-center text-xl font-semibold">

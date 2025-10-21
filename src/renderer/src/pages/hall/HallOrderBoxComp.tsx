@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import HallOrderOptionComp from "@renderer/pages/hall/HallOrderOptionComp";
@@ -12,7 +13,7 @@ interface HallOrderBoxCompProps {
 function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompProps) {
   // TODO: API에서 showImage 설정값 받아와서 적용 필요 (현재는 임시로 true)
   const showImage = true;
-  const isServed = orderMenu.served;
+  const [isServed, setIsServed] = useState(orderMenu.served);
 
   const orderOptions: (OrderOption & { orderOptionGroupId: string })[] =
     orderMenu.orderOptionGroups.flatMap((orderOptionGroup) =>
@@ -75,6 +76,7 @@ function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompPr
               ? "border-gray-300 text-gray-300 hover:!bg-transparent hover:!text-gray-300"
               : ""
           )}
+          onClick={() => setIsServed((prev) => !prev)}
         >
           {isServed ? "되돌리기" : "완료"}
         </Button>

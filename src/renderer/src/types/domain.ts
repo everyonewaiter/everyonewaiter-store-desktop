@@ -2,6 +2,12 @@ export type OrderCategory = "INITIAL" | "ADDITIONAL";
 export type PaymentType = "PREPAID" | "POSTPAID";
 export type OrderState = "ORDER" | "CANCEL";
 
+export type StaffCallState = "INCOMPLETE" | "COMPLETE";
+
+type OrderPaymentState = "APPROVE" | "CANCEL";
+type OrderPaymentMethod = "CASH" | "CARD";
+type OrderReceiptType = "NONE" | "DEDUCTION" | "PROOF";
+
 export interface Table {
   posTableId: string;
   storeId: string;
@@ -55,8 +61,6 @@ export interface OrderOptionGroup {
   orderOptions: OrderMenuOption[];
 }
 
-export type StaffCallState = "INCOMPLETE" | "COMPLETE";
-
 export interface StaffCall {
   staffCallId: string;
   tableNo: number;
@@ -77,10 +81,6 @@ export interface Waiting {
   state: string;
   createdAt: string;
 }
-
-type OrderPaymentState = "APPROVE" | "CANCEL";
-type OrderPaymentMethod = "CASH" | "CARD";
-type OrderReceiptType = "NONE" | "DEDUCTION" | "PROOF";
 
 interface OrderPayment {
   method: OrderPaymentMethod;

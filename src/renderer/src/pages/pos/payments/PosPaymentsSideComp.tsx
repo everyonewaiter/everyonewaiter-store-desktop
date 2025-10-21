@@ -1,8 +1,11 @@
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import PosPaymentsCancelPayModalComp from "@renderer/pages/pos/payments/PosPaymentsCancelPayModalComp";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import { TableActivity } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
+import { overlay } from "overlay-kit";
+import PosPaymentsOrderIncludeModalComp from "./PosPaymentsOrderIncludeModalComp";
 
 function PosPaymentsSideComp({ activity }: { activity: TableActivity }) {
   return (
@@ -25,13 +28,15 @@ function PosPaymentsSideComp({ activity }: { activity: TableActivity }) {
       </header>
       <section className="flex h-[calc(100%-8px-8px-24px-62px)] flex-col gap-4 overflow-y-auto">
         {activity.orders.map((order, index, arr) => (
-          <PosPaymentsOrderBoxComp key={order.orderId}>
-            <PosPaymentsOrderBoxComp.Index index={index} />
-            {order.orderMenus.map((menu) => (
-              <PosPaymentsOrderBoxComp.Order key={menu.orderMenuId} orderMenu={menu} />
-            ))}
-            {index !== arr.length - 1 && <PosPaymentsOrderBoxComp.Divider />}
-          </PosPaymentsOrderBoxComp>
+          <article key={order.orderId}>
+            <PosPaymentsOrderBoxComp>
+              <PosPaymentsOrderBoxComp.Index index={index} />
+              {order.orderMenus.map((menu) => (
+                <PosPaymentsOrderBoxComp.Order key={menu.orderMenuId} orderMenu={menu} />
+              ))}
+              {index !== arr.length - 1 && <PosPaymentsOrderBoxComp.Divider />}
+            </PosPaymentsOrderBoxComp>
+          </article>
         ))}
       </section>
       <footer className="flex h-16 items-center gap-3">
@@ -43,6 +48,11 @@ function PosPaymentsSideComp({ activity }: { activity: TableActivity }) {
             activity.posTableActivityId ? "text-gray-200" : "border-gray-500 text-gray-500"
           )}
           disabled={!activity.posTableActivityId}
+          onClick={() =>
+            overlay.open((overlayProps) => (
+              <PosPaymentsCancelPayModalComp price={activity.totalOrderPrice} {...overlayProps} />
+            ))
+          }
         >
           결제 취소하기
         </Button>
@@ -53,6 +63,9 @@ function PosPaymentsSideComp({ activity }: { activity: TableActivity }) {
             activity.posTableActivityId ? "bg-gray-0" : "bg-gray-500"
           )}
           disabled={!activity.posTableActivityId}
+          onClick={() =>
+            overlay.open((overlayProps) => <PosPaymentsOrderIncludeModalComp {...overlayProps} />)
+          }
         >
           영수증 출력하기
         </Button>
