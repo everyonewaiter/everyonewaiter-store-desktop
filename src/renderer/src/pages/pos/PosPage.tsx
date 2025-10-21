@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import posBgImage from "@renderer/assets/images/pos-bg.jpg";
 import { Button } from "@renderer/components";
 
 function PosPage() {
+  const navigate = useNavigate();
+
   return (
     <main className="flex h-dvh w-dvw items-center justify-center">
       <div className="absolute top-0 left-0 h-full w-full bg-black/40" />
@@ -25,12 +28,14 @@ function PosPage() {
           <Button
             color="black"
             className="bg-gray-0 h-30 rounded-2xl border-none text-3xl font-bold text-white"
+            onClick={() => navigate("/pos/tables")}
           >
             POS
           </Button>
           <Button
             variant="outline"
             className="h-18 rounded-2xl border-white text-2xl font-bold text-white"
+            onClick={() => navigate("/pos/payments")}
           >
             결제내역
           </Button>
