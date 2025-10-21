@@ -1,4 +1,4 @@
-import { Order, OrderPaymentsList, Table } from "@renderer/types/domain";
+import { MenuList, Order, OrderPaymentsList, Table, TableActivity } from "@renderer/types/domain";
 
 export const MOCK: Table[] = [
   {
@@ -499,3 +499,90 @@ export const POS_DETAIL_ORDER_MOCK: Order[] = [
     ],
   },
 ];
+
+export const MENU_LIST_MOCK: MenuList = {
+  categoryId: "CATEGORY-001",
+  name: "메인",
+  menus: [
+    {
+      menuId: "MENU-001",
+      categoryId: "CATEGORY-001",
+      name: "에스프레소",
+      description: "에스프레소",
+      price: 151000,
+      spicy: 0,
+      state: "DEFAULT",
+      label: null,
+      image: "",
+      printEnabled: true,
+      menuOptionGroups: [],
+    },
+    {
+      menuId: "MENU-002",
+      categoryId: "CATEGORY-001",
+      name: "아메리카노",
+      description: "아메리카노",
+      price: 4500,
+      spicy: 0,
+      state: "DEFAULT",
+      label: null,
+      image: "",
+      printEnabled: true,
+      menuOptionGroups: [
+        {
+          menuOptionGroupId: "MOG-2001",
+          name: "온도 선택",
+          printEnabled: true,
+          menuOptions: [
+            { name: "ICE", price: 0 },
+            { name: "HOT", price: 0 },
+          ],
+          type: "MANDATORY",
+        },
+        {
+          menuOptionGroupId: "MOG-2002",
+          name: "샷 추가",
+          printEnabled: true,
+          menuOptions: [{ name: "샷 1개 추가", price: 500 }],
+          type: "OPTIONAL",
+        },
+      ],
+    },
+    {
+      menuId: "MENU-003",
+      categoryId: "CATEGORY-001",
+      name: "카페라떼",
+      description: "카페라떼",
+      price: 5000,
+      spicy: 0,
+      state: "DEFAULT",
+      label: null,
+      image: "",
+      printEnabled: true,
+      menuOptionGroups: [
+        {
+          menuOptionGroupId: "MOG-2003",
+          name: "우유 선택",
+          printEnabled: true,
+          menuOptions: [{ name: "일반 우유", price: 0 }],
+          type: "MANDATORY",
+        },
+      ],
+    },
+  ],
+};
+
+export const TABLE_ACTIVITY_MOCK: TableActivity = {
+  posTableActivityId: "PTA-4886",
+  storeId: "A001",
+  posTableId: "PT-4886",
+  tableNo: 1,
+  orderType: "POSTPAID",
+  totalOrderPrice: 151000,
+  totalPaymentPrice: 151000,
+  discount: 0,
+  remainingPaymentPrice: 151000,
+  active: true,
+  orders: POS_DETAIL_ORDER_MOCK,
+  orderPayments: PAYMENTS_MOCK,
+};
