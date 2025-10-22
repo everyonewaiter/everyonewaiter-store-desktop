@@ -33,7 +33,10 @@ function PosTablesDetailSideComp({
             className="button-lg !text-medium !rounded-[8px] !text-base"
             onClick={() =>
               overlay.open((overlayProps) => (
-                <PosTablesDetailCancelPaymentModalComp {...overlayProps} />
+                <PosTablesDetailCancelPaymentModalComp
+                  tableNo={activity.tableNo}
+                  {...overlayProps}
+                />
               ))
             }
           >
@@ -76,7 +79,11 @@ function PosTablesDetailSideComp({
               className="!border-gray-[#4F4F4F] h-10 rounded-lg bg-white px-5 text-[15px] font-medium text-[#4F4F4F]"
               onClick={() =>
                 overlay.open((overlayProps) => (
-                  <PosTablesDetailDiscountModalComp {...overlayProps} />
+                  <PosTablesDetailDiscountModalComp
+                    tableNo={activity.tableNo}
+                    totalOrderPrice={activity.totalOrderPrice}
+                    {...overlayProps}
+                  />
                 ))
               }
             >
@@ -124,7 +131,11 @@ function PosTablesDetailSideComp({
             className="h-16 w-full rounded-xl border !border-gray-200 text-xl font-semibold text-gray-200"
             onClick={() =>
               overlay.open((overlayProps) => (
-                <PosTablesDetailPaymentModalComp paymentType="cash" {...overlayProps} />
+                <PosTablesDetailPaymentModalComp
+                  activity={activity}
+                  paymentType="cash"
+                  {...overlayProps}
+                />
               ))
             }
           >
@@ -135,7 +146,11 @@ function PosTablesDetailSideComp({
             className="h-16 w-full rounded-xl text-xl font-semibold"
             onClick={() =>
               overlay.open((overlayProps) => (
-                <PosTablesDetailPaymentModalComp paymentType="card" {...overlayProps} />
+                <PosTablesDetailPaymentModalComp
+                  activity={activity}
+                  paymentType="card"
+                  {...overlayProps}
+                />
               ))
             }
           >

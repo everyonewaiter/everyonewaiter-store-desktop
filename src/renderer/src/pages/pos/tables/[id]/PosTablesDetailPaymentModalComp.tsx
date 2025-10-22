@@ -1,5 +1,6 @@
 import { Button, Dropdown, Input } from "@renderer/components";
 import { Dialog } from "@renderer/components/Dialog";
+import { TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 
 const cardInstallmentMonths = new Array(12)
@@ -25,25 +26,35 @@ const cashReceiptTypes = [
 
 interface PosTablesDetailPaymentModalCompProps extends ModalProps {
   paymentType: "cash" | "card";
+  activity: TableActivity;
 }
 
 export default function PosTablesDetailPaymentModalComp({
   paymentType,
+  activity,
   ...props
 }: PosTablesDetailPaymentModalCompProps) {
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper width={648}>
         <div className="flex flex-col gap-10">
-          <h2 className="text-gray-0 text-2xl font-semibold">2번 테이블</h2>
+          <h2 className="text-gray-0 text-2xl font-semibold">{activity.tableNo}번 테이블</h2>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
               <span className="text-gray-0 text-[15px] font-normal">결제 정보</span>
-              <h3 className="text-gray-0 text-2xl font-semibold">바질 알리오올리오 외 3개</h3>
+              <h3 className="text-gray-0 text-2xl font-semibold">
+                {activity.orders[0].orderMenus[0].name} 외{" "}
+                {activity.orders
+                  .map((order) => order.orderMenus.length)
+                  .reduce((a, b) => a + b, 0) - 1}
+                개
+              </h3>
             </div>
             <div className="flex flex-col gap-2">
               <span className="text-gray-0 text-[15px] font-normal">결제할 금액</span>
-              <h3 className="text-gray-0 text-2xl font-semibold">{(140000).toLocaleString()}원</h3>
+              <h3 className="text-gray-0 text-2xl font-semibold">
+                {activity.totalOrderPrice.toLocaleString()}원
+              </h3>
             </div>
             {paymentType === "cash" ? (
               <>
@@ -69,7 +80,7 @@ export default function PosTablesDetailPaymentModalComp({
               </>
             ) : (
               <div className="flex flex-col gap-2">
-                <span className="text-gray-0 text-[15px] font-normal">결제할 금액</span>
+                <span className="text-gray-0 text-[15px] font-normal">할부 개월</span>
                 <Dropdown
                   dropdownItems={cardInstallmentMonths}
                   defaultText="할부개월을 선택해주세요."

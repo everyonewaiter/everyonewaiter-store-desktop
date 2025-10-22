@@ -5,9 +5,14 @@ import { Dialog } from "@renderer/components/Dialog";
 import { RadioGroup, RadioGroupFlex, RadioGroupItem } from "@renderer/components/Radio";
 import { ModalProps } from "@renderer/types/overlay";
 
-interface PosTablesDetailDiscountModalCompProps extends ModalProps {}
+interface PosTablesDetailDiscountModalCompProps extends ModalProps {
+  tableNo: number;
+  totalOrderPrice: number;
+}
 
 export default function PosTablesDetailDiscountModalComp({
+  tableNo,
+  totalOrderPrice,
   ...props
 }: PosTablesDetailDiscountModalCompProps) {
   return (
@@ -16,9 +21,11 @@ export default function PosTablesDetailDiscountModalComp({
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-10">
             <div className="flex items-center justify-between">
-              <h2 className="text-gray-0 text-2xl font-semibold">6번 테이블의 총 주문 금액</h2>
+              <h2 className="text-gray-0 text-2xl font-semibold">
+                {tableNo}번 테이블의 총 주문 금액
+              </h2>
               <span className="text-primary text-2xl font-semibold">
-                {(152000).toLocaleString()}원
+                {totalOrderPrice.toLocaleString()}원
               </span>
             </div>
             <div className="flex flex-col gap-6">
@@ -49,7 +56,7 @@ export default function PosTablesDetailDiscountModalComp({
             <span className="text-gray-0 text-lg font-normal">
               할인된 금액은{" "}
               <strong className="text-primary text-2xl font-semibold">
-                {(124000).toLocaleString()}원
+                {(totalOrderPrice - 124000).toLocaleString()}원
               </strong>{" "}
               입니다.
             </span>

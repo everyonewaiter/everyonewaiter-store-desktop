@@ -23,16 +23,21 @@ function PosTablesDetailContentComp() {
       label: "메모",
       icon: <NoteIcon width={28} height={28} color="#292D32" />,
       onClick: () =>
-        overlay.open((overlayProps) => <PosTablesDetailMemoModalComp {...overlayProps} />, {
-          overlayId: "pos-tables-detail-memo-modal",
-        }),
+        overlay.open(
+          (overlayProps) => <PosTablesDetailMemoModalComp tableNo={Number(id)} {...overlayProps} />,
+          {
+            overlayId: "pos-tables-detail-memo-modal",
+          }
+        ),
     },
     {
       label: "주방 재전송",
       icon: <SendIcon width={28} height={28} color="#292D32" />,
       onClick: () =>
         overlay.open(
-          (overlayProps) => <PosTablesDetailResendReceiptModalComp {...overlayProps} />,
+          (overlayProps) => (
+            <PosTablesDetailResendReceiptModalComp tableNo={Number(id)} {...overlayProps} />
+          ),
           {
             overlayId: "pos-tables-detail-resend-receipt-modal",
           }

@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Dialog } from "@renderer/components/Dialog";
 import { ModalProps } from "@renderer/types/overlay";
 
-interface PosTablesDetailMemoModalCompProps extends ModalProps {}
+interface PosTablesDetailMemoModalCompProps extends ModalProps {
+  tableNo: number;
+}
 
 export default function PosTablesDetailMemoModalComp({
+  tableNo,
   ...props
 }: PosTablesDetailMemoModalCompProps) {
   const [isEditing, setIsEditing] = useState(false);
@@ -15,7 +18,7 @@ export default function PosTablesDetailMemoModalComp({
         <div className="flex flex-col gap-5">
           <div className="flex items-center justify-between">
             <h2 className="text-gray-0 text-center text-2xl font-semibold">메모</h2>
-            <span className="text-gray-0 text-lg font-semibold">2번 테이블</span>
+            <span className="text-gray-0 text-lg font-semibold">{tableNo}번 테이블</span>
           </div>
           <div className="flex flex-col gap-[5px]">
             <span className="text-gray-0 text-lg font-semibold">1번 주문 메모</span>
