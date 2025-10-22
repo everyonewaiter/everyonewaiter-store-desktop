@@ -60,39 +60,82 @@ export default function PosTablesDetailMenuModalComp({
             <div className="my-5 h-[8px] w-full bg-gray-700" />
 
             {menu.menuOptionGroups.length > 0 && (
-              <div className="flex flex-col gap-3">
-                <h4 className="text-gray-0 text-[15px] font-semibold">
-                  필수 추가 옵션 <span className="text-primary">*</span>
-                </h4>
+              <>
                 <div className="flex flex-col gap-3">
-                  {menu.menuOptionGroups.map((optionGroup) => (
-                    <div
-                      key={optionGroup.menuOptionGroupId}
-                      className="flex flex-col gap-3 rounded-xl bg-gray-700 p-3"
-                    >
-                      <span className="text-gray-0 text-sm font-medium">{optionGroup.name}</span>
-                      <RadioGroup defaultValue={optionGroup.menuOptions[0].name}>
-                        {optionGroup.menuOptions.map((option) => (
-                          <RadioGroupFlex key={option.name} className="justify-between">
-                            <div className="flex items-center gap-2">
-                              <RadioGroupItem value={option.name} />
-                              <span className="text-s font-normal text-gray-100">
-                                {option.name}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-0.5">
-                              <PlusIcon className="text-gray-0 h-5 w-5" />
-                              <span className="text-s font-normal text-gray-100">
-                                {option.price.toLocaleString()}원
-                              </span>
-                            </div>
-                          </RadioGroupFlex>
-                        ))}
-                      </RadioGroup>
-                    </div>
-                  ))}
+                  <h4 className="text-gray-0 text-[15px] font-semibold">
+                    선택 추가 옵션 <span className="text-primary">*</span>
+                  </h4>
+                  <div className="flex flex-col gap-3">
+                    {menu.menuOptionGroups
+                      .filter((group) => group.type === "MANDATORY")
+                      .map((optionGroup) => (
+                        <div
+                          key={optionGroup.menuOptionGroupId}
+                          className="flex flex-col gap-3 rounded-xl bg-gray-700 p-3"
+                        >
+                          <span className="text-gray-0 text-sm font-medium">
+                            {optionGroup.name}
+                          </span>
+                          <RadioGroup defaultValue={optionGroup.menuOptions[0].name}>
+                            {optionGroup.menuOptions.map((option) => (
+                              <RadioGroupFlex key={option.name} className="justify-between">
+                                <div className="flex items-center gap-2">
+                                  <RadioGroupItem value={option.name} />
+                                  <span className="text-s font-normal text-gray-100">
+                                    {option.name}
+                                  </span>
+                                </div>
+                                <div className="flex items-center gap-0.5">
+                                  <PlusIcon className="text-gray-0 h-5 w-5" />
+                                  <span className="text-s font-normal text-gray-100">
+                                    {option.price.toLocaleString()}원
+                                  </span>
+                                </div>
+                              </RadioGroupFlex>
+                            ))}
+                          </RadioGroup>
+                        </div>
+                      ))}
+                  </div>
                 </div>
-              </div>
+                <div className="flex flex-col gap-3">
+                  <h4 className="text-gray-0 text-[15px] font-semibold">
+                    필수 추가 옵션 <span className="text-primary">*</span>
+                  </h4>
+                  <div className="flex flex-col gap-3">
+                    {menu.menuOptionGroups
+                      .filter((group) => group.type === "OPTIONAL")
+                      .map((optionGroup) => (
+                        <div
+                          key={optionGroup.menuOptionGroupId}
+                          className="flex flex-col gap-3 rounded-xl bg-gray-700 p-3"
+                        >
+                          <span className="text-gray-0 text-sm font-medium">
+                            {optionGroup.name}
+                          </span>
+                          <RadioGroup defaultValue={optionGroup.menuOptions[0].name}>
+                            {optionGroup.menuOptions.map((option) => (
+                              <RadioGroupFlex key={option.name} className="justify-between">
+                                <div className="flex items-center gap-2">
+                                  <RadioGroupItem value={option.name} />
+                                  <span className="text-s font-normal text-gray-100">
+                                    {option.name}
+                                  </span>
+                                </div>
+                                <div className="flex items-center gap-0.5">
+                                  <PlusIcon className="text-gray-0 h-5 w-5" />
+                                  <span className="text-s font-normal text-gray-100">
+                                    {option.price.toLocaleString()}원
+                                  </span>
+                                </div>
+                              </RadioGroupFlex>
+                            ))}
+                          </RadioGroup>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </>
             )}
           </div>
           <div className="sticky bottom-0 left-0 w-full bg-white pt-6">
