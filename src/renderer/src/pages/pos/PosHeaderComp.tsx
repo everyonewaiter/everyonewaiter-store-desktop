@@ -3,9 +3,9 @@ import { FileCheckIcon, MoneyCoinIcon, ReturnIcon } from "@renderer/assets/icons
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosStoreCloseModalComp from "@renderer/pages/pos/PosStoreCloseModalComp";
 import { overlay } from "overlay-kit";
-import PosPaymentsSalesModalComp from "./payments/PosPaymentsSalesModalComp";
 
 function PosHeaderComp() {
   const { pathname } = useLocation();

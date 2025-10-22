@@ -1,6 +1,6 @@
+import PosTablesDetailMenuModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuModalComp";
 import { Menu } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
-import PosTablesDetailMenuModalComp from "./PosTablesDetailMenuModalComp";
 
 interface PosTablesDetailMenuCardCompProps {
   menu: Menu;

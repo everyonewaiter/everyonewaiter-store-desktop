@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import posBgImage from "@renderer/assets/images/pos-bg.jpg";
 import { Button } from "@renderer/components";
+import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import { overlay } from "overlay-kit";
-import PosPaymentsSalesModalComp from "./payments/PosPaymentsSalesModalComp";
 
 function PosPage() {
   const navigate = useNavigate();

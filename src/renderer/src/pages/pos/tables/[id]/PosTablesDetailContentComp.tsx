@@ -2,12 +2,12 @@ import { Fragment } from "react/jsx-runtime";
 import { useNavigate, useParams } from "react-router-dom";
 import { NoteIcon, ReturnIcon, RotateIcon, SendIcon } from "@renderer/assets/icons";
 import { Button } from "@renderer/components";
+import { CATEGORY_MOCK, MENU_LIST_MOCK } from "@renderer/pages/pos/mock";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
+import PosTablesDetailMemoModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMemoModalComp";
 import PosTablesDetailMenuCardComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuCardComp";
+import PosTablesDetailResendReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailResendReceiptModalComp";
 import { overlay } from "overlay-kit";
-import { CATEGORY_MOCK, MENU_LIST_MOCK } from "../../mock";
-import PosTablesDetailMemoModalComp from "./PosTablesDetailMemoModalComp";
-import PosTablesDetailResendReceiptModalComp from "./PosTablesDetailResendReceiptModalComp";
 
 function PosTablesDetailContentComp() {
   const navigate = useNavigate();

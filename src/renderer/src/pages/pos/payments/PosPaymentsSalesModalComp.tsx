@@ -1,7 +1,7 @@
 import { DatePicker } from "@renderer/components";
 import { Dialog } from "@renderer/components/Dialog";
+import { REVENUE_MOCK } from "@renderer/pages/pos/mock";
 import { ModalProps } from "@renderer/types/overlay";
-import { REVENUE_MOCK } from "../mock";
 
 interface PosPaymentsSalesModalCompProps extends ModalProps {}
 

@@ -1,11 +1,11 @@
 import { Button } from "@renderer/components";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
+import PosTablesDetailCancelPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelPaymentModalComp";
+import PosTablesDetailDiscountModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailDiscountModalComp";
+import PosTablesDetailOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderModalComp";
+import PosTablesDetailPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPaymentModalComp";
 import { Menu, TableActivity } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
-import PosTablesDetailCancelPaymentModalComp from "./PosTablesDetailCancelPaymentModalComp";
-import PosTablesDetailDiscountModalComp from "./PosTablesDetailDiscountModalComp";
-import PosTablesDetailOrderModalComp from "./PosTablesDetailOrderModalComp";
-import PosTablesDetailPaymentModalComp from "./PosTablesDetailPaymentModalComp";
 
 interface PosTablesDetailSideCompProps {
   type?: "order" | "checkout";

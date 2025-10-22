@@ -1,6 +1,6 @@
-import { MENU_LIST_MOCK, TABLE_ACTIVITY_MOCK } from "../../mock";
-import PosTablesDetailContentComp from "./PosTablesDetailContentComp";
-import PosTablesDetailSideComp from "./PosTablesDetailSideComp";
+import { MENU_LIST_MOCK, TABLE_ACTIVITY_MOCK } from "@renderer/pages/pos/mock";
+import PosTablesDetailContentComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailContentComp";
+import PosTablesDetailSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp";
 
 function PosTablesDetailPage() {
   return (

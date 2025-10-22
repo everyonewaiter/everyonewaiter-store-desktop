@@ -4,8 +4,8 @@ import { Button } from "@renderer/components";
 import { MOCK } from "@renderer/pages/pos/mock";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import PosTablesBoxComp from "@renderer/pages/pos/tables/PosTablesBoxComp";
+import PosTablesChangeTableModalComp from "@renderer/pages/pos/tables/PosTablesChangeTableModalComp";
 import { overlay } from "overlay-kit";
-import PosTablesChangeTableModalComp from "./PosTablesChangeTableModalComp";
 
 function PosTablesPage() {
   const navigate = useNavigate();
