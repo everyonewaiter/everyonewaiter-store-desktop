@@ -1,4 +1,11 @@
-import { MenuList, Order, OrderPaymentsList, Table, TableActivity } from "@renderer/types/domain";
+import {
+  MenuList,
+  Order,
+  OrderPaymentsList,
+  Revenue,
+  Table,
+  TableActivity,
+} from "@renderer/types/domain";
 
 export const MOCK: Table[] = [
   {
@@ -585,4 +592,14 @@ export const TABLE_ACTIVITY_MOCK: TableActivity = {
   active: true,
   orders: POS_DETAIL_ORDER_MOCK,
   orderPayments: PAYMENTS_MOCK,
+};
+
+export const REVENUE_MOCK: Revenue = {
+  totalOrderPrice: 1000000,
+  totalDiscountPrice: 200000,
+  totalPaymentPrice: 1200000,
+  cashPaymentApprovePrice: 200000,
+  cardPaymentApprovePrice: 0,
+  cashPaymentCancelPrice: 800000,
+  cardPaymentCancelPrice: 100000,
 };

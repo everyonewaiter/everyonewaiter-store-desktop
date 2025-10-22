@@ -154,3 +154,13 @@ export interface TableActivity {
   orders: Order[];
   orderPayments: OrderPayment[];
 }
+
+export interface Revenue {
+  totalOrderPrice: number;
+  totalDiscountPrice: number;
+  totalPaymentPrice: number;
+  cashPaymentApprovePrice: number;
+  cardPaymentApprovePrice: number;
+  cashPaymentCancelPrice: number;
+  cardPaymentCancelPrice: number;
+}
