@@ -48,7 +48,7 @@ function PosTablesDetailContentComp() {
   return (
     <div className="relative flex flex-[calc(1-0.3375)] flex-col">
       <PosHeaderComp />
-      <div className="flex items-center gap-3 px-15 pt-10 pb-3">
+      <div className="flex items-center gap-3 px-15 pt-10 pb-6">
         <Button
           variant="outline"
           color="black"
@@ -68,7 +68,7 @@ function PosTablesDetailContentComp() {
         ))}
       </div>
       <div className="scrollbar-hide h-full overflow-y-auto pb-20">
-        <div className="grid grid-cols-4 gap-x-6 gap-y-10 px-15 py-6">
+        <div className="grid grid-cols-4 gap-x-6 gap-y-10 px-15 pt-3 pb-6">
           {MENU_LIST_MOCK.menus.map((menu) => (
             <PosTablesDetailMenuCardComp key={menu.menuId} menu={menu} />
           ))}
