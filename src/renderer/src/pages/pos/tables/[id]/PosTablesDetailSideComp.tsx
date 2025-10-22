@@ -1,14 +1,23 @@
 import { Button } from "@renderer/components";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import { Menu, TableActivity } from "@renderer/types/domain";
+import { overlay } from "overlay-kit";
+import PosTablesDetailCancelPaymentModalComp from "./PosTablesDetailCancelPaymentModalComp";
+import PosTablesDetailDiscountModalComp from "./PosTablesDetailDiscountModalComp";
+import PosTablesDetailOrderModalComp from "./PosTablesDetailOrderModalComp";
+import PosTablesDetailPaymentModalComp from "./PosTablesDetailPaymentModalComp";
 
-interface PosTablesSideCompProps {
+interface PosTablesDetailSideCompProps {
   type?: "order" | "checkout";
   activity: TableActivity;
   menus: Menu[];
 }
 
-function PosTablesSideComp({ type = "checkout", activity, menus }: PosTablesSideCompProps) {
+function PosTablesDetailSideComp({
+  type = "checkout",
+  activity,
+  menus,
+}: PosTablesDetailSideCompProps) {
   return (
     <aside
       className="sticky top-0 right-0 flex h-dvh flex-[0.3375] flex-col gap-8 overflow-y-hidden rounded-tl-[40px] rounded-bl-[40px] pt-10 pr-4 pb-8 pl-8"
@@ -19,7 +28,15 @@ function PosTablesSideComp({ type = "checkout", activity, menus }: PosTablesSide
           {activity.tableNo}번 테이블 {type === "order" && "주문 내역"}
         </h2>
         {type === "checkout" && activity.orderType === "PREPAID" && (
-          <Button variant="outline" className="button-lg !text-medium !rounded-[8px] !text-base">
+          <Button
+            variant="outline"
+            className="button-lg !text-medium !rounded-[8px] !text-base"
+            onClick={() =>
+              overlay.open((overlayProps) => (
+                <PosTablesDetailCancelPaymentModalComp {...overlayProps} />
+              ))
+            }
+          >
             결제 취소
           </Button>
         )}
@@ -57,6 +74,11 @@ function PosTablesSideComp({ type = "checkout", activity, menus }: PosTablesSide
               variant="outline"
               color="black"
               className="!border-gray-[#4F4F4F] h-10 rounded-lg bg-white px-5 text-[15px] font-medium text-[#4F4F4F]"
+              onClick={() =>
+                overlay.open((overlayProps) => (
+                  <PosTablesDetailDiscountModalComp {...overlayProps} />
+                ))
+              }
             >
               할인수단 추가
             </Button>
@@ -86,17 +108,37 @@ function PosTablesSideComp({ type = "checkout", activity, menus }: PosTablesSide
         </div>
       </div>
       {type === "order" && (
-        <Button className="h-16 w-full rounded-xl text-xl font-semibold">주문</Button>
+        <Button
+          className="h-16 w-full rounded-xl text-xl font-semibold"
+          onClick={() =>
+            overlay.open((overlayProps) => <PosTablesDetailOrderModalComp {...overlayProps} />)
+          }
+        >
+          주문 요청
+        </Button>
       )}
       {type === "checkout" && activity.orderType === "POSTPAID" && (
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
             className="h-16 w-full rounded-xl border !border-gray-200 text-xl font-semibold text-gray-200"
+            onClick={() =>
+              overlay.open((overlayProps) => (
+                <PosTablesDetailPaymentModalComp paymentType="cash" {...overlayProps} />
+              ))
+            }
           >
             현금 결제
           </Button>
-          <Button color="black" className="h-16 w-full rounded-xl text-xl font-semibold">
+          <Button
+            color="black"
+            className="h-16 w-full rounded-xl text-xl font-semibold"
+            onClick={() =>
+              overlay.open((overlayProps) => (
+                <PosTablesDetailPaymentModalComp paymentType="card" {...overlayProps} />
+              ))
+            }
+          >
             카드 결제
           </Button>
         </div>
@@ -111,4 +153,4 @@ function PosTablesSideComp({ type = "checkout", activity, menus }: PosTablesSide
   );
 }
 
-export default PosTablesSideComp;
+export default PosTablesDetailSideComp;
