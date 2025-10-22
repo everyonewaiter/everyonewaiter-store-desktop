@@ -1,20 +1,24 @@
-import { useNavigate } from "react-router-dom";
 import { AlarmIcon, StopwatchIcon } from "@renderer/assets/icons";
 import { ORDER_TYPE_TEXT } from "@renderer/constants/pos";
 import { Table } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
-function PosTablesBoxComp(props: Table) {
-  const navigate = useNavigate();
+interface PosTablesBoxCompProps extends Table {
+  table?: Table;
+  className?: string;
+  onClick: () => void;
+}
 
+function PosTablesBoxComp({ onClick, className, ...props }: PosTablesBoxCompProps) {
   return (
     <button
       className={cn(
         "flex aspect-[432/320] cursor-pointer flex-col items-start justify-between rounded-3xl border-2 border-gray-500 p-7",
         props.hasOrder && props.orderType === "POSTPAID" ? "border-primary" : "",
-        props.hasOrder && props.orderType === "PREPAID" ? "border-[#2E8CFF]" : ""
+        props.hasOrder && props.orderType === "PREPAID" ? "border-[#2E8CFF]" : "",
+        className
       )}
-      onClick={() => navigate(`/pos/tables/${props.tableNo}`)}
+      onClick={onClick}
     >
       <header className="flex w-full items-center justify-between">
         <div
