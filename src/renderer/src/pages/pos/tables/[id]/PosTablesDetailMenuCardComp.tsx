@@ -1,20 +1,35 @@
+import { Menu } from "@renderer/types/domain";
+import { overlay } from "overlay-kit";
+import PosTablesDetailMenuModalComp from "./PosTablesDetailMenuModalComp";
+
 interface PosTablesDetailMenuCardCompProps {
-  name: string;
-  price: number;
-  image?: string;
+  menu: Menu;
 }
 
-function PosTablesDetailMenuCardComp({ name, price, image }: PosTablesDetailMenuCardCompProps) {
+function PosTablesDetailMenuCardComp({ menu }: PosTablesDetailMenuCardCompProps) {
   return (
     <button
       type="button"
-      className="relative aspect-[270/340] cursor-pointer overflow-hidden rounded-3xl border border-gray-600"
+      className="relative aspect-[270/340] cursor-pointer overflow-hidden rounded-3xl border-[1.5px] border-gray-600"
+      onClick={() =>
+        overlay.open((overlayProps) => (
+          <PosTablesDetailMenuModalComp {...overlayProps} menu={menu} />
+        ))
+      }
     >
-      <img src={image || "./src/assets/images/pos-bg.jpg"} className="h-full w-full object-cover" />
+      {menu.state === "SOLD_OUT" && (
+        <div className="absolute z-50 flex h-full w-full items-center justify-center bg-black/70 text-2xl font-semibold text-white">
+          SOLD OUT
+        </div>
+      )}
+      <img
+        src={menu.image || "./src/assets/images/pos-bg.jpg"}
+        className="h-full w-full object-cover"
+      />
       <div className="absolute bottom-0 flex w-full flex-col items-center justify-center gap-2 bg-white px-6 py-4">
-        <span className="text-gray-0 text-lg leading-[27px] font-normal">{name}</span>
+        <span className="text-gray-0 text-lg leading-[27px] font-normal">{menu.name}</span>
         <strong className="text-gray-0 text-2xl leading-8 font-semibold">
-          {price.toLocaleString()}원
+          {menu.price.toLocaleString()}원
         </strong>
       </div>
     </button>
