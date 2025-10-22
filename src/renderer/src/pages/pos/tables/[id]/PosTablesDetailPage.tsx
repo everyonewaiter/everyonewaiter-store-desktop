@@ -1,13 +1,13 @@
 import { MENU_LIST_MOCK, TABLE_ACTIVITY_MOCK } from "../../mock";
-import PosTablesContentComp from "./PosTablesContentComp";
-import PosTablesSideComp from "./PosTablesSideComp";
+import PosTablesDetailContentComp from "./PosTablesDetailContentComp";
+import PosTablesDetailSideComp from "./PosTablesDetailSideComp";
 
 function PosTablesDetailPage() {
   return (
     <div className="flex h-dvh flex-col">
       <div className="relative flex w-full flex-1 overflow-hidden">
-        <PosTablesContentComp />
-        <PosTablesSideComp
+        <PosTablesDetailContentComp />
+        <PosTablesDetailSideComp
           type="checkout"
           activity={TABLE_ACTIVITY_MOCK}
           menus={MENU_LIST_MOCK.menus}
