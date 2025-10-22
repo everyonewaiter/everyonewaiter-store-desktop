@@ -10,7 +10,7 @@ interface PosTablesDetailDiscountModalCompProps extends ModalProps {
   totalOrderPrice: number;
 }
 
-export default function PosTablesDetailDiscountModalComp({
+function PosTablesDetailDiscountModalComp({
   tableNo,
   totalOrderPrice,
   ...props
@@ -68,3 +68,5 @@ export default function PosTablesDetailDiscountModalComp({
     </Dialog>
   );
 }
+
+export default PosTablesDetailDiscountModalComp;

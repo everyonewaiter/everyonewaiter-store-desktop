@@ -6,10 +6,7 @@ interface PosTablesDetailMemoModalCompProps extends ModalProps {
   tableNo: number;
 }
 
-export default function PosTablesDetailMemoModalComp({
-  tableNo,
-  ...props
-}: PosTablesDetailMemoModalCompProps) {
+function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemoModalCompProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -49,3 +46,5 @@ export default function PosTablesDetailMemoModalComp({
     </Dialog>
   );
 }
+
+export default PosTablesDetailMemoModalComp;

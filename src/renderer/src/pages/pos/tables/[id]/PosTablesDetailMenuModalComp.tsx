@@ -9,10 +9,7 @@ interface PosTablesDetailMenuModalCompProps extends ModalProps {
   menu: Menu;
 }
 
-export default function PosTablesDetailMenuModalComp({
-  menu,
-  ...props
-}: PosTablesDetailMenuModalCompProps) {
+function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuModalCompProps) {
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper width={1002} flexDirection="row" height={650} className="p-6">
@@ -150,3 +147,5 @@ export default function PosTablesDetailMenuModalComp({
     </Dialog>
   );
 }
+
+export default PosTablesDetailMenuModalComp;

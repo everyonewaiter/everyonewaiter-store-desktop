@@ -29,7 +29,7 @@ interface PosTablesDetailPaymentModalCompProps extends ModalProps {
   activity: TableActivity;
 }
 
-export default function PosTablesDetailPaymentModalComp({
+function PosTablesDetailPaymentModalComp({
   paymentType,
   activity,
   ...props
@@ -101,3 +101,5 @@ export default function PosTablesDetailPaymentModalComp({
     </Dialog>
   );
 }
+
+export default PosTablesDetailPaymentModalComp;

@@ -3,7 +3,7 @@ import { ModalProps } from "@renderer/types/overlay";
 
 interface PosTablesDetailPrintReceiptModalCompProps extends ModalProps {}
 
-export default function PosTablesDetailPrintReceiptModalComp({
+function PosTablesDetailPrintReceiptModalComp({
   ...props
 }: PosTablesDetailPrintReceiptModalCompProps) {
   return (
@@ -17,3 +17,5 @@ export default function PosTablesDetailPrintReceiptModalComp({
     </Dialog>
   );
 }
+
+export default PosTablesDetailPrintReceiptModalComp;

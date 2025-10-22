@@ -3,9 +3,7 @@ import { ModalProps } from "@renderer/types/overlay";
 
 interface PosTablesDetailOrderModalCompProps extends ModalProps {}
 
-export default function PosTablesDetailOrderModalComp({
-  ...props
-}: PosTablesDetailOrderModalCompProps) {
+function PosTablesDetailOrderModalComp({ ...props }: PosTablesDetailOrderModalCompProps) {
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
@@ -21,3 +19,5 @@ export default function PosTablesDetailOrderModalComp({
     </Dialog>
   );
 }
+
+export default PosTablesDetailOrderModalComp;

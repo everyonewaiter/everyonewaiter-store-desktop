@@ -5,7 +5,7 @@ interface PosTablesDetailResendReceiptModalCompProps extends ModalProps {
   tableNo: number;
 }
 
-export default function PosTablesDetailResendReceiptModalComp({
+function PosTablesDetailResendReceiptModalComp({
   tableNo,
   ...props
 }: PosTablesDetailResendReceiptModalCompProps) {
@@ -23,3 +23,5 @@ export default function PosTablesDetailResendReceiptModalComp({
     </Dialog>
   );
 }
+
+export default PosTablesDetailResendReceiptModalComp;

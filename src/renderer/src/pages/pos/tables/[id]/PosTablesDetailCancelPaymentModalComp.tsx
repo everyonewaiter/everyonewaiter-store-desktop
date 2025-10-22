@@ -5,7 +5,7 @@ interface PosTablesDetailCancelPaymentModalCompProps extends ModalProps {
   tableNo: number;
 }
 
-export default function PosTablesDetailCancelPaymentModalComp({
+function PosTablesDetailCancelPaymentModalComp({
   tableNo,
   ...props
 }: PosTablesDetailCancelPaymentModalCompProps) {
@@ -25,3 +25,5 @@ export default function PosTablesDetailCancelPaymentModalComp({
     </Dialog>
   );
 }
+
+export default PosTablesDetailCancelPaymentModalComp;
