@@ -1,7 +1,7 @@
 import {
   MenuList,
   Order,
-  OrderPaymentsList,
+  OrderPaymentList,
   Revenue,
   Table,
   TableActivity,
@@ -154,7 +154,7 @@ export const MOCK: Table[] = [
   },
 ];
 
-export const PAYMENTS_MOCK: OrderPaymentsList[] = [
+export const PAYMENTS_MOCK: OrderPaymentList[] = [
   {
     orderPaymentId: "OP-4886",
     state: "APPROVE",
@@ -519,7 +519,7 @@ export const MENU_LIST_MOCK: MenuList = {
       price: 151000,
       spicy: 0,
       state: "DEFAULT",
-      label: null,
+      label: "DEFAULT",
       image: "",
       printEnabled: true,
       menuOptionGroups: [],
@@ -532,7 +532,7 @@ export const MENU_LIST_MOCK: MenuList = {
       price: 4500,
       spicy: 0,
       state: "DEFAULT",
-      label: null,
+      label: "BEST",
       image: "",
       printEnabled: true,
       menuOptionGroups: [
@@ -563,7 +563,7 @@ export const MENU_LIST_MOCK: MenuList = {
       price: 5000,
       spicy: 0,
       state: "DEFAULT",
-      label: null,
+      label: "RECOMMEND",
       image: "",
       printEnabled: true,
       menuOptionGroups: [
