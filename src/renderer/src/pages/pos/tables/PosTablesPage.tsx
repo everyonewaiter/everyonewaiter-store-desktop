@@ -38,7 +38,7 @@ function PosTablesPage() {
             onClick={() => navigate(`/pos/tables/${currentTableNo}`)}
           >
             <ReturnIcon className="h-7 w-7" />
-            테이블 목록으로 이동
+            돌아가기
           </Button>
         )}
         <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4">
