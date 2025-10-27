@@ -15,7 +15,7 @@ export default function PosTablesDetailOrderBoxComp({
   return (
     <div className="flex flex-col gap-3">
       <h4 className="text-gray-0 text-[15px] font-semibold">
-        {type === "required" ? "필수" : "선택"} 추가 옵션{" "}
+        {type === "required" ? "필수" : "선택"} 옵션{" "}
         {type === "required" && <span className="text-primary">*</span>}
       </h4>
       <div className="flex flex-col gap-3">
