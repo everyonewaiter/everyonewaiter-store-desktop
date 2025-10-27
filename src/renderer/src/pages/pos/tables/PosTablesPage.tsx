@@ -47,17 +47,10 @@ function PosTablesPage() {
               key={table.posTableId}
               {...table}
               className={
-                currentTableNo
-                  ? table.tableNo === Number(currentTableNo)
-                    ? "cursor-default border-none bg-gray-500/60"
-                    : "animate-wiggle"
-                  : ""
+                currentTableNo && table.tableNo !== Number(currentTableNo) ? "animate-wiggle" : ""
               }
-              onClick={() =>
-                table.tableNo === Number(currentTableNo)
-                  ? null
-                  : handleMoveToTableDetail(table.tableNo)
-              }
+              disabled={table.tableNo === Number(currentTableNo)}
+              onClick={() => handleMoveToTableDetail(table.tableNo)}
             />
           ))}
         </div>
