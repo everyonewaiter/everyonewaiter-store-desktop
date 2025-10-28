@@ -3,6 +3,7 @@ import { FileCheckIcon, MoneyCoinIcon, ReturnIcon } from "@renderer/assets/icons
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosStoreCloseModalComp from "@renderer/pages/pos/PosStoreCloseModalComp";
 import { overlay } from "overlay-kit";
 
@@ -34,6 +35,9 @@ function PosHeaderComp() {
                 variant="outline"
                 color="grey"
                 className="text-gray-0 flex items-center gap-2.5 rounded-xl border-gray-600 px-4 py-3 text-lg font-normal"
+                onClick={() =>
+                  overlay.open((overlayProps) => <PosPaymentsSalesModalComp {...overlayProps} />)
+                }
               >
                 <MoneyCoinIcon width={28} height={28} color="#222222" />
                 매출 확인

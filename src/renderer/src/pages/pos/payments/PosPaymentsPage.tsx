@@ -1,5 +1,5 @@
 import { Button, DatePicker, Table } from "@renderer/components";
-import { PAYMENTS_MOCK, POS_ACTIVITY_MOCK } from "@renderer/pages/pos/mock";
+import { PAYMENTS_MOCK, TABLE_ACTIVITY_MOCK } from "@renderer/pages/pos/mock";
 import PosPaymentsSideComp from "@renderer/pages/pos/payments/PosPaymentsSideComp";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 
@@ -60,7 +60,7 @@ function PosPaymentsPage() {
             </Table.Body>
           </Table>
         </div>
-        <PosPaymentsSideComp activity={POS_ACTIVITY_MOCK} />
+        <PosPaymentsSideComp activity={TABLE_ACTIVITY_MOCK} />
       </div>
     </div>
   );

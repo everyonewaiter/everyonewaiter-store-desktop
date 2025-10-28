@@ -9,9 +9,14 @@ export { default as DoorOpenIcon } from "@renderer/assets/icons/door-open.svg?re
 export { default as DoubleArrowIcon } from "@renderer/assets/icons/double-arrow.svg?react";
 export { default as FileCheckIcon } from "@renderer/assets/icons/file-check.svg?react";
 export { default as InfoIcon } from "@renderer/assets/icons/info.svg?react";
+export { default as MinusIcon } from "@renderer/assets/icons/minus.svg?react";
 export { default as MoneyCoinIcon } from "@renderer/assets/icons/money-coin.svg?react";
+export { default as NoteIcon } from "@renderer/assets/icons/note.svg?react";
 export { default as PlusIcon } from "@renderer/assets/icons/plus.svg?react";
 export { default as ReturnIcon } from "@renderer/assets/icons/return.svg?react";
+export { default as RotateIcon } from "@renderer/assets/icons/rotate.svg?react";
+export { default as SaveIcon } from "@renderer/assets/icons/save.svg?react";
+export { default as SendIcon } from "@renderer/assets/icons/send.svg?react";
 export { default as SmileIcon } from "@renderer/assets/icons/smily.svg?react";
 export { default as StopwatchIcon } from "@renderer/assets/icons/stopwatch.svg?react";
 export { default as XCircleIcon } from "@renderer/assets/icons/x-circle.svg?react";

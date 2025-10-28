@@ -1,4 +1,11 @@
-import { Order, OrderPaymentsList, PosTableActivity, Table } from "@renderer/types/domain";
+import {
+  MenuList,
+  Order,
+  OrderPaymentList,
+  Revenue,
+  Table,
+  TableActivity,
+} from "@renderer/types/domain";
 
 export const MOCK: Table[] = [
   {
@@ -147,7 +154,7 @@ export const MOCK: Table[] = [
   },
 ];
 
-export const PAYMENTS_MOCK: OrderPaymentsList[] = [
+export const PAYMENTS_MOCK: OrderPaymentList[] = [
   {
     orderPaymentId: "OP-4886",
     state: "APPROVE",
@@ -418,10 +425,164 @@ export const POS_ORDER_MOCK: Order = {
   ],
 };
 
-export const POS_ACTIVITY_MOCK: PosTableActivity = {
+export const CATEGORY_MOCK = [
+  { category: "메인", categoryId: "CATEGORY-001" },
+  { category: "사이드", categoryId: "CATEGORY-002" },
+  { category: "음료", categoryId: "CATEGORY-003" },
+  { category: "디저트", categoryId: "CATEGORY-004" },
+];
+
+export const POS_DETAIL_ORDER_MOCK: Order[] = [
+  {
+    orderId: "OM-4886",
+    storeId: "A001",
+    category: "INITIAL",
+    type: "POSTPAID",
+    state: "ORDER",
+    tableNo: 1,
+    price: 151000,
+    memo: "",
+    served: false,
+    servedTime: "",
+    createdAt: "2025-10-12T13:15:30Z",
+    updatedAt: "2025-10-12T13:15:30Z",
+    orderMenus: [
+      {
+        orderMenuId: "OM-4886-1",
+        name: "스노우치즈폭탄",
+        price: 151000,
+        quantity: 1,
+        served: false,
+        servedTime: "",
+        printEnabled: true,
+        image: "",
+        orderOptionGroups: [],
+      },
+      {
+        orderMenuId: "OM-4886-2",
+        name: "아메리카노",
+        price: 4500,
+        quantity: 2,
+        served: true,
+        servedTime: "2025-10-12T13:15:30Z",
+        printEnabled: true,
+        image: "",
+        orderOptionGroups: [
+          {
+            orderOptionGroupId: "OOG-2001",
+            name: "온도 선택",
+            printEnabled: true,
+            orderOptions: [{ name: "ICE", price: 500 }],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    orderId: "OM-4887",
+    storeId: "A001",
+    category: "INITIAL",
+    type: "POSTPAID",
+    state: "ORDER",
+    tableNo: 1,
+    price: 151000,
+    memo: "",
+    served: false,
+    servedTime: "",
+    createdAt: "2025-10-12T13:15:30Z",
+    updatedAt: "2025-10-12T13:15:30Z",
+    orderMenus: [
+      {
+        orderMenuId: "OM-4887-1",
+        name: "스노우치즈폭탄",
+        price: 151000,
+        quantity: 1,
+        served: false,
+        servedTime: "",
+        printEnabled: true,
+        image: "",
+        orderOptionGroups: [],
+      },
+    ],
+  },
+];
+
+export const MENU_LIST_MOCK: MenuList = {
+  categoryId: "CATEGORY-001",
+  name: "메인",
+  menus: [
+    {
+      menuId: "MENU-001",
+      categoryId: "CATEGORY-001",
+      name: "에스프레소",
+      description: "에스프레소",
+      price: 151000,
+      spicy: 0,
+      state: "DEFAULT",
+      label: "DEFAULT",
+      image: "",
+      printEnabled: true,
+      menuOptionGroups: [],
+    },
+    {
+      menuId: "MENU-002",
+      categoryId: "CATEGORY-001",
+      name: "아메리카노",
+      description: "아메리카노",
+      price: 4500,
+      spicy: 0,
+      state: "DEFAULT",
+      label: "BEST",
+      image: "",
+      printEnabled: true,
+      menuOptionGroups: [
+        {
+          menuOptionGroupId: "MOG-2001",
+          name: "온도 선택",
+          printEnabled: true,
+          menuOptions: [
+            { name: "ICE", price: 0 },
+            { name: "HOT", price: 0 },
+          ],
+          type: "MANDATORY",
+        },
+        {
+          menuOptionGroupId: "MOG-2002",
+          name: "샷 추가",
+          printEnabled: true,
+          menuOptions: [{ name: "샷 1개 추가", price: 500 }],
+          type: "OPTIONAL",
+        },
+      ],
+    },
+    {
+      menuId: "MENU-003",
+      categoryId: "CATEGORY-001",
+      name: "카페라떼",
+      description: "카페라떼",
+      price: 5000,
+      spicy: 0,
+      state: "DEFAULT",
+      label: "RECOMMEND",
+      image: "",
+      printEnabled: true,
+      menuOptionGroups: [
+        {
+          menuOptionGroupId: "MOG-2003",
+          name: "우유 선택",
+          printEnabled: true,
+          menuOptions: [{ name: "일반 우유", price: 0 }],
+          type: "MANDATORY",
+        },
+      ],
+    },
+  ],
+};
+
+export const TABLE_ACTIVITY_MOCK: TableActivity = {
   posTableActivityId: "PTA-4886",
   storeId: "A001",
-  posTableId: "T-4886",
+  posTableId: "PT-4886",
   tableNo: 1,
   orderType: "POSTPAID",
   totalOrderPrice: 151000,
@@ -429,6 +590,16 @@ export const POS_ACTIVITY_MOCK: PosTableActivity = {
   discount: 0,
   remainingPaymentPrice: 151000,
   active: true,
-  orders: [POS_ORDER_MOCK],
+  orders: POS_DETAIL_ORDER_MOCK,
   orderPayments: PAYMENTS_MOCK,
+};
+
+export const REVENUE_MOCK: Revenue = {
+  totalOrderPrice: 1000000,
+  totalDiscountPrice: 200000,
+  totalPaymentPrice: 1200000,
+  cashPaymentApprovePrice: 200000,
+  cardPaymentApprovePrice: 0,
+  cashPaymentCancelPrice: 800000,
+  cardPaymentCancelPrice: 100000,
 };

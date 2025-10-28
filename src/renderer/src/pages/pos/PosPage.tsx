@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import posBgImage from "@renderer/assets/images/pos-bg.jpg";
 import { Button } from "@renderer/components";
+import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
+import { overlay } from "overlay-kit";
 
 function PosPage() {
   const navigate = useNavigate();
@@ -42,6 +44,9 @@ function PosPage() {
           <Button
             variant="outline"
             className="h-18 rounded-2xl border-white text-2xl font-bold text-white"
+            onClick={() =>
+              overlay.open((overlayProps) => <PosPaymentsSalesModalComp {...overlayProps} />)
+            }
           >
             매출액
           </Button>

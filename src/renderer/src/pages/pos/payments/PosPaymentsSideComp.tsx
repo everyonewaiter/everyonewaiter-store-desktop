@@ -3,11 +3,11 @@ import { ColorName } from "@renderer/constants";
 import PosPaymentsCancelPayModalComp from "@renderer/pages/pos/payments/PosPaymentsCancelPayModalComp";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosPaymentsOrderIncludeModalComp from "@renderer/pages/pos/payments/PosPaymentsOrderIncludeModalComp";
-import { PosTableActivity } from "@renderer/types/domain";
+import { TableActivity } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { overlay } from "overlay-kit";
 
-function PosPaymentsSideComp({ activity }: { activity: PosTableActivity }) {
+function PosPaymentsSideComp({ activity }: { activity: TableActivity }) {
   return (
     <aside
       className="sticky top-0 right-0 flex h-[calc(100dvh-133px)] flex-[0.3375] flex-col gap-8 overflow-y-hidden rounded-tl-[40px] rounded-bl-[40px] px-8 pt-10 pb-8"

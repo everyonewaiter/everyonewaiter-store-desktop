@@ -1,19 +1,24 @@
-export type OrderCategory = "INITIAL" | "ADDITIONAL";
-export type PaymentType = "PREPAID" | "POSTPAID";
-export type OrderState = "ORDER" | "CANCEL";
-
-export type StaffCallState = "INCOMPLETE" | "COMPLETE";
-
+type OrderPaymentType = "PREPAID" | "POSTPAID";
 type OrderPaymentState = "APPROVE" | "CANCEL";
 type OrderPaymentMethod = "CASH" | "CARD";
+
+type OrderCategory = "INITIAL" | "ADDITIONAL";
+type OrderState = "ORDER" | "CANCEL";
+
+type StaffCallState = "INCOMPLETE" | "COMPLETE";
+
 type OrderReceiptType = "NONE" | "DEDUCTION" | "PROOF";
+
+type MenuState = "DEFAULT" | "HIDE" | "SOLD_OUT";
+type MenuLabel = "BEST" | "NEW" | "DEFAULT" | "RECOMMEND";
+type MenuOptionType = "MANDATORY" | "OPTIONAL";
 
 export interface Table {
   posTableId: string;
   storeId: string;
   tableNo: number;
   hasOrder: boolean;
-  orderType: "POSTPAID" | "PREPAID" | null;
+  orderType: OrderPaymentType;
   orderedAt: string | null;
   orderMenuName: string | null;
   orderMenuCount: number;
@@ -25,7 +30,7 @@ export interface Order {
   orderId: string;
   storeId: string;
   category: OrderCategory;
-  type: PaymentType;
+  type: OrderPaymentType;
   state: OrderState;
   tableNo: number;
   price: number;
@@ -49,16 +54,16 @@ export interface OrderMenu {
   orderOptionGroups: OrderOptionGroup[];
 }
 
+export interface OrderMenuOption {
+  name: string;
+  price: number;
+}
+
 export interface OrderOptionGroup {
   orderOptionGroupId: string;
   name: string;
   printEnabled: boolean;
-  orderOptions: OrderOption[];
-}
-
-export interface OrderOption {
-  name: string;
-  price: number;
+  orderOptions: OrderMenuOption[];
 }
 
 export interface StaffCall {
@@ -99,7 +104,7 @@ interface OrderPayment {
   cashReceiptType: OrderReceiptType;
 }
 
-export interface OrderPaymentsList extends OrderPayment {
+export interface OrderPaymentList extends OrderPayment {
   orderPaymentId: string;
   posTableActivityId: string;
   storeId: string;
@@ -108,12 +113,40 @@ export interface OrderPaymentsList extends OrderPayment {
   createdAt: string;
 }
 
-export interface PosTableActivity {
+export interface MenuOptionGroup {
+  menuOptionGroupId: string;
+  name: string;
+  type: MenuOptionType;
+  printEnabled: boolean;
+  menuOptions: OrderMenuOption[];
+}
+
+export interface Menu {
+  menuId: string;
+  categoryId: string;
+  name: string;
+  description: string;
+  price: number;
+  spicy: number;
+  state: MenuState;
+  label: MenuLabel;
+  image: string;
+  printEnabled: boolean;
+  menuOptionGroups: MenuOptionGroup[];
+}
+
+export interface MenuList {
+  categoryId: string;
+  name: string;
+  menus: Menu[];
+}
+
+export interface TableActivity {
   posTableActivityId: string;
   storeId: string;
   posTableId: string;
   tableNo: number;
-  orderType: PaymentType;
+  orderType: OrderPaymentType;
   totalOrderPrice: number;
   totalPaymentPrice: number;
   discount: number;
@@ -121,4 +154,14 @@ export interface PosTableActivity {
   active: boolean;
   orders: Order[];
   orderPayments: OrderPayment[];
+}
+
+export interface Revenue {
+  totalOrderPrice: number;
+  totalDiscountPrice: number;
+  totalPaymentPrice: number;
+  cashPaymentApprovePrice: number;
+  cardPaymentApprovePrice: number;
+  cashPaymentCancelPrice: number;
+  cardPaymentCancelPrice: number;
 }
