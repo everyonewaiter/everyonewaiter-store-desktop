@@ -1,13 +1,13 @@
+import { PosViewPosTableActivityDetail } from "@renderer/api/device/data-contracts";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import PosPaymentsCancelPayModalComp from "@renderer/pages/pos/payments/PosPaymentsCancelPayModalComp";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosPaymentsOrderIncludeModalComp from "@renderer/pages/pos/payments/PosPaymentsOrderIncludeModalComp";
-import { TableActivity } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { overlay } from "overlay-kit";
 
-function PosPaymentsSideComp({ activity }: { activity: TableActivity }) {
+function PosPaymentsSideComp({ activity }: { activity: PosViewPosTableActivityDetail }) {
   return (
     <aside
       className="sticky top-0 right-0 flex h-[calc(100dvh-133px)] flex-[0.3375] flex-col gap-8 overflow-y-hidden rounded-tl-[40px] rounded-bl-[40px] px-8 pt-10 pb-8"
@@ -27,11 +27,11 @@ function PosPaymentsSideComp({ activity }: { activity: TableActivity }) {
         <h2 className="text-gray-0 text-[28px] font-bold">주문 내역</h2>
       </header>
       <section className="flex h-[calc(100%-8px-8px-24px-62px)] flex-col gap-4 overflow-y-auto">
-        {activity.orders.map((order, index, arr) => (
+        {activity.orders?.map((order, index, arr) => (
           <article key={order.orderId}>
             <PosPaymentsOrderBoxComp>
               <PosPaymentsOrderBoxComp.Index index={index} />
-              {order.orderMenus.map((menu) => (
+              {order.orderMenus?.map((menu) => (
                 <PosPaymentsOrderBoxComp.Order key={menu.orderMenuId} orderMenu={menu} />
               ))}
               {index !== arr.length - 1 && <PosPaymentsOrderBoxComp.Divider />}
@@ -50,7 +50,10 @@ function PosPaymentsSideComp({ activity }: { activity: TableActivity }) {
           disabled={!activity.posTableActivityId}
           onClick={() =>
             overlay.open((overlayProps) => (
-              <PosPaymentsCancelPayModalComp price={activity.totalOrderPrice} {...overlayProps} />
+              <PosPaymentsCancelPayModalComp
+                price={activity.totalOrderPrice ?? 0}
+                {...overlayProps}
+              />
             ))
           }
         >

@@ -1,9 +1,9 @@
+import { WaitingDetailResponse } from "@renderer/api/device/data-contracts";
 import { BabyIcon, SmileIcon } from "@renderer/assets/icons";
-import { Waiting } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
 interface WaitingInfoCompProps {
-  waiting: Waiting;
+  waiting: WaitingDetailResponse;
   isModal?: boolean;
 }
 
@@ -23,7 +23,7 @@ function WaitingInfoComp({ waiting, isModal }: WaitingInfoCompProps) {
             <SmileIcon className="h-6 w-6" />
             성인 {waiting.adult}
           </span>
-          {waiting.infant > 0 && (
+          {(waiting.infant ?? 0) > 0 && (
             <>
               <span className="bg-gray-0 h-4 w-[1px] flex-shrink-0" />
               <span className="flex gap-1">
@@ -34,12 +34,12 @@ function WaitingInfoComp({ waiting, isModal }: WaitingInfoCompProps) {
           )}
         </div>
         <span className={cn("font-bold", isModal ? "text-[28px]" : "text-3xl")}>
-          총 {waiting.infant + waiting.adult}명
+          총 {(waiting.infant ?? 0) + (waiting.adult ?? 0)}명
         </span>
       </div>
       <div className={cn("flex", isModal ? "flex-col gap-3" : "flex-row items-center gap-6")}>
         <span className="text-gray-0 text-xl font-semibold underline underline-offset-3">
-          {`${waiting.phoneNumber.slice(0, 3)}-${waiting.phoneNumber.slice(3, 7)}-${waiting.phoneNumber.slice(7)}`}
+          {`${(waiting.phoneNumber ?? "").slice(0, 3)}-${(waiting.phoneNumber ?? "").slice(3, 7)}-${(waiting.phoneNumber ?? "").slice(7)}`}
         </span>
         <time className="flex h-[39px] w-fit items-center gap-2 rounded-lg bg-gray-700 px-4">
           <span className="text-gray-0 text-lg font-semibold">24분 경과</span>

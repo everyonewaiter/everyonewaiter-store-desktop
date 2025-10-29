@@ -48,7 +48,7 @@ function HallPage() {
                   overlay.open((overlayProps) => (
                     <HallActionCompleteModalComp
                       type="call"
-                      tableNo={staffCall.tableNo}
+                      tableNo={staffCall.tableNo ?? 0}
                       staffCallText={staffCall.name}
                       {...overlayProps}
                     />

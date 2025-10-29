@@ -35,13 +35,13 @@ function PosPaymentsPage() {
                 <Table.Row className="flex w-full" key={payment.orderPaymentId}>
                   <Table.Cell className={COLUMN_WIDTHS.number}>{arr.length - index}</Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.cash}>
-                    {payment.method === "CASH" ? `${payment.amount.toLocaleString()}원` : "-"}
+                    {payment.method === "CASH" ? `${payment.amount?.toLocaleString()}원` : "-"}
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.card}>
-                    {payment.method === "CARD" ? `${payment.amount.toLocaleString()}원` : "-"}
+                    {payment.method === "CARD" ? `${payment.amount?.toLocaleString()}원` : "-"}
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.total}>
-                    {payment.amount.toLocaleString()}원
+                    {payment.amount?.toLocaleString()}원
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.status}>
                     <Button
@@ -52,8 +52,8 @@ function PosPaymentsPage() {
                     </Button>
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.createdAt}>
-                    {payment.createdAt.split(":")[0]}시 {payment.createdAt.split(":")[1]}분{" "}
-                    {payment.createdAt.split(":")[2]}초
+                    {payment.createdAt?.split(":")[0]}시 {payment.createdAt?.split(":")[1]}분{" "}
+                    {payment.createdAt?.split(":")[2]}초
                   </Table.Cell>
                 </Table.Row>
               ))}

@@ -1,13 +1,13 @@
 import {
-  MenuList,
-  Order,
-  OrderPaymentList,
-  Revenue,
-  Table,
-  TableActivity,
-} from "@renderer/types/domain";
+  CategoryViewCategoryDetail,
+  OrderPaymentViewOrderPaymentDetail,
+  OrderViewOrderDetail,
+  PosViewPosTableActivityDetail,
+  PosViewPosTableDetail,
+  PosViewRevenue,
+} from "@renderer/api/device/data-contracts";
 
-export const MOCK: Table[] = [
+export const MOCK: PosViewPosTableDetail[] = [
   {
     posTableId: "1",
     storeId: "A001",
@@ -154,7 +154,7 @@ export const MOCK: Table[] = [
   },
 ];
 
-export const PAYMENTS_MOCK: OrderPaymentList[] = [
+export const PAYMENTS_MOCK: OrderPaymentViewOrderPaymentDetail[] = [
   {
     orderPaymentId: "OP-4886",
     state: "APPROVE",
@@ -355,7 +355,7 @@ export const PAYMENTS_MOCK: OrderPaymentList[] = [
   },
 ];
 
-export const POS_ORDER_MOCK: Order = {
+export const POS_ORDER_MOCK: OrderViewOrderDetail = {
   orderId: "OM-4886",
   storeId: "A001",
   category: "INITIAL",
@@ -432,7 +432,7 @@ export const CATEGORY_MOCK = [
   { category: "디저트", categoryId: "CATEGORY-004" },
 ];
 
-export const POS_DETAIL_ORDER_MOCK: Order[] = [
+export const POS_DETAIL_ORDER_MOCK: OrderViewOrderDetail[] = [
   {
     orderId: "OM-4886",
     storeId: "A001",
@@ -507,7 +507,7 @@ export const POS_DETAIL_ORDER_MOCK: Order[] = [
   },
 ];
 
-export const MENU_LIST_MOCK: MenuList = {
+export const MENU_LIST_MOCK: CategoryViewCategoryDetail = {
   categoryId: "CATEGORY-001",
   name: "메인",
   menus: [
@@ -579,7 +579,7 @@ export const MENU_LIST_MOCK: MenuList = {
   ],
 };
 
-export const TABLE_ACTIVITY_MOCK: TableActivity = {
+export const TABLE_ACTIVITY_MOCK: PosViewPosTableActivityDetail = {
   posTableActivityId: "PTA-4886",
   storeId: "A001",
   posTableId: "PT-4886",
@@ -594,7 +594,7 @@ export const TABLE_ACTIVITY_MOCK: TableActivity = {
   orderPayments: PAYMENTS_MOCK,
 };
 
-export const REVENUE_MOCK: Revenue = {
+export const REVENUE_MOCK: PosViewRevenue = {
   totalOrderPrice: 1000000,
   totalDiscountPrice: 200000,
   totalPaymentPrice: 1200000,

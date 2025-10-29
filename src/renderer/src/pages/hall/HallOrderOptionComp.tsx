@@ -1,9 +1,9 @@
+import { OrderViewOrderOptionDetail } from "@renderer/api/device/data-contracts";
 import { PlusIcon } from "@renderer/assets/icons";
-import { OrderOption } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
 interface HallOrderOptionCompProps {
-  orderOption: OrderOption;
+  orderOption: OrderViewOrderOptionDetail;
   isServed: boolean;
 }
 

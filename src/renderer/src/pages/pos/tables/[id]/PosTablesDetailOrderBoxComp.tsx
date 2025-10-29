@@ -1,10 +1,10 @@
+import { MenuViewMenuOptionGroupDetail } from "@renderer/api/device/data-contracts";
 import { PlusIcon } from "@renderer/assets/icons";
 import { Checkbox } from "@renderer/components";
 import { RadioGroup, RadioGroupFlex, RadioGroupItem } from "@renderer/components/Radio";
-import { MenuOptionGroup } from "@renderer/types/domain";
 
 interface PosTablesDetailOrderBoxCompProps {
-  options: MenuOptionGroup[];
+  options: MenuViewMenuOptionGroupDetail[];
   type: "required" | "optional";
 }
 
@@ -27,18 +27,18 @@ export default function PosTablesDetailOrderBoxComp({
             <span className="text-gray-0 text-sm font-medium">{optionGroup.name}</span>
             {type === "required" ? (
               <RadioGroup
-                defaultValue={type === "required" ? optionGroup.menuOptions[0].name : undefined}
+                defaultValue={type === "required" ? optionGroup.menuOptions?.[0]?.name : undefined}
               >
-                {optionGroup.menuOptions.map((option) => (
+                {optionGroup.menuOptions?.map((option) => (
                   <RadioGroupFlex key={option.name} className="justify-between">
                     <div className="flex items-center gap-2">
-                      <RadioGroupItem value={option.name} />
+                      <RadioGroupItem value={option.name ?? ""} />
                       <span className="text-s font-normal text-gray-100">{option.name}</span>
                     </div>
                     <div className="flex items-center gap-0.5">
                       <PlusIcon className="text-gray-0 h-5 w-5" />
                       <span className="text-s font-normal text-gray-100">
-                        {option.price.toLocaleString()}원
+                        {option.price?.toLocaleString()}원
                       </span>
                     </div>
                   </RadioGroupFlex>
@@ -46,7 +46,7 @@ export default function PosTablesDetailOrderBoxComp({
               </RadioGroup>
             ) : (
               <div className="flex items-center gap-2">
-                {optionGroup.menuOptions.map((option) => (
+                {optionGroup.menuOptions?.map((option) => (
                   <div key={option.name} className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Checkbox />
@@ -55,7 +55,7 @@ export default function PosTablesDetailOrderBoxComp({
                     <div className="flex items-center gap-0.5">
                       <PlusIcon className="text-gray-0 h-5 w-5" />
                       <span className="text-s font-normal text-gray-100">
-                        {option.price.toLocaleString()}원
+                        {option.price?.toLocaleString()}원
                       </span>
                     </div>
                   </div>

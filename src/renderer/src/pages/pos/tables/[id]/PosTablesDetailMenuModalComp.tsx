@@ -1,8 +1,8 @@
+import { MenuViewMenuDetail } from "@renderer/api/device/data-contracts";
 import { MinusIcon, PlusIcon } from "@renderer/assets/icons";
 import { Button } from "@renderer/components";
 import { Dialog } from "@renderer/components/Dialog";
-import PosTablesDetailOrderBoxComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailorderBoxComp";
-import { Menu } from "@renderer/types/domain";
+import PosTablesDetailOrderBoxComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderBoxComp";
 import { ModalProps } from "@renderer/types/overlay";
 
 const MENU_LABEL = {
@@ -12,12 +12,12 @@ const MENU_LABEL = {
 } as const;
 
 interface PosTablesDetailMenuModalCompProps extends ModalProps {
-  menu: Menu;
+  menu: MenuViewMenuDetail;
 }
 
 function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuModalCompProps) {
-  const requiredOptions = menu.menuOptionGroups.filter((group) => group.type === "MANDATORY");
-  const optionalOptions = menu.menuOptionGroups.filter((group) => group.type === "OPTIONAL");
+  const requiredOptions = menu.menuOptionGroups?.filter((group) => group.type === "MANDATORY");
+  const optionalOptions = menu.menuOptionGroups?.filter((group) => group.type === "OPTIONAL");
 
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
@@ -33,7 +33,7 @@ function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuMod
             <div className="flex flex-col gap-5">
               {menu.label !== "DEFAULT" && (
                 <Button variant="outline" className="h-10 w-fit rounded-[40px] px-5">
-                  {MENU_LABEL[menu.label]}
+                  {MENU_LABEL[menu.label as keyof typeof MENU_LABEL]}
                 </Button>
               )}
 
@@ -58,7 +58,7 @@ function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuMod
                   </button>
                 </div>
                 <strong className="text-gray-0 text-3xl font-bold">
-                  {menu.price.toLocaleString()}원
+                  {menu.price?.toLocaleString()}원
                 </strong>
               </div>
             </div>
@@ -66,17 +66,17 @@ function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuMod
             <div className="my-5 h-[8px] w-full bg-gray-700" />
 
             <section className="flex flex-col gap-4">
-              {requiredOptions?.length > 0 && (
-                <PosTablesDetailOrderBoxComp options={requiredOptions} type="required" />
+              {(requiredOptions?.length ?? 0) > 0 && (
+                <PosTablesDetailOrderBoxComp options={requiredOptions ?? []} type="required" />
               )}
-              {optionalOptions?.length > 0 && (
-                <PosTablesDetailOrderBoxComp options={optionalOptions} type="optional" />
+              {(optionalOptions?.length ?? 0) > 0 && (
+                <PosTablesDetailOrderBoxComp options={optionalOptions ?? []} type="optional" />
               )}
             </section>
           </div>
           <div className="sticky bottom-0 left-0 w-full bg-white pt-6">
             <Button className="button-xl w-full">
-              총 {menu.price.toLocaleString()}원
+              총 {menu.price?.toLocaleString()}원
               <div className="h-1 w-1 rounded-full bg-white/60" />
               메뉴 추가
             </Button>

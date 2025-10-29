@@ -1,6 +1,6 @@
-import { Waiting } from "@renderer/types/domain";
+import { WaitingDetailResponse } from "@renderer/api/device/data-contracts";
 
-const MOCK: Waiting[] = [
+const MOCK: WaitingDetailResponse[] = [
   {
     waitingId: "1",
     phoneNumber: "01012341234",
@@ -9,7 +9,7 @@ const MOCK: Waiting[] = [
     number: 2,
     callCount: 3,
     lastCallTime: "2025-01-01 12:00:00",
-    state: "WAITING",
+    state: "REGISTRATION",
     createdAt: "2025-01-01 12:00:00",
   },
   {
@@ -20,7 +20,7 @@ const MOCK: Waiting[] = [
     number: 44,
     callCount: 0,
     lastCallTime: "2025-01-01 12:00:00",
-    state: "WAITING",
+    state: "REGISTRATION",
     createdAt: "2025-01-01 12:00:00",
   },
   {
@@ -31,7 +31,7 @@ const MOCK: Waiting[] = [
     number: 555,
     callCount: 1,
     lastCallTime: "2025-01-01 12:00:00",
-    state: "WAITING",
+    state: "REGISTRATION",
     createdAt: "2025-01-01 12:00:00",
   },
   {
@@ -42,7 +42,7 @@ const MOCK: Waiting[] = [
     number: 556,
     callCount: 10,
     lastCallTime: "2025-01-01 12:00:00",
-    state: "WAITING",
+    state: "REGISTRATION",
     createdAt: "2025-01-01 12:00:00",
   },
 ];

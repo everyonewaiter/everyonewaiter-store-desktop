@@ -1,6 +1,6 @@
+import { PosViewPosTableActivityDetail } from "@renderer/api/device/data-contracts";
 import { Button, Dropdown, Input } from "@renderer/components";
 import { Dialog } from "@renderer/components/Dialog";
-import { TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 
 const cardInstallmentMonths = new Array(12)
@@ -26,7 +26,7 @@ const cashReceiptTypes = [
 
 interface PosTablesDetailPaymentModalCompProps extends ModalProps {
   paymentType: "cash" | "card";
-  activity: TableActivity;
+  activity: PosViewPosTableActivityDetail;
 }
 
 function PosTablesDetailPaymentModalComp({
@@ -43,17 +43,17 @@ function PosTablesDetailPaymentModalComp({
             <div className="flex flex-col gap-2">
               <span className="text-gray-0 text-[15px] font-normal">결제 정보</span>
               <h3 className="text-gray-0 text-2xl font-semibold">
-                {activity.orders[0].orderMenus[0].name} 외{" "}
-                {activity.orders
-                  .map((order) => order.orderMenus.length)
-                  .reduce((a, b) => a + b, 0) - 1}
+                {activity.orders?.[0]?.orderMenus?.[0]?.name} 외{" "}
+                {(activity.orders
+                  ?.map((order) => order.orderMenus?.length ?? 0)
+                  .reduce((a, b) => a + b, 0) ?? 0) - 1}
                 개
               </h3>
             </div>
             <div className="flex flex-col gap-2">
               <span className="text-gray-0 text-[15px] font-normal">결제할 금액</span>
               <h3 className="text-gray-0 text-2xl font-semibold">
-                {activity.totalOrderPrice.toLocaleString()}원
+                {activity.totalOrderPrice?.toLocaleString()}원
               </h3>
             </div>
             {paymentType === "cash" ? (

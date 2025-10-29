@@ -1,9 +1,9 @@
+import { MenuViewMenuDetail } from "@renderer/api/device/data-contracts";
 import PosTablesDetailMenuModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuModalComp";
-import { Menu } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
 
 interface PosTablesDetailMenuCardCompProps {
-  menu: Menu;
+  menu: MenuViewMenuDetail;
 }
 
 function PosTablesDetailMenuCardComp({ menu }: PosTablesDetailMenuCardCompProps) {
@@ -29,7 +29,7 @@ function PosTablesDetailMenuCardComp({ menu }: PosTablesDetailMenuCardCompProps)
       <div className="absolute bottom-0 flex w-full flex-col items-center justify-center gap-2 bg-white px-6 py-4">
         <span className="text-gray-0 text-lg leading-[27px] font-normal">{menu.name}</span>
         <strong className="text-gray-0 text-2xl leading-8 font-semibold">
-          {menu.price.toLocaleString()}원
+          {menu.price?.toLocaleString()}원
         </strong>
       </div>
     </button>

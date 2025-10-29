@@ -10,7 +10,7 @@ function PosTablesDetailPage() {
         <PosTablesDetailSideComp
           type="checkout"
           activity={TABLE_ACTIVITY_MOCK}
-          menus={MENU_LIST_MOCK.menus}
+          menus={MENU_LIST_MOCK.menus ?? []}
         />
       </div>
     </div>

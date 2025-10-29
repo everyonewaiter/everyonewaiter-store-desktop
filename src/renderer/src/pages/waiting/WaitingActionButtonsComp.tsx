@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
+import { WaitingDetailResponse } from "@renderer/api/device/data-contracts";
 import { BellRingingIcon, DoorOpenIcon, XCircleIcon } from "@renderer/assets/icons";
 import { Button } from "@renderer/components";
 import { ButtonColor, ButtonVariant } from "@renderer/components/Button/Button.types";
 import WaitingModalComp from "@renderer/pages/waiting/WaitingModalComp";
-import { Waiting } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
 
 interface WaitingActionType {
@@ -39,7 +39,7 @@ const WAITING_ACTIONS: WaitingActionType[] = [
 ];
 
 interface WaitingActionButtonsCompProps {
-  waiting: Waiting;
+  waiting: WaitingDetailResponse;
 }
 
 function WaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
@@ -70,7 +70,7 @@ function WaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
             {action.icon}
             <span className="font-semibold md:text-lg lg:text-xl">{action.label}</span>
           </div>
-          {waiting.callCount > 0 && index === 0 && (
+          {(waiting.callCount ?? 0) > 0 && index === 0 && (
             <span className="text-sm font-medium">총 {waiting.callCount}회 · 15분전</span>
           )}
         </Button>

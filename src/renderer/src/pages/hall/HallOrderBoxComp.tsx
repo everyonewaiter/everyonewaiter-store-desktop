@@ -1,12 +1,15 @@
 import { useState } from "react";
+import {
+  OrderViewOrderMenuDetail,
+  OrderViewOrderOptionDetail,
+} from "@renderer/api/device/data-contracts";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import HallOrderOptionComp from "@renderer/pages/hall/HallOrderOptionComp";
-import { OrderMenu, OrderOption } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
 interface HallOrderBoxCompProps {
-  orderMenu: OrderMenu;
+  orderMenu: OrderViewOrderMenuDetail;
   isCompleted?: boolean;
 }
 
@@ -15,13 +18,14 @@ function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompPr
   const showImage = true;
   const [isServed, setIsServed] = useState(orderMenu.served);
 
-  const orderOptions: (OrderOption & { orderOptionGroupId: string })[] =
-    orderMenu.orderOptionGroups.flatMap((orderOptionGroup) =>
-      orderOptionGroup.orderOptions.map((orderOption) => ({
-        ...orderOption,
-        orderOptionGroupId: orderOptionGroup.orderOptionGroupId,
-      }))
-    );
+  const orderOptions: (OrderViewOrderOptionDetail & { orderOptionGroupId: string })[] =
+    orderMenu.orderOptionGroups?.flatMap(
+      (orderOptionGroup) =>
+        orderOptionGroup.orderOptions?.map((orderOption) => ({
+          ...orderOption,
+          orderOptionGroupId: orderOptionGroup.orderOptionGroupId ?? "",
+        })) ?? []
+    ) ?? [];
 
   return (
     <div
@@ -53,13 +57,13 @@ function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompPr
               {orderMenu.quantity}개
             </span>
           </div>
-          {orderMenu.orderOptionGroups.length > 0 && (
+          {(orderMenu.orderOptionGroups?.length ?? 0) > 0 && (
             <div className="flex flex-col gap-1">
               {orderOptions.map((orderOption) => (
                 <HallOrderOptionComp
                   key={`${orderOption.orderOptionGroupId}-${orderOption.name}`}
                   orderOption={orderOption}
-                  isServed={isServed}
+                  isServed={isServed ?? false}
                 />
               ))}
             </div>

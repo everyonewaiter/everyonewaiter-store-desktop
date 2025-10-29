@@ -1,14 +1,14 @@
+import { OrderViewOrderDetail } from "@renderer/api/device/data-contracts";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import HallActionCompleteModalComp from "@renderer/pages/hall/HallActionCompleteModalComp";
 import HallOrderBoxComp from "@renderer/pages/hall/HallOrderBoxComp";
-import { Order } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { getFormattedTime } from "@renderer/utils/format";
 import { overlay } from "overlay-kit";
 
 interface HallOrderCompProps {
-  order: Order;
+  order: OrderViewOrderDetail;
 }
 
 function HallOrderComp({ order }: HallOrderCompProps) {
@@ -25,11 +25,11 @@ function HallOrderComp({ order }: HallOrderCompProps) {
         >
           <div className={cn("flex w-full flex-col gap-2.5", isCompleted ? "" : "absolute top-0")}>
             <div className="flex h-[51px] w-full items-center justify-center rounded-xl border border-gray-600">
-              주문 시간 {getFormattedTime(order.createdAt)}
+              주문 시간 {getFormattedTime(order.createdAt ?? "")}
             </div>
             {isCompleted && (
               <div className="flex h-[51px] w-full items-center justify-center rounded-xl border border-gray-600">
-                완료 시간 {getFormattedTime(order.servedTime)}
+                완료 시간 {getFormattedTime(order.servedTime ?? "")}
               </div>
             )}
           </div>
@@ -37,7 +37,7 @@ function HallOrderComp({ order }: HallOrderCompProps) {
             <div className="flex h-full flex-col items-center justify-center">
               <span className="text-gray-0 text-lg font-medium">테이블 번호</span>
               <strong className="text-gray-0 pt-3 text-4xl font-bold">
-                {String(order.tableNo).padStart(2, "0")}
+                {String(order.tableNo ?? 0).padStart(2, "0")}
               </strong>
             </div>
           ) : (
@@ -53,7 +53,7 @@ function HallOrderComp({ order }: HallOrderCompProps) {
               </Button>
               <span className="text-gray-0 pt-6 text-lg font-medium">테이블 번호</span>
               <strong className="text-gray-0 pt-3 text-4xl font-bold">
-                {String(order.tableNo).padStart(2, "0")}
+                {String(order.tableNo ?? 0).padStart(2, "0")}
               </strong>
               <Button
                 color={ColorName.BLACK}
@@ -62,7 +62,7 @@ function HallOrderComp({ order }: HallOrderCompProps) {
                   overlay.open((overlayProps) => (
                     <HallActionCompleteModalComp
                       type="order"
-                      tableNo={order.tableNo}
+                      tableNo={order.tableNo ?? 0}
                       {...overlayProps}
                     />
                   ))
@@ -81,7 +81,7 @@ function HallOrderComp({ order }: HallOrderCompProps) {
               메모: {order.memo}
             </div>
           )}
-          {order.orderMenus.length > 0 && (
+          {order.orderMenus?.length && order.orderMenus.length > 0 && (
             <div className="grid-auto-rows-[1fr] grid w-full gap-x-2.5 gap-y-4 md:grid-cols-3 lg:grid-cols-4">
               {order.orderMenus
                 .sort((a, b) => Number(a.served) - Number(b.served))

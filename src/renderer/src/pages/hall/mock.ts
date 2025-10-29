@@ -1,9 +1,9 @@
-import { Order, StaffCall } from "@renderer/types/domain";
+import { OrderViewOrderDetail, StaffCallDetailResponse } from "@renderer/api/device/data-contracts";
 
 interface MockHallManagement {
-  unserved: Order[];
-  served: Order[];
-  staffCalls: StaffCall[];
+  unserved: OrderViewOrderDetail[];
+  served: OrderViewOrderDetail[];
+  staffCalls: StaffCallDetailResponse[];
 }
 
 const MOCK: MockHallManagement = {

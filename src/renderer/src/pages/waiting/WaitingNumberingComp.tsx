@@ -1,9 +1,9 @@
-import { Waiting } from "@renderer/types/domain";
+import { WaitingDetailResponse } from "@renderer/api/device/data-contracts";
 import cn from "@renderer/utils/cn";
 
 interface WaitingNumberingCompProps {
   index: number;
-  waitingList: Waiting[];
+  waitingList: WaitingDetailResponse[];
 }
 
 function WaitingNumberingComp({ index, waitingList }: WaitingNumberingCompProps) {
@@ -19,7 +19,7 @@ function WaitingNumberingComp({ index, waitingList }: WaitingNumberingCompProps)
         <div
           className={cn(
             "absolute left-1/2 z-50 w-0.5 -translate-x-1/2 bg-gray-100 md:block lg:hidden",
-            waitingList[index].callCount > 0 && waitingList[index + 1].callCount > 0
+            (waitingList[index].callCount ?? 0) > 0 && (waitingList[index + 1].callCount ?? 0) > 0
               ? "top-[calc(50%+24px+12px)] h-[calc(260px-45px)]"
               : "top-[calc(50%+24px+12px)] h-[calc(260px-29px-12px-12px)]"
           )}

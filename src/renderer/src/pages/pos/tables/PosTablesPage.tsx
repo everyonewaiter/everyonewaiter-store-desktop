@@ -50,7 +50,7 @@ function PosTablesPage() {
                 currentTableNo && table.tableNo !== Number(currentTableNo) ? "animate-wiggle" : ""
               }
               disabled={table.tableNo === Number(currentTableNo)}
-              onClick={() => handleMoveToTableDetail(table.tableNo)}
+              onClick={() => handleMoveToTableDetail(table.tableNo ?? 0)}
             />
           ))}
         </div>

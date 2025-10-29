@@ -1,9 +1,9 @@
+import { StaffCallDetailResponse } from "@renderer/api/device/data-contracts";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
-import { StaffCall } from "@renderer/types/domain";
 
 interface HallStaffCallCompProps {
-  staffCall: StaffCall;
+  staffCall: StaffCallDetailResponse;
   onClick: () => void;
 }
 

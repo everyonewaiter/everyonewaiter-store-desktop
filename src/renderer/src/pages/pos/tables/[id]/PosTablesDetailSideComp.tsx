@@ -1,16 +1,19 @@
+import {
+  MenuViewMenuDetail,
+  PosViewPosTableActivityDetail,
+} from "@renderer/api/device/data-contracts";
 import { Button } from "@renderer/components";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailCancelPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelPaymentModalComp";
 import PosTablesDetailDiscountModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailDiscountModalComp";
 import PosTablesDetailOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderModalComp";
 import PosTablesDetailPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPaymentModalComp";
-import { Menu, TableActivity } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
 
 interface PosTablesDetailSideCompProps {
   type?: "order" | "checkout";
-  activity: TableActivity;
-  menus: Menu[];
+  activity: PosViewPosTableActivityDetail;
+  menus: MenuViewMenuDetail[];
 }
 
 function PosTablesDetailSideComp({
@@ -34,7 +37,7 @@ function PosTablesDetailSideComp({
             onClick={() =>
               overlay.open((overlayProps) => (
                 <PosTablesDetailCancelPaymentModalComp
-                  tableNo={activity.tableNo}
+                  tableNo={activity.tableNo ?? 0}
                   {...overlayProps}
                 />
               ))
@@ -47,10 +50,10 @@ function PosTablesDetailSideComp({
       <div className="scrollbar-hide min-h-0 flex-1 overflow-y-auto pr-4">
         <div className="flex w-full flex-col gap-8">
           {type === "checkout" &&
-            activity.orders.map((order, index) => (
+            activity.orders?.map((order, index) => (
               <PosPaymentsOrderBoxComp key={order.orderId}>
                 <PosPaymentsOrderBoxComp.Index index={index} hasCheckbox />
-                {order.orderMenus.map((menu) => (
+                {order.orderMenus?.map((menu) => (
                   <PosPaymentsOrderBoxComp.Order key={menu.orderMenuId} orderMenu={menu} />
                 ))}
               </PosPaymentsOrderBoxComp>
@@ -80,8 +83,8 @@ function PosTablesDetailSideComp({
               onClick={() =>
                 overlay.open((overlayProps) => (
                   <PosTablesDetailDiscountModalComp
-                    tableNo={activity.tableNo}
-                    totalOrderPrice={activity.totalOrderPrice}
+                    tableNo={activity.tableNo ?? 0}
+                    totalOrderPrice={activity.totalOrderPrice ?? 0}
                     {...overlayProps}
                   />
                 ))

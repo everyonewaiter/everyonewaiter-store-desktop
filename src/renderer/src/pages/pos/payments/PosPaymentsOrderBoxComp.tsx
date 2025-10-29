@@ -1,7 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
+import { MenuViewMenuDetail, OrderViewOrderMenuDetail } from "@renderer/api/device/data-contracts";
 import { PlusIcon } from "@renderer/assets/icons";
 import { Checkbox } from "@renderer/components";
-import { Menu, OrderMenu } from "@renderer/types/domain";
 
 function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-2">{children}</div>;
@@ -10,34 +10,31 @@ function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
 PosPaymentsOrderBoxComp.Order = function Order({
   orderMenu,
 }: {
-  orderMenu: OrderMenu | (Menu & { quantity: number });
+  orderMenu: OrderViewOrderMenuDetail | (MenuViewMenuDetail & { quantity: number });
 }) {
-  const normalizeMenuItem = (
-    item: OrderMenu | (Menu & { quantity: number })
-  ): {
-    name: string;
-    quantity: number;
-    optionGroups: {
-      id: string;
-      name: string;
-      options: { name: string; price: number }[];
-    }[];
-  } => {
-    if ("orderMenuId" in item) {
+  const normalizeMenuItem = () => {
+    if ("orderMenuId" in orderMenu) {
       return {
-        name: item.name,
-        quantity: item.quantity,
-        optionGroups: item.orderOptionGroups.map((group) => ({
-          id: group.orderOptionGroupId,
-          name: group.name,
-          options: group.orderOptions,
-        })),
+        name: orderMenu.name ?? "",
+        quantity: orderMenu.quantity ?? 0,
+        optionGroups:
+          orderMenu.orderOptionGroups?.map((group) => ({
+            id: group.orderOptionGroupId ?? "",
+            name: group.name ?? "",
+            options:
+              group.orderOptions?.map((option) => ({
+                name: option.name ?? "",
+                price: option.price ?? 0,
+              })) ?? [],
+          })) ?? [],
       };
     } else {
+      const data = orderMenu as MenuViewMenuDetail & { quantity: number };
+
       return {
-        name: item.name,
-        quantity: item.quantity,
-        optionGroups: item.menuOptionGroups.map((group) => ({
+        name: data.name ?? "",
+        quantity: data.quantity ?? 0,
+        optionGroups: data.menuOptionGroups?.map((group) => ({
           id: group.menuOptionGroupId,
           name: group.name,
           options: group.menuOptions,
@@ -46,7 +43,7 @@ PosPaymentsOrderBoxComp.Order = function Order({
     }
   };
 
-  const normalized = normalizeMenuItem(orderMenu);
+  const normalized = normalizeMenuItem();
 
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-gray-600 p-4">
@@ -55,8 +52,8 @@ PosPaymentsOrderBoxComp.Order = function Order({
         <span className="text-lg font-medium text-gray-100">{normalized.quantity}개</span>
       </div>
       <div className="flex flex-col gap-1">
-        {normalized.optionGroups.map((group) =>
-          group.options.map((option) => (
+        {normalized.optionGroups?.map((group) =>
+          group.options?.map((option) => (
             <div key={group.id} className="flex items-center justify-between">
               <span className="flex text-base font-medium text-[#2E7BB3]">
                 <PlusIcon width={24} height={24} color="#2E7BB3" />
@@ -71,7 +68,13 @@ PosPaymentsOrderBoxComp.Order = function Order({
   );
 };
 
-PosPaymentsOrderBoxComp.Menu = function Menu({ menu, quantity }: { menu: Menu; quantity: number }) {
+PosPaymentsOrderBoxComp.Menu = function Menu({
+  menu,
+  quantity,
+}: {
+  menu: MenuViewMenuDetail;
+  quantity: number;
+}) {
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-gray-600 p-4">
       <div className="flex items-center justify-between">
@@ -79,8 +82,8 @@ PosPaymentsOrderBoxComp.Menu = function Menu({ menu, quantity }: { menu: Menu; q
         <span className="text-lg font-medium text-gray-100">{quantity}개</span>
       </div>
       <div className="flex flex-col gap-1">
-        {menu.menuOptionGroups.map((optionGroup) =>
-          optionGroup.menuOptions.map((option) => (
+        {menu.menuOptionGroups?.map((optionGroup) =>
+          optionGroup.menuOptions?.map((option) => (
             <div key={optionGroup.menuOptionGroupId} className="flex items-center justify-between">
               <Fragment>
                 <span className="flex text-base font-medium text-[#2E7BB3]">

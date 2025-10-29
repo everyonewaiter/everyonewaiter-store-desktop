@@ -16,7 +16,7 @@ function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps)
           <div className="flex items-center justify-between">
             <h1 className="text-gray-0 text-2xl font-semibold">03월 11일 매출 내역</h1>
             <h1 className="text-primary text-2xl font-semibold">
-              {revenue.totalPaymentPrice.toLocaleString()}원
+              {revenue.totalPaymentPrice?.toLocaleString()}원
             </h1>
           </div>
           <div className="flex flex-col gap-5">
@@ -26,13 +26,13 @@ function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps)
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">주문 금액</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.totalOrderPrice.toLocaleString()}원
+                    {revenue.totalOrderPrice?.toLocaleString()}원
                   </h3>
                 </div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">할인</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.totalDiscountPrice.toLocaleString()}원
+                    {revenue.totalDiscountPrice?.toLocaleString()}원
                   </h3>
                 </div>
               </div>
@@ -43,13 +43,13 @@ function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps)
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">카드</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.cardPaymentApprovePrice.toLocaleString()}원
+                    {revenue.cardPaymentApprovePrice?.toLocaleString()}원
                   </h3>
                 </div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">현금</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.cashPaymentApprovePrice.toLocaleString()}원
+                    {revenue.cashPaymentApprovePrice?.toLocaleString()}원
                   </h3>
                 </div>
               </div>
@@ -60,13 +60,13 @@ function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps)
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">카드</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.cardPaymentCancelPrice.toLocaleString()}원
+                    {revenue.cardPaymentCancelPrice?.toLocaleString()}원
                   </h3>
                 </div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">현금</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.cashPaymentCancelPrice.toLocaleString()}원
+                    {revenue.cashPaymentCancelPrice?.toLocaleString()}원
                   </h3>
                 </div>
               </div>
