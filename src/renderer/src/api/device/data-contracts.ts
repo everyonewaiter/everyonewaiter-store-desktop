@@ -1043,72 +1043,72 @@ export interface DeviceDetailResponse {
   updatedAt?: string;
 }
 
-export type UpdateOrdersData = any;
+export type UpdatePosTablesOrdersData = any;
 
-export type UpdateOrderMemoData = any;
+export type UpdatePosTablesOrdersMemoData = any;
 
 export type GetWaitingsData = WaitingDetailResponses;
 
-export type RegisterData = any;
+export type AddWaitingsData = any;
 
-export type CompleteData = any;
+export type CompleteWaitingsData = any;
 
-export type CancelData = any;
+export type CancelWaitingsData = any;
 
-export type CallData = any;
+export type AddWaitingsCallData = any;
 
-export type Cancel1Data = any;
+export type CancelStoresWaitingsData = any;
 
-export type OpenData = any;
+export type AddStoresOpenData = any;
 
-export type CloseData = any;
+export type AddStoresCloseData = any;
 
-export type ResendReceiptData = any;
+export type ResendPosTablesReceiptData = any;
 
-export type CancelOrderData = any;
+export type CancelPosTablesOrdersData = any;
 
-export type DiscountData = any;
+export type AddPosTablesDiscountData = any;
 
-export type CompleteActivityData = any;
+export type CompletePosTablesData = any;
 
-export type MoveTableData = any;
+export type MovePosTablesData = any;
 
-export type CreateData = any;
+export type AddOrdersData = any;
 
-export type ServingOrderData = any;
+export type AddOrdersServingData = any;
 
-export type ServingOrderMenuData = any;
+export type AddOrdersMenusServingData = any;
 
-export type GetStaffCallsData = StaffCallDetailResponses;
+export type GetOrdersStaffCallsData = StaffCallDetailResponses;
 
-export type Call1Data = any;
+export type AddOrdersStaffCallsData = any;
 
-export type Complete1Data = any;
+export type CompleteOrdersStaffCallsData = any;
 
-export type ApproveData = any;
+export type ApproveOrdersPaymentsData = any;
 
-export type Cancel2Data = any;
+export type CancelOrdersPaymentsData = any;
 
-export type CountData = WaitingCountResponse;
+export type GetWaitingsCountData = WaitingCountResponse;
 
-export type MyTurnData = WaitingMyTurnView;
+export type GetStoresWaitingsMyTurnData = WaitingMyTurnView;
 
-export type GetStoreMenusData = CategoryDetails;
+export type GetStoresMenusData = CategoryDetails;
 
-export type ConnectData = SseEmitter;
+export type GetStoresSubscribeData = SseEmitter;
 
-export type GetTablesData = PosTableDetailResponses;
+export type GetPosTablesData = PosTableDetailResponses;
 
-export type GetActiveTableActivityData = PosViewPosTableActivityDetail;
+export type GetPosTablesByIdData = PosViewPosTableActivityDetail;
 
-export type GetTableActivityData = PosViewPosTableActivityDetail;
+export type GetPosTablesActivitiesByIdData = PosViewPosTableActivityDetail;
 
-export type GetRevenueData = PosViewRevenue;
+export type GetPosRevenueData = PosViewRevenue;
 
-export type GetOrdersByTableData = OrderDetailResponses;
+export type GetOrdersTablesData = OrderDetailResponses;
 
-export type GetOrderPaymentsByPosData = OrderPaymentDetailResponses;
+export type GetOrdersPaymentsData = OrderPaymentDetailResponses;
 
-export type GetOrdersByHallData = OrderHallResponses;
+export type GetOrdersHallData = OrderHallResponses;
 
-export type GetDeviceData = DeviceDetailResponse;
+export type GetDevicesData = DeviceDetailResponse;

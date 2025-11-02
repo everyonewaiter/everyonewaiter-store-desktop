@@ -12,62 +12,62 @@
 
 import {
   AccountCreateRequest,
+  AccountsData,
   AccountSignInRequest,
-  ApplyData,
+  AccountsResult,
+  AddAccountsData,
+  AddStoresCategoriesData,
+  AddStoresCategoriesMenusData,
+  AddStoresCategoriesMenusPayload,
+  AddStoresDevicesData,
+  AddStoresRegistrationsData,
   CategoryCreateRequest,
   CategoryMovePositionRequest,
   CategoryUpdateRequest,
-  Create1Data,
-  Create2Data,
-  Create2Payload,
-  CreateData,
-  Delete1Data,
-  Delete2Data,
-  DeleteAllData,
-  DeleteData,
+  DeleteStoresCategoriesData,
+  DeleteStoresCategoriesMenusData,
+  DeleteStoresDevicesData,
+  DeleteStoresMenusData,
   DeviceCreateRequest,
+  DevicesData,
   DeviceUpdateRequest,
-  GetCategoriesData,
-  GetDeviceData,
-  GetDevicesData,
-  GetMenuData,
-  GetMenusData,
-  GetProfile1Data,
-  GetProfileData,
-  GetRegistrationData,
-  GetRegistrationsData,
-  GetStoreData,
-  GetStores1Data,
+  GetAccountsMeData,
+  GetAccountsPhoneNumberMeData,
+  GetStoresAccountsByIdData,
+  GetStoresByIdData,
+  GetStoresCategoriesData,
+  GetStoresCategoriesMenusByIdData,
+  GetStoresCategoriesMenusData,
   GetStoresData,
+  GetStoresDevicesByIdData,
+  GetStoresDevicesData,
+  GetStoresRegistrationsByIdData,
+  GetStoresRegistrationsData,
   MenuDeleteRequest,
   MenuMovePositionRequest,
   MenuUpdateRequest,
-  MovePosition1Data,
-  MovePositionData,
-  Reapply1Data,
-  ReapplyData,
+  MoveStoresCategoriesData,
+  MoveStoresMenusData,
   RegistrationApplyRequest,
   RegistrationReapplyRequest,
-  RenewTokenData,
-  SendAuthCode1Data,
-  SendAuthCodeData,
+  RenewAccountsTokenData,
+  SendAccountsAuthCodeData,
+  SendAccountsAuthMailData,
   SendAuthCodeRequest,
-  SendAuthMailData,
   SendAuthMailRequest,
-  SignInData,
+  SendDevicesAuthCodeData,
+  SignAccountsInData,
   SignInTokenRenewRequest,
-  SignUpData,
   StoreUpdateRequest,
-  Update1Data,
-  Update2Data,
-  Update3Data,
-  UpdateData,
-  UpdateWithImageData,
-  UpdateWithImagePayload,
-  VerifyAuthCode1Data,
-  VerifyAuthCodeData,
+  UpdateStoresCategoriesData,
+  UpdateStoresData,
+  UpdateStoresDevicesData,
+  UpdateStoresMenusData,
+  UpdateStoresMenusWithImageData,
+  UpdateStoresMenusWithImagePayload,
+  UpdateStoresRegistrationsData,
+  UpdateStoresRegistrationsWithImageData,
   VerifyAuthCodeRequest,
-  VerifyEmailData,
 } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
@@ -76,12 +76,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 매장 상세 조회 API
    *
    * @tags 매장
-   * @name GetStore
+   * @name GetStoresById
    * @summary 매장 상세 조회
    * @request GET:/v1/stores/{storeId}
    */
-  getStore = (storeId: number, params: RequestParams = {}) =>
-    this.request<GetStoreData, void>({
+  getStoresById = (storeId: number, params: RequestParams = {}) =>
+    this.request<GetStoresByIdData, void>({
       path: `/v1/stores/${storeId}`,
       method: "GET",
       format: "json",
@@ -91,13 +91,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 매장 정보 수정 API
    *
    * @tags 매장
-   * @name Update
+   * @name UpdateStores
    * @summary 매장 정보 수정
    * @request PUT:/v1/stores/{storeId}
    * @secure
    */
-  update = (storeId: number, data: StoreUpdateRequest, params: RequestParams = {}) =>
-    this.request<UpdateData, void>({
+  updateStores = (storeId: number, data: StoreUpdateRequest, params: RequestParams = {}) =>
+    this.request<UpdateStoresData, void>({
       path: `/v1/stores/${storeId}`,
       method: "PUT",
       body: data,
@@ -109,18 +109,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 메뉴 수정 API
    *
    * @tags 메뉴
-   * @name Update1
+   * @name UpdateStoresMenus
    * @summary 메뉴 수정
    * @request PUT:/v1/stores/{storeId}/menus/{menuId}
    * @secure
    */
-  update1 = (
+  updateStoresMenus = (
     storeId: number,
     menuId: number,
     data: MenuUpdateRequest,
     params: RequestParams = {}
   ) =>
-    this.request<Update1Data, void>({
+    this.request<UpdateStoresMenusData, void>({
       path: `/v1/stores/${storeId}/menus/${menuId}`,
       method: "PUT",
       body: data,
@@ -132,18 +132,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 메뉴 수정 (이미지 포함) API
    *
    * @tags 메뉴
-   * @name UpdateWithImage
+   * @name UpdateStoresMenusWithImage
    * @summary 메뉴 수정 (이미지 포함)
    * @request PUT:/v1/stores/{storeId}/menus/{menuId}/with-image
    * @secure
    */
-  updateWithImage = (
+  updateStoresMenusWithImage = (
     storeId: number,
     menuId: number,
-    data: UpdateWithImagePayload,
+    data: UpdateStoresMenusWithImagePayload,
     params: RequestParams = {}
   ) =>
-    this.request<UpdateWithImageData, void>({
+    this.request<UpdateStoresMenusWithImageData, void>({
       path: `/v1/stores/${storeId}/menus/${menuId}/with-image`,
       method: "PUT",
       body: data,
@@ -155,13 +155,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 기기 상세 조회 API
    *
    * @tags 기기
-   * @name GetDevice
+   * @name GetStoresDevicesById
    * @summary 기기 상세 조회
    * @request GET:/v1/stores/{storeId}/devices/{deviceId}
    * @secure
    */
-  getDevice = (storeId: number, deviceId: number, params: RequestParams = {}) =>
-    this.request<GetDeviceData, void>({
+  getStoresDevicesById = (storeId: number, deviceId: number, params: RequestParams = {}) =>
+    this.request<GetStoresDevicesByIdData, void>({
       path: `/v1/stores/${storeId}/devices/${deviceId}`,
       method: "GET",
       secure: true,
@@ -172,18 +172,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 기기 정보 수정 API
    *
    * @tags 기기
-   * @name Update2
+   * @name UpdateStoresDevices
    * @summary 기기 정보 수정
    * @request PUT:/v1/stores/{storeId}/devices/{deviceId}
    * @secure
    */
-  update2 = (
+  updateStoresDevices = (
     storeId: number,
     deviceId: number,
     data: DeviceUpdateRequest,
     params: RequestParams = {}
   ) =>
-    this.request<Update2Data, void>({
+    this.request<UpdateStoresDevicesData, void>({
       path: `/v1/stores/${storeId}/devices/${deviceId}`,
       method: "PUT",
       body: data,
@@ -195,13 +195,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 기기 삭제 API
    *
    * @tags 기기
-   * @name Delete
+   * @name DeleteStoresDevices
    * @summary 기기 삭제
    * @request DELETE:/v1/stores/{storeId}/devices/{deviceId}
    * @secure
    */
-  delete = (storeId: number, deviceId: number, params: RequestParams = {}) =>
-    this.request<DeleteData, void>({
+  deleteStoresDevices = (storeId: number, deviceId: number, params: RequestParams = {}) =>
+    this.request<DeleteStoresDevicesData, void>({
       path: `/v1/stores/${storeId}/devices/${deviceId}`,
       method: "DELETE",
       secure: true,
@@ -211,18 +211,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 카테고리 수정 API
    *
    * @tags 메뉴 카테고리
-   * @name Update3
+   * @name UpdateStoresCategories
    * @summary 카테고리 수정
    * @request PUT:/v1/stores/{storeId}/categories/{categoryId}
    * @secure
    */
-  update3 = (
+  updateStoresCategories = (
     storeId: number,
     categoryId: number,
     data: CategoryUpdateRequest,
     params: RequestParams = {}
   ) =>
-    this.request<Update3Data, void>({
+    this.request<UpdateStoresCategoriesData, void>({
       path: `/v1/stores/${storeId}/categories/${categoryId}`,
       method: "PUT",
       body: data,
@@ -234,13 +234,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 카테고리 삭제 API
    *
    * @tags 메뉴 카테고리
-   * @name Delete1
+   * @name DeleteStoresCategories
    * @summary 카테고리 삭제
    * @request DELETE:/v1/stores/{storeId}/categories/{categoryId}
    * @secure
    */
-  delete1 = (storeId: number, categoryId: number, params: RequestParams = {}) =>
-    this.request<Delete1Data, void>({
+  deleteStoresCategories = (storeId: number, categoryId: number, params: RequestParams = {}) =>
+    this.request<DeleteStoresCategoriesData, void>({
       path: `/v1/stores/${storeId}/categories/${categoryId}`,
       method: "DELETE",
       secure: true,
@@ -250,13 +250,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 매장 등록 신청 상세 조회 API
    *
    * @tags 매장 등록
-   * @name GetRegistration
+   * @name GetStoresRegistrationsById
    * @summary 등록 신청 상세 조회
    * @request GET:/v1/stores/registrations/{registrationId}
    * @secure
    */
-  getRegistration = (registrationId: number, params: RequestParams = {}) =>
-    this.request<GetRegistrationData, void>({
+  getStoresRegistrationsById = (registrationId: number, params: RequestParams = {}) =>
+    this.request<GetStoresRegistrationsByIdData, void>({
       path: `/v1/stores/registrations/${registrationId}`,
       method: "GET",
       secure: true,
@@ -267,17 +267,17 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 매장 등록 재신청 API
    *
    * @tags 매장 등록
-   * @name Reapply
+   * @name UpdateStoresRegistrations
    * @summary 등록 재신청
    * @request PUT:/v1/stores/registrations/{registrationId}
    * @secure
    */
-  reapply = (
+  updateStoresRegistrations = (
     registrationId: number,
     data: RegistrationReapplyRequest,
     params: RequestParams = {}
   ) =>
-    this.request<ReapplyData, void>({
+    this.request<UpdateStoresRegistrationsData, void>({
       path: `/v1/stores/registrations/${registrationId}`,
       method: "PUT",
       body: data,
@@ -289,13 +289,17 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 매장 등록 재신청 (이미지 포함) API<br/><br/>사업자 등록증 파일은 이미지 또는 PDF 형식만 지원합니다.<br/>PDF 형식의 파일의 경우 첫번째 페이지만 이미지로 변환 후 업로드됩니다.
    *
    * @tags 매장 등록
-   * @name Reapply1
+   * @name UpdateStoresRegistrationsWithImage
    * @summary 등록 재신청 (이미지 포함)
    * @request PUT:/v1/stores/registrations/{registrationId}/with-image
    * @secure
    */
-  reapply1 = (registrationId: number, data: RegistrationApplyRequest, params: RequestParams = {}) =>
-    this.request<Reapply1Data, void>({
+  updateStoresRegistrationsWithImage = (
+    registrationId: number,
+    data: RegistrationApplyRequest,
+    params: RequestParams = {}
+  ) =>
+    this.request<UpdateStoresRegistrationsWithImageData, void>({
       path: `/v1/stores/registrations/${registrationId}/with-image`,
       method: "PUT",
       body: data,
@@ -307,19 +311,19 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 메뉴 순서 이동 API<br/><br/>- sourceId와 targetId로 메뉴를 찾습니다.<br/>- sourceId 메뉴의 위치를 targetId 메뉴의 위치 전,후로 이동합니다.<br/>
    *
    * @tags 메뉴
-   * @name MovePosition
+   * @name MoveStoresMenus
    * @summary 메뉴 순서 이동
    * @request POST:/v1/stores/{storeId}/menus/{sourceId}/move/{targetId}
    * @secure
    */
-  movePosition = (
+  moveStoresMenus = (
     storeId: number,
     sourceId: number,
     targetId: number,
     data: MenuMovePositionRequest,
     params: RequestParams = {}
   ) =>
-    this.request<MovePositionData, void>({
+    this.request<MoveStoresMenusData, void>({
       path: `/v1/stores/${storeId}/menus/${sourceId}/move/${targetId}`,
       method: "POST",
       body: data,
@@ -331,13 +335,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 메뉴 다중 삭제 API
    *
    * @tags 메뉴
-   * @name DeleteAll
+   * @name DeleteStoresMenus
    * @summary 메뉴 다중 삭제
    * @request POST:/v1/stores/{storeId}/menus/delete
    * @secure
    */
-  deleteAll = (storeId: number, data: MenuDeleteRequest, params: RequestParams = {}) =>
-    this.request<DeleteAllData, void>({
+  deleteStoresMenus = (storeId: number, data: MenuDeleteRequest, params: RequestParams = {}) =>
+    this.request<DeleteStoresMenusData, void>({
       path: `/v1/stores/${storeId}/menus/delete`,
       method: "POST",
       body: data,
@@ -349,12 +353,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 기기 목록 조회 API
    *
    * @tags 기기
-   * @name GetDevices
+   * @name GetStoresDevices
    * @summary 기기 목록 조회
    * @request GET:/v1/stores/{storeId}/devices
    * @secure
    */
-  getDevices = (
+  getStoresDevices = (
     storeId: number,
     query: {
       /**
@@ -376,7 +380,7 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
     },
     params: RequestParams = {}
   ) =>
-    this.request<GetDevicesData, void>({
+    this.request<GetStoresDevicesData, void>({
       path: `/v1/stores/${storeId}/devices`,
       method: "GET",
       query: query,
@@ -388,12 +392,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 기기 생성 API<br/><br/>기기의 사용 용도에 따라 추가적으로 유효성 검사를 진행합니다.<br/>- **TABLE**: 테이블 번호 1 이상<br/><br/>기기 생성 시 사용 용도에 따라 요청 본문과 상관없이 기본값을 사용합니다.<br/>- **POS**: 테이블 번호 0, 결제 타입 POSTPAID<br/>- **HALL**, **WAITING**: 테이블 번호 0, 결제 타입 POSTPAID
    *
    * @tags 기기
-   * @name Create
+   * @name AddStoresDevices
    * @summary 기기 생성
    * @request POST:/v1/stores/{storeId}/devices
    */
-  create = (storeId: number, data: DeviceCreateRequest, params: RequestParams = {}) =>
-    this.request<CreateData, void>({
+  addStoresDevices = (storeId: number, data: DeviceCreateRequest, params: RequestParams = {}) =>
+    this.request<AddStoresDevicesData, void>({
       path: `/v1/stores/${storeId}/devices`,
       method: "POST",
       body: data,
@@ -405,13 +409,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 카테고리 목록 조회 API
    *
    * @tags 메뉴 카테고리
-   * @name GetCategories
+   * @name GetStoresCategories
    * @summary 카테고리 목록 조회
    * @request GET:/v1/stores/{storeId}/categories
    * @secure
    */
-  getCategories = (storeId: number, params: RequestParams = {}) =>
-    this.request<GetCategoriesData, void>({
+  getStoresCategories = (storeId: number, params: RequestParams = {}) =>
+    this.request<GetStoresCategoriesData, void>({
       path: `/v1/stores/${storeId}/categories`,
       method: "GET",
       secure: true,
@@ -422,13 +426,17 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 카테고리 생성 API
    *
    * @tags 메뉴 카테고리
-   * @name Create1
+   * @name AddStoresCategories
    * @summary 카테고리 생성
    * @request POST:/v1/stores/{storeId}/categories
    * @secure
    */
-  create1 = (storeId: number, data: CategoryCreateRequest, params: RequestParams = {}) =>
-    this.request<Create1Data, void>({
+  addStoresCategories = (
+    storeId: number,
+    data: CategoryCreateRequest,
+    params: RequestParams = {}
+  ) =>
+    this.request<AddStoresCategoriesData, void>({
       path: `/v1/stores/${storeId}/categories`,
       method: "POST",
       body: data,
@@ -440,19 +448,19 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 카테고리 순서 이동 API<br/><br/>- sourceId와 targetId로 카테고리를 찾습니다.<br/>- sourceId 카테고리의 위치를 targetId 카테고리의 위치 전,후로 이동합니다.<br/>
    *
    * @tags 메뉴 카테고리
-   * @name MovePosition1
+   * @name MoveStoresCategories
    * @summary 카테고리 순서 이동
    * @request POST:/v1/stores/{storeId}/categories/{sourceId}/move/{targetId}
    * @secure
    */
-  movePosition1 = (
+  moveStoresCategories = (
     storeId: number,
     sourceId: number,
     targetId: number,
     data: CategoryMovePositionRequest,
     params: RequestParams = {}
   ) =>
-    this.request<MovePosition1Data, void>({
+    this.request<MoveStoresCategoriesData, void>({
       path: `/v1/stores/${storeId}/categories/${sourceId}/move/${targetId}`,
       method: "POST",
       body: data,
@@ -464,13 +472,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 메뉴 목록 조회 API
    *
    * @tags 메뉴
-   * @name GetMenus
+   * @name GetStoresCategoriesMenus
    * @summary 메뉴 목록 조회
    * @request GET:/v1/stores/{storeId}/categories/{categoryId}/menus
    * @secure
    */
-  getMenus = (storeId: number, categoryId: number, params: RequestParams = {}) =>
-    this.request<GetMenusData, void>({
+  getStoresCategoriesMenus = (storeId: number, categoryId: number, params: RequestParams = {}) =>
+    this.request<GetStoresCategoriesMenusData, void>({
       path: `/v1/stores/${storeId}/categories/${categoryId}/menus`,
       method: "GET",
       secure: true,
@@ -481,18 +489,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 메뉴 생성 API
    *
    * @tags 메뉴
-   * @name Create2
+   * @name AddStoresCategoriesMenus
    * @summary 메뉴 생성
    * @request POST:/v1/stores/{storeId}/categories/{categoryId}/menus
    * @secure
    */
-  create2 = (
+  addStoresCategoriesMenus = (
     storeId: number,
     categoryId: number,
-    data: Create2Payload,
+    data: AddStoresCategoriesMenusPayload,
     params: RequestParams = {}
   ) =>
-    this.request<Create2Data, void>({
+    this.request<AddStoresCategoriesMenusData, void>({
       path: `/v1/stores/${storeId}/categories/${categoryId}/menus`,
       method: "POST",
       body: data,
@@ -504,12 +512,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 매장 등록 신청 목록 조회 API
    *
    * @tags 매장 등록
-   * @name GetRegistrations
+   * @name GetStoresRegistrations
    * @summary 등록 신청 목록 조회
    * @request GET:/v1/stores/registrations
    * @secure
    */
-  getRegistrations = (
+  getStoresRegistrations = (
     query: {
       /**
        * 조회 페이지 번호
@@ -530,7 +538,7 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
     },
     params: RequestParams = {}
   ) =>
-    this.request<GetRegistrationsData, void>({
+    this.request<GetStoresRegistrationsData, void>({
       path: `/v1/stores/registrations`,
       method: "GET",
       query: query,
@@ -542,13 +550,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 매장 등록 신청 API<br/><br/>사업자 등록증 파일은 이미지 또는 PDF 형식만 지원합니다.<br/>PDF 형식의 파일의 경우 첫번째 페이지만 이미지로 변환 후 업로드됩니다.
    *
    * @tags 매장 등록
-   * @name Apply
+   * @name AddStoresRegistrations
    * @summary 등록 신청
    * @request POST:/v1/stores/registrations
    * @secure
    */
-  apply = (data: RegistrationApplyRequest, params: RequestParams = {}) =>
-    this.request<ApplyData, void>({
+  addStoresRegistrations = (data: RegistrationApplyRequest, params: RequestParams = {}) =>
+    this.request<AddStoresRegistrationsData, void>({
       path: `/v1/stores/registrations`,
       method: "POST",
       body: data,
@@ -560,12 +568,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 휴대폰 번호 인증 API<br/><br/>휴대폰 번호 인증이 완료된 후 30분 이내 기기 생성을 완료해야 합니다.
    *
    * @tags 기기
-   * @name VerifyAuthCode
+   * @name Devices
    * @summary 휴대폰 인증
    * @request POST:/v1/devices/verify-auth-code
    */
-  verifyAuthCode = (data: VerifyAuthCodeRequest, params: RequestParams = {}) =>
-    this.request<VerifyAuthCodeData, void>({
+  Devices = (data: VerifyAuthCodeRequest, params: RequestParams = {}) =>
+    this.request<DevicesData, void>({
       path: `/v1/devices/verify-auth-code`,
       method: "POST",
       body: data,
@@ -577,12 +585,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 휴대폰 인증 번호 알림톡 발송 요청 API<br/><br/>24시간동안 최대 50번까지 요청할 수 있습니다.<br/>**5분**의 유효기간을 가진 6자리의 랜덤 번호를 생성 후, 요청 본문의 휴대폰 번호로 알림톡을 발송합니다.
    *
    * @tags 기기
-   * @name SendAuthCode
+   * @name SendDevicesAuthCode
    * @summary 휴대폰 인증 번호 알림톡 발송
    * @request POST:/v1/devices/send-auth-code
    */
-  sendAuthCode = (data: SendAuthCodeRequest, params: RequestParams = {}) =>
-    this.request<SendAuthCodeData, void>({
+  sendDevicesAuthCode = (data: SendAuthCodeRequest, params: RequestParams = {}) =>
+    this.request<SendDevicesAuthCodeData, void>({
       path: `/v1/devices/send-auth-code`,
       method: "POST",
       body: data,
@@ -593,12 +601,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 계정 생성 API<br/><br/>휴대폰 번호 인증이 완료된 후 15분 이내 계정 생성을 완료해야 합니다.<br/>계정 생성 완료 시 계정의 상태는 **비활성**이며, 이메일 인증을 완료하면 **활성** 상태로 변경됩니다.<br/>이메일 인증 확인 메일은 가입 완료 후 자동으로 발송되며, 이메일 인증에 필요한 액세스 토큰은 발송된 메일에 첨부되어 있는 링크에 포함되어 있습니다.
    *
    * @tags 계정
-   * @name SignUp
+   * @name AddAccounts
    * @summary 계정 생성
    * @request POST:/v1/accounts
    */
-  signUp = (data: AccountCreateRequest, params: RequestParams = {}) =>
-    this.request<SignUpData, void>({
+  addAccounts = (data: AccountCreateRequest, params: RequestParams = {}) =>
+    this.request<AddAccountsData, void>({
       path: `/v1/accounts`,
       method: "POST",
       body: data,
@@ -609,17 +617,17 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 이메일 인증 API
    *
    * @tags 계정
-   * @name VerifyEmail
+   * @name Accounts
    * @summary 이메일 인증
    * @request POST:/v1/accounts/verify-auth-mail
    */
-  verifyEmail = (
+  Accounts = (
     query: {
       token: string;
     },
     params: RequestParams = {}
   ) =>
-    this.request<VerifyEmailData, void>({
+    this.request<AccountsData, void>({
       path: `/v1/accounts/verify-auth-mail`,
       method: "POST",
       query: query,
@@ -629,12 +637,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 휴대폰 번호 인증 API<br/><br/>휴대폰 번호 인증이 완료된 후 15분 이내 계정 생성을 완료해야 합니다.
    *
    * @tags 계정
-   * @name VerifyAuthCode1
+   * @name Accounts
    * @summary 휴대폰 인증
    * @request POST:/v1/accounts/verify-auth-code
    */
-  verifyAuthCode1 = (data: VerifyAuthCodeRequest, params: RequestParams = {}) =>
-    this.request<VerifyAuthCode1Data, void>({
+  Accounts = (data: VerifyAuthCodeRequest, params: RequestParams = {}) =>
+    this.request<AccountsResult, void>({
       path: `/v1/accounts/verify-auth-code`,
       method: "POST",
       body: data,
@@ -645,12 +653,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 로그인 API
    *
    * @tags 계정
-   * @name SignIn
+   * @name SignAccountsIn
    * @summary 로그인
    * @request POST:/v1/accounts/sign-in
    */
-  signIn = (data: AccountSignInRequest, params: RequestParams = {}) =>
-    this.request<SignInData, void>({
+  signAccountsIn = (data: AccountSignInRequest, params: RequestParams = {}) =>
+    this.request<SignAccountsInData, void>({
       path: `/v1/accounts/sign-in`,
       method: "POST",
       body: data,
@@ -662,12 +670,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 이메일 인증 확인 메일 발송 요청 API<br/><br/>계정 생성 시 자동으로 발송됨으로 계정 생성 요청 후 직접 해당 API를 호출할 필요가 없습니다.<br/>이메일 인증 확인 메일 내 첨부된 토큰이 만료된 경우 해당 API를 이용하여 확인 메일을 재발송할 수 있습니다.
    *
    * @tags 계정
-   * @name SendAuthMail
+   * @name SendAccountsAuthMail
    * @summary 이메일 인증 확인 메일 발송
    * @request POST:/v1/accounts/send-auth-mail
    */
-  sendAuthMail = (data: SendAuthMailRequest, params: RequestParams = {}) =>
-    this.request<SendAuthMailData, void>({
+  sendAccountsAuthMail = (data: SendAuthMailRequest, params: RequestParams = {}) =>
+    this.request<SendAccountsAuthMailData, void>({
       path: `/v1/accounts/send-auth-mail`,
       method: "POST",
       body: data,
@@ -678,12 +686,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 휴대폰 인증 번호 알림톡 발송 요청 API<br/><br/>24시간동안 최대 5번까지 요청할 수 있습니다.<br/>**5분**의 유효기간을 가진 6자리의 랜덤 번호를 생성 후, 요청 본문의 휴대폰 번호로 알림톡을 발송합니다.
    *
    * @tags 계정
-   * @name SendAuthCode1
+   * @name SendAccountsAuthCode
    * @summary 휴대폰 인증 번호 알림톡 발송
    * @request POST:/v1/accounts/send-auth-code
    */
-  sendAuthCode1 = (data: SendAuthCodeRequest, params: RequestParams = {}) =>
-    this.request<SendAuthCode1Data, void>({
+  sendAccountsAuthCode = (data: SendAuthCodeRequest, params: RequestParams = {}) =>
+    this.request<SendAccountsAuthCodeData, void>({
       path: `/v1/accounts/send-auth-code`,
       method: "POST",
       body: data,
@@ -694,12 +702,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 토큰 갱신 API
    *
    * @tags 계정
-   * @name RenewToken
+   * @name RenewAccountsToken
    * @summary 토큰 갱신
    * @request POST:/v1/accounts/renew-token
    */
-  renewToken = (data: SignInTokenRenewRequest, params: RequestParams = {}) =>
-    this.request<RenewTokenData, void>({
+  renewAccountsToken = (data: SignInTokenRenewRequest, params: RequestParams = {}) =>
+    this.request<RenewAccountsTokenData, void>({
       path: `/v1/accounts/renew-token`,
       method: "POST",
       body: data,
@@ -728,13 +736,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 메뉴 상세 조회 API
    *
    * @tags 메뉴
-   * @name GetMenu
+   * @name GetStoresCategoriesMenusById
    * @summary 메뉴 상세 조회
    * @request GET:/v1/stores/{storeId}/categories/{categoryId}/menus/{menuId}
    * @secure
    */
-  getMenu = (storeId: number, categoryId: number, menuId: number, params: RequestParams = {}) =>
-    this.request<GetMenuData, void>({
+  getStoresCategoriesMenusById = (
+    storeId: number,
+    categoryId: number,
+    menuId: number,
+    params: RequestParams = {}
+  ) =>
+    this.request<GetStoresCategoriesMenusByIdData, void>({
       path: `/v1/stores/${storeId}/categories/${categoryId}/menus/${menuId}`,
       method: "GET",
       secure: true,
@@ -745,13 +758,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 메뉴 삭제 API
    *
    * @tags 메뉴
-   * @name Delete2
+   * @name DeleteStoresCategoriesMenus
    * @summary 메뉴 삭제
    * @request DELETE:/v1/stores/{storeId}/categories/{categoryId}/menus/{menuId}
    * @secure
    */
-  delete2 = (storeId: number, categoryId: number, menuId: number, params: RequestParams = {}) =>
-    this.request<Delete2Data, void>({
+  deleteStoresCategoriesMenus = (
+    storeId: number,
+    categoryId: number,
+    menuId: number,
+    params: RequestParams = {}
+  ) =>
+    this.request<DeleteStoresCategoriesMenusData, void>({
       path: `/v1/stores/${storeId}/categories/${categoryId}/menus/${menuId}`,
       method: "DELETE",
       secure: true,
@@ -761,12 +779,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 매장 목록 (계정 ID) 조회 API
    *
    * @tags 매장
-   * @name GetStores1
+   * @name GetStoresAccountsById
    * @summary 매장 목록 (계정 ID) 조회
    * @request GET:/v1/stores/accounts/{accountId}
    */
-  getStores1 = (accountId: number, params: RequestParams = {}) =>
-    this.request<GetStores1Data, any>({
+  getStoresAccountsById = (accountId: number, params: RequestParams = {}) =>
+    this.request<GetStoresAccountsByIdData, any>({
       path: `/v1/stores/accounts/${accountId}`,
       method: "GET",
       format: "json",
@@ -776,12 +794,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 프로필 조회 (휴대폰 번호) API
    *
    * @tags 계정
-   * @name GetProfile
+   * @name GetAccountsPhoneNumberMe
    * @summary 프로필 조회 (휴대폰 번호)
    * @request GET:/v1/accounts/phone-number/{phoneNumber}/me
    */
-  getProfile = (phoneNumber: string, params: RequestParams = {}) =>
-    this.request<GetProfileData, void>({
+  getAccountsPhoneNumberMe = (phoneNumber: string, params: RequestParams = {}) =>
+    this.request<GetAccountsPhoneNumberMeData, void>({
       path: `/v1/accounts/phone-number/${phoneNumber}/me`,
       method: "GET",
       format: "json",
@@ -791,13 +809,13 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * @description 프로필 조회 API
    *
    * @tags 계정
-   * @name GetProfile1
+   * @name GetAccountsMe
    * @summary 프로필 조회
    * @request GET:/v1/accounts/me
    * @secure
    */
-  getProfile1 = (params: RequestParams = {}) =>
-    this.request<GetProfile1Data, void>({
+  getAccountsMe = (params: RequestParams = {}) =>
+    this.request<GetAccountsMeData, void>({
       path: `/v1/accounts/me`,
       method: "GET",
       secure: true,

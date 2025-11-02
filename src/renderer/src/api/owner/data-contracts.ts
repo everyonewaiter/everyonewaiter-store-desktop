@@ -1129,90 +1129,90 @@ export interface AccountProfileResponse {
   permission?: "USER" | "OWNER" | "ADMIN";
 }
 
-export type GetStoreData = StoreDetailResponse;
+export type GetStoresByIdData = StoreDetailResponse;
 
-export type UpdateData = any;
+export type UpdateStoresData = any;
 
-export type Update1Data = any;
+export type UpdateStoresMenusData = any;
 
-export interface UpdateWithImagePayload {
+export interface UpdateStoresMenusWithImagePayload {
   /** @format binary */
   file: File;
   request: MenuUpdateRequest;
 }
 
-export type UpdateWithImageData = any;
+export type UpdateStoresMenusWithImageData = any;
 
-export type GetDeviceData = DeviceDetailResponse;
+export type GetStoresDevicesByIdData = DeviceDetailResponse;
 
-export type Update2Data = any;
+export type UpdateStoresDevicesData = any;
 
-export type DeleteData = any;
+export type DeleteStoresDevicesData = any;
 
-export type Update3Data = any;
+export type UpdateStoresCategoriesData = any;
 
-export type Delete1Data = any;
+export type DeleteStoresCategoriesData = any;
 
-export type GetRegistrationData = RegistrationDetailResponse;
+export type GetStoresRegistrationsByIdData = RegistrationDetailResponse;
 
-export type ReapplyData = any;
+export type UpdateStoresRegistrationsData = any;
 
-export type Reapply1Data = any;
+export type UpdateStoresRegistrationsWithImageData = any;
 
-export type MovePositionData = any;
+export type MoveStoresMenusData = any;
 
-export type DeleteAllData = any;
+export type DeleteStoresMenusData = any;
 
-export type GetDevicesData = PagingDevicePageResponse;
+export type GetStoresDevicesData = PagingDevicePageResponse;
 
-export type CreateData = DeviceCreateResponse;
+export type AddStoresDevicesData = DeviceCreateResponse;
 
-export type GetCategoriesData = CategorySimpleResponses;
+export type GetStoresCategoriesData = CategorySimpleResponses;
 
-export type Create1Data = any;
+export type AddStoresCategoriesData = any;
 
-export type MovePosition1Data = any;
+export type MoveStoresCategoriesData = any;
 
-export type GetMenusData = MenuSimpleResponses;
+export type GetStoresCategoriesMenusData = MenuSimpleResponses;
 
-export interface Create2Payload {
+export interface AddStoresCategoriesMenusPayload {
   /** @format binary */
   file: File;
   request: MenuCreateRequest;
 }
 
-export type Create2Data = any;
+export type AddStoresCategoriesMenusData = any;
 
-export type GetRegistrationsData = PagingRegistrationDetailResponse;
+export type GetStoresRegistrationsData = PagingRegistrationDetailResponse;
 
-export type ApplyData = any;
+export type AddStoresRegistrationsData = any;
 
-export type VerifyAuthCodeData = StoreSimpleResponses;
+export type DevicesData = StoreSimpleResponses;
 
-export type SendAuthCodeData = any;
+export type SendDevicesAuthCodeData = any;
 
-export type SignUpData = any;
+export type AddAccountsData = any;
 
-export type VerifyEmailData = any;
+export type AccountsData = any;
 
-export type VerifyAuthCode1Data = any;
+export type AccountsResult = any;
 
-export type SignInData = SignInToken;
+export type SignAccountsInData = SignInToken;
 
-export type SendAuthMailData = any;
+export type SendAccountsAuthMailData = any;
 
-export type SendAuthCode1Data = any;
+export type SendAccountsAuthCodeData = any;
 
-export type RenewTokenData = SignInToken;
+export type RenewAccountsTokenData = SignInToken;
 
 export type GetStoresData = StoreSimpleResponses;
 
-export type GetMenuData = MenuViewMenuDetail;
+export type GetStoresCategoriesMenusByIdData = MenuViewMenuDetail;
 
-export type Delete2Data = any;
+export type DeleteStoresCategoriesMenusData = any;
 
-export type GetStores1Data = StoreSimpleResponses;
+export type GetStoresAccountsByIdData = StoreSimpleResponses;
 
-export type GetProfileData = AccountProfileResponse;
+export type GetAccountsPhoneNumberMeData = AccountProfileResponse;
 
-export type GetProfile1Data = AccountProfileResponse;
+export type GetAccountsMeData = AccountProfileResponse;
