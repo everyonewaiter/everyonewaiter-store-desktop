@@ -264,9 +264,9 @@ export interface OrderPaymentApproveRequest {
    * @example "DEDUCTION"
    */
   cashReceiptType: "NONE" | "DEDUCTION" | "PROOF";
-  cash?: boolean;
-  card?: boolean;
-  pureCash?: boolean;
+  cash: boolean;
+  card: boolean;
+  pureCash: boolean;
 }
 
 export interface OrderPaymentCancelRequest {
@@ -292,53 +292,53 @@ export interface WaitingDetailResponse {
    * 웨이팅 ID
    * @example "694865267482835533"
    */
-  waitingId?: string;
+  waitingId: string;
   /**
    * 휴대폰 번호
    * @example "01044591812"
    */
-  phoneNumber?: string;
+  phoneNumber: string;
   /**
    * 성인 인원 수
    * @format int32
    * @example 2
    */
-  adult?: number;
+  adult: number;
   /**
    * 유아 인원 수
    * @format int32
    * @example 0
    */
-  infant?: number;
+  infant: number;
   /**
    * 대기 번호
    * @format int32
    * @example 1
    */
-  number?: number;
+  number: number;
   /**
    * 총 호출 횟수
    * @format int32
    * @example 0
    */
-  callCount?: number;
+  callCount: number;
   /**
    * 마지막 호출 시간
    * @format date-time
    * @example "1970-01-01 00:00:00"
    */
-  lastCallTime?: string;
+  lastCallTime: string;
   /**
    * 상태
    * @example "REGISTRATION"
    */
-  state?: "REGISTRATION" | "CANCEL" | "COMPLETE";
+  state: "REGISTRATION" | "CANCEL" | "COMPLETE";
   /**
    * 웨이팅 등록일
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface WaitingDetailResponses {
@@ -351,7 +351,7 @@ export interface WaitingCountResponse {
    * @format int32
    * @example 5
    */
-  count?: number;
+  count: number;
 }
 
 export interface WaitingMyTurnView {
@@ -360,30 +360,30 @@ export interface WaitingMyTurnView {
    * @format int32
    * @example 1
    */
-  number?: number;
+  number: number;
   /**
    * 웨이팅 등록 당시 내 앞 대기팀 수
    * @format int32
    * @example 0
    */
-  initWaitingTeamCount?: number;
+  initWaitingTeamCount: number;
   /**
    * 현재 내 앞 대기팀 수
    * @format int32
    * @example 0
    */
-  currentWaitingTeamCount?: number;
+  currentWaitingTeamCount: number;
   /**
    * 상태
    * @example "REGISTRATION"
    */
-  state?: "REGISTRATION" | "CANCEL" | "COMPLETE";
+  state: "REGISTRATION" | "CANCEL" | "COMPLETE";
   /**
    * 웨이팅 등록일
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface CategoryDetails {
@@ -395,14 +395,14 @@ export interface CategoryViewCategoryDetail {
    * 카테고리 ID
    * @example "694865267482835533"
    */
-  categoryId?: string;
+  categoryId: string;
   /**
    * 카테고리 이름
    * @example "스테이크"
    */
-  name?: string;
+  name: string;
   /** 메뉴 목록 */
-  menus?: MenuViewMenuDetail[];
+  menus: MenuViewMenuDetail[];
 }
 
 export interface MenuViewMenuDetail {
@@ -410,56 +410,56 @@ export interface MenuViewMenuDetail {
    * 메뉴 ID
    * @example "694865267482835533"
    */
-  menuId?: string;
+  menuId: string;
   /**
    * 카테고리 ID
    * @example "694865267482835533"
    */
-  categoryId?: string;
+  categoryId: string;
   /**
    * 메뉴 이름
    * @example "안심 스테이크"
    */
-  name?: string;
+  name: string;
   /**
    * 메뉴 설명
    * @example "1++ 한우 안심을 사용합니다."
    */
-  description?: string;
+  description: string;
   /**
    * 메뉴 가격
    * @format int64
    * @example 34900
    */
-  price?: number;
+  price: number;
   /**
    * 메뉴 맵기 단계
    * @format int32
    * @example 0
    */
-  spicy?: number;
+  spicy: number;
   /**
    * 메뉴 상태
    * @example "DEFAULT"
    */
-  state?: "DEFAULT" | "HIDE" | "SOLD_OUT";
+  state: "DEFAULT" | "HIDE" | "SOLD_OUT";
   /**
    * 메뉴 라벨
    * @example "BEST"
    */
-  label?: "DEFAULT" | "NEW" | "BEST" | "RECOMMEND";
+  label: "DEFAULT" | "NEW" | "BEST" | "RECOMMEND";
   /**
    * 메뉴 이미지명
    * @example "menu/202504/0KA652ZFZ26DG.webp"
    */
-  image?: string;
+  image: string;
   /**
    * 메뉴 주방 프린트 출력 여부
    * @example true
    */
-  printEnabled?: boolean;
+  printEnabled: boolean;
   /** 메뉴 옵션 그룹 목록 */
-  menuOptionGroups?: MenuViewMenuOptionGroupDetail[];
+  menuOptionGroups: MenuViewMenuOptionGroupDetail[];
 }
 
 export interface MenuViewMenuOptionDetail {
@@ -467,13 +467,13 @@ export interface MenuViewMenuOptionDetail {
    * 메뉴 옵션명
    * @example "미디움"
    */
-  name?: string;
+  name: string;
   /**
    * 메뉴 옵션 가격
    * @format int64
    * @example 0
    */
-  price?: number;
+  price: number;
 }
 
 export interface MenuViewMenuOptionGroupDetail {
@@ -481,24 +481,24 @@ export interface MenuViewMenuOptionGroupDetail {
    * 메뉴 옵션 그룹 ID
    * @example "694865267482835533"
    */
-  menuOptionGroupId?: string;
+  menuOptionGroupId: string;
   /**
    * 메뉴 옵션 그룹명
    * @example "굽기 정도"
    */
-  name?: string;
+  name: string;
   /**
    * 메뉴 옵션 그룹 타입 (필수, 옵셔널)
    * @example "MANDATORY"
    */
-  type?: "MANDATORY" | "OPTIONAL";
+  type: "MANDATORY" | "OPTIONAL";
   /**
    * 메뉴 옵션 주방 프린트 출력 여부
    * @example true
    */
-  printEnabled?: boolean;
+  printEnabled: boolean;
   /** 메뉴 옵션 목록 */
-  menuOptions?: MenuViewMenuOptionDetail[];
+  menuOptions: MenuViewMenuOptionDetail[];
 }
 
 export interface SseEmitter {
@@ -515,57 +515,57 @@ export interface PosViewPosTableDetail {
    * POS 테이블 ID
    * @example "694865267482835533"
    */
-  posTableId?: string;
+  posTableId: string;
   /**
    * 매장 ID
    * @example "694865267482835533"
    */
-  storeId?: string;
+  storeId: string;
   /**
    * 테이블 번호
    * @format int32
    * @example 1
    */
-  tableNo?: number;
+  tableNo: number;
   /**
    * 주문 존재 여부
    * @example true
    */
-  hasOrder?: boolean;
+  hasOrder: boolean;
   /**
    * 주문 타입
    * @example "POSTPAID"
    */
-  orderType?: "PREPAID" | "POSTPAID";
+  orderType: "PREPAID" | "POSTPAID";
   /**
    * 주문 시간
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  orderedAt?: string;
+  orderedAt: string | null;
   /**
    * 주문한 메뉴명
    * @example "오일 파스타"
    */
-  orderMenuName?: string;
+  orderMenuName: string | null;
   /**
    * 주문한 메뉴 건수
    * @format int32
    * @example 3
    */
-  orderMenuCount?: number;
+  orderMenuCount: number;
   /**
    * 총 주문 금액
    * @format int64
    * @example 29900
    */
-  totalOrderPrice?: number;
+  totalOrderPrice: number;
   /**
    * 할인 금액
    * @format int64
    * @example 0
    */
-  discount?: number;
+  discount: number;
 }
 
 export interface OrderPaymentViewOrderPaymentDetail {
@@ -573,73 +573,73 @@ export interface OrderPaymentViewOrderPaymentDetail {
    * 주문 결제 ID
    * @example "694865267482835533"
    */
-  orderPaymentId?: string;
+  orderPaymentId: string;
   /**
    * POS 테이블 액티비티 ID
    * @example "694865267482835533"
    */
-  posTableActivityId?: string;
+  posTableActivityId: string;
   /**
    * 매장 ID
    * @example "694865267482835533"
    */
-  storeId?: string;
+  storeId: string;
   /**
    * 결제 상태
    * @example "APPROVE"
    */
-  state?: "APPROVE" | "CANCEL";
+  state: "APPROVE" | "CANCEL";
   /**
    * 결제 수단
    * @example "CARD"
    */
-  method?: "CASH" | "CARD";
+  method: "CASH" | "CARD";
   /**
    * 결제 금액
    * @format int64
    * @example 10000
    */
-  amount?: number;
+  amount: number;
   /**
    * 결제 취소 가능 여부
    * @example true
    */
-  cancellable?: boolean;
+  cancellable: boolean;
   /**
    * 카드 결제 승인 번호
    * @example 1234567890
    */
-  approvalNo?: string;
+  approvalNo: string;
   /**
    * 카드 할부 개월
    * @example "00"
    */
-  installment?: string;
+  installment: string;
   /**
    * 카드 번호
    * @example "950002******"
    */
-  cardNo?: string;
+  cardNo: string;
   /**
    * 카드 발급사명
    * @example "국민카드"
    */
-  issuerName?: string;
+  issuerName: string;
   /**
    * 카드 매입사명
    * @example "BC카드"
    */
-  purchaseName?: string;
+  purchaseName: string;
   /**
    * 카드사/포인트사 가맹점 번호
    * @example 1234567890
    */
-  merchantNo?: string;
+  merchantNo: string;
   /**
    * 카드 거래일시 YYMMDDHHmmss
    * @example 250101120000
    */
-  tradeTime?: string;
+  tradeTime: string;
   /**
    * 카드 거래 고유 번호
    * @example 1234567890
@@ -650,29 +650,29 @@ export interface OrderPaymentViewOrderPaymentDetail {
    * @format int64
    * @example 1000
    */
-  vat?: number;
+  vat: number;
   /**
    * 공급가액
    * @format int64
    * @example 9000
    */
-  supplyAmount?: number;
+  supplyAmount: number;
   /**
    * 현금 영수증 번호
    * @example "01044591812"
    */
-  cashReceiptNo?: string;
+  cashReceiptNo: string;
   /**
    * 현금 영수증 타입
    * @example "DEDUCTION"
    */
-  cashReceiptType?: "NONE" | "DEDUCTION" | "PROOF";
+  cashReceiptType: "NONE" | "DEDUCTION" | "PROOF";
   /**
    * 주문 결제 생성일
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface OrderViewOrderDetail {
@@ -680,69 +680,69 @@ export interface OrderViewOrderDetail {
    * 주문 ID
    * @example "694865267482835533"
    */
-  orderId?: string;
+  orderId: string;
   /**
    * 매장 ID
    * @example "694865267482835533"
    */
-  storeId?: string;
+  storeId: string;
   /**
    * 주문 카테고리 (첫 주문, 추가 주문)
    * @example "INITIAL"
    */
-  category?: "INITIAL" | "ADDITIONAL";
+  category: "INITIAL" | "ADDITIONAL";
   /**
    * 주문 타입
    * @example "POSTPAID"
    */
-  type?: "PREPAID" | "POSTPAID";
+  type: "PREPAID" | "POSTPAID";
   /**
    * 주문 상태
    * @example "ORDER"
    */
-  state?: "ORDER" | "CANCEL";
+  state: "ORDER" | "CANCEL";
   /**
    * 테이블 번호
    * @format int32
    * @example 1
    */
-  tableNo?: number;
+  tableNo: number;
   /**
    * 주문 금액
    * @format int64
    * @example 34900
    */
-  price?: number;
+  price: number;
   /**
    * 주문 메모
    * @example "13시 포장"
    */
-  memo?: string;
+  memo: string;
   /**
    * 주문 서빙 여부
    * @example false
    */
-  served?: boolean;
+  served: boolean;
   /**
    * 주문 서빙 시간
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  servedTime?: string;
+  servedTime: string;
   /** 주문 메뉴 목록 */
-  orderMenus?: OrderViewOrderMenuDetail[];
+  orderMenus: OrderViewOrderMenuDetail[];
   /**
    * 주문 생성일
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  createdAt?: string;
+  createdAt: string;
   /**
    * 주문 수정일
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  updatedAt?: string;
+  updatedAt: string;
 }
 
 export interface OrderViewOrderMenuDetail {
@@ -750,47 +750,47 @@ export interface OrderViewOrderMenuDetail {
    * 주문 메뉴 ID
    * @example "694865267482835533"
    */
-  orderMenuId?: string;
+  orderMenuId: string;
   /**
    * 주문 메뉴 이름
    * @example "안심 스테이크"
    */
-  name?: string;
+  name: string;
   /**
    * 주문 메뉴 가격
    * @format int64
    * @example 34900
    */
-  price?: number;
+  price: number;
   /**
    * 주문 메뉴 수량
    * @format int32
    * @example 1
    */
-  quantity?: number;
+  quantity: number;
   /**
    * 주문 메뉴 이미지명
    * @example "menu/202504/0KA652ZFZ26DG.webp"
    */
-  image?: string;
+  image: string;
   /**
    * 주문 메뉴 서빙 여부
    * @example false
    */
-  served?: boolean;
+  served: boolean;
   /**
    * 주문 메뉴 서빙 시간
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  servedTime?: string;
+  servedTime: string;
   /**
    * 주문 메뉴 주방 프린트 출력 여부
    * @example true
    */
-  printEnabled?: boolean;
+  printEnabled: boolean;
   /** 주문 메뉴 옵션 그룹 목록 */
-  orderOptionGroups?: OrderViewOrderOptionGroupDetail[];
+  orderOptionGroups: OrderViewOrderOptionGroupDetail[];
 }
 
 export interface OrderViewOrderOptionDetail {
@@ -798,13 +798,13 @@ export interface OrderViewOrderOptionDetail {
    * 주문 메뉴 옵션명
    * @example "미디움"
    */
-  name?: string;
+  name: string;
   /**
    * 주문 메뉴 옵션 가격
    * @format int64
    * @example 0
    */
-  price?: number;
+  price: number;
 }
 
 export interface OrderViewOrderOptionGroupDetail {
@@ -812,19 +812,19 @@ export interface OrderViewOrderOptionGroupDetail {
    * 주문 메뉴 옵션 그룹 ID
    * @example "694865267482835533"
    */
-  orderOptionGroupId?: string;
+  orderOptionGroupId: string;
   /**
    * 주문 메뉴 옵션 그룹명
    * @example "굽기 정도"
    */
-  name?: string;
+  name: string;
   /**
    * 주문 메뉴 옵션 주방 프린트 출력 여부
    * @example true
    */
-  printEnabled?: boolean;
+  printEnabled: boolean;
   /** 주문 메뉴 옵션 목록 */
-  orderOptions?: OrderViewOrderOptionDetail[];
+  orderOptions: OrderViewOrderOptionDetail[];
 }
 
 export interface PosViewPosTableActivityDetail {
@@ -832,61 +832,61 @@ export interface PosViewPosTableActivityDetail {
    * POS 테이블 액티비티 ID
    * @example "694865267482835533"
    */
-  posTableActivityId?: string;
+  posTableActivityId: string;
   /**
    * 매장 ID
    * @example "694865267482835533"
    */
-  storeId?: string;
+  storeId: string;
   /**
    * POS 테이블 ID
    * @example "694865267482835533"
    */
-  posTableId?: string;
+  posTableId: string;
   /**
    * 테이블 번호
    * @format int32
    * @example 1
    */
-  tableNo?: number;
+  tableNo: number;
   /**
    * 테이블 결제 타입
    * @example "POSTPAID"
    */
-  orderType?: "PREPAID" | "POSTPAID";
+  orderType: "PREPAID" | "POSTPAID";
   /**
    * 총 주문 금액
    * @format int64
    * @example 10000
    */
-  totalOrderPrice?: number;
+  totalOrderPrice: number;
   /**
    * 총 결제 금액
    * @format int64
    * @example 0
    */
-  totalPaymentPrice?: number;
+  totalPaymentPrice: number;
   /**
    * 할인 금액
    * @format int64
    * @example 0
    */
-  discount?: number;
+  discount: number;
   /**
    * 잔여 결제 금액
    * @format int64
    * @example 0
    */
-  remainingPaymentPrice?: number;
+  remainingPaymentPrice: number;
   /**
    * POS 테이블 액티비티 활성화 여부
    * @example true
    */
-  active?: boolean;
+  active: boolean;
   /** 주문 목록 */
-  orders?: OrderViewOrderDetail[];
+  orders: OrderViewOrderDetail[];
   /** 주문 결제 목록 */
-  orderPayments?: OrderPaymentViewOrderPaymentDetail[];
+  orderPayments: OrderPaymentViewOrderPaymentDetail[];
 }
 
 export interface PosViewRevenue {
@@ -895,43 +895,43 @@ export interface PosViewRevenue {
    * @format int64
    * @example 29900
    */
-  totalOrderPrice?: number;
+  totalOrderPrice: number;
   /**
    * 총 할인 금액
    * @format int64
    * @example 0
    */
-  totalDiscountPrice?: number;
+  totalDiscountPrice: number;
   /**
    * 총 결제 금액
    * @format int64
    * @example 29900
    */
-  totalPaymentPrice?: number;
+  totalPaymentPrice: number;
   /**
    * 현금 결제 승인 금액
    * @format int64
    * @example 0
    */
-  cashPaymentApprovePrice?: number;
+  cashPaymentApprovePrice: number;
   /**
    * 카드 결제 승인 금액
    * @format int64
    * @example 29900
    */
-  cardPaymentApprovePrice?: number;
+  cardPaymentApprovePrice: number;
   /**
    * 현금 결제 취소 금액
    * @format int64
    * @example 0
    */
-  cashPaymentCancelPrice?: number;
+  cashPaymentCancelPrice: number;
   /**
    * 카드 결제 취소 금액
    * @format int64
    * @example 0
    */
-  cardPaymentCancelPrice?: number;
+  cardPaymentCancelPrice: number;
 }
 
 export interface OrderDetailResponses {
@@ -943,35 +943,35 @@ export interface StaffCallDetailResponse {
    * 직원 호출 ID
    * @example "694865267482835533"
    */
-  staffCallId?: string;
+  staffCallId: string;
   /**
    * 테이블 번호
    * @format int32
    * @example 1
    */
-  tableNo?: number;
+  tableNo: number;
   /**
    * 직원 호출 옵션명
    * @example "직원 호출"
    */
-  name?: string;
+  name: string;
   /**
    * 직원 호출 상태
    * @example "INCOMPLETE"
    */
-  state?: "INCOMPLETE" | "COMPLETE";
+  state: "INCOMPLETE" | "COMPLETE";
   /**
    * 직원 호출 완료 시간
    * @format date-time
    * @example "1970-01-01 00:00:00"
    */
-  completeTime?: string;
+  completeTime: string;
   /**
    * 직원 호출 시간
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface StaffCallDetailResponses {
@@ -992,55 +992,50 @@ export interface DeviceDetailResponse {
    * 기기 ID
    * @example "694865267482835533"
    */
-  deviceId?: string;
+  deviceId: string;
   /**
    * 매장 ID
    * @example "694865267482835533"
    */
-  storeId?: string;
+  storeId: string;
   /**
    * 매장명
    * @example "나루"
    */
-  storeName?: string;
-  /**
-   * 기기명
-   * @example "1번 테이블"
-   */
-  name?: string;
+  storeName: string;
   /**
    * 기기 사용 용도
    * @example "TABLE"
    */
-  purpose?: "POS" | "HALL" | "TABLE" | "WAITING";
+  purpose: "POS" | "HALL" | "TABLE" | "WAITING";
   /**
    * 테이블 번호
    * @format int32
    * @example 1
    */
-  tableNo?: number;
+  tableNo: number;
   /**
    * 기기 상태
    * @example "ACTIVE"
    */
-  state?: "INACTIVE" | "ACTIVE";
+  state: "INACTIVE" | "ACTIVE";
   /**
    * 결제 타입 (선결제, 후결제)
    * @example "POSTPAID"
    */
-  paymentType?: "PREPAID" | "POSTPAID";
+  paymentType: "PREPAID" | "POSTPAID";
   /**
    * 기기 생성일
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  createdAt?: string;
+  createdAt: string;
   /**
    * 기기 수정일
    * @format date-time
    * @example "2025-01-01 12:00:00"
    */
-  updatedAt?: string;
+  updatedAt: string;
 }
 
 export type UpdatePosTablesOrdersData = any;
