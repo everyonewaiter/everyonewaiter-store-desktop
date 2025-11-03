@@ -5,6 +5,7 @@ export { default as CalendarIcon } from "@renderer/assets/icons/calendar.svg?rea
 export { default as ChevronDownIcon } from "@renderer/assets/icons/chevron-down.svg?react";
 export { default as ChevronLeftIcon } from "@renderer/assets/icons/chevron-left.svg?react";
 export { default as ChevronRightIcon } from "@renderer/assets/icons/chevron-right.svg?react";
+export { default as DeleteIcon } from "@renderer/assets/icons/delete.svg?react";
 export { default as DoorOpenIcon } from "@renderer/assets/icons/door-open.svg?react";
 export { default as DoubleArrowIcon } from "@renderer/assets/icons/double-arrow.svg?react";
 export { default as FileCheckIcon } from "@renderer/assets/icons/file-check.svg?react";
