@@ -6,14 +6,14 @@ import { ColorName } from "@renderer/constants";
 import { mockStores } from "@renderer/pages/device/mock";
 import useDeviceFormatPhoneNumber from "@renderer/pages/device/useDeviceFormatPhoneNumber";
 import useDeviceRemainingTime from "@renderer/pages/device/useDeviceRemainingTime";
-import { deviceFormSchema } from "@renderer/schemas/device";
+import { deviceFormSchema, DeviceSchema } from "@renderer/schemas/device";
 
 interface DeviceStep1CompProps {
   onNextStep: () => void;
 }
 
 function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
-  const form = useForm({
+  const form = useForm<DeviceSchema>({
     resolver: zodResolver(deviceFormSchema),
     defaultValues: {
       phoneNumber: "",
@@ -29,7 +29,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
   });
 
   const { handleChangePhoneNumber } = useDeviceFormatPhoneNumber(form);
-  const { time, resetInterval, setInitTime } = useDeviceRemainingTime({
+  const { remainingTime, resetInterval, setInitTime } = useDeviceRemainingTime({
     isSubmitted: isSubmitted.phoneNumber,
   });
 
@@ -100,9 +100,9 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
               maxLength={6}
               disabled={!isSubmitted.phoneNumber || isSubmitted.code}
             />
-            {isSubmitted.phoneNumber && !isSubmitted.code && time.get() > 0 && (
+            {isSubmitted.phoneNumber && !isSubmitted.code && remainingTime > 0 && (
               <span className="md:text-s absolute top-1/2 right-3 -translate-y-1/2 font-normal text-gray-200 disabled:hidden lg:text-[15px]">
-                {`${String(Math.floor(time.get() / 60)).padStart(2, "0")}:${String(time.get() % 60).padStart(2, "0")}`}
+                {`${String(Math.floor(remainingTime / 60)).padStart(2, "0")}:${String(remainingTime % 60).padStart(2, "0")}`}
               </span>
             )}
           </div>
@@ -117,7 +117,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
             disabled={
               !isSubmitted.phoneNumber ||
               isSubmitted.code ||
-              (isSubmitted.phoneNumber && time.get() === 0)
+              (isSubmitted.phoneNumber && remainingTime === 0)
             }
             onClick={handleRequestCodeVerification}
           >

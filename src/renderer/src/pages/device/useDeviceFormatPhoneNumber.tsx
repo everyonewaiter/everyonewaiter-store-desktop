@@ -1,7 +1,7 @@
 import { UseFormReturn } from "react-hook-form";
 import { DeviceSchema } from "@renderer/schemas/device";
 
-export default function useDeviceFormatPhoneNumber(form: UseFormReturn<DeviceSchema>) {
+function useDeviceFormatPhoneNumber(form: UseFormReturn<DeviceSchema>) {
   const handleSetPhoneNumber = (value: string) =>
     form.setValue("phoneNumber", value, { shouldValidate: false });
 
@@ -35,3 +35,5 @@ export default function useDeviceFormatPhoneNumber(form: UseFormReturn<DeviceSch
 
   return { handleChangePhoneNumber };
 }
+
+export default useDeviceFormatPhoneNumber;

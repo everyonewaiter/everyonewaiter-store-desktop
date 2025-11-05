@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function useDeviceRemainingTime({ isSubmitted }: { isSubmitted: boolean }) {
+function useDeviceRemainingTime({ isSubmitted }: { isSubmitted: boolean }) {
   const INIT_NUMBER = 300;
 
   const [remainingTime, setRemainingTime] = useState(INIT_NUMBER);
@@ -40,19 +40,16 @@ export default function useDeviceRemainingTime({ isSubmitted }: { isSubmitted: b
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitted]);
 
-  const setTime = (value: number) => {
-    setRemainingTime(value);
-    if (isSubmitted && value > 0) startInterval();
-  };
-
   const setInitTime = () => {
     setRemainingTime(INIT_NUMBER);
     if (isSubmitted) startInterval();
   };
 
   return {
-    time: { get: () => remainingTime, set: setTime },
+    remainingTime,
     resetInterval,
     setInitTime,
   };
 }
+
+export default useDeviceRemainingTime;
