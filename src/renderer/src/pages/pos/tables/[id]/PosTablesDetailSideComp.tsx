@@ -20,7 +20,6 @@ function PosTablesDetailSideComp({
   menus,
 }: PosTablesDetailSideCompProps) {
   const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
-  console.log(activity);
 
   return (
     <aside
