@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@renderer/components";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailCancelPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelPaymentModalComp";
@@ -19,7 +18,7 @@ function PosTablesDetailSideComp({
   activity,
   menus,
 }: PosTablesDetailSideCompProps) {
-  const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
+  const checkedOrders: Order[] = [];
 
   return (
     <aside
@@ -74,20 +73,7 @@ function PosTablesDetailSideComp({
           {type === "checkout" &&
             activity.orders.map((order, index) => (
               <OrderBox key={order.orderId}>
-                <OrderBox.Index
-                  index={index}
-                  hasCheckbox
-                  checked={checkedOrders.some(
-                    (checkedOrder) => checkedOrder.orderId === order.orderId
-                  )}
-                  onCheckboxChange={(checked) =>
-                    setCheckedOrders((prev) =>
-                      checked
-                        ? [...prev, order]
-                        : prev.filter((checkedOrder) => checkedOrder.orderId !== order.orderId)
-                    )
-                  }
-                />
+                <OrderBox.Index index={index} hasCheckbox />
                 <OrderBox.Body>
                   {order.orderMenus.map((menu) => (
                     <OrderBox.Order key={menu.orderMenuId} orderMenu={menu} />
