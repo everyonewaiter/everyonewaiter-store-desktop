@@ -17,7 +17,7 @@ function Input({ className, hasError, prefix, ...props }: CombineInputProps) {
         data-error={hasError}
         aria-invalid={hasError}
         className={cn(
-          "md:text-s text-gray-0 h-12 w-full rounded-xl border py-2.5 pr-3 pl-4 text-[15px] font-normal outline-none placeholder:text-gray-300 disabled:border-gray-500 disabled:bg-gray-700 disabled:text-gray-300 disabled:placeholder:text-gray-400",
+          "text-gray-0 h-12 w-full rounded-xl border py-2.5 pr-3 pl-4 text-[15px] font-normal outline-none placeholder:text-gray-300 disabled:border-gray-500 disabled:bg-gray-700 disabled:text-gray-300 disabled:placeholder:text-gray-400",
           hasError ? "border-status-error" : "border-gray-600",
           prefix && "pl-10",
           className
