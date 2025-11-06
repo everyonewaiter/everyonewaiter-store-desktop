@@ -8,7 +8,11 @@ import { DeviceInfoSchema, deviceInfoSchema } from "@renderer/schemas/device";
 import cn from "@renderer/utils/cn";
 import dayjs from "dayjs";
 
-function DeviceStep2Comp() {
+// interface DeviceStep2CompProps {
+//   deviceData: DeviceSchema | null;
+// }
+
+function DeviceStep2Comp(/* { deviceData }: DeviceStep2CompProps */) {
   const navigate = useNavigate();
 
   const form = useForm<DeviceInfoSchema>({
@@ -21,13 +25,14 @@ function DeviceStep2Comp() {
 
   useEffect(() => {
     const today = dayjs().format("YYMMDDhhmmss");
-    form.setValue("deviceName", `${form.watch("deviceType")}-${today}`);
+    form.setValue("deviceName", `${form.watch("deviceType") === "HALL" ? "홀" : "POS"}-${today}`);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("deviceType")]);
 
-  const handleSubmit = (/*data: DeviceInfoSchema */) => {
+  const handleSubmit = (/* data: DeviceInfoSchema */) => {
     // TODO: 기기 등록 API 로직 추가
+    // deviceData, data
     navigate(`/${form.watch("deviceType").toLowerCase()}`);
   };
 

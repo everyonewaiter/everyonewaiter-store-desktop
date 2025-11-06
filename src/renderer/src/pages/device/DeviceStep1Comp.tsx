@@ -3,13 +3,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Dropdown, Input, Label } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import DeviceNoStoreModalComp from "@renderer/pages/device/DeviceNoStoreModalComp";
 import { mockStores } from "@renderer/pages/device/mock";
 import useDeviceFormatPhoneNumber from "@renderer/pages/device/useDeviceFormatPhoneNumber";
 import useDeviceRemainingTime from "@renderer/pages/device/useDeviceRemainingTime";
 import { deviceFormSchema, DeviceSchema } from "@renderer/schemas/device";
+import { SimpleStore } from "@renderer/types/domain";
+import { overlay } from "overlay-kit";
 
 interface DeviceStep1CompProps {
-  onNextStep: () => void;
+  onNextStep: (data: DeviceSchema) => void;
 }
 
 function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
@@ -18,7 +21,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
     defaultValues: {
       phoneNumber: "",
       code: "",
-      storeId: "",
+      storeId: mockStores.length > 0 ? mockStores[0].storeId : "",
     },
   });
 
@@ -34,8 +37,27 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
   });
 
   const handleRequestPhoneAuthentication = () => {
-    // TODO: 폰번호 인증 요청 API 로직 추가
     if (!form.watch("phoneNumber").length) return;
+
+    // TODO: 폰번호 인증 요청 API 로직 추가
+
+    // TODO: 폰번호 인증 요청 후 존재하는 매장이 없다면 DeviceNoStoreModalComp 모달 노출
+    const resultStores: SimpleStore[] = [];
+    if (resultStores.length === 0) {
+      overlay.open((overlayProps) => (
+        <DeviceNoStoreModalComp
+          {...overlayProps}
+          resetForm={() => {
+            form.reset();
+            setIsSubmitted({
+              phoneNumber: false,
+              code: false,
+              storeId: false,
+            });
+          }}
+        />
+      ));
+    }
 
     if (isSubmitted.phoneNumber) {
       setInitTime();
@@ -48,13 +70,13 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
     if (!form.watch("code").length) return;
 
     // TODO: 인증 코드 요청 API 로직 추가
+
     setIsSubmitted({ ...isSubmitted, code: true });
     resetInterval();
   };
 
-  const handleSubmit = (/*data: DeviceSchema */) => {
-    // TODO: 인증 정보 저장 API 로직 추가
-    onNextStep();
+  const handleSubmit = (data: DeviceSchema) => {
+    onNextStep(data);
   };
 
   return (
@@ -80,7 +102,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
                 lg: { buttonSize: "lg", className: "!min-w-[90px] !px-0" },
               }}
               onClick={handleRequestPhoneAuthentication}
-              disabled={isSubmitted.code}
+              disabled={isSubmitted.code || (isSubmitted.phoneNumber && remainingTime > 271)}
             >
               {isSubmitted.phoneNumber ? "재인증" : "인증요청"}
             </Button>
@@ -124,7 +146,7 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
             확인
           </Button>
         </div>
-        {isSubmitted.code && (
+        {isSubmitted.code && mockStores.length > 0 && (
           <div className="flex flex-col gap-1">
             <Label>매장 선택</Label>
             {mockStores.length > 1 ? (
