@@ -166,7 +166,7 @@ export interface Revenue {
   cardPaymentCancelPrice: number;
 }
 
-export interface Store {
+export interface SimpleStore {
   storeId: string;
   name: string;
 }
