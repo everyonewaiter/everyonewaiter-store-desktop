@@ -39,6 +39,12 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
   const handleRequestPhoneAuthentication = () => {
     if (!form.watch("phoneNumber").length) return;
 
+    if (isSubmitted.phoneNumber) {
+      setInitTime();
+      setIsSubmitted({ ...isSubmitted, code: false });
+      return;
+    }
+
     // TODO: 폰번호 인증 요청 API 로직 추가
 
     // TODO: 폰번호 인증 요청 후 존재하는 매장이 없다면 DeviceNoStoreModalComp 모달 노출
@@ -59,10 +65,6 @@ function DeviceStep1Comp({ onNextStep }: DeviceStep1CompProps) {
       ));
     }
 
-    if (isSubmitted.phoneNumber) {
-      setInitTime();
-      setIsSubmitted({ ...isSubmitted, code: false });
-    }
     setIsSubmitted({ ...isSubmitted, phoneNumber: true });
   };
 
