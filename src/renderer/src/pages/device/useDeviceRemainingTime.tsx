@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
-function useDeviceRemainingTime({ isSubmitted }: { isSubmitted: boolean }) {
+function useDeviceRemainingTime({
+  isSubmitted,
+  resetForm,
+}: {
+  isSubmitted: boolean;
+  resetForm: () => void;
+}) {
   const INIT_NUMBER = 300;
 
   const [remainingTime, setRemainingTime] = useState(INIT_NUMBER);
@@ -20,6 +26,7 @@ function useDeviceRemainingTime({ isSubmitted }: { isSubmitted: boolean }) {
       setRemainingTime((prev) => {
         if (prev <= 1) {
           resetInterval();
+          resetForm();
           return 0;
         }
         return prev - 1;

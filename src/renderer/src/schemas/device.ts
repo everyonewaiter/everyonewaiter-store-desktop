@@ -16,5 +16,8 @@ const deviceSchema = z.object({
 export const deviceFormSchema = deviceSchema.pick({ phoneNumber: true, code: true, storeId: true });
 export const deviceInfoSchema = deviceSchema.pick({ deviceType: true, deviceName: true });
 
+export const phoneNumberSchema = deviceSchema.shape.phoneNumber;
+export const codeSchema = deviceSchema.shape.code;
+
 export type DeviceSchema = z.infer<typeof deviceFormSchema>;
 export type DeviceInfoSchema = z.infer<typeof deviceInfoSchema>;
