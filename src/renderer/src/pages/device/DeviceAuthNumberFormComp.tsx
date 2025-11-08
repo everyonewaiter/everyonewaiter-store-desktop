@@ -2,25 +2,26 @@ import { useFormContext } from "react-hook-form";
 import { Button, Input } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import DeviceNoStoreModalComp from "@renderer/pages/device/DeviceNoStoreModalComp";
-import { DeviceSubmitted } from "@renderer/pages/device/DeviceStep1Comp";
+import useDeviceAuthStore from "@renderer/pages/device/useDeviceAuthStore";
 import { codeSchema, DeviceSchema } from "@renderer/schemas/device";
 import { SimpleStore } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
+import { useShallow } from "zustand/react/shallow";
 
 interface DeviceAuthNumberFormCompProps {
-  isSubmitted: DeviceSubmitted;
-  setIsSubmitted: (isSubmitted: DeviceSubmitted) => void;
   remainingTime: number;
   resetInterval: () => void;
 }
 
-function DeviceAuthNumberFormComp({
-  isSubmitted,
-  setIsSubmitted,
-  remainingTime,
-  resetInterval,
-}: DeviceAuthNumberFormCompProps) {
+function DeviceAuthNumberFormComp({ remainingTime, resetInterval }: DeviceAuthNumberFormCompProps) {
   const form = useFormContext<DeviceSchema>();
+
+  const { isSubmitted, setIsSubmitted } = useDeviceAuthStore(
+    useShallow((state) => ({
+      isSubmitted: state.isSubmitted,
+      setIsSubmitted: state.setIsSubmitted,
+    }))
+  );
 
   const handleRequestCodeVerification = () => {
     const validation = codeSchema.safeParse(form.watch("code"));
@@ -48,7 +49,7 @@ function DeviceAuthNumberFormComp({
       return;
     }
 
-    setIsSubmitted({ ...isSubmitted, code: true });
+    setIsSubmitted({ code: true });
     resetInterval();
   };
 

@@ -1,25 +1,26 @@
 import { useFormContext } from "react-hook-form";
 import { Button, Input, Label } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
-import { DeviceSubmitted } from "@renderer/pages/device/DeviceStep1Comp";
+import useDeviceAuthStore from "@renderer/pages/device/useDeviceAuthStore";
 import useDeviceFormatPhoneNumber from "@renderer/pages/device/useDeviceFormatPhoneNumber";
 import { DeviceSchema, phoneNumberSchema } from "@renderer/schemas/device";
+import { useShallow } from "zustand/react/shallow";
 
 interface DevicePhoneNumberFormCompProps {
-  isSubmitted: DeviceSubmitted;
-  setIsSubmitted: (isSubmitted: DeviceSubmitted) => void;
   remainingTime: number;
   setInitTime: () => void;
 }
 
-function DevicePhoneNumberFormComp({
-  isSubmitted,
-  setIsSubmitted,
-  remainingTime,
-  setInitTime,
-}: DevicePhoneNumberFormCompProps) {
+function DevicePhoneNumberFormComp({ remainingTime, setInitTime }: DevicePhoneNumberFormCompProps) {
   const form = useFormContext<DeviceSchema>();
   const { handleChangePhoneNumber } = useDeviceFormatPhoneNumber(form);
+
+  const { isSubmitted, setIsSubmitted } = useDeviceAuthStore(
+    useShallow((state) => ({
+      isSubmitted: state.isSubmitted,
+      setIsSubmitted: state.setIsSubmitted,
+    }))
+  );
 
   const handleRequestPhoneAuthentication = () => {
     const validation = phoneNumberSchema.safeParse(form.watch("phoneNumber"));
@@ -27,13 +28,13 @@ function DevicePhoneNumberFormComp({
 
     if (isSubmitted.phoneNumber) {
       setInitTime();
-      setIsSubmitted({ ...isSubmitted, code: false });
+      setIsSubmitted({ code: false });
       return;
     }
 
     // TODO: 폰번호 인증 요청 API 로직 추가
 
-    setIsSubmitted({ ...isSubmitted, phoneNumber: true });
+    setIsSubmitted({ phoneNumber: true });
   };
 
   return (

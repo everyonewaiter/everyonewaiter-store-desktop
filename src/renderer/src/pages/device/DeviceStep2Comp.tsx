@@ -4,15 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Label } from "@renderer/components";
 import { ColorName, DeviceSupport } from "@renderer/constants";
+import useDeviceStore from "@renderer/pages/device/useDeviceStore";
 import { DeviceInfoSchema, deviceInfoSchema } from "@renderer/schemas/device";
 import cn from "@renderer/utils/cn";
 import dayjs from "dayjs";
 
-// interface DeviceStep2CompProps {
-//   deviceData: DeviceSchema | null;
-// }
-
-function DeviceStep2Comp(/* { deviceData }: DeviceStep2CompProps */) {
+function DeviceStep2Comp() {
   const navigate = useNavigate();
 
   const form = useForm<DeviceInfoSchema>({
@@ -30,9 +27,9 @@ function DeviceStep2Comp(/* { deviceData }: DeviceStep2CompProps */) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("deviceType")]);
 
-  const handleSubmit = (/* data: DeviceInfoSchema */) => {
+  const handleSubmit = (data: DeviceInfoSchema) => {
     // TODO: 기기 등록 API 로직 추가
-    // deviceData, data
+    useDeviceStore.getState().setDeviceData(data);
     navigate(`/${form.watch("deviceType").toLowerCase()}`);
   };
 
