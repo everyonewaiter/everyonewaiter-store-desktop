@@ -165,3 +165,16 @@ export interface Revenue {
   cashPaymentCancelPrice: number;
   cardPaymentCancelPrice: number;
 }
+
+export interface Receipt {
+  tableNo: number;
+  memo: string;
+  printNo: number;
+  receiptMenu: ReceiptMenu[];
+}
+
+export interface ReceiptMenu {
+  name: string;
+  quantity: number;
+  options: string[];
+}
