@@ -1,7 +1,7 @@
 import {
   MenuList,
   Order,
-  OrderPaymentList,
+  OrderPayment,
   Revenue,
   Table,
   TableActivity,
@@ -154,7 +154,7 @@ export const MOCK: Table[] = [
   },
 ];
 
-export const PAYMENTS_MOCK: OrderPaymentList[] = [
+export const PAYMENTS_MOCK: OrderPayment[] = [
   {
     orderPaymentId: "OP-4886",
     state: "APPROVE",

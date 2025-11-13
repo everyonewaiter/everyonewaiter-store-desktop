@@ -1,4 +1,4 @@
-import { Receipt } from "@renderer/types/domain";
+import { OrderPayment, Receipt, Store, TableActivity } from "@renderer/types/domain";
 import { PrinterInterface, TextAlign, TextAttribute, TextSize } from "@shared/printer/options";
 
 export const openUsbPrinter = () => {
@@ -7,6 +7,382 @@ export const openUsbPrinter = () => {
 
 export const closePrinter = () => {
   window.printer.close();
+};
+
+export const printReceiptWithPayment = (store: Store, orderPayment: OrderPayment) => {
+  window.printer.transactionStart();
+  window.printer.initialize();
+
+  window.printer.printText(
+    "영 수 증",
+    TextAlign.CENTER,
+    TextAttribute.BOLD,
+    TextSize.WIDTH1 | TextSize.HEIGHT1
+  );
+  window.printer.lineFeed(2);
+
+  divider();
+
+  window.printer.printText(
+    `상  호  명: ${store.name}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `대  표  자: ${store.ceoName}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `사업자번호: ${store.license}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `주      소: ${store.address}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `전화  번호: ${store.landline}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `주문  번호: #${orderPayment.posTableActivityId}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  divider();
+
+  printLeftRightText(
+    "결제 수단",
+    orderPayment.method === "CASH" ? "현금" : "카드",
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0,
+    TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  printLeftRightText(
+    "결제 타입",
+    orderPayment.state === "APPROVE" ? "승인" : "취소",
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0,
+    TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  if (orderPayment.method === "CARD") {
+    window.printer.lineFeed();
+    window.printer.printText(
+      orderPayment.purchaseName,
+      TextAlign.LEFT,
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0 | TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+
+    printLeftRightText(
+      "카드 번호",
+      orderPayment.cardNo,
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+
+    printLeftRightText(
+      "할부 개월",
+      orderPayment.installment,
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+
+    printLeftRightText(
+      "승인 번호",
+      orderPayment.approvalNo,
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+  }
+
+  printLeftRightText(
+    "승인 일시",
+    orderPayment.tradeTime,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0,
+    TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  printLeftRightText(
+    "승인 금액",
+    `${orderPayment.amount.toLocaleString()}원`,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0,
+    TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  divider();
+
+  window.printer.cutPaper();
+  window.printer.transactionEnd();
+};
+
+export const printReceiptWithActivity = (
+  store: Store,
+  tableActivity: TableActivity,
+  includeProducts: boolean
+) => {
+  window.printer.transactionStart();
+  window.printer.initialize();
+
+  window.printer.printText(
+    "영 수 증",
+    TextAlign.CENTER,
+    TextAttribute.BOLD,
+    TextSize.WIDTH1 | TextSize.HEIGHT1
+  );
+  window.printer.lineFeed(2);
+
+  divider();
+
+  window.printer.printText(
+    `상  호  명: ${store.name}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `대  표  자: ${store.ceoName}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `사업자번호: ${store.license}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `주      소: ${store.address}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `전화  번호: ${store.landline}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  window.printer.printText(
+    `주문  번호: #${tableActivity.posTableActivityId}`,
+    TextAlign.LEFT,
+    TextAttribute.DEFAULT,
+    TextSize.WIDTH0 | TextSize.HEIGHT0
+  );
+  window.printer.lineFeed();
+
+  divider();
+
+  if (includeProducts) {
+    printLeftRightText(
+      "품명",
+      "수량/금액",
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+
+    divider();
+
+    const orderMenus = tableActivity.orders.flatMap((order) => order.orderMenus);
+    for (const orderMenu of orderMenus) {
+      let orderMenuWithOptionPrice = orderMenu.price;
+
+      printLeftRightText(
+        orderMenu.name.replace(/ /g, ""),
+        orderMenu.quantity.toString(),
+        TextAttribute.DEFAULT,
+        TextSize.WIDTH0,
+        TextSize.HEIGHT0
+      );
+      window.printer.lineFeed();
+
+      const orderOptions = orderMenu.orderOptionGroups.flatMap(
+        (orderOptionGroup) => orderOptionGroup.orderOptions
+      );
+      for (const orderOption of orderOptions) {
+        orderMenuWithOptionPrice += orderOption.price;
+
+        window.printer.printText(
+          ` └${orderOption.name.replace(/ /g, "")}`,
+          TextAlign.LEFT,
+          TextAttribute.DEFAULT,
+          TextSize.WIDTH0 | TextSize.HEIGHT0
+        );
+        window.printer.lineFeed();
+      }
+
+      const orderMenuTotalPrice = orderMenuWithOptionPrice * orderMenu.quantity;
+      window.printer.printText(
+        `${orderMenuTotalPrice.toLocaleString()}원`,
+        TextAlign.RIGHT,
+        TextAttribute.DEFAULT,
+        TextSize.WIDTH0 | TextSize.HEIGHT0
+      );
+      window.printer.lineFeed();
+
+      divider();
+    }
+
+    printLeftRightText(
+      "주문 합계",
+      `${tableActivity.totalOrderPrice.toLocaleString()}원`,
+      TextAttribute.BOLD,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT1
+    );
+    window.printer.lineFeed();
+
+    printLeftRightText(
+      "할인 금액",
+      `${tableActivity.discount.toLocaleString()}원`,
+      TextAttribute.BOLD,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT1
+    );
+    window.printer.lineFeed();
+
+    printLeftRightText(
+      "받을 금액",
+      `${tableActivity.totalPaymentPrice.toLocaleString()}원`,
+      TextAttribute.BOLD,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT1
+    );
+    window.printer.lineFeed();
+
+    divider();
+  }
+
+  for (const orderPayment of tableActivity.orderPayments) {
+    printLeftRightText(
+      "결제 수단",
+      orderPayment.method === "CASH" ? "현금" : "카드",
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+
+    printLeftRightText(
+      "결제 타입",
+      orderPayment.state === "APPROVE" ? "승인" : "취소",
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+
+    if (orderPayment.method === "CARD") {
+      window.printer.lineFeed();
+      window.printer.printText(
+        orderPayment.purchaseName,
+        TextAlign.LEFT,
+        TextAttribute.DEFAULT,
+        TextSize.WIDTH0 | TextSize.HEIGHT0
+      );
+      window.printer.lineFeed();
+
+      printLeftRightText(
+        "카드 번호",
+        orderPayment.cardNo,
+        TextAttribute.DEFAULT,
+        TextSize.WIDTH0,
+        TextSize.HEIGHT0
+      );
+      window.printer.lineFeed();
+
+      printLeftRightText(
+        "할부 개월",
+        orderPayment.installment,
+        TextAttribute.DEFAULT,
+        TextSize.WIDTH0,
+        TextSize.HEIGHT0
+      );
+      window.printer.lineFeed();
+
+      printLeftRightText(
+        "승인 번호",
+        orderPayment.approvalNo,
+        TextAttribute.DEFAULT,
+        TextSize.WIDTH0,
+        TextSize.HEIGHT0
+      );
+      window.printer.lineFeed();
+    }
+
+    printLeftRightText(
+      "승인 일시",
+      orderPayment.tradeTime,
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+
+    printLeftRightText(
+      "승인 금액",
+      `${orderPayment.amount.toLocaleString()}원`,
+      TextAttribute.DEFAULT,
+      TextSize.WIDTH0,
+      TextSize.HEIGHT0
+    );
+    window.printer.lineFeed();
+
+    divider();
+  }
+
+  window.printer.cutPaper();
+  window.printer.transactionEnd();
 };
 
 export const printOrder = (receipt: Receipt) => {
@@ -84,12 +460,6 @@ export const printOrder = (receipt: Receipt) => {
   }
 
   window.printer.cutPaper();
-  window.printer.transactionEnd();
-};
-
-export const printReceipt = () => {
-  window.printer.transactionStart();
-  window.printer.initialize();
   window.printer.transactionEnd();
 };
 

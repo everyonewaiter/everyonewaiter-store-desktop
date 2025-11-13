@@ -87,9 +87,14 @@ export interface Waiting {
   createdAt: string;
 }
 
-interface OrderPayment {
+export interface OrderPayment {
+  orderPaymentId: string;
+  posTableActivityId: string;
+  storeId: string;
+  state: OrderPaymentState;
   method: OrderPaymentMethod;
   amount: number;
+  cancellable: boolean;
   approvalNo: string;
   installment: string;
   cardNo: string;
@@ -102,14 +107,6 @@ interface OrderPayment {
   supplyAmount: number;
   cashReceiptNo: string;
   cashReceiptType: OrderReceiptType;
-}
-
-export interface OrderPaymentList extends OrderPayment {
-  orderPaymentId: string;
-  posTableActivityId: string;
-  storeId: string;
-  state: OrderPaymentState;
-  cancellable: boolean;
   createdAt: string;
 }
 
@@ -177,4 +174,37 @@ export interface ReceiptMenu {
   name: string;
   quantity: number;
   options: string[];
+}
+
+export interface Store {
+  storeId: string;
+  accountId: string;
+  name: string;
+  ceoName: string;
+  address: string;
+  landline: string;
+  license: string;
+  image: string;
+  status: "OPEN" | "CLOSE";
+  lastOpenedAt: string;
+  lastClosedAt: string;
+  setting: Setting;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Setting {
+  ksnetDeviceNo: string;
+  extraTableCount: number;
+  kitchenPrinterLocation: "HALL" | "POS";
+  showMenuPopup: boolean;
+  showOrderTotalPrice: boolean;
+  showOrderMenuImage: boolean;
+  countryOfOrigins: CountryOfOrigin[];
+  staffCallOptions: string[];
+}
+
+export interface CountryOfOrigin {
+  item: string;
+  origin: string;
 }
