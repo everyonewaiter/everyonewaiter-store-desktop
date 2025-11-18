@@ -165,3 +165,8 @@ export interface Revenue {
   cashPaymentCancelPrice: number;
   cardPaymentCancelPrice: number;
 }
+
+export interface SimpleStore {
+  storeId: string;
+  name: string;
+}
