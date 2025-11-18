@@ -208,3 +208,8 @@ export interface CountryOfOrigin {
   item: string;
   origin: string;
 }
+
+export interface SimpleStore {
+  storeId: string;
+  name: string;
+}
