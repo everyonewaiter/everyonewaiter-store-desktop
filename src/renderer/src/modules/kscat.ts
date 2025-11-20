@@ -83,7 +83,6 @@ export const kscatApproval = async ({
     jsonp: "callback",
     data: { REQ: requestTelegram },
     success: async (data) => {
-      console.log(data);
       if (FindJSONtoString("RES", data) != "0000") {
         alert(FindJSONtoString("MSG", data));
       } else {
