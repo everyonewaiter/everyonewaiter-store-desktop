@@ -13,6 +13,8 @@ type MenuState = "DEFAULT" | "HIDE" | "SOLD_OUT";
 type MenuLabel = "BEST" | "NEW" | "DEFAULT" | "RECOMMEND";
 type MenuOptionType = "MANDATORY" | "OPTIONAL";
 
+export type DevicePurpose = "POS" | "HALL";
+
 export interface Table {
   posTableId: string;
   storeId: string;
@@ -196,7 +198,7 @@ export interface Store {
 export interface Setting {
   ksnetDeviceNo: string;
   extraTableCount: number;
-  kitchenPrinterLocation: "HALL" | "POS";
+  kitchenPrinterLocation: DevicePurpose;
   showMenuPopup: boolean;
   showOrderTotalPrice: boolean;
   showOrderMenuImage: boolean;
