@@ -20,7 +20,8 @@
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:linux": "electron-vite build && electron-builder --linux",
     "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "keytar": "npx electron-rebuild -f -w keytar"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
