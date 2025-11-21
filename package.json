@@ -36,6 +36,7 @@
     "koffi": "^2.14.1"
   },
   "devDependencies": {
+    "crypto-js": "^4.2.0",
     "@commitlint/cli": "^20.0.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
