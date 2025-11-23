@@ -37,7 +37,6 @@
     "koffi": "^2.14.1"
   },
   "devDependencies": {
-    "crypto-js": "^4.2.0",
     "@commitlint/cli": "^20.0.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
@@ -60,6 +59,7 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "crypto-js": "^4.2.0",
     "dayjs": "^1.11.19",
     "electron": "^38.1.2",
     "electron-builder": "^25.1.8",
@@ -95,6 +95,7 @@
       "@tailwindcss/oxide",
       "electron",
       "esbuild",
+      "keytar",
       "koffi"
     ]
   }
