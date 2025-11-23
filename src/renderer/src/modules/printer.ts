@@ -492,7 +492,7 @@ const printLeftRightText = (
   height: number
 ) => {
   const lastLineLeftTextByteLength = getLastLineTextByteLength(leftText, width);
-  const rightTextByteLength = getByteLength(rightText);
+  const rightTextByteLength = rightText.byteLength();
 
   if (lastLineLeftTextByteLength + rightTextByteLength >= maxLineByteLength[width]) {
     window.printer.printText(leftText, TextAlign.LEFT, attribute, width | height);
@@ -510,7 +510,7 @@ const printLeftRightText = (
 };
 
 const getLastLineTextByteLength = (text: string, width: number) => {
-  const totalByteLength = getByteLength(text);
+  const totalByteLength = text.byteLength();
 
   if (totalByteLength <= maxLineByteLength[width]) {
     return totalByteLength;
@@ -529,15 +529,4 @@ const getLastLineTextByteLength = (text: string, width: number) => {
   }
 
   return lastLineByteLength;
-};
-
-const getByteLength = (text: string) => {
-  let byteLength = 0;
-
-  for (let i = 0; i < text.length; i++) {
-    const charCode = text.charCodeAt(i);
-    byteLength += charCode > 127 ? 2 : 1;
-  }
-
-  return byteLength;
 };
