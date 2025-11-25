@@ -57,6 +57,14 @@ function registerDeviceHandlers() {
     const deviceType = await keytar.getPassword(SERVICE, DEVICE_TYPE_ACCOUNT);
     return { deviceId, secretKey, deviceType };
   });
+
+  // 삭제
+  ipcMain.handle("delete-device-info", async () => {
+    await keytar.deletePassword(SERVICE, DEVICE_ACCOUNT);
+    await keytar.deletePassword(SERVICE, SECRET_ACCOUNT);
+    await keytar.deletePassword(SERVICE, DEVICE_TYPE_ACCOUNT);
+    return true;
+  });
 }
 
 function registerIpcHandlers() {

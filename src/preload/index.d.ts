@@ -16,6 +16,7 @@ declare global {
         secretKey: string;
         deviceType: "POS" | "HALL";
       }>;
+      deleteDeviceInfo: () => Promise<boolean>;
     };
   }
 }
