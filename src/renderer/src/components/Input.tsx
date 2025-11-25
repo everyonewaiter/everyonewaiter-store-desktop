@@ -16,7 +16,7 @@ const Input = forwardRef<HTMLInputElement, CombineInputProps>(
 
     return (
       <div className="flex w-full flex-1 flex-col gap-1">
-        <div className="relative h-12">
+        <div className="relative h-9 lg:h-12">
           {prefix && (
             <div className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2">{prefix}</div>
           )}
@@ -26,7 +26,7 @@ const Input = forwardRef<HTMLInputElement, CombineInputProps>(
             data-error={hasError}
             aria-invalid={hasError}
             className={cn(
-              "text-gray-0 h-12 w-full rounded-xl border py-2.5 pr-3 pl-4 text-[15px] font-normal outline-none placeholder:text-gray-300 disabled:border-gray-500 disabled:bg-gray-700 disabled:text-gray-300 disabled:placeholder:text-gray-400",
+              "text-gray-0 text-s h-9 w-full rounded-lg border py-2.5 pr-3 pl-3 font-normal outline-none placeholder:text-gray-300 disabled:border-gray-500 disabled:bg-gray-700 disabled:text-gray-300 disabled:placeholder:text-gray-400 lg:h-12 lg:rounded-xl lg:pl-4 lg:text-[15px]",
               hasError ? "border-status-error" : "border-gray-600",
               prefix && "pl-10",
               className
