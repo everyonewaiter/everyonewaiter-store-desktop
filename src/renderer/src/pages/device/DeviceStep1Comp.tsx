@@ -55,6 +55,7 @@ function DeviceStep1Comp() {
         form.reset();
         resetSubmitted();
       }
+      resetInterval();
     },
   });
 
@@ -68,12 +69,8 @@ function DeviceStep1Comp() {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col md:gap-5 lg:gap-8">
-        <div className="flex flex-col md:gap-3 lg:gap-4">
-          <DevicePhoneNumberFormComp
-            remainingTime={remainingTime}
-            setInitTime={setInitTime}
-            resetInterval={resetInterval}
-          />
+        <div className="flex flex-col gap-3 lg:gap-4">
+          <DevicePhoneNumberFormComp remainingTime={remainingTime} setInitTime={setInitTime} />
           <DeviceAuthNumberFormComp
             remainingTime={remainingTime}
             resetInterval={resetInterval}

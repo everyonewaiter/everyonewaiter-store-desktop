@@ -11,14 +11,9 @@ import { useShallow } from "zustand/react/shallow";
 interface DevicePhoneNumberFormCompProps {
   remainingTime: number;
   setInitTime: () => void;
-  resetInterval: () => void;
 }
 
-function DevicePhoneNumberFormComp({
-  remainingTime,
-  setInitTime,
-  resetInterval,
-}: DevicePhoneNumberFormCompProps) {
+function DevicePhoneNumberFormComp({ remainingTime, setInitTime }: DevicePhoneNumberFormCompProps) {
   const form = useFormContext<DeviceSchema>();
   const { handleChangePhoneNumber } = useDeviceFormatPhoneNumber(form);
 
@@ -36,13 +31,14 @@ function DevicePhoneNumberFormComp({
     if (isSubmitted.phoneNumber) {
       setInitTime();
       setIsSubmitted({ code: false });
-      return;
     }
 
     try {
       await sendAuthCode(form.watch("phoneNumber").replaceAll("-", ""));
       setIsSubmitted({ ...isSubmitted, phoneNumber: true });
-      resetInterval();
+      if (!isSubmitted.phoneNumber) {
+        setInitTime();
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         const status = error.response?.status;
