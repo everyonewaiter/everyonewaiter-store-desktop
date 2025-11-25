@@ -60,6 +60,11 @@ body {
   input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px #fff inset;
   }
+
+  input:-webkit-autofill:disabled {
+    -webkit-box-shadow: 0 0 0 30px var(--color-gray-700) inset;
+    -webkit-text-fill-color: var(--color-gray-300);
+  }
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
