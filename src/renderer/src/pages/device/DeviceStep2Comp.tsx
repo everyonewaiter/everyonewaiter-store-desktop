@@ -57,6 +57,7 @@ function DeviceStep2Comp() {
         try {
           await window.storageAPI.storeDeviceInfo({
             deviceId,
+            storeId: deviceData?.storeId as string,
             secretKey,
             deviceType: data.deviceType as DevicePurpose,
           });

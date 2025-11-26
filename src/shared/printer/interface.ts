@@ -5,7 +5,7 @@ import {
 } from "@shared/printer/options";
 import { ValueOf } from "@shared/utils/types";
 
-interface PrinterApi {
+interface PrinterAPI {
   open: (
     communicationInterface: ValueOf<typeof PrinterInterface>,
     portName?: string,
@@ -43,4 +43,4 @@ interface PrinterApi {
   cutPaper: () => void;
 }
 
-export type { PrinterApi };
+export type { PrinterAPI };
