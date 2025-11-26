@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import { api } from "@renderer/api";
 import { queryKey } from "@renderer/queries/key";
+import { Device } from "@renderer/types/domain";
+import { storageKey } from "@shared/storage/key";
 import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 
 export const useGetDevice = () => {
   const { data, error, isSuccess, isError, isPending } = useQuery({
     queryKey: [queryKey.DEVICE],
-    queryFn: async () => {
+    queryFn: async (): Promise<Device> => {
       const { data } = await api.get("/devices");
       return data;
     },
@@ -16,12 +18,11 @@ export const useGetDevice = () => {
   useEffect(() => {
     if (data && isSuccess) {
       (async () => {
-        await window.storageAPI.storeDeviceInfo({
-          deviceId: data.deviceId,
-          storeId: data.storeId,
-          secretKey: data.secretKey,
-          deviceType: data.deviceType,
-        });
+        await Promise.all([
+          window.storageAPI.store(storageKey.DEVICE_ID, data.deviceId),
+          window.storageAPI.store(storageKey.STORE_ID, data.storeId),
+          window.storageAPI.store(storageKey.DEVICE_TYPE, data.purpose),
+        ]);
       })();
     }
   }, [isSuccess, data]);

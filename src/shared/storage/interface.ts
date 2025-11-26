@@ -1,4 +1,4 @@
-type StorageDeviceType = "POS" | "HALL";
+type StorageDeviceType = "POS" | "HALL" | "WAITING" | "TABLE";
 
 interface StorageDeviceInfo {
   deviceId: string;
@@ -8,8 +8,8 @@ interface StorageDeviceInfo {
 }
 
 interface StorageAPI {
-  storeDeviceInfo: (data: StorageDeviceInfo) => Promise<boolean>;
-  getDeviceInfo: () => Promise<StorageDeviceInfo>;
+  store: (key: string, value: string) => Promise<boolean>;
+  getDeviceInfo: () => Promise<StorageDeviceInfo | null>;
   deleteDeviceInfo: () => Promise<boolean>;
 }
 

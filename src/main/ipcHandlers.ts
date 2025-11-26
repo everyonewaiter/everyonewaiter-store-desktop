@@ -10,10 +10,9 @@ import {
   transactionEnd,
   transactionStart,
 } from "@main/printer";
-import { deleteDeviceInfo, getDeviceInfo, saveDeviceInfo } from "@main/storage";
+import { deleteDeviceInfo, getDeviceInfo, storeStorage } from "@main/storage";
 import printerChannel from "@shared/printer/channel";
 import storageChannel from "@shared/storage/channel";
-import { StorageDeviceInfo } from "@shared/storage/interface";
 import { ipcMain } from "electron";
 import "dotenv/config";
 
@@ -39,8 +38,8 @@ function registerPrinterHandlers() {
 }
 
 function registerDeviceHandlers() {
-  ipcMain.handle(storageChannel.SAVE_DEVICE_INFO, async (_, data: StorageDeviceInfo) =>
-    saveDeviceInfo(data)
+  ipcMain.handle(storageChannel.STORE, async (_, key: string, value: string) =>
+    storeStorage(key, value)
   );
   ipcMain.handle(storageChannel.GET_DEVICE_INFO, async () => getDeviceInfo());
   ipcMain.handle(storageChannel.DELETE_DEVICE_INFO, async () => deleteDeviceInfo());

@@ -7,8 +7,9 @@ import { Button, Input, Label } from "@renderer/components";
 import { ColorName, DeviceSupport } from "@renderer/constants";
 import useDeviceStore from "@renderer/pages/device/useDeviceStore";
 import { DeviceInfoSchema, deviceInfoSchema } from "@renderer/schemas/device";
-import { DevicePurpose, OrderPayment } from "@renderer/types/domain";
+import { AllowDevicePurpose, OrderPayment } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
+import { storageKey } from "@shared/storage/key";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
 
@@ -44,7 +45,7 @@ function DeviceStep2Comp() {
       const body = {
         phoneNumber: deviceData?.phoneNumber.replaceAll("-", "") as string,
         name: data.deviceName,
-        purpose: data.deviceType as DevicePurpose,
+        purpose: data.deviceType as AllowDevicePurpose,
         tableNo: 1,
         paymentType: "POSTPAID" as unknown as OrderPayment,
       };
@@ -55,12 +56,12 @@ function DeviceStep2Comp() {
         const { deviceId, secretKey } = response.data;
 
         try {
-          await window.storageAPI.storeDeviceInfo({
-            deviceId,
-            storeId: deviceData?.storeId as string,
-            secretKey,
-            deviceType: data.deviceType as DevicePurpose,
-          });
+          await Promise.all([
+            window.storageAPI.store(storageKey.DEVICE_ID, deviceId),
+            window.storageAPI.store(storageKey.STORE_ID, deviceData?.storeId as string),
+            window.storageAPI.store(storageKey.DEVICE_SECRET_KEY, secretKey),
+            window.storageAPI.store(storageKey.DEVICE_TYPE, data.deviceType),
+          ]);
 
           navigate(`/${data.deviceType.toLowerCase()}`);
         } catch (storageError) {
