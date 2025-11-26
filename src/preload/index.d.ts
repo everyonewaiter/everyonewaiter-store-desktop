@@ -5,5 +5,18 @@ declare global {
   interface Window {
     electron: ElectronAPI;
     printer: PrinterApi;
+    storageAPI: {
+      storeDeviceInfo: (data: {
+        deviceId: string;
+        secretKey: string;
+        deviceType: "POS" | "HALL";
+      }) => Promise<boolean>;
+      getDeviceInfo: () => Promise<{
+        deviceId: string;
+        secretKey: string;
+        deviceType: "POS" | "HALL";
+      }>;
+      deleteDeviceInfo: () => Promise<boolean>;
+    };
   }
 }

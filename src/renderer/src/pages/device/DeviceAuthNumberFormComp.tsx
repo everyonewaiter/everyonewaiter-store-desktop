@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { verifyAuthCode } from "@renderer/api/device";
 import { Button, Input } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import DeviceNoStoreModalComp from "@renderer/pages/device/DeviceNoStoreModalComp";
@@ -11,9 +12,14 @@ import { useShallow } from "zustand/react/shallow";
 interface DeviceAuthNumberFormCompProps {
   remainingTime: number;
   resetInterval: () => void;
+  setStores: (stores: SimpleStore[]) => void;
 }
 
-function DeviceAuthNumberFormComp({ remainingTime, resetInterval }: DeviceAuthNumberFormCompProps) {
+function DeviceAuthNumberFormComp({
+  remainingTime,
+  resetInterval,
+  setStores,
+}: DeviceAuthNumberFormCompProps) {
   const form = useFormContext<DeviceSchema>();
 
   const { isSubmitted, setIsSubmitted } = useDeviceAuthStore(
@@ -23,16 +29,16 @@ function DeviceAuthNumberFormComp({ remainingTime, resetInterval }: DeviceAuthNu
     }))
   );
 
-  const handleRequestCodeVerification = () => {
+  const handleRequestCodeVerification = async () => {
     const validation = codeSchema.safeParse(form.watch("code"));
     if (!validation.success) return;
 
-    // TODO: 인증 코드 요청 API 로직 추가
+    const { phoneNumber, code } = form.watch();
 
-    // TODO: 폰번호 인증 요청 후 존재하는 매장이 없다면 DeviceNoStoreModalComp 모달 노출
-    const resultStores: SimpleStore[] = [];
-    if (resultStores.length === 0) {
-      resetInterval();
+    const response = await verifyAuthCode(phoneNumber.replaceAll("-", ""), code);
+    const { stores } = response.data;
+
+    if (stores.length === 0) {
       overlay.open((overlayProps) => (
         <DeviceNoStoreModalComp
           {...overlayProps}
@@ -43,14 +49,18 @@ function DeviceAuthNumberFormComp({ remainingTime, resetInterval }: DeviceAuthNu
               code: false,
               storeId: false,
             });
+            resetInterval();
           }}
         />
       ));
-      return;
+    } else {
+      setStores(stores);
+      if (stores.length === 1) {
+        form.setValue("storeId", stores[0].storeId);
+      }
+      setIsSubmitted({ code: true });
+      resetInterval();
     }
-
-    setIsSubmitted({ code: true });
-    resetInterval();
   };
 
   return (

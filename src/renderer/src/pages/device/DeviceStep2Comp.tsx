@@ -2,12 +2,22 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { addDevice } from "@renderer/api/device";
 import { Button, Input, Label } from "@renderer/components";
 import { ColorName, DeviceSupport } from "@renderer/constants";
 import useDeviceStore from "@renderer/pages/device/useDeviceStore";
 import { DeviceInfoSchema, deviceInfoSchema } from "@renderer/schemas/device";
+import { DevicePurpose, OrderPayment } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
+import { AxiosError } from "axios";
 import dayjs from "dayjs";
+
+const ERROR_MESSAGES = {
+  ALREADY_USE_DEVICE_NAME: "이미 사용 중인 기기 이름입니다. 다른 이름을 입력해 주세요.",
+  EXPIRED_VERIFICATION_PHONE_NUMBER:
+    "휴대폰 번호 인증 시간이 만료되었습니다. 다시 인증을 진행해 주세요.",
+  DEFAULT: "알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.",
+} as const;
 
 function DeviceStep2Comp() {
   const navigate = useNavigate();
@@ -27,10 +37,48 @@ function DeviceStep2Comp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("deviceType")]);
 
-  const handleSubmit = (data: DeviceInfoSchema) => {
-    // TODO: 기기 등록 API 로직 추가
-    useDeviceStore.getState().setDeviceData(data);
-    navigate(`/${form.watch("deviceType").toLowerCase()}`);
+  const handleSubmit = async (data: DeviceInfoSchema) => {
+    try {
+      const deviceData = useDeviceStore.getState().deviceData;
+
+      const body = {
+        phoneNumber: deviceData?.phoneNumber.replaceAll("-", "") as string,
+        name: data.deviceName,
+        purpose: data.deviceType as DevicePurpose,
+        tableNo: 1,
+        paymentType: "POSTPAID" as unknown as OrderPayment,
+      };
+
+      const response = await addDevice(deviceData?.storeId as string, body);
+
+      if (response.status === 201) {
+        const { deviceId, secretKey } = response.data;
+
+        try {
+          await window.storageAPI.storeDeviceInfo({
+            deviceId,
+            secretKey,
+            deviceType: data.deviceType as DevicePurpose,
+          });
+
+          navigate(`/${data.deviceType.toLowerCase()}`);
+        } catch (storageError) {
+          const errorMessage =
+            storageError instanceof Error && storageError.message.includes("storageAPI")
+              ? "앱을 다시 시작한 후 시도해 주세요."
+              : "기기 정보 저장 중 오류가 발생했습니다. 다시 시도해 주세요.";
+
+          form.setError("deviceName", { message: errorMessage });
+        }
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const code = error.response?.data?.code;
+        const errorMessage =
+          ERROR_MESSAGES[code as keyof typeof ERROR_MESSAGES] || ERROR_MESSAGES.DEFAULT;
+        form.setError("deviceName", { message: errorMessage });
+      }
+    }
   };
 
   return (

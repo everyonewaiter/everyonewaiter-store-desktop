@@ -1,6 +1,22 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { LogoIcon, LogoSquaredIcon, LogoTextIcon } from "@renderer/assets/logos";
 
 function DeviceLayout({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = async () => {
+      const creds = await window.storageAPI?.getDeviceInfo?.();
+      if (creds?.deviceType) {
+        navigate(`/${creds?.deviceType.toLowerCase()}`);
+      }
+    };
+
+    isLoggedIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="min-h-dvh w-dvw bg-gray-700">
       <header className="flex w-full flex-col md:gap-3 md:px-7.5 md:pt-5 lg:gap-6 lg:px-15 lg:pt-7">
