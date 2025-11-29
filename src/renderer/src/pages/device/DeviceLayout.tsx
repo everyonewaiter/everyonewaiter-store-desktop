@@ -1,21 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogoIcon, LogoSquaredIcon, LogoTextIcon } from "@renderer/assets/logos";
+import { useGetDevice } from "@renderer/queries/useGetDevice";
 
 function DeviceLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
+  const { device, isSuccess } = useGetDevice();
 
   useEffect(() => {
-    const isLoggedIn = async () => {
-      const creds = await window.storageAPI?.getDeviceInfo?.();
-      if (creds?.deviceType) {
-        navigate(`/${creds?.deviceType.toLowerCase()}`);
-      }
-    };
-
-    isLoggedIn();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (isSuccess && device) {
+      navigate(`/${device.purpose.toLowerCase()}`);
+    }
+  }, [isSuccess, device, navigate]);
 
   return (
     <div className="min-h-dvh w-dvw bg-gray-700">

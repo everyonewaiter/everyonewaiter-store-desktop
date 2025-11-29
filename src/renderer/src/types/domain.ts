@@ -15,6 +15,19 @@ type MenuOptionType = "MANDATORY" | "OPTIONAL";
 
 export type DevicePurpose = "POS" | "HALL";
 
+export interface Device {
+  deviceId: string;
+  storeId: string;
+  storeName: string;
+  name: string;
+  purpose: DevicePurpose;
+  tableNo: number;
+  state: "ACTIVE" | "INACTIVE";
+  paymentType: OrderPaymentType;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Table {
   posTableId: string;
   storeId: string;

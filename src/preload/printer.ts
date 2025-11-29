@@ -1,9 +1,9 @@
 import printerChannel from "@shared/printer/channel";
-import { PrinterApi } from "@shared/printer/interface";
+import { PrinterAPI } from "@shared/printer/interface";
 import { CodePage } from "@shared/printer/options";
 import { ipcRenderer } from "electron";
 
-const printer: PrinterApi = {
+const printer: PrinterAPI = {
   open: (
     communicationInterface,
     portName = "",

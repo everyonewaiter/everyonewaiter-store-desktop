@@ -15,13 +15,13 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-  const { deviceId, secretKey, deviceType } = await window.storageAPI.getDeviceInfo();
+  const deviceInfo = await window.storageAPI.getDeviceInfo();
   const method = config.method?.toUpperCase() || "GET";
   const rawUrl = config.url || "/";
   const searchParams = new URLSearchParams(config.params).toString();
   const uri = searchParams ? `${rawUrl}?${searchParams}` : rawUrl;
 
-  if (!deviceId || !secretKey || !deviceType) {
+  if (!deviceInfo || !deviceInfo.deviceId || !deviceInfo.secretKey || !deviceInfo.deviceType) {
     throw new Error("Device info not found");
   }
 
@@ -29,13 +29,13 @@ api.interceptors.request.use(async (config) => {
   const signature = makeSignature({
     uri: `/v1${uri}`,
     method,
-    secretKey,
-    deviceId,
+    secretKey: deviceInfo.secretKey,
+    deviceId: deviceInfo.deviceId,
     timestamp,
   });
 
   config.headers = config.headers || {};
-  config.headers["x-ew-access-key"] = deviceId;
+  config.headers["x-ew-access-key"] = deviceInfo.deviceId;
   config.headers["x-ew-signature"] = signature;
   config.headers["x-ew-timestamp"] = timestamp;
 
