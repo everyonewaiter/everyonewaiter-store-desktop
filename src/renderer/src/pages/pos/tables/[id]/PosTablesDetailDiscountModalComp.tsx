@@ -15,6 +15,8 @@ function PosTablesDetailDiscountModalComp({
   totalOrderPrice,
   ...props
 }: PosTablesDetailDiscountModalCompProps) {
+  const discountValue = 0;
+
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
@@ -56,7 +58,7 @@ function PosTablesDetailDiscountModalComp({
             <span className="text-gray-0 text-lg font-normal">
               할인된 금액은{" "}
               <strong className="text-primary text-2xl font-semibold">
-                {(totalOrderPrice - 124000).toLocaleString()}원
+                {(totalOrderPrice - discountValue).toLocaleString()}원
               </strong>{" "}
               입니다.
             </span>

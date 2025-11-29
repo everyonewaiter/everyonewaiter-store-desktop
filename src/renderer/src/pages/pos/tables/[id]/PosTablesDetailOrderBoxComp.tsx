@@ -8,10 +8,7 @@ interface PosTablesDetailOrderBoxCompProps {
   type: "required" | "optional";
 }
 
-export default function PosTablesDetailOrderBoxComp({
-  options,
-  type,
-}: PosTablesDetailOrderBoxCompProps) {
+function PosTablesDetailOrderBoxComp({ options, type }: PosTablesDetailOrderBoxCompProps) {
   return (
     <div className="flex flex-col gap-3">
       <h4 className="text-gray-0 text-[15px] font-semibold">
@@ -68,3 +65,5 @@ export default function PosTablesDetailOrderBoxComp({
     </div>
   );
 }
+
+export default PosTablesDetailOrderBoxComp;
