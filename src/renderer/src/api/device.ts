@@ -1,5 +1,5 @@
 import { publicApi } from "@renderer/api";
-import { AllowDevicePurpose, OrderPayment, SimpleStore } from "@renderer/types/domain";
+import { DevicePurpose, OrderPayment, SimpleStore } from "@renderer/types/domain";
 import { AxiosResponse } from "axios";
 
 /**
@@ -37,7 +37,7 @@ export const addDevice = async (
   body: {
     phoneNumber: string;
     name: string;
-    purpose: AllowDevicePurpose;
+    purpose: DevicePurpose;
     tableNo: number;
     paymentType: OrderPayment;
   }

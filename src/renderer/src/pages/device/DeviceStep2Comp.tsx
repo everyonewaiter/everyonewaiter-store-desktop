@@ -7,7 +7,7 @@ import { Button, Input, Label } from "@renderer/components";
 import { ColorName, DeviceSupport } from "@renderer/constants";
 import useDeviceStore from "@renderer/pages/device/useDeviceStore";
 import { DeviceInfoSchema, deviceInfoSchema } from "@renderer/schemas/device";
-import { AllowDevicePurpose, OrderPayment } from "@renderer/types/domain";
+import { DevicePurpose, OrderPayment } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { storageKey } from "@shared/storage/key";
 import { AxiosError } from "axios";
@@ -45,7 +45,7 @@ function DeviceStep2Comp() {
       const body = {
         phoneNumber: deviceData?.phoneNumber.replaceAll("-", "") as string,
         name: data.deviceName,
-        purpose: data.deviceType as AllowDevicePurpose,
+        purpose: data.deviceType as DevicePurpose,
         tableNo: 1,
         paymentType: "POSTPAID" as unknown as OrderPayment,
       };

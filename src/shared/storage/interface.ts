@@ -1,4 +1,4 @@
-type StorageDeviceType = "POS" | "HALL" | "WAITING" | "TABLE";
+type StorageDeviceType = "POS" | "HALL";
 
 interface StorageDeviceInfo {
   deviceId: string;
