@@ -3,6 +3,7 @@ import { WAITING_TYPE_TEXT } from "@renderer/constants/waiting";
 import HallWaitingInfoComp from "@renderer/pages/hall/waiting/HallWaitingInfoComp";
 import { Waiting } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
+import { getMinutesAgo } from "@renderer/utils/format";
 
 interface HallWaitingModalCompProps extends ModalProps {
   type: "call" | "enter" | "cancel";
@@ -32,11 +33,14 @@ function HallWaitingModalComp({ type, waiting, ...props }: HallWaitingModalCompP
                 <span className="text-gray-0 text-base font-medium">총 호출한 횟수</span>
                 <span className="text-gray-0 text-xl font-semibold">{waiting.callCount}회</span>
               </div>
-              <div className="border-status-error flex w-full items-center justify-between rounded-xl border px-5">
-                <span className="text-status-error text-base font-medium">마지막 호출 시간</span>
-                <span className="text-status-error text-xl font-semibold">15분 전</span>
-                {/* TODO: waiting.lastCallTime 표시 */}
-              </div>
+              {waiting.callCount > 0 && (
+                <div className="border-status-error flex w-full items-center justify-between rounded-xl border px-5">
+                  <span className="text-status-error text-base font-medium">마지막 호출 시간</span>
+                  <span className="text-status-error text-xl font-semibold">
+                    {getMinutesAgo(waiting.lastCallTime)}분 전
+                  </span>
+                </div>
+              )}
             </div>
           )}
         </div>

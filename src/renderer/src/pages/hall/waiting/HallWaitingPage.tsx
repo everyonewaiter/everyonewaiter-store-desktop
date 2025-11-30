@@ -2,17 +2,19 @@ import WaitingActionButtons from "@renderer/pages/hall/waiting/HallWaitingAction
 import HallWaitingInfoComp from "@renderer/pages/hall/waiting/HallWaitingInfoComp";
 import HallWaitingLayout from "@renderer/pages/hall/waiting/HallWaitingLayout";
 import HallWaitingNumberingComp from "@renderer/pages/hall/waiting/HallWaitingNumberingComp";
-import MOCK from "@renderer/pages/hall/waiting/mock";
+import { useGetWaitings } from "@renderer/queries/useGetWaitings";
 
 function HallWaitingPage() {
+  const { waitings } = useGetWaitings();
+
   return (
     <HallWaitingLayout>
-      {MOCK.map((waiting, index) => (
+      {waitings.map((waiting, index) => (
         <article
           key={waiting.waitingId}
           className="flex w-full items-center gap-[25px] md:min-h-[260px] lg:min-h-[225px]"
         >
-          <HallWaitingNumberingComp index={index} waitingList={MOCK} />
+          <HallWaitingNumberingComp index={index} />
           <section className="flex h-full flex-1 gap-2">
             <aside className="flex w-40 flex-col items-center justify-center gap-2 rounded-2xl bg-white">
               <span className="text-lg font-medium">대기 번호</span>

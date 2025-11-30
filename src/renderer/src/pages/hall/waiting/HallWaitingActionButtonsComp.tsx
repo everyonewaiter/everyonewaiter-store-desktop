@@ -4,6 +4,7 @@ import { Button } from "@renderer/components";
 import { ButtonColor, ButtonVariant } from "@renderer/components/Button/Button.types";
 import HallWaitingModalComp from "@renderer/pages/hall/waiting/HallWaitingModalComp";
 import { Waiting } from "@renderer/types/domain";
+import { getMinutesAgo } from "@renderer/utils/format";
 import { overlay } from "overlay-kit";
 
 interface HallWaitingActionType {
@@ -71,7 +72,9 @@ function HallWaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps
             <span className="font-semibold md:text-lg lg:text-xl">{action.label}</span>
           </div>
           {waiting.callCount > 0 && index === 0 && (
-            <span className="text-sm font-medium">총 {waiting.callCount}회 · 15분전</span>
+            <span className="text-sm font-medium">
+              총 {waiting.callCount}회 · {getMinutesAgo(waiting.lastCallTime)}분전
+            </span>
           )}
         </Button>
       ))}

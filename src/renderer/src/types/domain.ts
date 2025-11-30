@@ -13,6 +13,8 @@ type MenuState = "DEFAULT" | "HIDE" | "SOLD_OUT";
 type MenuLabel = "BEST" | "NEW" | "DEFAULT" | "RECOMMEND";
 type MenuOptionType = "MANDATORY" | "OPTIONAL";
 
+type WaitingState = "REGISTRATION" | "CANCEL" | "COMPLETE";
+
 export type DevicePurpose = "POS" | "HALL";
 
 export interface Device {
@@ -98,7 +100,7 @@ export interface Waiting {
   number: number;
   callCount: number;
   lastCallTime: string;
-  state: string;
+  state: WaitingState;
   createdAt: string;
 }
 
