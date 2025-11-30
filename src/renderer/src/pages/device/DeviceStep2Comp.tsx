@@ -41,11 +41,12 @@ function DeviceStep2Comp() {
   const handleSubmit = async (data: DeviceInfoSchema) => {
     try {
       const deviceData = useDeviceStore.getState().deviceData;
+      const deviceType = form.watch("deviceType");
 
       const body = {
         phoneNumber: deviceData?.phoneNumber.replaceAll("-", "") as string,
         name: data.deviceName,
-        purpose: data.deviceType as DevicePurpose,
+        purpose: deviceType as DevicePurpose,
         tableNo: 1,
         paymentType: "POSTPAID" as unknown as OrderPayment,
       };
@@ -60,10 +61,9 @@ function DeviceStep2Comp() {
             window.storageAPI.store(storageKey.DEVICE_ID, deviceId),
             window.storageAPI.store(storageKey.STORE_ID, deviceData?.storeId as string),
             window.storageAPI.store(storageKey.DEVICE_SECRET_KEY, secretKey),
-            window.storageAPI.store(storageKey.DEVICE_TYPE, data.deviceType),
+            window.storageAPI.store(storageKey.DEVICE_TYPE, deviceType),
           ]);
-
-          navigate(`/${data.deviceType.toLowerCase()}`);
+          navigate(`/${deviceType.toLowerCase()}`, { replace: true });
         } catch (storageError) {
           const errorMessage =
             storageError instanceof Error && storageError.message.includes("storageAPI")
