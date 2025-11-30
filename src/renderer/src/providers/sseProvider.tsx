@@ -1,7 +1,10 @@
 import { createContext, PropsWithChildren, useEffect, useRef } from "react";
 import EventSource, { EventSourceListener } from "react-native-sse";
+import { closePrinter, openUsbPrinter, printOrder } from "@renderer/modules/printer";
 import { queryKey } from "@renderer/queries/key";
 import { useGetDevice } from "@renderer/queries/useGetDevice";
+import { useGetStore } from "@renderer/queries/useGetStore";
+import { Receipt } from "@renderer/types/domain";
 import makeSignature from "@renderer/utils/make-signature";
 import useInterval from "@renderer/utils/useInterval";
 import { useQueryClient } from "@tanstack/react-query";
@@ -13,7 +16,7 @@ type SseEvent = {
   category: keyof SseCategory;
   action: keyof ServerAction;
   hasData: boolean;
-  data: string | null;
+  data: string | Receipt | null;
 };
 
 type SseCategory = {
@@ -40,6 +43,7 @@ const SseContext = createContext(null);
 const SseProvider = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();
   const { device } = useGetDevice();
+  const { store } = useGetStore(device?.storeId ?? "");
 
   const eventSourceRef = useRef<EventSource<SseEventName> | null>(null);
   const isConnectedRef = useRef(false);
@@ -129,6 +133,16 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.STAFF_CALL] });
               break;
             case "RECEIPT":
+              if (
+                sseEvent.hasData &&
+                sseEvent.action === "CREATE" &&
+                store?.setting.kitchenPrinterLocation === device.purpose
+              ) {
+                openUsbPrinter();
+                printOrder(sseEvent.data as Receipt);
+                closePrinter();
+              }
+              break;
             case "POS":
               break;
             default:
@@ -150,7 +164,7 @@ const SseProvider = ({ children }: PropsWithChildren) => {
       eventSourceRef.current = null;
       isConnectedRef.current = false;
     };
-  }, [device, queryClient]);
+  }, [device, store, queryClient]);
 
   return <SseContext.Provider value={null}>{children}</SseContext.Provider>;
 };
