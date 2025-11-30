@@ -113,6 +113,7 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               }
               break;
             case "STORE":
+              queryClient.invalidateQueries({ queryKey: [queryKey.STORE] });
               break;
             case "CATEGORY":
               break;

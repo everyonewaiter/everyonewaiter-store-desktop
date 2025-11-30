@@ -1,4 +1,5 @@
 export const queryKey = {
+  STORE: "store",
   DEVICE: "device",
   HALL: "hall",
   WAITING: "waiting",

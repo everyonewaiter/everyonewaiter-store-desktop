@@ -63,6 +63,7 @@ function HallOrderComp({ order }: HallOrderCompProps) {
                     <HallActionCompleteModalComp
                       type="order"
                       tableNo={order.tableNo}
+                      resourceId={order.orderId}
                       {...overlayProps}
                     />
                   ))
@@ -88,6 +89,8 @@ function HallOrderComp({ order }: HallOrderCompProps) {
                 .map((orderMenu) => (
                   <HallOrderBoxComp
                     key={orderMenu.orderMenuId}
+                    orderId={order.orderId}
+                    storeId={order.storeId}
                     orderMenu={orderMenu}
                     isCompleted={isCompleted}
                   />

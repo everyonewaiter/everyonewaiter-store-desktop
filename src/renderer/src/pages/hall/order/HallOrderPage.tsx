@@ -53,6 +53,7 @@ function HallOrderPage() {
                     <HallActionCompleteModalComp
                       type="call"
                       tableNo={staffCall.tableNo}
+                      resourceId={staffCall.staffCallId}
                       staffCallText={staffCall.name}
                       {...overlayProps}
                     />
