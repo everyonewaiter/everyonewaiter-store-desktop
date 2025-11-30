@@ -1,9 +1,16 @@
 import { Dialog } from "@renderer/components/Dialog";
 import { WAITING_TYPE_TEXT } from "@renderer/constants/waiting";
 import HallWaitingInfoComp from "@renderer/pages/hall/waiting/HallWaitingInfoComp";
+import {
+  useWaitingCancel,
+  useWaitingComplete,
+  useWaitingCustomerCall,
+} from "@renderer/pages/hall/waiting/useHallWaitingApi";
 import { Waiting } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 import { getMinutesAgo } from "@renderer/utils/format";
+import { UseMutateFunction } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 interface HallWaitingModalCompProps extends ModalProps {
   type: "call" | "enter" | "cancel";
@@ -11,7 +18,35 @@ interface HallWaitingModalCompProps extends ModalProps {
 }
 
 function HallWaitingModalComp({ type, waiting, ...props }: HallWaitingModalCompProps) {
-  const handleClick = () => {};
+  const { mutate: mutateComplete } = useWaitingComplete();
+  const { mutate: mutateCustomerCall } = useWaitingCustomerCall();
+  const { mutate: mutateCancel } = useWaitingCancel();
+
+  const handleClick = () => {
+    let mutate: UseMutateFunction<AxiosResponse, Error, string>;
+    switch (type) {
+      case "enter":
+        mutate = mutateComplete;
+        break;
+      case "call":
+        mutate = mutateCustomerCall;
+        break;
+      case "cancel":
+        mutate = mutateCancel;
+        break;
+      default:
+        throw new Error("Invalid waiting type");
+    }
+
+    mutate(waiting.waitingId, {
+      onError: () => {
+        // TODO: 에러 메시지 다이얼로그 출력
+      },
+      onSettled: () => {
+        props.close();
+      },
+    });
+  };
 
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
