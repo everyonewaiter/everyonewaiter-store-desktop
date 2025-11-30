@@ -1,14 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { api } from "@renderer/api";
 import posIframe from "@renderer/assets/images/pos-bg.mp4";
 import { Button } from "@renderer/components";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosGoTableListModalComp from "@renderer/pages/pos/PosGoTableListModalComp";
-import { queryKey } from "@renderer/queries/key";
+import { useControlStoreStatus } from "@renderer/queries/useControlStoreStatus";
 import { useGetStore } from "@renderer/queries/useGetStore";
 import { StoreStatus } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
-import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { overlay } from "overlay-kit";
 
@@ -20,11 +18,12 @@ const STATUS_TEXT: Record<StoreStatus, string> = {
 
 function PosPage() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const { store } = useGetStore();
   const storeStatus = store?.status;
   const storeName = store?.name;
+
+  const { openStore } = useControlStoreStatus();
 
   return (
     <main className="flex h-dvh w-dvw items-center justify-center">
@@ -65,11 +64,9 @@ function PosPage() {
                     <PosGoTableListModalComp
                       {...overlayProps}
                       onClick={async () => {
-                        await api.post("/stores/open").then(async () => {
-                          await queryClient.invalidateQueries({ queryKey: [queryKey.STORE] });
-                          navigate("tables");
-                          overlayProps.close();
-                        });
+                        await openStore.mutateAsync();
+                        navigate("tables");
+                        overlayProps.close();
                       }}
                     />
                   ),
