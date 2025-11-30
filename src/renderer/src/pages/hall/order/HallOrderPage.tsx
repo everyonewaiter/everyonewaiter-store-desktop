@@ -5,16 +5,20 @@ import HallActionCompleteModalComp from "@renderer/pages/hall/order/HallActionCo
 import HallOrderComp from "@renderer/pages/hall/order/HallOrderComp";
 import HallOrderLayout from "@renderer/pages/hall/order/HallOrderLayout";
 import HallStaffCallComp from "@renderer/pages/hall/order/HallStaffCallComp";
-import MOCK from "@renderer/pages/hall/order/mock";
+import { useGetHallOrders } from "@renderer/queries/useGetHallOrders";
+import { useGetHallStaffCalls } from "@renderer/queries/useGetHallStaffCalls";
 import { overlay } from "overlay-kit";
-
-const tabs = [
-  { isServed: false, label: "주문", count: MOCK.unserved.length },
-  { isServed: true, label: "완료", count: MOCK.served.length },
-];
 
 function HallOrderPage() {
   const [served, setServed] = useState(false);
+
+  const { staffCalls } = useGetHallStaffCalls();
+  const { orders } = useGetHallOrders();
+
+  const tabs = [
+    { isServed: false, label: "주문", count: orders.unserved.length },
+    { isServed: true, label: "완료", count: orders.served.length },
+  ];
 
   return (
     <HallOrderLayout>
@@ -31,16 +35,16 @@ function HallOrderPage() {
           </Button>
         ))}
       </section>
-      {!served && MOCK.staffCalls.length > 0 && (
+      {!served && staffCalls.length > 0 && (
         <section className="flex flex-col gap-6 rounded-2xl border border-gray-600 bg-white p-6">
           <div className="flex items-center gap-2">
             <h1 className="text-gray-0 text-2xl font-semibold">호출 내역</h1>
             <div className="text-gray-0 flex h-8 w-8 items-center justify-center rounded-3xl bg-gray-700 text-xl font-semibold">
-              {MOCK.staffCalls.length}
+              {staffCalls.length}
             </div>
           </div>
           <div className="flex flex-row gap-6 overflow-x-auto">
-            {MOCK.staffCalls.map((staffCall) => (
+            {staffCalls.map((staffCall) => (
               <HallStaffCallComp
                 key={staffCall.staffCallId}
                 staffCall={staffCall}
@@ -59,16 +63,16 @@ function HallOrderPage() {
           </div>
         </section>
       )}
-      {!served && MOCK.unserved.length > 0 && (
+      {!served && orders.unserved.length > 0 && (
         <section className="flex h-full w-full flex-col gap-6 rounded-2xl border border-gray-600 bg-white p-6">
-          {MOCK.unserved.map((order) => (
+          {orders.unserved.map((order) => (
             <HallOrderComp key={order.orderId} order={order} />
           ))}
         </section>
       )}
-      {served && MOCK.served.length > 0 && (
+      {served && orders.served.length > 0 && (
         <section className="flex h-full w-full flex-col gap-6 rounded-2xl border border-gray-600 bg-white p-6">
-          {MOCK.served.map((order) => (
+          {orders.served.map((order) => (
             <HallOrderComp key={order.orderId} order={order} />
           ))}
         </section>

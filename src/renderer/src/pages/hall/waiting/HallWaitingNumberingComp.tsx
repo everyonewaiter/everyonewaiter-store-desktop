@@ -1,4 +1,4 @@
-import { useGetWaitings } from "@renderer/queries/useGetWaitings";
+import { useGetHallWaitings } from "@renderer/queries/useGetHallWaitings";
 import cn from "@renderer/utils/cn";
 
 interface HallWaitingNumberingCompProps {
@@ -6,7 +6,7 @@ interface HallWaitingNumberingCompProps {
 }
 
 function HallWaitingNumberingComp({ index }: HallWaitingNumberingCompProps) {
-  const { waitings } = useGetWaitings();
+  const { waitings } = useGetHallWaitings();
 
   return (
     <aside className="relative flex h-full w-12 flex-col items-center">

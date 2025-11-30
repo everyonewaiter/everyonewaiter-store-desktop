@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import { useGetHallOrders } from "@renderer/queries/useGetHallOrders";
+import { useGetHallStaffCalls } from "@renderer/queries/useGetHallStaffCalls";
 
 function HallWaitingLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
+  const { staffCalls } = useGetHallStaffCalls();
+  const { orders } = useGetHallOrders();
 
   return (
     <div className="min-h-dvh w-full bg-gray-700">
@@ -19,7 +23,7 @@ function HallWaitingLayout({ children }: { children: React.ReactNode }) {
               홀 관리 이동
             </Button>
             <div className="bg-primary absolute -top-5 -right-5 flex h-10 w-10 items-center justify-center rounded-full text-xl font-semibold text-white">
-              4
+              {staffCalls.length + orders.unserved.length}
             </div>
           </div>
         </div>

@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
-import { useGetWaitings } from "@renderer/queries/useGetWaitings";
+import { useGetHallWaitings } from "@renderer/queries/useGetHallWaitings";
 
 function HallOrderLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
-  const { waitings } = useGetWaitings();
+  const { waitings } = useGetHallWaitings();
 
   return (
     <div className="min-h-dvh w-full bg-gray-700">

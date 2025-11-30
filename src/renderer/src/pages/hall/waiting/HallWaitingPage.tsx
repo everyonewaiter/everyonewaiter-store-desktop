@@ -2,10 +2,10 @@ import WaitingActionButtons from "@renderer/pages/hall/waiting/HallWaitingAction
 import HallWaitingInfoComp from "@renderer/pages/hall/waiting/HallWaitingInfoComp";
 import HallWaitingLayout from "@renderer/pages/hall/waiting/HallWaitingLayout";
 import HallWaitingNumberingComp from "@renderer/pages/hall/waiting/HallWaitingNumberingComp";
-import { useGetWaitings } from "@renderer/queries/useGetWaitings";
+import { useGetHallWaitings } from "@renderer/queries/useGetHallWaitings";
 
 function HallWaitingPage() {
-  const { waitings } = useGetWaitings();
+  const { waitings } = useGetHallWaitings();
 
   return (
     <HallWaitingLayout>

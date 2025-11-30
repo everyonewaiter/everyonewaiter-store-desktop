@@ -3,9 +3,9 @@ import { queryKey } from "@renderer/queries/key";
 import { Waiting } from "@renderer/types/domain";
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetWaitings = () => {
+export const useGetHallWaitings = () => {
   const { data } = useQuery({
-    queryKey: [queryKey.WAITING],
+    queryKey: [queryKey.HALL, queryKey.WAITING],
     queryFn: async (): Promise<{ waitings: Waiting[] }> => {
       const { data } = await api.get("/waitings");
       return data;
