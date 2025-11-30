@@ -2,12 +2,12 @@ import { BabyIcon, SmileIcon } from "@renderer/assets/icons";
 import { Waiting } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
-interface WaitingInfoCompProps {
+interface HallWaitingInfoCompProps {
   waiting: Waiting;
   isModal?: boolean;
 }
 
-function WaitingInfoComp({ waiting, isModal }: WaitingInfoCompProps) {
+function HallWaitingInfoComp({ waiting, isModal }: HallWaitingInfoCompProps) {
   return (
     <div
       className={cn(
@@ -50,4 +50,4 @@ function WaitingInfoComp({ waiting, isModal }: WaitingInfoCompProps) {
   );
 }
 
-export default WaitingInfoComp;
+export default HallWaitingInfoComp;

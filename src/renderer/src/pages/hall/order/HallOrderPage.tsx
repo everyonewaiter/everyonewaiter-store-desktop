@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
-import HallActionCompleteModalComp from "@renderer/pages/hall/HallActionCompleteModalComp";
-import HallLayout from "@renderer/pages/hall/HallLayout";
-import HallOrderComp from "@renderer/pages/hall/HallOrderComp";
-import HallStaffCallComp from "@renderer/pages/hall/HallStaffCallComp";
-import MOCK from "@renderer/pages/hall/mock";
+import HallActionCompleteModalComp from "@renderer/pages/hall/order/HallActionCompleteModalComp";
+import HallOrderComp from "@renderer/pages/hall/order/HallOrderComp";
+import HallOrderLayout from "@renderer/pages/hall/order/HallOrderLayout";
+import HallStaffCallComp from "@renderer/pages/hall/order/HallStaffCallComp";
+import MOCK from "@renderer/pages/hall/order/mock";
 import { overlay } from "overlay-kit";
 
 const tabs = [
@@ -13,11 +13,11 @@ const tabs = [
   { isServed: true, label: "완료", count: MOCK.served.length },
 ];
 
-function HallPage() {
+function HallOrderPage() {
   const [served, setServed] = useState(false);
 
   return (
-    <HallLayout>
+    <HallOrderLayout>
       <section className="flex flex-row gap-3 rounded-2xl bg-white px-4 py-3">
         {tabs.map((tab) => (
           <Button
@@ -73,8 +73,8 @@ function HallPage() {
           ))}
         </section>
       )}
-    </HallLayout>
+    </HallOrderLayout>
   );
 }
 
-export default HallPage;
+export default HallOrderPage;

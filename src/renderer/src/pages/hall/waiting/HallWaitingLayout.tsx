@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 
-function WaitingLayout({ children }: { children: React.ReactNode }) {
+function HallWaitingLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
 
   return (
@@ -30,4 +30,4 @@ function WaitingLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default WaitingLayout;
+export default HallWaitingLayout;

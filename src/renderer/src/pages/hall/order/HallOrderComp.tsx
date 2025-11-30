@@ -1,7 +1,7 @@
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
-import HallActionCompleteModalComp from "@renderer/pages/hall/HallActionCompleteModalComp";
-import HallOrderBoxComp from "@renderer/pages/hall/HallOrderBoxComp";
+import HallActionCompleteModalComp from "@renderer/pages/hall/order/HallActionCompleteModalComp";
+import HallOrderBoxComp from "@renderer/pages/hall/order/HallOrderBoxComp";
 import { Order } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { getFormattedTime } from "@renderer/utils/format";

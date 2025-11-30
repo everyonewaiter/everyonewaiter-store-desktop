@@ -1,15 +1,15 @@
 import { Dialog } from "@renderer/components/Dialog";
 import { WAITING_TYPE_TEXT } from "@renderer/constants/waiting";
-import WaitingInfoComp from "@renderer/pages/waiting/WaitingInfoComp";
+import HallWaitingInfoComp from "@renderer/pages/hall/waiting/HallWaitingInfoComp";
 import { Waiting } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 
-interface WaitingModalCompProps extends ModalProps {
+interface HallWaitingModalCompProps extends ModalProps {
   type: "call" | "enter" | "cancel";
   waiting: Waiting;
 }
 
-function WaitingModalComp({ type, waiting, ...props }: WaitingModalCompProps) {
+function HallWaitingModalComp({ type, waiting, ...props }: HallWaitingModalCompProps) {
   const handleClick = () => {};
 
   return (
@@ -24,7 +24,7 @@ function WaitingModalComp({ type, waiting, ...props }: WaitingModalCompProps) {
                 {String(waiting.number).padStart(3, "0")}
               </strong>
             </div>
-            <WaitingInfoComp isModal waiting={waiting} />
+            <HallWaitingInfoComp isModal waiting={waiting} />
           </div>
           {type === "call" && (
             <div className="flex h-13 gap-2">
@@ -51,4 +51,4 @@ function WaitingModalComp({ type, waiting, ...props }: WaitingModalCompProps) {
   );
 }
 
-export default WaitingModalComp;
+export default HallWaitingModalComp;

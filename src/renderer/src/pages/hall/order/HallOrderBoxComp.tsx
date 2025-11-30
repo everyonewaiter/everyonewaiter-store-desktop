@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
-import HallOrderOptionComp from "@renderer/pages/hall/HallOrderOptionComp";
-import { OrderMenu, OrderOption } from "@renderer/types/domain";
+import HallOrderOptionComp from "@renderer/pages/hall/order/HallOrderOptionComp";
+import { OrderMenu, OrderMenuOption } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
 interface HallOrderBoxCompProps {
@@ -15,7 +15,7 @@ function HallOrderBoxComp({ orderMenu, isCompleted = false }: HallOrderBoxCompPr
   const showImage = true;
   const [isServed, setIsServed] = useState(orderMenu.served);
 
-  const orderOptions: (OrderOption & { orderOptionGroupId: string })[] =
+  const orderOptions: (OrderMenuOption & { orderOptionGroupId: string })[] =
     orderMenu.orderOptionGroups.flatMap((orderOptionGroup) =>
       orderOptionGroup.orderOptions.map((orderOption) => ({
         ...orderOption,

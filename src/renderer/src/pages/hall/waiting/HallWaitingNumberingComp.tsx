@@ -1,12 +1,12 @@
 import { Waiting } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
-interface WaitingNumberingCompProps {
+interface HallWaitingNumberingCompProps {
   index: number;
   waitingList: Waiting[];
 }
 
-function WaitingNumberingComp({ index, waitingList }: WaitingNumberingCompProps) {
+function HallWaitingNumberingComp({ index, waitingList }: HallWaitingNumberingCompProps) {
   return (
     <aside className="relative flex h-full w-12 flex-col items-center">
       <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-xl font-semibold text-white">
@@ -29,4 +29,4 @@ function WaitingNumberingComp({ index, waitingList }: WaitingNumberingCompProps)
   );
 }
 
-export default WaitingNumberingComp;
+export default HallWaitingNumberingComp;

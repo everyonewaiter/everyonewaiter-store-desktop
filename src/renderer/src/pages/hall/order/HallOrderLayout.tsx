@@ -3,7 +3,7 @@ import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 
-function HallLayout({ children }: { children: React.ReactNode }) {
+function HallOrderLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
 
   return (
@@ -31,4 +31,4 @@ function HallLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default HallLayout;
+export default HallOrderLayout;
