@@ -1,0 +1,27 @@
+import { Dialog } from "@renderer/components/Dialog";
+import { ModalProps } from "@renderer/types/overlay";
+
+interface PosGoTableListModalCompProps extends ModalProps {
+  onClick: () => void;
+}
+
+function PosGoTableListModalComp({ onClick, ...props }: PosGoTableListModalCompProps) {
+  return (
+    <Dialog open={props.isOpen} onOpenChange={props.close}>
+      <Dialog.Wrapper>
+        <div className="text-gray-0 flex items-center justify-center py-6 text-xl font-semibold">
+          매장을 오픈하시겠습니까?
+        </div>
+        <Dialog.Footer
+          primaryButton={{
+            color: "primary",
+            text: "매장 열기",
+            onClick,
+          }}
+        />
+      </Dialog.Wrapper>
+    </Dialog>
+  );
+}
+
+export default PosGoTableListModalComp;
