@@ -16,6 +16,7 @@ export const useOrderMenuServe = () => {
 
 export const useStaffCallComplete = () => {
   return useMutation({
-    mutationFn: async (staffCallId: string) => await api.post(`/orders/${staffCallId}/complete`),
+    mutationFn: async (staffCallId: string) =>
+      await api.post(`/orders/staff-calls/${staffCallId}/complete`),
   });
 };
