@@ -3,7 +3,6 @@ import posIframe from "@renderer/assets/images/pos-bg.mp4";
 import { Button } from "@renderer/components";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosGoTableListModalComp from "@renderer/pages/pos/PosGoTableListModalComp";
-import { useControlStoreStatus } from "@renderer/queries/useControlStoreStatus";
 import { useGetStore } from "@renderer/queries/useGetStore";
 import { StoreStatus } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
@@ -22,8 +21,6 @@ function PosPage() {
   const { store } = useGetStore();
   const storeStatus = store?.status;
   const storeName = store?.name;
-
-  const { openStore } = useControlStoreStatus();
 
   return (
     <main className="flex h-dvh w-dvw items-center justify-center">
@@ -61,14 +58,7 @@ function PosPage() {
               if (storeStatus === "CLOSE") {
                 overlay.open(
                   (overlayProps) => (
-                    <PosGoTableListModalComp
-                      {...overlayProps}
-                      onClick={async () => {
-                        await openStore.mutateAsync();
-                        navigate("tables");
-                        overlayProps.close();
-                      }}
-                    />
+                    <PosGoTableListModalComp {...overlayProps} onClick={() => navigate("tables")} />
                   ),
                   {
                     overlayId: "pos-go-table-list-modal",

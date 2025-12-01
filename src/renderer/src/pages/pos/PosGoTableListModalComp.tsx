@@ -1,4 +1,5 @@
 import { Dialog } from "@renderer/components/Dialog";
+import { useControlStoreStatus } from "@renderer/queries/useControlStoreStatus";
 import { ModalProps } from "@renderer/types/overlay";
 
 interface PosGoTableListModalCompProps extends ModalProps {
@@ -6,6 +7,8 @@ interface PosGoTableListModalCompProps extends ModalProps {
 }
 
 function PosGoTableListModalComp({ onClick, ...props }: PosGoTableListModalCompProps) {
+  const { openStore } = useControlStoreStatus();
+
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
@@ -16,7 +19,11 @@ function PosGoTableListModalComp({ onClick, ...props }: PosGoTableListModalCompP
           primaryButton={{
             color: "primary",
             text: "매장 열기",
-            onClick,
+            onClick: async () => {
+              await openStore.mutateAsync();
+              onClick();
+              props.close();
+            },
           }}
         />
       </Dialog.Wrapper>
