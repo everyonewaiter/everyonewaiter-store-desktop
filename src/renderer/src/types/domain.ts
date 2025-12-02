@@ -15,6 +15,8 @@ type MenuOptionType = "MANDATORY" | "OPTIONAL";
 
 export type DevicePurpose = "POS" | "HALL";
 
+export type StoreStatus = "OPEN" | "CLOSE";
+
 export interface Device {
   deviceId: string;
   storeId: string;
@@ -200,7 +202,7 @@ export interface Store {
   landline: string;
   license: string;
   image: string;
-  status: "OPEN" | "CLOSE";
+  status: StoreStatus;
   lastOpenedAt: string;
   lastClosedAt: string;
   setting: Setting;

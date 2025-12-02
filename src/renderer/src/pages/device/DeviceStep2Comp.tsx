@@ -62,8 +62,7 @@ function DeviceStep2Comp() {
             window.storageAPI.store(storageKey.DEVICE_SECRET_KEY, secretKey),
             window.storageAPI.store(storageKey.DEVICE_TYPE, data.deviceType),
           ]);
-
-          navigate(`/${data.deviceType.toLowerCase()}`);
+          navigate(`/${data.deviceType.toLowerCase()}`, { replace: true });
         } catch (storageError) {
           const errorMessage =
             storageError instanceof Error && storageError.message.includes("storageAPI")
