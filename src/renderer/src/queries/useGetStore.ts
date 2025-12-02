@@ -10,7 +10,7 @@ export const useGetStore = (storeId: string) => {
       const { data } = await publicApi.get(`/stores/${storeId}`);
       return data;
     },
-    enabled: Boolean(storeId),
+    enabled: Boolean(storeId) && storeId.length > 0,
   });
 
   return { store: data };

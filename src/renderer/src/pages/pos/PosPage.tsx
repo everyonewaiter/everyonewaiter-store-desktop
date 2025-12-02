@@ -3,6 +3,7 @@ import posIframe from "@renderer/assets/images/pos-bg.mp4";
 import { Button } from "@renderer/components";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosGoTableListModalComp from "@renderer/pages/pos/PosGoTableListModalComp";
+import { useGetDevice } from "@renderer/queries/useGetDevice";
 import { useGetStore } from "@renderer/queries/useGetStore";
 import { StoreStatus } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
@@ -18,7 +19,8 @@ const STATUS_TEXT: Record<StoreStatus, string> = {
 function PosPage() {
   const navigate = useNavigate();
 
-  const { store } = useGetStore();
+  const { device } = useGetDevice();
+  const { store } = useGetStore(device?.storeId ?? "");
   const storeStatus = store?.status;
   const storeName = store?.name;
 
