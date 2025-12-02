@@ -1,23 +1,54 @@
 import { Dialog } from "@renderer/components/Dialog";
+import { useOrderServe, useStaffCallComplete } from "@renderer/pages/hall/order/useHallOrderApi";
 import { ModalProps } from "@renderer/types/overlay";
+import { UseMutateFunction } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 interface HallActionCompleteModalCompProps extends ModalProps {
-  tableNo: number;
   type: "order" | "call";
+  tableNo: number;
+  resourceId: string;
   staffCallText?: string;
 }
 
 function HallActionCompleteModalComp({
   type,
   tableNo,
+  resourceId,
   staffCallText,
   ...props
 }: HallActionCompleteModalCompProps) {
+  const { mutate: mutateOrderServe } = useOrderServe();
+  const { mutate: mutateStaffCallComplete } = useStaffCallComplete();
+
   const title = type === "order" ? "모든 주문" : "호출";
   const subtitle =
     type === "order"
       ? `해당 테이블의 모든 주문이 완료됩니다.\n완료 후에는 주문 내역을 되돌릴 수 없습니다.`
       : `손님의 요청이 처리되었는지 다시 한 번 확인해 주세요.\n완료 후에는 호출 기록이 사라집니다.`;
+
+  const handleClick = () => {
+    let mutate: UseMutateFunction<AxiosResponse, Error, string>;
+    switch (type) {
+      case "order":
+        mutate = mutateOrderServe;
+        break;
+      case "call":
+        mutate = mutateStaffCallComplete;
+        break;
+      default:
+        throw new Error("Invalid order type");
+    }
+
+    mutate(resourceId, {
+      onError: () => {
+        // TODO: 에러 메시지 다이얼로그 출력
+      },
+      onSettled: () => {
+        props.close();
+      },
+    });
+  };
 
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
@@ -45,7 +76,7 @@ function HallActionCompleteModalComp({
         </div>
         <Dialog.Footer
           buttonSize="lg"
-          primaryButton={{ text: type === "call" ? "완료" : "전체 완료", onClick: () => {} }}
+          primaryButton={{ text: type === "call" ? "완료" : "전체 완료", onClick: handleClick }}
         />
       </Dialog.Wrapper>
     </Dialog>
