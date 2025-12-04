@@ -1,13 +1,15 @@
 import { BabyIcon, SmileIcon } from "@renderer/assets/icons";
 import { Waiting } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
+import { getMinutesAgo } from "@renderer/utils/format";
+import dayjs from "dayjs";
 
-interface WaitingInfoCompProps {
+interface HallWaitingInfoCompProps {
   waiting: Waiting;
   isModal?: boolean;
 }
 
-function WaitingInfoComp({ waiting, isModal }: WaitingInfoCompProps) {
+function HallWaitingInfoComp({ waiting, isModal }: HallWaitingInfoCompProps) {
   return (
     <div
       className={cn(
@@ -42,12 +44,16 @@ function WaitingInfoComp({ waiting, isModal }: WaitingInfoCompProps) {
           {`${waiting.phoneNumber.slice(0, 3)}-${waiting.phoneNumber.slice(3, 7)}-${waiting.phoneNumber.slice(7)}`}
         </span>
         <time className="flex h-[39px] w-fit items-center gap-2 rounded-lg bg-gray-700 px-4">
-          <span className="text-gray-0 text-lg font-semibold">24분 경과</span>
-          <span className="text-status-error text-lg font-semibold">18:10:10</span>
+          <span className="text-gray-0 text-lg font-semibold">
+            {getMinutesAgo(waiting.createdAt)}분 경과
+          </span>
+          <span className="text-status-error text-lg font-semibold">
+            {dayjs(waiting.createdAt).format("HH:mm:ss")}
+          </span>
         </time>
       </div>
     </div>
   );
 }
 
-export default WaitingInfoComp;
+export default HallWaitingInfoComp;

@@ -2,11 +2,12 @@ import { ReactElement } from "react";
 import { BellRingingIcon, DoorOpenIcon, XCircleIcon } from "@renderer/assets/icons";
 import { Button } from "@renderer/components";
 import { ButtonColor, ButtonVariant } from "@renderer/components/Button/Button.types";
-import WaitingModalComp from "@renderer/pages/waiting/WaitingModalComp";
+import HallWaitingModalComp from "@renderer/pages/hall/waiting/HallWaitingModalComp";
 import { Waiting } from "@renderer/types/domain";
+import { getMinutesAgo } from "@renderer/utils/format";
 import { overlay } from "overlay-kit";
 
-interface WaitingActionType {
+interface HallWaitingActionType {
   icon: ReactElement<SVGElement>;
   label: string;
   variant: ButtonVariant["variant"];
@@ -14,7 +15,7 @@ interface WaitingActionType {
   textColor: string;
 }
 
-const WAITING_ACTIONS: WaitingActionType[] = [
+const HALL_WAITING_ACTIONS: HallWaitingActionType[] = [
   {
     icon: <BellRingingIcon className="md:h-6 md:w-6 lg:h-10 lg:w-10" />,
     label: "호출",
@@ -42,10 +43,10 @@ interface WaitingActionButtonsCompProps {
   waiting: Waiting;
 }
 
-function WaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
+function HallWaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
   return (
     <nav className="flex md:w-30 md:flex-col md:gap-3 lg:w-auto lg:flex-row lg:items-center lg:gap-5">
-      {WAITING_ACTIONS.map((action, index) => (
+      {HALL_WAITING_ACTIONS.map((action, index) => (
         <Button
           key={action.label}
           className="flex cursor-pointer flex-col gap-0.5 md:min-h-14 md:rounded-2xl md:!px-6 md:!py-4 lg:h-30 lg:min-h-0 lg:w-30 lg:rounded-[20px] lg:!px-0 lg:!py-0"
@@ -62,7 +63,7 @@ function WaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
             }
 
             overlay.open((overlayProps) => (
-              <WaitingModalComp type={type} waiting={waiting} {...overlayProps} />
+              <HallWaitingModalComp type={type} waiting={waiting} {...overlayProps} />
             ));
           }}
         >
@@ -71,7 +72,9 @@ function WaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
             <span className="font-semibold md:text-lg lg:text-xl">{action.label}</span>
           </div>
           {waiting.callCount > 0 && index === 0 && (
-            <span className="text-sm font-medium">총 {waiting.callCount}회 · 15분전</span>
+            <span className="text-sm font-medium">
+              총 {waiting.callCount}회 · {getMinutesAgo(waiting.lastCallTime)}분전
+            </span>
           )}
         </Button>
       ))}
@@ -79,4 +82,4 @@ function WaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
   );
 }
 
-export default WaitingActionButtonsComp;
+export default HallWaitingActionButtonsComp;

@@ -1,9 +1,9 @@
 import { PlusIcon } from "@renderer/assets/icons";
-import { OrderOption } from "@renderer/types/domain";
+import { OrderMenuOption } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
 interface HallOrderOptionCompProps {
-  orderOption: OrderOption;
+  orderOption: OrderMenuOption;
   isServed: boolean;
 }
 

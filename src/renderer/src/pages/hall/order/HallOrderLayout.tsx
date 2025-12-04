@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import { useGetHallWaitings } from "@renderer/queries/useGetHallWaitings";
 
-function HallLayout({ children }: { children: React.ReactNode }) {
+function HallOrderLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
+  const { waitings } = useGetHallWaitings();
 
   return (
     <div className="min-h-dvh w-full bg-gray-700">
@@ -22,7 +24,7 @@ function HallLayout({ children }: { children: React.ReactNode }) {
             웨이팅 관리 이동
           </Button>
           <div className="bg-primary absolute -top-5 -right-5 flex h-10 w-10 items-center justify-center rounded-full text-xl font-semibold text-white">
-            4
+            {waitings.length}
           </div>
         </div>
       </header>
@@ -31,4 +33,4 @@ function HallLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default HallLayout;
+export default HallOrderLayout;
