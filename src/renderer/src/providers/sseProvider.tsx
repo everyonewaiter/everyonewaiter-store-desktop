@@ -1,11 +1,14 @@
 import { createContext, PropsWithChildren, useEffect, useRef } from "react";
 import EventSource, { EventSourceListener } from "react-native-sse";
+import orderNotificationSound from "@renderer/assets/sounds/order-notification.mp3";
+import waitingNotificationSound from "@renderer/assets/sounds/waiting-notification.mp3";
 import { closePrinter, openUsbPrinter, printOrder } from "@renderer/modules/printer";
 import { queryKey } from "@renderer/queries/key";
 import { useGetDevice } from "@renderer/queries/useGetDevice";
 import { useGetStore } from "@renderer/queries/useGetStore";
 import { Receipt } from "@renderer/types/domain";
 import makeSignature from "@renderer/utils/make-signature";
+import useAudio from "@renderer/utils/useAudio";
 import useInterval from "@renderer/utils/useInterval";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -44,6 +47,9 @@ const SseProvider = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
+
+  const { play: playOrderNotification } = useAudio(orderNotificationSound);
+  const { play: playWaitingNotification } = useAudio(waitingNotificationSound);
 
   const eventSourceRef = useRef<EventSource<SseEventName> | null>(null);
   const isConnectedRef = useRef(false);
@@ -125,12 +131,21 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               break;
             case "WAITING":
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.WAITING] });
+              if (sseEvent.action === "CREATE") {
+                playWaitingNotification();
+              }
               break;
             case "ORDER":
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.ORDER] });
+              if (sseEvent.action === "CREATE") {
+                playOrderNotification();
+              }
               break;
             case "STAFF_CALL":
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.STAFF_CALL] });
+              if (sseEvent.action === "CREATE") {
+                playOrderNotification();
+              }
               break;
             case "RECEIPT":
               if (
@@ -164,7 +179,7 @@ const SseProvider = ({ children }: PropsWithChildren) => {
       eventSourceRef.current = null;
       isConnectedRef.current = false;
     };
-  }, [device, store, queryClient]);
+  }, [device, store, queryClient, playWaitingNotification, playOrderNotification]);
 
   return <SseContext.Provider value={null}>{children}</SseContext.Provider>;
 };
