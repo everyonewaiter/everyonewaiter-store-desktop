@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { AlarmIcon, StopwatchIcon } from "@renderer/assets/icons";
 import { ORDER_TYPE_TEXT } from "@renderer/constants/pos";
+import { usePosTablesElapsedTime } from "@renderer/pages/pos/tables/usePosTablesElapsedTime";
 import { Table } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
-import dayjs from "dayjs";
-import duration from "dayjs/plugin/duration";
 
 interface PosTablesBoxCompProps extends Table {
   table?: Table;
@@ -14,27 +13,13 @@ interface PosTablesBoxCompProps extends Table {
 }
 
 function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesBoxCompProps) {
-  dayjs.extend(duration);
-
   const orderedAt = useMemo(() => {
     return typeof props.orderedAt === "string"
       ? props.orderedAt?.split("T")[1]?.replace("Z", "")
       : "00:00";
   }, [props.orderedAt]);
 
-  const [elapsedTime, setElapsedTime] = useState("");
-
-  useEffect(() => {
-    if (!props.orderedAt) return;
-    const ordered = dayjs(props.orderedAt);
-
-    const interval = setInterval(() => {
-      const now = dayjs();
-      setElapsedTime(dayjs.duration(now.diff(ordered)).format("HH:mm:ss"));
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [props.orderedAt]);
+  const { elapsedTime } = usePosTablesElapsedTime(props.orderedAt);
 
   return (
     <button
