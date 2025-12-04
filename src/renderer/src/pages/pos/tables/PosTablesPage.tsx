@@ -14,7 +14,7 @@ function PosTablesPage() {
 
   const { tables } = useGetPosTables();
 
-  const handleMoveToTableDetail = (tableNo: number) => {
+  const handleTableBoxClick = (tableNo: number) => {
     if (currentTableNo) {
       overlay.open((overlayProps) => (
         <PosTablesChangeTableModalComp
@@ -52,7 +52,7 @@ function PosTablesPage() {
                 currentTableNo && table.tableNo !== Number(currentTableNo) ? "animate-wiggle" : ""
               }
               disabled={table.tableNo === Number(currentTableNo)}
-              onClick={() => handleMoveToTableDetail(table.tableNo)}
+              onClick={() => handleTableBoxClick(table.tableNo)}
             />
           ))}
         </div>
