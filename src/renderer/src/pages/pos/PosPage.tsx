@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import posIframe from "@renderer/assets/images/pos-bg.mp4";
 import { Button } from "@renderer/components";
+import { WEEK_NAME } from "@renderer/constants/week";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosGoTableListModalComp from "@renderer/pages/pos/PosGoTableListModalComp";
 import { useGetStore } from "@renderer/queries/useGetStore";
@@ -9,7 +10,6 @@ import cn from "@renderer/utils/cn";
 import dayjs from "dayjs";
 import { overlay } from "overlay-kit";
 
-const WEEK_NAME = ["일", "월", "화", "수", "목", "금", "토"];
 const STATUS_TEXT: Record<StoreStatus, string> = {
   OPEN: "오픈",
   CLOSE: "마감",

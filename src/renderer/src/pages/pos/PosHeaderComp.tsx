@@ -3,8 +3,10 @@ import { FileCheckIcon, MoneyCoinIcon, ReturnIcon } from "@renderer/assets/icons
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
+import { WEEK_NAME } from "@renderer/constants/week";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosStoreCloseModalComp from "@renderer/pages/pos/PosStoreCloseModalComp";
+import dayjs from "dayjs";
 import { overlay } from "overlay-kit";
 
 function PosHeaderComp() {
@@ -22,7 +24,9 @@ function PosHeaderComp() {
           <LogoIcon className="h-15 w-15" />
           <LogoTextIcon className="h-[25px]" />
         </button>
-        <time className="text-gray-0 text-2xl font-medium">2025.03.23(금) 18:29</time>
+        <time className="text-gray-0 text-2xl font-medium">
+          {dayjs().format(`YYYY.MM.DD(${WEEK_NAME[dayjs().day()]}) HH:mm`)}
+        </time>
         <nav className="flex items-center gap-6">
           {pathname === "/pos/payments" && (
             <>
