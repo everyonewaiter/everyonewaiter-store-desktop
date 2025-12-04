@@ -131,19 +131,19 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               break;
             case "WAITING":
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.WAITING] });
-              if (sseEvent.action === "CREATE") {
+              if (sseEvent.action === "CREATE" && device.purpose === "HALL") {
                 playWaitingNotification();
               }
               break;
             case "ORDER":
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.ORDER] });
-              if (sseEvent.action === "CREATE") {
+              if (sseEvent.action === "CREATE" && device.purpose === "HALL") {
                 playOrderNotification();
               }
               break;
             case "STAFF_CALL":
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.STAFF_CALL] });
-              if (sseEvent.action === "CREATE") {
+              if (sseEvent.action === "CREATE" && device.purpose === "HALL") {
                 playOrderNotification();
               }
               break;
