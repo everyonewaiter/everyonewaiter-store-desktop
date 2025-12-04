@@ -67,7 +67,7 @@ function PosHeaderComp() {
             className="text-gray-0 gap-3 rounded-[40px] border-[#6BD876] bg-[#E1F7E4] py-2.5 pr-4 pl-3 text-base font-normal hover:bg-[#E1F7E4]"
             onClick={() =>
               overlay.open((overlayProps) => (
-                <PosStoreCloseModalComp type="open" {...overlayProps} />
+                <PosStoreCloseModalComp {...overlayProps} onSuccess={() => navigate("/pos")} />
               ))
             }
           >
