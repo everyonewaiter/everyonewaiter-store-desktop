@@ -1,6 +1,7 @@
 import { Dialog } from "@renderer/components/Dialog";
 import { useOrderServe, useStaffCallComplete } from "@renderer/pages/hall/order/useHallOrderApi";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 import { UseMutateFunction } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
@@ -41,12 +42,8 @@ function HallActionCompleteModalComp({
     }
 
     mutate(resourceId, {
-      onError: () => {
-        // TODO: 에러 메시지 다이얼로그 출력
-      },
-      onSettled: () => {
-        props.close();
-      },
+      onError: (error) => handleApiError(error),
+      onSettled: () => props.close(),
     });
   };
 
