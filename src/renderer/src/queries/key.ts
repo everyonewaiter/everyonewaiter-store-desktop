@@ -1,6 +1,6 @@
 export const queryKey = {
+  POS: "pos",
   STORE: "store",
-  TABLES: "tables",
   DEVICE: "device",
   HALL: "hall",
   WAITING: "waiting",
