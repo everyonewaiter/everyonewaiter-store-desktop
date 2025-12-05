@@ -9,6 +9,7 @@ import {
 import { Waiting } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 import { getMinutesAgo } from "@renderer/utils/format";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 import { UseMutateFunction } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
@@ -39,12 +40,8 @@ function HallWaitingModalComp({ type, waiting, ...props }: HallWaitingModalCompP
     }
 
     mutate(waiting.waitingId, {
-      onError: () => {
-        // TODO: 에러 메시지 다이얼로그 출력
-      },
-      onSettled: () => {
-        props.close();
-      },
+      onError: (error) => handleApiError(error),
+      onSettled: () => props.close(),
     });
   };
 
