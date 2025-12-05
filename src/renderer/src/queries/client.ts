@@ -1,4 +1,3 @@
-import { handleApiError } from "@renderer/utils/handle-api-error";
 import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient({
@@ -9,7 +8,6 @@ export const queryClient = new QueryClient({
     },
     mutations: {
       retry: false,
-      onError: (error) => handleApiError(error),
     },
   },
 });
