@@ -16,14 +16,14 @@ export function handleApiError(error: Error, handlers?: Record<string, () => voi
 
   const status = error.response?.status;
   const code = error.response?.data?.code ?? "";
+  const message = error.response?.data?.message;
+  const fn = handlers?.[code];
 
   if (status === 401 && code === "UNAUTHORIZED") {
     alert("등록된 기기가 아닙니다.");
     return;
   }
 
-  const message = error.response?.data?.message;
-  const fn = handlers?.[code];
   if (fn) {
     fn();
   } else if (message) {
