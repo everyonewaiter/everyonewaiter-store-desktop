@@ -6,7 +6,12 @@ export interface ApiErrorResponse {
   timestamp: string;
 }
 
-export function handleApiError(error: Error) {
+/**
+ * @param error
+ * @param handlers - 오류 코드에 따른 핸들러 함수 { NOT_FOUND: () => {...}, FORBIDDEN: () => {...} }
+ * @returns
+ */
+export function handleApiError(error: Error, handlers?: Record<string, () => void>) {
   if (!isAxiosError<ApiErrorResponse>(error)) return;
 
   const status = error.response?.status;
@@ -18,5 +23,10 @@ export function handleApiError(error: Error) {
   }
 
   const message = error.response?.data?.message;
-  if (message) alert(message);
+  const fn = handlers?.[code];
+  if (fn) {
+    fn();
+  } else if (message) {
+    alert(message);
+  }
 }
