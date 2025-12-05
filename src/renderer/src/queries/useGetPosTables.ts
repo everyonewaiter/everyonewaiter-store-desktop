@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetPosTables = () => {
   const { data, isPending, isError } = useQuery({
-    queryKey: [queryKey.POS],
+    queryKey: [queryKey.POS, queryKey.TABLES],
     queryFn: getPosTables,
   });
 
