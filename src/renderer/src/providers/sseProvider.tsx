@@ -124,6 +124,9 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               break;
             case "STORE":
               queryClient.invalidateQueries({ queryKey: [queryKey.STORE] });
+              if (sseEvent.hasData && sseEvent.action === "UPDATE" && sseEvent.data === "CLOSE") {
+                queryClient.removeQueries({ queryKey: [queryKey.POS] });
+              }
               break;
             case "CATEGORY":
               break;

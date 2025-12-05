@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import posIframe from "@renderer/assets/images/pos-bg.mp4";
 import { Button } from "@renderer/components";
+import { WEEK_NAME } from "@renderer/constants/week";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
-import PosGoTableListModalComp from "@renderer/pages/pos/PosGoTableListModalComp";
+import PosStoreCloseModalComp from "@renderer/pages/pos/PosStoreCloseModalComp";
 import { useGetDevice } from "@renderer/queries/useGetDevice";
 import { useGetStore } from "@renderer/queries/useGetStore";
 import { StoreStatus } from "@renderer/types/domain";
@@ -10,7 +11,6 @@ import cn from "@renderer/utils/cn";
 import dayjs from "dayjs";
 import { overlay } from "overlay-kit";
 
-const WEEK_NAME = ["일", "월", "화", "수", "목", "금", "토"];
 const STATUS_TEXT: Record<StoreStatus, string> = {
   OPEN: "오픈",
   CLOSE: "마감",
@@ -27,19 +27,30 @@ function PosPage() {
   return (
     <main className="flex h-dvh w-dvw items-center justify-center">
       <div className="absolute top-0 left-0 h-full w-full bg-black/40" />
-      <div className="absolute top-0 left-0 flex w-full justify-end px-15 py-10">
+      <div className="absolute top-0 left-0 z-10 flex w-full justify-end px-15 py-10">
         <div className="flex items-center gap-1 rounded-[80px] bg-white/16 px-4 py-2.5">
-          {Object.keys(STATUS_TEXT).map((statusEng) => (
-            <div
-              key={statusEng}
-              className={cn(
-                "flex items-center justify-center rounded-3xl px-6 py-2 text-xl font-normal",
-                storeStatus === statusEng ? "bg-primary text-white" : "text-gray-300"
-              )}
-            >
-              {STATUS_TEXT[statusEng]}
-            </div>
-          ))}
+          {Object.keys(STATUS_TEXT).map((statusEng) => {
+            const isCurrentStatus = storeStatus === statusEng;
+            return (
+              <button
+                type="button"
+                key={statusEng}
+                className={cn(
+                  "flex items-center justify-center rounded-3xl px-6 py-2 text-xl font-normal",
+                  isCurrentStatus
+                    ? "bg-primary cursor-default text-white"
+                    : "cursor-pointer text-gray-300 hover:text-white"
+                )}
+                disabled={isCurrentStatus}
+                onClick={() => {
+                  if (isCurrentStatus) return;
+                  overlay.open((overlayProps) => <PosStoreCloseModalComp {...overlayProps} />);
+                }}
+              >
+                {STATUS_TEXT[statusEng]}
+              </button>
+            );
+          })}
         </div>
       </div>
       <video className="h-full w-full object-cover" autoPlay loop muted>
@@ -58,14 +69,9 @@ function PosPage() {
             className="bg-gray-0 h-30 rounded-2xl border-none text-3xl font-bold text-white"
             onClick={() => {
               if (storeStatus === "CLOSE") {
-                overlay.open(
-                  (overlayProps) => (
-                    <PosGoTableListModalComp {...overlayProps} onClick={() => navigate("tables")} />
-                  ),
-                  {
-                    overlayId: "pos-go-table-list-modal",
-                  }
-                );
+                overlay.open((overlayProps) => (
+                  <PosStoreCloseModalComp {...overlayProps} onSuccess={() => navigate("tables")} />
+                ));
               } else {
                 navigate("tables");
               }

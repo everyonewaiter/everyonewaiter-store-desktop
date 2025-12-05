@@ -3,6 +3,7 @@ import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "@renderer/assets/icons";
 import Button from "@renderer/components/Button/Button";
 import { ButtonColor } from "@renderer/components/Button/Button.types";
+import { WEEK_NAME } from "@renderer/constants/week";
 import cn from "@renderer/utils/cn";
 
 function Calendar({
@@ -27,8 +28,7 @@ function Calendar({
       formatters={{
         formatMonthDropdown: (date) => date.toLocaleString("ko-KR", { month: "long" }),
         formatCaption: (date) => `${date.getFullYear()}년 ${date.getMonth() + 1}월`,
-        formatWeekdayName: (weekday) =>
-          ["일", "월", "화", "수", "목", "금", "토"][weekday.getDay()],
+        formatWeekdayName: (weekday) => WEEK_NAME[weekday.getDay()],
         ...formatters,
       }}
       classNames={{

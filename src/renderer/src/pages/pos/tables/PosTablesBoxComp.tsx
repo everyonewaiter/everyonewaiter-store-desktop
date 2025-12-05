@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import { AlarmIcon, StopwatchIcon } from "@renderer/assets/icons";
 import { ORDER_TYPE_TEXT } from "@renderer/constants/pos";
+import { usePosTablesElapsedTime } from "@renderer/pages/pos/tables/usePosTablesElapsedTime";
 import { Table } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
@@ -11,6 +13,14 @@ interface PosTablesBoxCompProps extends Table {
 }
 
 function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesBoxCompProps) {
+  const orderedAt = useMemo(() => {
+    return typeof props.orderedAt === "string"
+      ? props.orderedAt?.split("T")[1]?.replace("Z", "")
+      : "00:00";
+  }, [props.orderedAt]);
+
+  const { elapsedTime } = usePosTablesElapsedTime(props.orderedAt);
+
   return (
     <button
       className={cn(
@@ -47,7 +57,7 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
             )}
           >
             <AlarmIcon width={20} height={20} color="#222222" />
-            {props.orderedAt || "00:00"}
+            {orderedAt || "00:00"}
           </time>
           <time
             className={cn(
@@ -56,7 +66,7 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
             )}
           >
             <StopwatchIcon width={20} height={20} color="#222222" />
-            {props.orderedAt || "00:00"}
+            {elapsedTime || "00:00"}
           </time>
         </div>
       </header>

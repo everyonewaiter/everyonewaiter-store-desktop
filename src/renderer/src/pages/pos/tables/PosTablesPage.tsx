@@ -1,10 +1,10 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ReturnIcon } from "@renderer/assets/icons";
 import { Button } from "@renderer/components";
-import { MOCK } from "@renderer/pages/pos/mock";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import PosTablesBoxComp from "@renderer/pages/pos/tables/PosTablesBoxComp";
 import PosTablesChangeTableModalComp from "@renderer/pages/pos/tables/PosTablesChangeTableModalComp";
+import { useGetPosTables } from "@renderer/queries/useGetPosTables";
 import { overlay } from "overlay-kit";
 
 function PosTablesPage() {
@@ -12,7 +12,9 @@ function PosTablesPage() {
   const searchParams = useSearchParams();
   const currentTableNo = searchParams[0].get("currentTableNo");
 
-  const handleMoveToTableDetail = (tableNo: number) => {
+  const { tables } = useGetPosTables();
+
+  const handleTableBoxClick = (tableNo: number) => {
     if (currentTableNo) {
       overlay.open((overlayProps) => (
         <PosTablesChangeTableModalComp
@@ -42,7 +44,7 @@ function PosTablesPage() {
           </Button>
         )}
         <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4">
-          {MOCK.map((table) => (
+          {tables?.map((table) => (
             <PosTablesBoxComp
               key={table.posTableId}
               {...table}
@@ -50,7 +52,7 @@ function PosTablesPage() {
                 currentTableNo && table.tableNo !== Number(currentTableNo) ? "animate-wiggle" : ""
               }
               disabled={table.tableNo === Number(currentTableNo)}
-              onClick={() => handleMoveToTableDetail(table.tableNo)}
+              onClick={() => handleTableBoxClick(table.tableNo)}
             />
           ))}
         </div>
