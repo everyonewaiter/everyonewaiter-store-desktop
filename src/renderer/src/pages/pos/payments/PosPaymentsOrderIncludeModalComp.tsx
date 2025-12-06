@@ -27,24 +27,28 @@ function PosPaymentsOrderIncludeModalComp({
             color: ColorName.BLACK,
             text: "미포함",
             onClick: () => {
-              openUsbPrinter().then((result) => {
-                if (result === 0) {
-                  printReceiptWithActivity(store, activity, false);
-                  closePrinter();
-                }
-              });
+              openUsbPrinter()
+                .then((result) => {
+                  if (result === 0) {
+                    printReceiptWithActivity(store, activity, false);
+                    closePrinter();
+                  }
+                })
+                .finally(() => props.close());
             },
           }}
           primaryButton={{
             color: ColorName.PRIMARY,
             text: "포함",
             onClick: () => {
-              openUsbPrinter().then((result) => {
-                if (result === 0) {
-                  printReceiptWithActivity(store, activity, true);
-                  closePrinter();
-                }
-              });
+              openUsbPrinter()
+                .then((result) => {
+                  if (result === 0) {
+                    printReceiptWithActivity(store, activity, true);
+                    closePrinter();
+                  }
+                })
+                .finally(() => props.close());
             },
           }}
         />
