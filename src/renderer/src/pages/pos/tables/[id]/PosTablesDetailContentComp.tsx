@@ -1,12 +1,16 @@
+import { useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { useNavigate, useParams } from "react-router-dom";
 import { NoteIcon, ReturnIcon, RotateIcon, SendIcon } from "@renderer/assets/icons";
+import { LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
-import { CATEGORY_MOCK, MENU_LIST_MOCK } from "@renderer/pages/pos/mock";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import PosTablesDetailMemoModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMemoModalComp";
 import PosTablesDetailMenuCardComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuCardComp";
 import PosTablesDetailResendReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailResendReceiptModalComp";
+import { useGetMenus } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import { useGetDevice } from "@renderer/queries/useGetDevice";
+import cn from "@renderer/utils/cn";
 import { overlay } from "overlay-kit";
 
 function PosTablesDetailContentComp() {
@@ -50,6 +54,21 @@ function PosTablesDetailContentComp() {
     },
   ];
 
+  const { device } = useGetDevice();
+  const { data } = useGetMenus(device?.storeId ?? "");
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const filteredMenus = selectedCategory
+    ? (data?.categories?.find((c) => c.categoryId === selectedCategory)?.menus ?? [])
+    : (data?.categories?.flatMap((category) => category.menus) ?? []);
+
+  const categoryStyle = (isValid: boolean) =>
+    cn(
+      "border-gray-[#4F4F4F] h-10 rounded-lg border px-5 text-[#4F4F4F] hover:bg-transparent hover:text-[#4F4F4F]",
+      isValid && "bg-primary border-primary text-white hover:bg-primary hover:text-white"
+    );
+
   return (
     <div className="relative flex flex-[calc(1-0.3375)] flex-col">
       <PosHeaderComp />
@@ -57,33 +76,35 @@ function PosTablesDetailContentComp() {
         <Button
           variant="outline"
           color="black"
-          className="focus:bg-primary focus:border-primary border-gray-[#4F4F4F] h-10 rounded-lg border px-5 text-[#4F4F4F] hover:bg-transparent hover:text-[#4F4F4F] focus:text-white"
+          className={categoryStyle(selectedCategory === null)}
+          onClick={() => setSelectedCategory(null)}
         >
           전체
         </Button>
-        {CATEGORY_MOCK.map((category) => (
+        {data?.categories?.map((category) => (
           <Button
             variant="outline"
             color="black"
-            className="focus:bg-primary focus:border-primary border-gray-[#4F4F4F] h-10 rounded-lg border px-5 text-[#4F4F4F] hover:bg-transparent hover:text-[#4F4F4F] focus:text-white"
+            className={categoryStyle(selectedCategory === category.categoryId)}
             key={category.categoryId}
+            onClick={() => setSelectedCategory(category.categoryId)}
           >
-            {category.category}
+            {category.name}
           </Button>
         ))}
       </div>
       <div className="scrollbar-hide h-full overflow-y-auto pb-20">
-        <div className="grid grid-cols-4 gap-x-6 gap-y-10 px-15 pt-3 pb-6">
-          {MENU_LIST_MOCK.menus.map((menu) => (
-            <PosTablesDetailMenuCardComp key={menu.menuId} menu={menu} />
-          ))}
-          {MENU_LIST_MOCK.menus.map((menu) => (
-            <PosTablesDetailMenuCardComp key={menu.menuId} menu={menu} />
-          ))}
-          {MENU_LIST_MOCK.menus.map((menu) => (
-            <PosTablesDetailMenuCardComp key={menu.menuId} menu={menu} />
-          ))}
-        </div>
+        {filteredMenus.length > 0 ? (
+          <div className="grid grid-cols-4 gap-x-6 gap-y-10 px-15 pt-3 pb-6">
+            {filteredMenus.map((menu) => (
+              <PosTablesDetailMenuCardComp key={menu.menuId} menu={menu} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex h-full w-full items-center justify-center pb-20">
+            <LogoTextIcon className="h-[80px] opacity-5 grayscale" />
+          </div>
+        )}
       </div>
       <nav
         className="fixed bottom-6 z-50 flex items-center rounded-[40px] bg-white px-10 py-6"
