@@ -2,6 +2,8 @@ import { Button, DatePicker, Table } from "@renderer/components";
 import { PAYMENTS_MOCK, TABLE_ACTIVITY_MOCK } from "@renderer/pages/pos/mock";
 import PosPaymentsSideComp from "@renderer/pages/pos/payments/PosPaymentsSideComp";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
+import { useGetDevice } from "@renderer/queries/useGetDevice";
+import { useGetStore } from "@renderer/queries/useGetStore";
 
 const COLUMN_WIDTHS = {
   number: "flex-[1]",
@@ -13,6 +15,13 @@ const COLUMN_WIDTHS = {
 };
 
 function PosPaymentsPage() {
+  const { device } = useGetDevice();
+  const { store } = useGetStore(device?.storeId ?? "");
+
+  if (!store) {
+    return null;
+  }
+
   return (
     <div className="flex min-h-dvh flex-col overflow-y-hidden">
       <PosHeaderComp />
@@ -60,7 +69,7 @@ function PosPaymentsPage() {
             </Table.Body>
           </Table>
         </div>
-        <PosPaymentsSideComp activity={TABLE_ACTIVITY_MOCK} />
+        <PosPaymentsSideComp store={store} activity={TABLE_ACTIVITY_MOCK} />
       </div>
     </div>
   );
