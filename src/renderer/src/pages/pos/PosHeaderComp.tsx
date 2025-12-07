@@ -4,14 +4,16 @@ import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { Button } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import { WEEK_NAME } from "@renderer/constants/week";
+import { useCurrentTime } from "@renderer/hooks/useCurrentTime";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosStoreCloseModalComp from "@renderer/pages/pos/PosStoreCloseModalComp";
-import dayjs from "dayjs";
 import { overlay } from "overlay-kit";
 
 function PosHeaderComp() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const { date } = useCurrentTime();
 
   return (
     <header className="flex w-full flex-col gap-8 px-15 pt-10">
@@ -25,7 +27,7 @@ function PosHeaderComp() {
           <LogoTextIcon className="h-[25px]" />
         </button>
         <time className="text-gray-0 text-2xl font-medium">
-          {dayjs().format(`YYYY.MM.DD(${WEEK_NAME[dayjs().day()]}) HH:mm`)}
+          {date.format(`YYYY.MM.DD(${WEEK_NAME[date.day()]}) HH:mm`)}
         </time>
         <nav className="flex items-center gap-6">
           {pathname === "/pos/payments" && (
