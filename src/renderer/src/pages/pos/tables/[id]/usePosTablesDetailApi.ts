@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetMenus = (storeId: string) => {
   return useQuery({
-    queryKey: [queryKey.STORE, storeId],
+    queryKey: [queryKey.MENU, storeId],
     queryFn: () => getMenus(storeId),
     enabled: !!storeId,
   });

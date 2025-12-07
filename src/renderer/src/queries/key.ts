@@ -7,4 +7,5 @@ export const queryKey = {
   WAITING: "waiting",
   ORDER: "order",
   STAFF_CALL: "staff-call",
+  MENU: "menu",
 } as const;
