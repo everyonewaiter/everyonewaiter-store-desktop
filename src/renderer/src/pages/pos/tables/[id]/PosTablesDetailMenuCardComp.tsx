@@ -1,3 +1,4 @@
+import { CdnImage } from "@renderer/components";
 import PosTablesDetailMenuModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuModalComp";
 import { Menu } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
@@ -22,10 +23,7 @@ function PosTablesDetailMenuCardComp({ menu }: PosTablesDetailMenuCardCompProps)
           SOLD OUT
         </div>
       )}
-      <img
-        src={menu.image || "./src/assets/images/pos-bg.jpg"}
-        className="h-full w-full object-cover"
-      />
+      <CdnImage src={menu.image} alt={`메뉴 ${menu.name}`} className="h-full w-full object-cover" />
       <div className="absolute bottom-0 flex w-full flex-col items-center justify-center gap-2 bg-white px-6 py-4">
         <span className="text-gray-0 text-lg leading-[27px] font-normal">{menu.name}</span>
         <strong className="text-gray-0 text-2xl leading-8 font-semibold">
