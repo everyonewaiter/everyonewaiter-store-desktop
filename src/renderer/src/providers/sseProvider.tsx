@@ -129,8 +129,10 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               }
               break;
             case "CATEGORY":
+              queryClient.invalidateQueries({ queryKey: [queryKey.MENU] });
               break;
             case "MENU":
+              queryClient.invalidateQueries({ queryKey: [queryKey.MENU] });
               break;
             case "WAITING":
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.WAITING] });

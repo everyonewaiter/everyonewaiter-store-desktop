@@ -232,3 +232,9 @@ export interface SimpleStore {
   storeId: string;
   name: string;
 }
+
+export interface MenuCategory {
+  categoryId: string;
+  name: string;
+  menus: Menu[];
+}

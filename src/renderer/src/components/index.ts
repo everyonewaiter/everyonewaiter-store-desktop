@@ -1,4 +1,5 @@
 export { default as Button, type ButtonProps } from "@renderer/components/Button/Button";
+export { default as CdnImage } from "@renderer/components/CdnImage";
 export { default as Checkbox } from "@renderer/components/Checkbox";
 export { default as DatePicker } from "@renderer/components/DatePicker";
 export { default as Dropdown } from "@renderer/components/Dropdown";
