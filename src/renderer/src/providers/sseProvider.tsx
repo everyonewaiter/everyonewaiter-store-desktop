@@ -158,12 +158,16 @@ const SseProvider = ({ children }: PropsWithChildren) => {
                 sseEvent.action === "CREATE" &&
                 store?.setting.kitchenPrinterLocation === device.purpose
               ) {
-                openUsbPrinter();
-                printOrder(sseEvent.data as Receipt);
-                closePrinter();
+                openUsbPrinter().then((result) => {
+                  if (result === 0) {
+                    printOrder(sseEvent.data as Receipt);
+                    closePrinter();
+                  }
+                });
               }
               break;
             case "POS":
+              queryClient.invalidateQueries({ queryKey: [queryKey.POS] });
               break;
             default:
               throw new Error(`Unhandled store action event: ${sseEvent}`);

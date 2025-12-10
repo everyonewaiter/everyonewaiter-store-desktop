@@ -1,12 +1,12 @@
 import { OrderPayment, Receipt, Store, TableActivity } from "@renderer/types/domain";
 import { PrinterInterface, TextAlign, TextAttribute, TextSize } from "@shared/printer/options";
 
-export const openUsbPrinter = () => {
-  window.printer.open(PrinterInterface.USB);
+export const openUsbPrinter = async () => {
+  return window.printer.open(PrinterInterface.USB);
 };
 
-export const closePrinter = () => {
-  window.printer.close();
+export const closePrinter = async () => {
+  return window.printer.close();
 };
 
 export const printReceiptWithPayment = (store: Store, orderPayment: OrderPayment) => {
