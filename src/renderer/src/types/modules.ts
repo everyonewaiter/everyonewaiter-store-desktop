@@ -14,7 +14,7 @@ export interface KSCATApprovalTelegram {
   approvalDate: string;
 }
 
-export interface KSCATApprovalReqeust {
+export interface KSCATApprovalRequest {
   deviceNo: string;
   method: valueOf<typeof paymentMethod>;
   type: valueOf<typeof paymentType>;

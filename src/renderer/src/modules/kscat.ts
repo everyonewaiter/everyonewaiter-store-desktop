@@ -1,6 +1,6 @@
 import { FindJSONtoString } from "@shared/utils/string";
 import $ from "jquery";
-import { KSCATApprovalReqeust, KSCATApprovalTelegram } from "./../types/modules";
+import { KSCATApprovalRequest, KSCATApprovalTelegram } from "./../types/modules";
 
 export const paymentMethod = {
   CASH: "HK",
@@ -60,7 +60,7 @@ export const kscatApproval = async ({
   successCallback,
   approvalNo = "            ",
   approvalDate = "      ",
-}: KSCATApprovalReqeust) => {
+}: KSCATApprovalRequest) => {
   const { totalAmount, serviceAmount, vat, supplyAmount } = calculateTax(amount);
 
   const requestTelegram = createRequestTelegram({

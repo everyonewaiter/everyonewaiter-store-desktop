@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { CalendarIcon } from "@renderer/assets/icons";
 import Button from "@renderer/components/Button/Button";
 import { Calendar } from "@renderer/components/Calendar";
@@ -7,7 +7,7 @@ import cn from "@renderer/utils/cn";
 
 interface DatePickerProps {
   date: Date | null;
-  onSetDate: (value: Date | null) => void;
+  onSetDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 function DatePicker({ date, onSetDate }: DatePickerProps) {
@@ -61,8 +61,10 @@ function DatePicker({ date, onSetDate }: DatePickerProps) {
             mode="single"
             selected={date!}
             onSelect={(day) => {
-              onSetDate(day ?? null);
-              setOpen(false);
+              if (day) {
+                onSetDate(day);
+                setOpen(false);
+              }
             }}
             initialFocus
           />

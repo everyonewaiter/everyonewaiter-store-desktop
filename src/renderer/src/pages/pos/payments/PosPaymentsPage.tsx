@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
+import { api } from "@renderer/api";
 import { Button, DatePicker, Table } from "@renderer/components";
-import { PAYMENTS_MOCK, TABLE_ACTIVITY_MOCK } from "@renderer/pages/pos/mock";
 import PosPaymentsSideComp from "@renderer/pages/pos/payments/PosPaymentsSideComp";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import { useGetDevice } from "@renderer/queries/useGetDevice";
 import { useGetStore } from "@renderer/queries/useGetStore";
+import { OrderPayment } from "@renderer/types/domain";
+import dayjs from "dayjs";
 
 const COLUMN_WIDTHS = {
   number: "flex-[1]",
@@ -18,6 +21,20 @@ function PosPaymentsPage() {
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
 
+  const [payments, setPayments] = useState<OrderPayment[]>([]);
+  const [selectedPayment] = useState<OrderPayment | null>(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  useEffect(() => {
+    const fetchPayments = () => {
+      api
+        .get(`/orders/payments?date=${dayjs(selectedDate).format("YYYYMMDD")}`)
+        .then(({ data }) => setPayments(data?.payments ?? []));
+    };
+
+    fetchPayments();
+  }, [selectedDate]);
+
   if (!store) {
     return null;
   }
@@ -27,7 +44,7 @@ function PosPaymentsPage() {
       <PosHeaderComp />
       <div className="relative flex w-full flex-1">
         <div className="flex h-[calc(100dvh-133px)] flex-[calc(1-0.3375)] flex-col gap-6 overflow-y-auto px-15 py-8">
-          <DatePicker date={new Date()} onSetDate={() => {}} />
+          <DatePicker date={selectedDate} onSetDate={setSelectedDate} />
           <Table className="">
             <Table.Header className="flex w-full">
               <Table.Row className="flex w-full cursor-default">
@@ -40,7 +57,8 @@ function PosPaymentsPage() {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {PAYMENTS_MOCK.map((payment, index, arr) => (
+              {payments.map((payment, index, arr) => (
+                // TODO: 행 선택 시 setSelectedPayment 호출
                 <Table.Row className="flex w-full" key={payment.orderPaymentId}>
                   <Table.Cell className={COLUMN_WIDTHS.number}>{arr.length - index}</Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.cash}>
@@ -69,7 +87,7 @@ function PosPaymentsPage() {
             </Table.Body>
           </Table>
         </div>
-        <PosPaymentsSideComp store={store} activity={TABLE_ACTIVITY_MOCK} />
+        {selectedPayment && <PosPaymentsSideComp store={store} payment={selectedPayment} />}
       </div>
     </div>
   );
