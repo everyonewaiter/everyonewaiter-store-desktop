@@ -1,22 +1,38 @@
+import { useEffect, useState } from "react";
+import { api } from "@renderer/api";
 import { DatePicker } from "@renderer/components";
 import { Dialog } from "@renderer/components/Dialog";
-import { REVENUE_MOCK } from "@renderer/pages/pos/mock";
+import { Revenue } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
+import dayjs from "dayjs";
 
 interface PosPaymentsSalesModalCompProps extends ModalProps {}
 
 function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps) {
-  const revenue = REVENUE_MOCK;
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [revenue, setRevenue] = useState<Revenue | null>(null);
+
+  useEffect(() => {
+    const fetchRevenue = () => {
+      api
+        .get(`/pos/revenue?date=${dayjs(selectedDate).format("YYYYMMDD")}`)
+        .then(({ data }) => setRevenue(data));
+    };
+
+    fetchRevenue();
+  }, [selectedDate]);
 
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
-        <DatePicker date={new Date()} onSetDate={() => {}} />
+        <DatePicker date={selectedDate} onSetDate={setSelectedDate} />
         <div className="flex flex-col gap-10">
           <div className="flex items-center justify-between">
-            <h1 className="text-gray-0 text-2xl font-semibold">03월 11일 매출 내역</h1>
+            <h1 className="text-gray-0 text-2xl font-semibold">
+              {dayjs(selectedDate).format("MM월 DD일")} 매출 내역
+            </h1>
             <h1 className="text-primary text-2xl font-semibold">
-              {revenue.totalPaymentPrice.toLocaleString()}원
+              {revenue?.totalPaymentPrice.toLocaleString() ?? 0}원
             </h1>
           </div>
           <div className="flex flex-col gap-5">
@@ -26,13 +42,13 @@ function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps)
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">주문 금액</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.totalOrderPrice.toLocaleString()}원
+                    {revenue?.totalOrderPrice.toLocaleString() ?? 0}원
                   </h3>
                 </div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">할인</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.totalDiscountPrice.toLocaleString()}원
+                    {revenue?.totalDiscountPrice.toLocaleString() ?? 0}원
                   </h3>
                 </div>
               </div>
@@ -43,13 +59,13 @@ function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps)
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">카드</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.cardPaymentApprovePrice.toLocaleString()}원
+                    {revenue?.cardPaymentApprovePrice.toLocaleString() ?? 0}원
                   </h3>
                 </div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">현금</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.cashPaymentApprovePrice.toLocaleString()}원
+                    {revenue?.cashPaymentApprovePrice.toLocaleString() ?? 0}원
                   </h3>
                 </div>
               </div>
@@ -60,13 +76,13 @@ function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps)
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">카드</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.cardPaymentCancelPrice.toLocaleString()}원
+                    {revenue?.cardPaymentCancelPrice.toLocaleString() ?? 0}원
                   </h3>
                 </div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-gray-0 text-lg font-semibold">현금</h3>
                   <h3 className="text-gray-0 text-lg font-semibold">
-                    {revenue.cashPaymentCancelPrice.toLocaleString()}원
+                    {revenue?.cashPaymentCancelPrice.toLocaleString() ?? 0}원
                   </h3>
                 </div>
               </div>
