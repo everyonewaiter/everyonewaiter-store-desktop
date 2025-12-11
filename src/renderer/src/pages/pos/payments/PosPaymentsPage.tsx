@@ -6,6 +6,7 @@ import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import { useGetDevice } from "@renderer/queries/useGetDevice";
 import { useGetStore } from "@renderer/queries/useGetStore";
 import { OrderPayment } from "@renderer/types/domain";
+import cn from "@renderer/utils/cn";
 import dayjs from "dayjs";
 
 const COLUMN_WIDTHS = {
@@ -22,7 +23,7 @@ function PosPaymentsPage() {
   const { store } = useGetStore(device?.storeId ?? "");
 
   const [payments, setPayments] = useState<OrderPayment[]>([]);
-  const [selectedPayment] = useState<OrderPayment | null>(null);
+  const [selectedPayment, setSelectedPayment] = useState<OrderPayment | null>(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
@@ -43,7 +44,12 @@ function PosPaymentsPage() {
     <div className="flex min-h-dvh flex-col overflow-y-hidden">
       <PosHeaderComp />
       <div className="relative flex w-full flex-1">
-        <div className="flex h-[calc(100dvh-133px)] flex-[calc(1-0.3375)] flex-col gap-6 overflow-y-auto px-15 py-8">
+        <div
+          className={cn(
+            "flex h-[calc(100dvh-133px)] flex-col gap-6 overflow-y-auto px-15 py-8",
+            selectedPayment ? "flex-[calc(1-0.3375)]" : "flex-1"
+          )}
+        >
           <DatePicker date={selectedDate} onSetDate={setSelectedDate} />
           <Table className="">
             <Table.Header className="flex w-full">
@@ -58,8 +64,11 @@ function PosPaymentsPage() {
             </Table.Header>
             <Table.Body>
               {payments.map((payment, index, arr) => (
-                // TODO: 행 선택 시 setSelectedPayment 호출
-                <Table.Row className="flex w-full" key={payment.orderPaymentId}>
+                <Table.Row
+                  className="flex w-full cursor-pointer"
+                  key={payment.orderPaymentId}
+                  onClick={() => setSelectedPayment(payment)}
+                >
                   <Table.Cell className={COLUMN_WIDTHS.number}>{arr.length - index}</Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.cash}>
                     {payment.method === "CASH" ? `${payment.amount.toLocaleString()}원` : "-"}
@@ -79,8 +88,7 @@ function PosPaymentsPage() {
                     </Button>
                   </Table.Cell>
                   <Table.Cell className={COLUMN_WIDTHS.createdAt}>
-                    {payment.createdAt.split(":")[0]}시 {payment.createdAt.split(":")[1]}분{" "}
-                    {payment.createdAt.split(":")[2]}초
+                    {dayjs(payment.createdAt).format("HH:mm:ss")}
                   </Table.Cell>
                 </Table.Row>
               ))}
