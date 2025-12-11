@@ -52,11 +52,7 @@ function DatePicker({ date, onSetDate }: DatePickerProps) {
         </Button>
       </PopoverTrigger>
       {open && (
-        <PopoverContent
-          className="!z-[10000] !ml-15 w-auto !rounded-3xl border-none p-0"
-          onMouseDown={(e) => e.stopPropagation()}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <PopoverContent className="!z-[10000] !ml-15 w-auto !rounded-3xl border-none p-0">
           <Calendar
             mode="single"
             selected={date!}
