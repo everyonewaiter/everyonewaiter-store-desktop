@@ -63,7 +63,7 @@ PosPaymentsOrderBoxComp.Order = function Order({
           <div className="flex flex-col gap-1">
             {normalized.optionGroups.map((group) =>
               group.options.map((option) => (
-                <div key={group.id} className="flex items-center justify-between">
+                <div key={group.id + option.name} className="flex items-center justify-between">
                   <span className="flex text-base leading-6 font-medium text-gray-400">
                     <PlusIcon width={24} height={24} className="text-gray-400" />
                     {group.name}
