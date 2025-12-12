@@ -2,10 +2,13 @@ import { useState } from "react";
 import { MinusIcon, PlusIcon } from "@renderer/assets/icons";
 import { Button, CdnImage } from "@renderer/components";
 import { Dialog } from "@renderer/components/Dialog";
-import PosTablesDetailOrderBoxComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderBoxComp";
+import PosTablesDetailOptionalOptionComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOptionalOptionComp";
+import PosTablesDetailRequiredOptionComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailRequiredOptionComp";
 import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
 import { Menu, OrderMenuOption } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
+
+export type SelectedRequiredOption = Record<string, OrderMenuOption>;
 
 export type SelectedOption = OrderMenuOption & {
   menuOptionGroupId: string;
@@ -25,21 +28,54 @@ function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuMod
   const requiredOptions = menu.menuOptionGroups.filter((group) => group.type === "MANDATORY");
   const optionalOptions = menu.menuOptionGroups.filter((group) => group.type === "OPTIONAL");
 
-  const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
+  const [selectedRequired, setSelectedRequired] = useState<SelectedRequiredOption>(
+    Object.fromEntries(
+      requiredOptions.map((group) => [
+        group.menuOptionGroupId,
+        { name: group.menuOptions[0].name, price: group.menuOptions[0].price },
+      ])
+    )
+  );
+  const [selectedOptional, setSelectedOptional] = useState<SelectedOption[]>([]);
   const [quantity, setQuantity] = useState(1);
 
   const { addMenu } = usePosTablesDetailOrderStore();
 
-  const totalPrice = () => menu.price * quantity + selectedOptions.reduce((a, b) => a + b.price, 0);
+  const allSelectedOptions: SelectedOption[] = [
+    ...Object.entries(selectedRequired).map(([groupId, opt]) => ({
+      ...opt,
+      menuOptionGroupId: groupId,
+    })),
+    ...selectedOptional,
+  ];
+  const totalPrice = () =>
+    menu.price * quantity + allSelectedOptions.reduce((a, b) => a + b.price, 0);
 
   const handleAddMenu = () => {
+    const groupedOptions = allSelectedOptions.reduce(
+      (
+        acc: { menuOptionGroupId: string; orderOptions: OrderMenuOption[] }[],
+        option: SelectedOption
+      ) => {
+        const existing = acc.find((g) => g.menuOptionGroupId === option.menuOptionGroupId);
+        const newOption = { name: option.name, price: option.price };
+        if (existing) {
+          existing.orderOptions.push(newOption);
+        } else {
+          acc.push({
+            menuOptionGroupId: option.menuOptionGroupId,
+            orderOptions: [newOption],
+          });
+        }
+        return acc;
+      },
+      []
+    );
+
     addMenu({
       menuId: menu.menuId,
       quantity,
-      menuOptionGroups: selectedOptions.map((option) => ({
-        menuOptionGroupId: option.menuOptionGroupId,
-        orderOptions: [option],
-      })),
+      menuOptionGroups: groupedOptions,
     });
     props.close();
   };
@@ -96,19 +132,17 @@ function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuMod
 
             <section className="flex flex-col gap-4">
               {requiredOptions?.length > 0 && (
-                <PosTablesDetailOrderBoxComp
+                <PosTablesDetailRequiredOptionComp
                   options={requiredOptions}
-                  type="required"
-                  selectedOptions={selectedOptions}
-                  setSelectedOptions={setSelectedOptions}
+                  selectedOptions={selectedRequired}
+                  setSelectedOptions={setSelectedRequired}
                 />
               )}
               {optionalOptions?.length > 0 && (
-                <PosTablesDetailOrderBoxComp
+                <PosTablesDetailOptionalOptionComp
                   options={optionalOptions}
-                  type="optional"
-                  selectedOptions={selectedOptions}
-                  setSelectedOptions={setSelectedOptions}
+                  selectedOptions={selectedOptional}
+                  setSelectedOptions={setSelectedOptional}
                 />
               )}
             </section>
