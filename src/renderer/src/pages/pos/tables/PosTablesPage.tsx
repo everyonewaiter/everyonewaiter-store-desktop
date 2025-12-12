@@ -49,7 +49,9 @@ function PosTablesPage() {
               key={table.posTableId}
               {...table}
               className={
-                currentTableNo && table.tableNo !== Number(currentTableNo) ? "animate-wiggle" : ""
+                currentTableNo && (table.tableNo !== Number(currentTableNo) || !table.hasOrder)
+                  ? "animate-wiggle"
+                  : ""
               }
               disabled={table.tableNo === Number(currentTableNo)}
               onClick={() => handleTableBoxClick(table.tableNo)}
