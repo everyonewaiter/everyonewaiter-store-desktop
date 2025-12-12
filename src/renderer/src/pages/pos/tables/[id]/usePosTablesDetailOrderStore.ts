@@ -37,7 +37,7 @@ export const usePosTablesDetailOrderStore = create<State>((set) => ({
   setTableNo: (tableNo: number) => set({ tableNo }),
   addMenu: (menu: CreateOrderMenu) =>
     set((state) => {
-      const orders = [...state.orders!];
+      const orders = [...(state.orders ?? [])];
       const targetIndex = orders.findIndex((item) => isSameMenu(item, menu));
 
       // NOTE: 일치하는 메뉴가 있으면 quantity + 1
@@ -55,7 +55,7 @@ export const usePosTablesDetailOrderStore = create<State>((set) => ({
 
   updateMenuQuantity: (menuId: string, orderIndex: number, action: "add" | "sub") => {
     set((state) => {
-      const orders = [...state.orders!];
+      const orders = [...(state.orders ?? [])];
       const target = orders[orderIndex];
 
       if (!target || target.menuId !== menuId) return { orders };
