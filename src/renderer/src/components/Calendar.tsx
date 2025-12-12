@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "@renderer/assets/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@renderer/assets/icons";
 import Button from "@renderer/components/Button/Button";
 import { ButtonColor } from "@renderer/components/Button/Button.types";
 import { WEEK_NAME } from "@renderer/constants/week";
@@ -48,7 +48,7 @@ function Calendar({
           defaultClassNames.button_next
         ),
         month_caption: cn(
-          "top-0 absolute flex items-center justify-center h-8 w-full text-xl font-bold",
+          "top-0 absolute flex items-center justify-center h-8 w-full text-xl font-bold pointer-events-none",
           defaultClassNames.month_caption
         ),
         dropdowns: cn(
@@ -82,39 +82,22 @@ function Calendar({
         }: React.ComponentProps<"div"> & { rootRef?: React.Ref<HTMLDivElement> }) => {
           return <div data-slot="calendar" ref={rootRef} className={cn(className)} {...props} />;
         },
-
-        Chevron: ({
-          className,
-          orientation = "down",
-          ...props
-        }: {
-          className?: string;
-          size?: number;
-          disabled?: boolean;
-          orientation?: "left" | "right" | "down" | "up";
-        }) => {
-          if (orientation === "left") {
-            return (
-              <Button variant="ghost" color="black">
-                <ChevronLeftIcon className={cn("size-6", className)} {...props} />
-              </Button>
-            );
-          }
-
-          if (orientation === "right") {
-            return (
-              <Button variant="ghost" color="black">
-                <ChevronRightIcon className={cn("size-6", className)} {...props} />
-              </Button>
-            );
-          }
-
-          return (
-            <Button variant="ghost" color="black">
-              <ChevronDownIcon className={cn("size-6", className)} {...props} />
-            </Button>
-          );
-        },
+        PreviousMonthButton: ({ ...props }) => (
+          <button
+            {...props}
+            className={cn("flex size-8 cursor-pointer items-center justify-center p-0", className)}
+          >
+            <ChevronLeftIcon className="size-6" />
+          </button>
+        ),
+        NextMonthButton: ({ ...props }) => (
+          <button
+            {...props}
+            className={cn("flex size-8 cursor-pointer items-center justify-center p-0", className)}
+          >
+            <ChevronRightIcon className="size-6" />
+          </button>
+        ),
         DayButton: CalendarDayButton,
         WeekNumber: ({ children, ...props }) => {
           return (

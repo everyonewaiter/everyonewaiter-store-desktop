@@ -38,11 +38,9 @@ function registerPrinterHandlers() {
 }
 
 function registerDeviceHandlers() {
-  ipcMain.handle(storageChannel.STORE, async (_, key: string, value: string) =>
-    storeStorage(key, value)
-  );
-  ipcMain.handle(storageChannel.GET_DEVICE_INFO, async () => getDeviceInfo());
-  ipcMain.handle(storageChannel.DELETE_DEVICE_INFO, async () => deleteDeviceInfo());
+  ipcMain.handle(storageChannel.STORE, (_, key: string, value: string) => storeStorage(key, value));
+  ipcMain.handle(storageChannel.GET_DEVICE_INFO, () => getDeviceInfo());
+  ipcMain.handle(storageChannel.DELETE_DEVICE_INFO, () => deleteDeviceInfo());
 }
 
 function registerIpcHandlers() {
