@@ -24,8 +24,9 @@ PosPaymentsOrderBoxComp.Order = function Order({
   const normalizeMenuItem = (
     item: OrderMenu | CreateOrderMenu
   ): {
-    menuId: string;
+    menuId?: string;
     quantity: number;
+    name?: string;
     optionGroups: {
       id: string;
       name: string;
@@ -34,7 +35,7 @@ PosPaymentsOrderBoxComp.Order = function Order({
   } => {
     if ("orderMenuId" in item) {
       return {
-        menuId: item.orderMenuId,
+        name: item.name,
         quantity: item.quantity,
         optionGroups: item.orderOptionGroups.map((group) => ({
           id: group.orderOptionGroupId,
@@ -57,6 +58,8 @@ PosPaymentsOrderBoxComp.Order = function Order({
 
   const normalized = normalizeMenuItem(orderMenu);
 
+  const isOrdered = "orderMenuId" in orderMenu;
+
   return (
     <>
       <div
@@ -67,11 +70,11 @@ PosPaymentsOrderBoxComp.Order = function Order({
       >
         <div className="flex flex-col gap-2">
           <span className="text-xl leading-[30px] font-medium text-gray-100">
-            {
-              menus?.categories
-                ?.flatMap((cat) => cat.menus)
-                .find((menu) => menu.menuId === normalized.menuId)?.name
-            }
+            {isOrdered
+              ? normalized.name
+              : menus?.categories
+                  ?.flatMap((cat) => cat.menus)
+                  .find((menu) => String(menu.menuId) === String(normalized.menuId))?.name}
           </span>
           <div className="flex flex-col gap-1">
             {normalized.optionGroups?.map((group) =>
@@ -90,7 +93,11 @@ PosPaymentsOrderBoxComp.Order = function Order({
           <button
             className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600"
             onClick={() => {
-              updateMenuQuantity(normalized.menuId, index ?? -1, "sub");
+              if (isOrdered) {
+                // do something
+              } else {
+                updateMenuQuantity(normalized.menuId as string, index ?? -1, "sub");
+              }
             }}
           >
             {normalized.quantity === 1 ? (
@@ -106,7 +113,11 @@ PosPaymentsOrderBoxComp.Order = function Order({
             type="button"
             className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600"
             onClick={() => {
-              updateMenuQuantity(normalized.menuId, index ?? -1, "add");
+              if (isOrdered) {
+                // do something
+              } else {
+                updateMenuQuantity(normalized.menuId as string, index ?? -1, "add");
+              }
             }}
           >
             <PlusIcon width={24} height={24} className="text-gray-300" />
