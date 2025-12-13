@@ -238,3 +238,16 @@ export interface MenuCategory {
   name: string;
   menus: Menu[];
 }
+
+export interface CreateOrder {
+  tableNo: number;
+  memo: string;
+  orderMenus: {
+    menuId: string;
+    quantity: number;
+    menuOptionGroups: {
+      menuOptionGroupId: string;
+      orderOptions: OrderMenuOption[];
+    }[];
+  }[];
+}
