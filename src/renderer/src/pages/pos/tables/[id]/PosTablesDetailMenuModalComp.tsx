@@ -49,7 +49,7 @@ function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuMod
     ...selectedOptional,
   ];
   const totalPrice = () =>
-    menu.price * quantity + allSelectedOptions.reduce((a, b) => a + b.price, 0);
+    (menu.price + allSelectedOptions.reduce((a, b) => a + b.price, 0)) * quantity;
 
   const handleAddMenu = () => {
     const groupedOptions = allSelectedOptions.reduce(
