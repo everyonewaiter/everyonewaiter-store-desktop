@@ -247,7 +247,11 @@ export interface CreateOrder {
     quantity: number;
     menuOptionGroups: {
       menuOptionGroupId: string;
+      name: string;
       orderOptions: OrderMenuOption[];
     }[];
+    totalPrice: number;
   }[];
 }
+
+export type CreateOrderMenu = CreateOrder["orderMenus"][number];
