@@ -1,6 +1,7 @@
-import { getMenus, getTableActivity } from "@renderer/api/pos";
+import { addOrder, getMenus, getTableActivity } from "@renderer/api/pos";
 import { queryKey } from "@renderer/queries/key";
-import { useQuery } from "@tanstack/react-query";
+import { CreateOrderMenu } from "@renderer/types/domain";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useGetMenus = (storeId: string) => {
   return useQuery({
@@ -15,5 +16,19 @@ export const useGetTableActivity = (tableNo: number) => {
     queryKey: [queryKey.POS, tableNo],
     queryFn: () => getTableActivity(tableNo),
     enabled: !!tableNo,
+  });
+};
+
+export const useAddOrder = () => {
+  return useMutation({
+    mutationFn: async ({
+      tableNo,
+      memo,
+      orders,
+    }: {
+      tableNo: number;
+      memo: string;
+      orders: CreateOrderMenu[];
+    }) => await addOrder(tableNo, memo, orders),
   });
 };
