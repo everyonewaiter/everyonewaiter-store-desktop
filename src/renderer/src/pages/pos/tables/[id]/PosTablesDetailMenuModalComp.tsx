@@ -75,7 +75,14 @@ function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuMod
     addMenu({
       menuId: menu.menuId,
       quantity,
-      menuOptionGroups: groupedOptions,
+      menuOptionGroups: groupedOptions.map((group) => ({
+        menuOptionGroupId: group.menuOptionGroupId,
+        name:
+          menu.menuOptionGroups.find((g) => g.menuOptionGroupId === group.menuOptionGroupId)
+            ?.name ?? "",
+        orderOptions: group.orderOptions,
+      })),
+      totalPrice: totalPrice(),
     });
     props.close();
   };
