@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PosTablesDetailContentComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailContentComp";
 import PosTablesDetailSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp";
@@ -6,7 +7,12 @@ import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/us
 function PosTablesDetailPage() {
   const params = useParams();
   const tableNo = Number(params.id);
-  const { orders } = usePosTablesDetailOrderStore();
+  const { orders, setTableNo } = usePosTablesDetailOrderStore();
+
+  useEffect(() => {
+    setTableNo(tableNo);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableNo]);
 
   return (
     <div className="flex h-dvh flex-col">
