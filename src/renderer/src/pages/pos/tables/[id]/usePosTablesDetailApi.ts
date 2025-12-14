@@ -13,7 +13,7 @@ export const useGetMenus = (storeId: string) => {
 
 export const useGetTableActivity = (tableNo: number) => {
   return useQuery({
-    queryKey: [queryKey.HALL, queryKey.ORDER, tableNo],
+    queryKey: [queryKey.POS, queryKey.ACTIVITY, tableNo],
     queryFn: () => getTableActivity(tableNo),
     enabled: !!tableNo,
   });

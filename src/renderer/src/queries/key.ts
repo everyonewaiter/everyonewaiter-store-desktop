@@ -1,5 +1,6 @@
 export const queryKey = {
   POS: "pos",
+  ACTIVITY: "activity",
   TABLES: "tables",
   STORE: "store",
   DEVICE: "device",
