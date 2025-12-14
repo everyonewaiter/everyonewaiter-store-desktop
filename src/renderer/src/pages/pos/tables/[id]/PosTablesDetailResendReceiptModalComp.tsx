@@ -1,5 +1,7 @@
+import { api } from "@renderer/api";
 import { Dialog } from "@renderer/components/Dialog";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailResendReceiptModalCompProps extends ModalProps {
   tableNo: number;
@@ -9,6 +11,16 @@ function PosTablesDetailResendReceiptModalComp({
   tableNo,
   ...props
 }: PosTablesDetailResendReceiptModalCompProps) {
+  const handleResendReceipt = async () => {
+    try {
+      await api.post(`/pos/tables/${tableNo}/resend-receipt`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        handleApiError(error);
+      }
+    }
+  };
+
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
@@ -16,9 +28,20 @@ function PosTablesDetailResendReceiptModalComp({
           <h2 className="text-primary text-center text-[28px] font-semibold">
             {tableNo}번 테이블 주문
           </h2>
-          <span className="text-gray-0 text-lg font-normal">영수증을 재전송할까요?</span>
+          <span className="text-gray-0 text-lg font-normal">
+            주문 빌지를 주방으로 재전송할까요?
+          </span>
         </div>
-        <Dialog.Footer buttonSize="xl" primaryButton={{ text: "재전송하기" }} />
+        <Dialog.Footer
+          buttonSize="xl"
+          primaryButton={{
+            text: "재전송하기",
+            onClick: () => {
+              handleResendReceipt();
+              props.close();
+            },
+          }}
+        />
       </Dialog.Wrapper>
     </Dialog>
   );
