@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PosTablesDetailContentComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailContentComp";
-import PosTablesDetailSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp";
+import PosTablesDetailSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailSideComp";
 import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
 
 function PosTablesDetailPage() {
