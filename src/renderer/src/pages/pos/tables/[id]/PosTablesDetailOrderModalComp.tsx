@@ -4,9 +4,14 @@ import { useAddOrder } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailA
 import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
 import { ModalProps } from "@renderer/types/overlay";
 
-interface PosTablesDetailOrderModalCompProps extends ModalProps {}
+interface PosTablesDetailOrderModalCompProps extends ModalProps {
+  onSuccess: () => void;
+}
 
-function PosTablesDetailOrderModalComp({ ...props }: PosTablesDetailOrderModalCompProps) {
+function PosTablesDetailOrderModalComp({
+  onSuccess,
+  ...props
+}: PosTablesDetailOrderModalCompProps) {
   const { orders, tableNo, resetOrders } = usePosTablesDetailOrderStore();
   const { mutate: addOrder } = useAddOrder();
 
@@ -23,8 +28,8 @@ function PosTablesDetailOrderModalComp({ ...props }: PosTablesDetailOrderModalCo
       },
       {
         onSuccess: () => {
-          props.close();
           resetOrders();
+          onSuccess();
         },
       }
     );

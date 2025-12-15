@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@renderer/components";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailCancelPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelPaymentModalComp";
@@ -15,6 +16,7 @@ interface PosTablesDetailSideCompProps {
 }
 
 function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetailSideCompProps) {
+  const navigate = useNavigate();
   const checkedOrders: Order[] = [];
 
   const { orders } = usePosTablesDetailOrderStore();
@@ -151,7 +153,15 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
         <Button
           className="h-16 w-full rounded-xl text-xl font-semibold"
           onClick={() =>
-            overlay.open((overlayProps) => <PosTablesDetailOrderModalComp {...overlayProps} />)
+            overlay.open((overlayProps) => (
+              <PosTablesDetailOrderModalComp
+                {...overlayProps}
+                onSuccess={() => {
+                  navigate("/pos/tables");
+                  overlayProps.close();
+                }}
+              />
+            ))
           }
         >
           주문 요청
