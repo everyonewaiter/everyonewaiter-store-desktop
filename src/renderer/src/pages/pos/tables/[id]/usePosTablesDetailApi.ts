@@ -1,4 +1,4 @@
-import { addOrder, getMenus, getTableActivity } from "@renderer/api/pos";
+import { addOrder, getMenus, getTableActivity, updateMemo } from "@renderer/api/pos";
 import { queryKey } from "@renderer/queries/key";
 import { CreateOrderMenu } from "@renderer/types/domain";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -30,5 +30,19 @@ export const useAddOrder = () => {
       memo: string;
       orders: CreateOrderMenu[];
     }) => await addOrder(tableNo, memo, orders),
+  });
+};
+
+export const useUpdateMemo = () => {
+  return useMutation({
+    mutationFn: async ({
+      tableNo,
+      orderId,
+      memo,
+    }: {
+      tableNo: number;
+      orderId: string;
+      memo: string;
+    }) => updateMemo(tableNo, orderId, memo),
   });
 };
