@@ -21,6 +21,7 @@ function PosTablesPage() {
           {...overlayProps}
           fromTableNo={Number(currentTableNo)}
           toTableNo={tableNo}
+          onSuccess={() => navigate(`/pos/tables/${tableNo}`)}
         />
       ));
     } else {

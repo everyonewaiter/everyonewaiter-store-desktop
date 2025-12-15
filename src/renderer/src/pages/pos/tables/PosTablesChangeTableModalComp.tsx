@@ -1,17 +1,34 @@
 import { DoubleArrowIcon } from "@renderer/assets/icons";
 import { Dialog } from "@renderer/components/Dialog";
+import { useChangeTable } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { ModalProps } from "@renderer/types/overlay";
 
 interface PosTablesChangeTableModalCompProps extends ModalProps {
   fromTableNo: number;
   toTableNo: number;
+  onSuccess: () => void;
 }
 
 function PosTablesChangeTableModalComp({
   fromTableNo,
   toTableNo,
+  onSuccess,
   ...props
 }: PosTablesChangeTableModalCompProps) {
+  const { mutate: changeTable } = useChangeTable();
+
+  const handleMoveTable = () => {
+    changeTable(
+      { sourceTableNo: fromTableNo, targetTableNo: toTableNo },
+      {
+        onSuccess: () => {
+          props.close();
+          onSuccess();
+        },
+      }
+    );
+  };
+
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper gap={32}>
@@ -32,7 +49,10 @@ function PosTablesChangeTableModalComp({
           </span>
           <span className="text-0 text-xl font-semibold">좌석 이동하시겠습니까?</span>
         </div>
-        <Dialog.Footer buttonSize="xl" primaryButton={{ text: "이동하기" }} />
+        <Dialog.Footer
+          buttonSize="xl"
+          primaryButton={{ text: "이동하기", onClick: handleMoveTable }}
+        />
       </Dialog.Wrapper>
     </Dialog>
   );

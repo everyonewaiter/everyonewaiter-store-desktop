@@ -31,3 +31,8 @@ export const addOrder = async (tableNo: number, memo: string, orders: CreateOrde
   });
   return response.data;
 };
+
+export const moveTable = async (sourceTableNo: number, targetTableNo: number) => {
+  const response = await api.post(`/pos/tables/${sourceTableNo}/move/${targetTableNo}`);
+  return response.data;
+};
