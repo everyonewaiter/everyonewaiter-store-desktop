@@ -1,16 +1,36 @@
 import { Dialog } from "@renderer/components/Dialog";
+import { useCancelOrder } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import { Order, TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailCancelPaymentModalCompProps extends ModalProps {
   tableNo: number;
   cancelOrderPrice: number;
+  activity: TableActivity;
+  checkedOrders: Order[];
 }
 
 function PosTablesDetailCancelPaymentModalComp({
   tableNo,
   cancelOrderPrice,
+  activity,
+  checkedOrders,
   ...props
 }: PosTablesDetailCancelPaymentModalCompProps) {
+  const { mutateAsync: cancelOrder, isPending } = useCancelOrder();
+
+  const handleCancel = async () => {
+    const orders = checkedOrders.length > 0 ? checkedOrders : activity.orders;
+
+    try {
+      await Promise.all(orders.map((order) => cancelOrder({ tableNo, orderId: order.orderId })));
+      props.close();
+    } catch (error) {
+      handleApiError(error as Error);
+    }
+  };
+
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
@@ -25,6 +45,14 @@ function PosTablesDetailCancelPaymentModalComp({
             결제를 취소하시겠습니까?
           </span>
         </div>
+        <Dialog.Footer
+          buttonSize="xl"
+          primaryButton={{
+            text: isPending ? "취소중..." : "취소하기",
+            onClick: handleCancel,
+            disabled: isPending,
+          }}
+        />
       </Dialog.Wrapper>
     </Dialog>
   );
