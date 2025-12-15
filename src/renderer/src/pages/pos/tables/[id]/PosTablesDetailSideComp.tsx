@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@renderer/components";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
@@ -17,7 +18,7 @@ interface PosTablesDetailSideCompProps {
 
 function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetailSideCompProps) {
   const navigate = useNavigate();
-  const checkedOrders: Order[] = [];
+  const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
 
   const { orders } = usePosTablesDetailOrderStore();
   const { data: activity } = useGetTableActivity(tableNo);
@@ -75,7 +76,18 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
           {type === "checkout" &&
             activity?.orders?.map((order, index) => (
               <OrderBox key={order.orderId}>
-                <OrderBox.Index index={index} hasCheckbox />
+                <OrderBox.Index
+                  index={index}
+                  hasCheckbox
+                  checked={checkedOrders.some((o) => o.orderId === order.orderId)}
+                  onCheckboxChange={(checked) => {
+                    if (checked) {
+                      setCheckedOrders((prev) => [...prev, order]);
+                    } else {
+                      setCheckedOrders((prev) => prev.filter((o) => o.orderId !== order.orderId));
+                    }
+                  }}
+                />
                 <OrderBox.Body>
                   {order.orderMenus.map((menu) => (
                     <OrderBox.Order key={menu.orderMenuId} orderMenu={menu} />
