@@ -23,7 +23,7 @@ function PosTablesDetailOrderModalComp({
     addOrder(
       {
         tableNo: tableNo,
-        memo: "",
+        memo,
         orders: orders ?? [],
       },
       {
