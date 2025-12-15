@@ -2,6 +2,7 @@ import { DoubleArrowIcon } from "@renderer/assets/icons";
 import { Dialog } from "@renderer/components/Dialog";
 import { useChangeTable } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesChangeTableModalCompProps extends ModalProps {
   fromTableNo: number;
@@ -25,6 +26,7 @@ function PosTablesChangeTableModalComp({
           props.close();
           onSuccess();
         },
+        onError: (error) => handleApiError(error),
       }
     );
   };
