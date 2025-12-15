@@ -5,7 +5,6 @@ import {
   useUpdateMemo,
 } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { ModalProps } from "@renderer/types/overlay";
-import dayjs from "dayjs";
 
 interface PosTablesDetailMemoModalCompProps extends ModalProps {
   tableNo: number;
@@ -41,12 +40,6 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
     props.close();
   };
 
-  const handleShowUpdate = (index: number) => {
-    const order = activity?.orders[index];
-    if (!order?.updatedAt || order.updatedAt === order.createdAt) return null;
-    return `${dayjs(order.updatedAt).format("YY.MM.DD HH:mm")} 수정됨`;
-  };
-
   return (
     <Dialog open={props.isOpen} onOpenChange={handleClose}>
       <Dialog.Wrapper>
@@ -57,10 +50,7 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
           </div>
           {memos?.map((memo, index) => (
             <div className="flex flex-col gap-[5px]" key={memo}>
-              <div className="flex items-end justify-between">
-                <span className="text-gray-0 text-lg font-semibold">{index + 1}번 주문 메모</span>
-                <span className="text-s text-gray-400">{handleShowUpdate(index)}</span>
-              </div>
+              <span className="text-gray-0 text-lg font-semibold">{index + 1}번 주문 메모</span>
               <textarea
                 className="placholder:text-gray-100 text-gray-0 h-20 w-full resize-none rounded-xl border border-gray-600 px-4 pt-3 pb-4 text-base font-medium outline-none read-only:cursor-default"
                 readOnly={!isEditing}
