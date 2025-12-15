@@ -3,6 +3,7 @@ import { Dialog } from "@renderer/components/Dialog";
 import { useAddOrder } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailOrderModalCompProps extends ModalProps {
   onSuccess: () => void;
@@ -31,6 +32,7 @@ function PosTablesDetailOrderModalComp({
           resetOrders();
           onSuccess();
         },
+        onError: (error) => handleApiError(error),
       }
     );
   };

@@ -5,6 +5,7 @@ import {
   useUpdateMemo,
 } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailMemoModalCompProps extends ModalProps {
   tableNo: number;
@@ -20,7 +21,6 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
 
   const handleClose = () => {
     setIsEditing(false);
-    setUpdatedMemos(memos);
     props.close();
   };
 
@@ -34,7 +34,12 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
 
       if (!activity?.orders[index] || activity?.orders[index].memo === memo) continue;
 
-      await updateMemo({ tableNo, orderId: activity?.orders[index].orderId, memo });
+      await updateMemo(
+        { tableNo, orderId: activity?.orders[index].orderId, memo },
+        {
+          onError: (error) => handleApiError(error),
+        }
+      );
     }
     setIsEditing(false);
     props.close();
