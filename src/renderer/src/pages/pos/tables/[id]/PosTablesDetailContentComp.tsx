@@ -8,7 +8,10 @@ import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import PosTablesDetailMemoModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMemoModalComp";
 import PosTablesDetailMenuCardComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuCardComp";
 import PosTablesDetailResendReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailResendReceiptModalComp";
-import { useGetMenus } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import {
+  useGetMenus,
+  useGetTableActivity,
+} from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { useGetDevice } from "@renderer/queries/useGetDevice";
 import cn from "@renderer/utils/cn";
 import { overlay } from "overlay-kit";
@@ -56,6 +59,12 @@ function PosTablesDetailContentComp() {
 
   const { device } = useGetDevice();
   const { data } = useGetMenus(device?.storeId ?? "");
+  const { data: activity } = useGetTableActivity(Number(id));
+
+  const floating =
+    activity?.orders?.length && activity.orders.length > 0
+      ? floatingAction
+      : floatingAction.slice(-1);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -107,14 +116,17 @@ function PosTablesDetailContentComp() {
         )}
       </div>
       <nav
-        className="fixed bottom-6 z-50 flex items-center rounded-[40px] bg-white px-10 py-6"
+        className={cn(
+          "fixed bottom-6 z-50 flex items-center rounded-[40px] bg-white py-6",
+          activity?.orders?.length && activity.orders.length > 0 ? "px-10" : "px-4"
+        )}
         style={{
           boxShadow: "0px 0px 24px 0px rgba(0, 0, 0, 0.08)",
           left: "33.125%",
           transform: "translateX(-50%)",
         }}
       >
-        {floatingAction.map((action, index) => (
+        {floating.map((action, index) => (
           <Fragment key={action.label}>
             <button
               type="button"
@@ -124,7 +136,7 @@ function PosTablesDetailContentComp() {
               {action.icon}
               {action.label}
             </button>
-            {index !== floatingAction.length - 1 && <div className="h-5 w-[1px] bg-gray-600" />}
+            {index !== floating.length - 1 && <div className="h-5 w-[1px] bg-gray-600" />}
           </Fragment>
         ))}
       </nav>

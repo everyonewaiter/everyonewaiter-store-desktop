@@ -1,6 +1,9 @@
 import { DeleteIcon, MinusIcon, PlusIcon } from "@renderer/assets/icons";
 import { Checkbox } from "@renderer/components";
-import { Menu, OrderMenu } from "@renderer/types/domain";
+import { useGetMenus } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
+import { useGetDevice } from "@renderer/queries/useGetDevice";
+import { CreateOrderMenu, OrderMenu } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
 function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
@@ -9,14 +12,21 @@ function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
 
 PosPaymentsOrderBoxComp.Order = function Order({
   orderMenu,
+  index,
 }: {
-  orderMenu: OrderMenu | (Menu & { quantity: number });
+  orderMenu: OrderMenu | CreateOrderMenu;
+  index?: number;
 }) {
+  const { device } = useGetDevice();
+  const { data: menus } = useGetMenus(device?.storeId ?? "");
+  const { updateMenuQuantity } = usePosTablesDetailOrderStore();
+
   const normalizeMenuItem = (
-    item: OrderMenu | (Menu & { quantity: number })
+    item: OrderMenu | CreateOrderMenu
   ): {
-    name: string;
+    menuId?: string;
     quantity: number;
+    name?: string;
     optionGroups: {
       id: string;
       name: string;
@@ -35,18 +45,20 @@ PosPaymentsOrderBoxComp.Order = function Order({
       };
     } else {
       return {
-        name: item.name,
+        menuId: item.menuId,
         quantity: item.quantity,
         optionGroups: item.menuOptionGroups.map((group) => ({
           id: group.menuOptionGroupId,
           name: group.name,
-          options: group.menuOptions,
+          options: group.orderOptions,
         })),
       };
     }
   };
 
   const normalized = normalizeMenuItem(orderMenu);
+
+  const isOrdered = "orderMenuId" in orderMenu;
 
   return (
     <>
@@ -58,18 +70,19 @@ PosPaymentsOrderBoxComp.Order = function Order({
       >
         <div className="flex flex-col gap-2">
           <span className="text-xl leading-[30px] font-medium text-gray-100">
-            {normalized.name}
+            {isOrdered
+              ? normalized.name
+              : menus?.categories
+                  ?.flatMap((cat) => cat.menus)
+                  .find((menu) => String(menu.menuId) === String(normalized.menuId))?.name}
           </span>
           <div className="flex flex-col gap-1">
-            {normalized.optionGroups.map((group) =>
-              group.options.map((option) => (
-                <div key={group.id + option.name} className="flex items-center justify-between">
+            {normalized.optionGroups?.map((group) =>
+              group.options?.map((option) => (
+                <div key={group.id + option.name} className="flex items-center">
                   <span className="flex text-base leading-6 font-medium text-gray-400">
                     <PlusIcon width={24} height={24} className="text-gray-400" />
-                    {group.name}
-                  </span>
-                  <span className="flex text-base leading-6 font-medium text-gray-400">
-                    {option.name}
+                    {`${group.name} : ${option.name}`}
                   </span>
                 </div>
               ))
@@ -77,7 +90,16 @@ PosPaymentsOrderBoxComp.Order = function Order({
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600">
+          <button
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600"
+            onClick={() => {
+              if (isOrdered) {
+                // do something
+              } else {
+                updateMenuQuantity(normalized.menuId as string, index ?? -1, "sub");
+              }
+            }}
+          >
             {normalized.quantity === 1 ? (
               <DeleteIcon width={24} height={24} className="text-gray-300" />
             ) : (
@@ -90,6 +112,13 @@ PosPaymentsOrderBoxComp.Order = function Order({
           <button
             type="button"
             className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600"
+            onClick={() => {
+              if (isOrdered) {
+                // do something
+              } else {
+                updateMenuQuantity(normalized.menuId as string, index ?? -1, "add");
+              }
+            }}
           >
             <PlusIcon width={24} height={24} className="text-gray-300" />
           </button>

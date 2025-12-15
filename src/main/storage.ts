@@ -1,6 +1,10 @@
 import { StorageDeviceInfo, StorageDeviceType } from "@shared/storage/interface";
 import { storageKey } from "@shared/storage/key";
-import Store from "electron-store";
+import _Store from "electron-store";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const Store = _Store.default || _Store;
 
 const store = new Store();
 

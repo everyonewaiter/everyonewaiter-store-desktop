@@ -1,7 +1,5 @@
-import { CreateOrder } from "@renderer/types/domain";
+import { CreateOrderMenu } from "@renderer/types/domain";
 import { create } from "zustand";
-
-type CreateOrderMenu = CreateOrder["orderMenus"][number];
 
 interface State {
   orders: CreateOrderMenu[] | null;

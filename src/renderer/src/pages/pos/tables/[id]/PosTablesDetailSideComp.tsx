@@ -1,24 +1,27 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@renderer/components";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailCancelPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelPaymentModalComp";
 import PosTablesDetailDiscountModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailDiscountModalComp";
 import PosTablesDetailOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderModalComp";
 import PosTablesDetailPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPaymentModalComp";
-import { Menu, Order, TableActivity } from "@renderer/types/domain";
+import { useGetTableActivity } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
+import { Order } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
 
 interface PosTablesDetailSideCompProps {
   type?: "order" | "checkout";
-  activity: TableActivity;
-  menus: Menu[];
+  tableNo: number;
 }
 
-function PosTablesDetailSideComp({
-  type = "checkout",
-  activity,
-  menus,
-}: PosTablesDetailSideCompProps) {
-  const checkedOrders: Order[] = [];
+function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetailSideCompProps) {
+  const navigate = useNavigate();
+  const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
+
+  const { orders } = usePosTablesDetailOrderStore();
+  const { data: activity } = useGetTableActivity(tableNo);
 
   return (
     <aside
@@ -27,17 +30,17 @@ function PosTablesDetailSideComp({
     >
       <div className="flex items-center justify-between">
         <h2 className="text-gray-0 text-[28px] font-semibold">
-          {activity.tableNo}번 테이블 {type === "order" && "주문 내역"}
+          {tableNo}번 테이블 {type === "order" && "주문 내역"}
         </h2>
-        {type === "checkout" && activity.orderType === "PREPAID" && (
+        {type === "checkout" && activity?.orderType === "PREPAID" && (
           <Button
             variant="outline"
             className="button-lg !text-medium !rounded-[8px] !text-base"
             onClick={() =>
               overlay.open((overlayProps) => (
                 <PosTablesDetailCancelPaymentModalComp
-                  tableNo={activity.tableNo}
-                  cancelOrderPrice={activity.totalOrderPrice}
+                  tableNo={tableNo}
+                  cancelOrderPrice={activity?.totalOrderPrice}
                   {...overlayProps}
                 />
               ))
@@ -46,18 +49,18 @@ function PosTablesDetailSideComp({
             결제 취소
           </Button>
         )}
-        {type === "checkout" && activity.orderType === "POSTPAID" && (
+        {type === "checkout" && activity?.orderType === "POSTPAID" && (
           <Button
             variant="outline"
             className="button-lg !text-medium !rounded-[8px] !text-base"
             onClick={() =>
               overlay.open((overlayProps) => (
                 <PosTablesDetailCancelPaymentModalComp
-                  tableNo={activity.tableNo}
+                  tableNo={tableNo}
                   cancelOrderPrice={
                     checkedOrders.length > 0
                       ? checkedOrders.reduce((acc, order) => acc + order.price, 0)
-                      : activity.totalOrderPrice
+                      : activity?.totalOrderPrice
                   }
                   {...overlayProps}
                 />
@@ -71,9 +74,20 @@ function PosTablesDetailSideComp({
       <div className="scrollbar-hide min-h-0 flex-1 overflow-y-auto">
         <div className="flex w-full flex-col gap-8">
           {type === "checkout" &&
-            activity.orders.map((order, index) => (
+            activity?.orders?.map((order, index) => (
               <OrderBox key={order.orderId}>
-                <OrderBox.Index index={index} hasCheckbox />
+                <OrderBox.Index
+                  index={index}
+                  hasCheckbox
+                  checked={checkedOrders.some((o) => o.orderId === order.orderId)}
+                  onCheckboxChange={(checked) => {
+                    if (checked) {
+                      setCheckedOrders((prev) => [...prev, order]);
+                    } else {
+                      setCheckedOrders((prev) => prev.filter((o) => o.orderId !== order.orderId));
+                    }
+                  }}
+                />
                 <OrderBox.Body>
                   {order.orderMenus.map((menu) => (
                     <OrderBox.Order key={menu.orderMenuId} orderMenu={menu} />
@@ -83,12 +97,15 @@ function PosTablesDetailSideComp({
             ))}
         </div>
         <div className="flex w-full flex-col gap-2">
-          {type === "order" &&
-            menus.map((menu) => (
-              <OrderBox key={menu.menuId}>
-                <OrderBox.Order key={menu.menuId} orderMenu={{ ...menu, quantity: 1 }} />
-              </OrderBox>
-            ))}
+          {type === "order" && orders && orders.length > 0 && (
+            <OrderBox>
+              <OrderBox.Body>
+                {orders?.map((menu, index) => (
+                  <OrderBox.Order key={menu.menuId} index={index} orderMenu={menu} />
+                ))}
+              </OrderBox.Body>
+            </OrderBox>
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-8">
@@ -103,8 +120,8 @@ function PosTablesDetailSideComp({
               onClick={() =>
                 overlay.open((overlayProps) => (
                   <PosTablesDetailDiscountModalComp
-                    tableNo={activity.tableNo}
-                    totalOrderPrice={activity.totalOrderPrice}
+                    tableNo={tableNo}
+                    totalOrderPrice={activity?.totalOrderPrice ?? 0}
                     {...overlayProps}
                   />
                 ))
@@ -120,13 +137,13 @@ function PosTablesDetailSideComp({
               <div className="flex items-center justify-between">
                 <span className="flex-1 text-lg font-normal text-gray-300">총 주문금액</span>
                 <span className="text-xl font-medium text-gray-100">
-                  {activity.totalOrderPrice.toLocaleString()}원
+                  {activity?.totalOrderPrice?.toLocaleString() ?? 0}원
                 </span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="flex-1 text-lg font-normal text-gray-300">할인된 금액</span>
                 <span className="text-primary text-xl font-medium">
-                  {activity.discount.toLocaleString()}원
+                  {activity?.discount?.toLocaleString() ?? 0}원
                 </span>
               </div>
             </div>
@@ -134,7 +151,12 @@ function PosTablesDetailSideComp({
           <div className="flex items-center justify-between">
             <span className="text-gray-0 text-2xl font-semibold">결제할 금액</span>
             <span className="text-gray-0 text-4xl font-bold">
-              {activity.totalPaymentPrice.toLocaleString()}원
+              {type === "order"
+                ? orders
+                    ?.reduce((acc, cur) => acc + cur.totalPrice * cur.quantity, 0)
+                    ?.toLocaleString()
+                : (activity?.totalPaymentPrice?.toLocaleString() ?? 0)}
+              원
             </span>
           </div>
         </div>
@@ -143,13 +165,21 @@ function PosTablesDetailSideComp({
         <Button
           className="h-16 w-full rounded-xl text-xl font-semibold"
           onClick={() =>
-            overlay.open((overlayProps) => <PosTablesDetailOrderModalComp {...overlayProps} />)
+            overlay.open((overlayProps) => (
+              <PosTablesDetailOrderModalComp
+                {...overlayProps}
+                onSuccess={() => {
+                  navigate("/pos/tables");
+                  overlayProps.close();
+                }}
+              />
+            ))
           }
         >
           주문 요청
         </Button>
       )}
-      {type === "checkout" && activity.orderType === "POSTPAID" && (
+      {type === "checkout" && activity?.orderType === "POSTPAID" && (
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
@@ -184,9 +214,9 @@ function PosTablesDetailSideComp({
         </div>
       )}
       {(type === "checkout" &&
-        activity.orderType === "POSTPAID" &&
-        activity.remainingPaymentPrice === 0) ||
-        (activity.orderType === "PREPAID" && (
+        activity?.orderType === "POSTPAID" &&
+        activity?.remainingPaymentPrice === 0) ||
+        (activity?.orderType === "PREPAID" && (
           <Button className="h-16 w-full rounded-xl text-xl font-semibold">테이블 완료</Button>
         ))}
     </aside>

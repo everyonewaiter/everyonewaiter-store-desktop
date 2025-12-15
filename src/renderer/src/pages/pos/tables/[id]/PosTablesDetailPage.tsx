@@ -1,19 +1,26 @@
-import { MENU_LIST_MOCK, TABLE_ACTIVITY_MOCK } from "@renderer/pages/pos/mock";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import PosTablesDetailContentComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailContentComp";
 import PosTablesDetailSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp";
 import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
 
 function PosTablesDetailPage() {
-  const { orders } = usePosTablesDetailOrderStore();
+  const params = useParams();
+  const tableNo = Number(params.id);
+  const { orders, setTableNo } = usePosTablesDetailOrderStore();
+
+  useEffect(() => {
+    setTableNo(tableNo);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableNo]);
 
   return (
     <div className="flex h-dvh flex-col">
       <div className="relative flex w-full flex-1 overflow-hidden">
         <PosTablesDetailContentComp />
         <PosTablesDetailSideComp
-          type={orders ? "order" : "checkout"}
-          activity={TABLE_ACTIVITY_MOCK}
-          menus={MENU_LIST_MOCK.menus}
+          type={orders && orders.length > 0 ? "order" : "checkout"}
+          tableNo={tableNo}
         />
       </div>
     </div>
