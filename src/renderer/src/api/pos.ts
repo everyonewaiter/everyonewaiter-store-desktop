@@ -31,3 +31,11 @@ export const addOrder = async (tableNo: number, memo: string, orders: CreateOrde
   });
   return response.data;
 };
+
+export const updateOrder = async (
+  tableNo: number,
+  orders: { orderId: string; orderMenus: { orderMenuId: string; quantity: number }[] }[]
+) => {
+  const response = await api.put(`/pos/tables/${tableNo}/orders`, { orders });
+  return response.data;
+};

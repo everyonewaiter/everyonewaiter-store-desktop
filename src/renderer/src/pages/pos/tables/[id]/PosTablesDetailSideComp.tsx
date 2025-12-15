@@ -6,9 +6,13 @@ import PosTablesDetailCancelPaymentModalComp from "@renderer/pages/pos/tables/[i
 import PosTablesDetailDiscountModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailDiscountModalComp";
 import PosTablesDetailOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderModalComp";
 import PosTablesDetailPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPaymentModalComp";
-import { useGetTableActivity } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import {
+  useGetTableActivity,
+  useUpdateOrder,
+} from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
-import { Order } from "@renderer/types/domain";
+import { Order, OrderMenu } from "@renderer/types/domain";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 import { overlay } from "overlay-kit";
 
 interface PosTablesDetailSideCompProps {
@@ -20,8 +24,31 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
   const navigate = useNavigate();
   const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
 
-  const { orders } = usePosTablesDetailOrderStore();
+  const { orders, updateMenuQuantity } = usePosTablesDetailOrderStore();
   const { data: activity } = useGetTableActivity(tableNo);
+  const { mutate: updateOrder } = useUpdateOrder();
+
+  const handleUpdateOrder = (type: "add" | "sub", order: Order, menu: OrderMenu) => {
+    updateOrder(
+      {
+        tableNo: order.tableNo,
+        orders: [
+          {
+            orderId: order.orderId,
+            orderMenus: [
+              {
+                orderMenuId: menu.orderMenuId,
+                quantity: type === "add" ? menu.quantity + 1 : menu.quantity - 1,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        onError: (error) => handleApiError(error),
+      }
+    );
+  };
 
   return (
     <aside
@@ -41,6 +68,7 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
                 <PosTablesDetailCancelPaymentModalComp
                   tableNo={tableNo}
                   cancelOrderPrice={activity?.totalOrderPrice}
+                  activity={activity}
                   {...overlayProps}
                 />
               ))
@@ -62,6 +90,7 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
                       ? checkedOrders.reduce((acc, order) => acc + order.price, 0)
                       : activity?.totalOrderPrice
                   }
+                  activity={activity}
                   {...overlayProps}
                 />
               ))
@@ -90,7 +119,11 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
                 />
                 <OrderBox.Body>
                   {order.orderMenus.map((menu) => (
-                    <OrderBox.Order key={menu.orderMenuId} orderMenu={menu} />
+                    <OrderBox.Order
+                      key={menu.orderMenuId}
+                      orderMenu={menu}
+                      onUpdateOrder={(type) => handleUpdateOrder(type, order, menu)}
+                    />
                   ))}
                 </OrderBox.Body>
               </OrderBox>
@@ -101,7 +134,11 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
             <OrderBox>
               <OrderBox.Body>
                 {orders?.map((menu, index) => (
-                  <OrderBox.Order key={menu.menuId} index={index} orderMenu={menu} />
+                  <OrderBox.Order
+                    key={menu.menuId}
+                    orderMenu={menu}
+                    onUpdateOrder={(type) => updateMenuQuantity(menu.menuId, index, type)}
+                  />
                 ))}
               </OrderBox.Body>
             </OrderBox>
@@ -155,7 +192,7 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
                 ? orders
                     ?.reduce((acc, cur) => acc + cur.totalPrice * cur.quantity, 0)
                     ?.toLocaleString()
-                : (activity?.totalPaymentPrice?.toLocaleString() ?? 0)}
+                : (activity?.remainingPaymentPrice?.toLocaleString() ?? 0)}
               원
             </span>
           </div>
