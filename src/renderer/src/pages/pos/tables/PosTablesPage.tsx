@@ -54,7 +54,9 @@ function PosTablesPage() {
                   ? "animate-wiggle"
                   : ""
               }
-              disabled={table.tableNo === Number(currentTableNo) || table.hasOrder}
+              disabled={
+                currentTableNo ? table.tableNo === Number(currentTableNo) || table.hasOrder : false
+              }
               onClick={() => handleTableBoxClick(table.tableNo)}
             />
           ))}
