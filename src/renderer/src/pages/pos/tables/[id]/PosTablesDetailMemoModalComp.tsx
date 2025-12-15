@@ -55,29 +55,26 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
             <h2 className="text-gray-0 text-center text-2xl font-semibold">메모</h2>
             <span className="text-gray-0 text-lg font-semibold">{tableNo}번 테이블</span>
           </div>
-          {memos?.map((memo, index) => {
-            if (!memo) return null;
-            return (
-              <div className="flex flex-col gap-[5px]" key={memo}>
-                <div className="flex items-end justify-between">
-                  <span className="text-gray-0 text-lg font-semibold">{index + 1}번 주문 메모</span>
-                  <span className="text-s text-gray-400">{handleShowUpdate(index)}</span>
-                </div>
-                <textarea
-                  className="placholder:text-gray-100 text-gray-0 h-20 w-full resize-none rounded-xl border border-gray-600 px-4 pt-3 pb-4 text-base font-medium outline-none"
-                  readOnly={!isEditing}
-                  placeholder="메모가 없습니다."
-                  value={updatedMemos[index]}
-                  onChange={(e) => {
-                    const newMemos = [...updatedMemos];
-                    newMemos[index] = e.target.value;
-                    setUpdatedMemos(newMemos);
-                  }}
-                  maxLength={10}
-                />
+          {memos?.map((memo, index) => (
+            <div className="flex flex-col gap-[5px]" key={memo}>
+              <div className="flex items-end justify-between">
+                <span className="text-gray-0 text-lg font-semibold">{index + 1}번 주문 메모</span>
+                <span className="text-s text-gray-400">{handleShowUpdate(index)}</span>
               </div>
-            );
-          })}
+              <textarea
+                className="placholder:text-gray-100 text-gray-0 h-20 w-full resize-none rounded-xl border border-gray-600 px-4 pt-3 pb-4 text-base font-medium outline-none read-only:cursor-default"
+                readOnly={!isEditing}
+                placeholder="메모가 없습니다."
+                value={updatedMemos[index]}
+                onChange={(e) => {
+                  const newMemos = [...updatedMemos];
+                  newMemos[index] = e.target.value;
+                  setUpdatedMemos(newMemos);
+                }}
+                maxLength={10}
+              />
+            </div>
+          ))}
         </div>
         <Dialog.Footer
           buttonSize="xl"
@@ -85,7 +82,6 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
             color: isEditing ? "primary" : "black",
             text: isEditing ? "저장" : "수정",
             onClick: isEditing ? handleUpdateMemos : () => setIsEditing(true),
-            hide: !memos || memos.length === 0,
           }}
         />
       </Dialog.Wrapper>
