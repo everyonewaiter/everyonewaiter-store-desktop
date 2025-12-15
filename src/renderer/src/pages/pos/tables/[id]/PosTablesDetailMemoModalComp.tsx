@@ -49,7 +49,7 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
             <span className="text-gray-0 text-lg font-semibold">{tableNo}번 테이블</span>
           </div>
           {memos?.map((memo, index) => (
-            <div className="flex flex-col gap-[5px]" key={memo}>
+            <div className="relative flex flex-col gap-[5px]" key={memo}>
               <span className="text-gray-0 text-lg font-semibold">{index + 1}번 주문 메모</span>
               <textarea
                 className="placholder:text-gray-100 text-gray-0 h-20 w-full resize-none rounded-xl border border-gray-600 px-4 pt-3 pb-4 text-base font-medium outline-none read-only:cursor-default"
@@ -63,6 +63,9 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
                 }}
                 maxLength={10}
               />
+              <span className="absolute right-4 bottom-3 text-right text-sm text-gray-300">
+                {updatedMemos[index].length}/10
+              </span>
             </div>
           ))}
         </div>
