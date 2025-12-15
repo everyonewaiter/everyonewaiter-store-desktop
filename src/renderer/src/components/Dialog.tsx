@@ -116,6 +116,7 @@ Dialog.Footer = function DialogFooter({
   layout?: "balanced" | "unbalanced";
   buttonClassName?: string;
   primaryButton?: {
+    disabled?: boolean;
     color?: ButtonColor;
     className?: string;
     text?: string;
@@ -123,6 +124,7 @@ Dialog.Footer = function DialogFooter({
     hide?: boolean;
   };
   secondaryButton?: {
+    disabled?: boolean;
     color?: ButtonColor;
     className?: string;
     text?: string;
@@ -151,7 +153,7 @@ Dialog.Footer = function DialogFooter({
                   buttonClassName,
                   secondaryButton?.className ?? ""
                 )}
-                onClick={secondaryButton?.onClick}
+                {...secondaryButton}
               >
                 {secondaryButton?.text ?? "닫기"}
               </Button>
@@ -161,7 +163,7 @@ Dialog.Footer = function DialogFooter({
             <Button
               color={primaryButton?.color ?? "black"}
               className={cn(getButtonSize(), "w-full", primaryButton?.className ?? "")}
-              onClick={primaryButton?.onClick}
+              {...primaryButton}
             >
               {primaryButton?.text ?? "확인"}
             </Button>
