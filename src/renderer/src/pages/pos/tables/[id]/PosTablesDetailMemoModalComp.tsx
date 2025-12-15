@@ -15,9 +15,9 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
   const [isEditing, setIsEditing] = useState(false);
 
   const { data: activity } = useGetTableActivity(tableNo);
-  const memos = activity?.orders.map((order) => order.memo) ?? [];
+  const memos = activity?.orders?.map((order) => order.memo) ?? [];
 
-  const [updatedMemos, setUpdatedMemos] = useState<string[]>(memos);
+  const [updatedMemos, setUpdatedMemos] = useState<string[]>([]);
 
   const handleClose = () => {
     setIsEditing(false);
@@ -29,8 +29,8 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
   const handleUpdateMemos = async () => {
     if (!activity?.orders) return;
 
-    for (let index = 0; index < updatedMemos.length; index++) {
-      const memo = updatedMemos[index];
+    for (let index = 0; index < memos.length; index++) {
+      const memo = updatedMemos[index] ?? memos[index] ?? "";
 
       if (!activity?.orders[index] || activity?.orders[index].memo === memo) continue;
 
@@ -60,16 +60,18 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
                 className="placholder:text-gray-100 text-gray-0 h-20 w-full resize-none rounded-xl border border-gray-600 px-4 pt-3 pb-4 text-base font-medium outline-none read-only:cursor-default"
                 readOnly={!isEditing}
                 placeholder="메모가 없습니다."
-                value={updatedMemos[index]}
+                value={updatedMemos[index] ?? memo ?? ""}
                 onChange={(e) => {
-                  const newMemos = [...updatedMemos];
-                  newMemos[index] = e.target.value;
-                  setUpdatedMemos(newMemos);
+                  setUpdatedMemos((prev) => {
+                    const newMemos = memos.map((m, i) => prev[i] ?? m ?? "");
+                    newMemos[index] = e.target.value;
+                    return newMemos;
+                  });
                 }}
                 maxLength={10}
               />
               <span className="absolute right-4 bottom-3 text-right text-sm text-gray-300">
-                {updatedMemos[index].length}/10
+                {(updatedMemos[index] ?? memo ?? "").length}/10
               </span>
             </div>
           ))}
