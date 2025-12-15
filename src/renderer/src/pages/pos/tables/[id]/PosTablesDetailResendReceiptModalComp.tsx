@@ -1,6 +1,7 @@
 import { api } from "@renderer/api";
 import { Dialog } from "@renderer/components/Dialog";
 import { ModalProps } from "@renderer/types/overlay";
+import { getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailResendReceiptModalCompProps extends ModalProps {
@@ -26,7 +27,7 @@ function PosTablesDetailResendReceiptModalComp({
       <Dialog.Wrapper>
         <div className="flex flex-col items-center justify-center gap-3 py-6">
           <h2 className="text-primary text-center text-[28px] font-semibold">
-            {tableNo}번 테이블 주문
+            {getFormattedTableNo(tableNo)}
           </h2>
           <span className="text-gray-0 text-lg font-normal">
             주문 빌지를 주방으로 재전송할까요?

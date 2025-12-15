@@ -4,6 +4,7 @@ import { ORDER_TYPE_TEXT } from "@renderer/constants/pos";
 import { usePosTablesElapsedTime } from "@renderer/pages/pos/tables/usePosTablesElapsedTime";
 import { Table } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
+import { getFormattedTableNo } from "@renderer/utils/format";
 
 interface PosTablesBoxCompProps extends Table {
   table?: Table;
@@ -76,7 +77,7 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
           disabled ? "text-gray-300" : "text-gray-0"
         )}
       >
-        {props.tableNo}번 테이블
+        {getFormattedTableNo(props.tableNo)}
       </h2>
       <section className="flex w-full flex-row items-start gap-8">
         <div className="flex flex-1 flex-col items-start gap-[11px]">
