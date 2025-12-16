@@ -5,6 +5,7 @@ import { useOrderMenuServe } from "@renderer/pages/hall/order/useHallOrderApi";
 import { useGetStore } from "@renderer/queries/useGetStore";
 import { OrderMenu, OrderMenuOption } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface HallOrderBoxCompProps {
   orderId: string;
@@ -26,7 +27,12 @@ function HallOrderBoxComp({ orderId, storeId, orderMenu, isCompleted }: HallOrde
     );
 
   const handleClick = () => {
-    mutateOrderMenuServe({ orderId: orderId, orderMenuId: orderMenu.orderMenuId });
+    mutateOrderMenuServe(
+      { orderId: orderId, orderMenuId: orderMenu.orderMenuId },
+      {
+        onError: (error) => handleApiError(error),
+      }
+    );
   };
 
   return (

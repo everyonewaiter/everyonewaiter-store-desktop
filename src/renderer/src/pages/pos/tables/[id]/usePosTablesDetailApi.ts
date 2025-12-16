@@ -1,4 +1,4 @@
-import { addOrder, getMenus, getTableActivity, moveTable } from "@renderer/api/pos";
+import { addOrder, getMenus, getTableActivity, moveTable, updateMemo } from "@renderer/api/pos";
 import { queryKey } from "@renderer/queries/key";
 import { CreateOrderMenu } from "@renderer/types/domain";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -42,5 +42,19 @@ export const useChangeTable = () => {
       sourceTableNo: number;
       targetTableNo: number;
     }) => await moveTable(sourceTableNo, targetTableNo),
+  });
+};
+
+export const useUpdateMemo = () => {
+  return useMutation({
+    mutationFn: async ({
+      tableNo,
+      orderId,
+      memo,
+    }: {
+      tableNo: number;
+      orderId: string;
+      memo: string;
+    }) => updateMemo(tableNo, orderId, memo),
   });
 };
