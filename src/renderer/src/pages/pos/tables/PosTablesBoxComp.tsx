@@ -4,6 +4,7 @@ import { ORDER_TYPE_TEXT } from "@renderer/constants/pos";
 import { usePosTablesElapsedTime } from "@renderer/pages/pos/tables/usePosTablesElapsedTime";
 import { Table } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
+import { getFormattedTableNo } from "@renderer/utils/format";
 
 interface PosTablesBoxCompProps extends Table {
   table?: Table;
@@ -76,14 +77,14 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
           disabled ? "text-gray-300" : "text-gray-0"
         )}
       >
-        {props.tableNo}번 테이블
+        {getFormattedTableNo(props.tableNo)}
       </h2>
       <section className="flex w-full flex-row items-start gap-8">
         <div className="flex flex-1 flex-col items-start gap-[11px]">
           <span className={cn("text-sm font-normal", disabled ? "text-gray-300" : "text-gray-0")}>
             주문한 메뉴
           </span>
-          <p className={cn("text-xl font-semibold", disabled ? "text-gray-300" : "text-gray-0")}>
+          <div className={cn("text-xl font-semibold", disabled ? "text-gray-300" : "text-gray-0")}>
             {props.orderMenuCount > 0 ? (
               <div className="flex items-end gap-1.5">
                 <strong className="text-xl font-semibold">{props.orderMenuName}</strong>
@@ -96,7 +97,7 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
                 -
               </strong>
             )}
-          </p>
+          </div>
         </div>
         <div className="flex w-[140px] flex-col items-start gap-[11px]">
           <span className={cn("text-sm font-normal", disabled ? "text-gray-300" : "text-gray-0")}>

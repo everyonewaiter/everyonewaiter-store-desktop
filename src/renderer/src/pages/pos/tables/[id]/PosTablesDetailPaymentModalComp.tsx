@@ -2,6 +2,7 @@ import { Button, Dropdown, Input } from "@renderer/components";
 import { Dialog } from "@renderer/components/Dialog";
 import { TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
+import { getFormattedTableNo } from "@renderer/utils/format";
 
 const cardInstallmentMonths = new Array(12)
   .fill(0)
@@ -38,7 +39,9 @@ function PosTablesDetailPaymentModalComp({
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper width={648}>
         <div className="flex flex-col gap-10">
-          <h2 className="text-gray-0 text-2xl font-semibold">{activity.tableNo}번 테이블</h2>
+          <h2 className="text-gray-0 text-2xl font-semibold">
+            {getFormattedTableNo(activity.tableNo)}
+          </h2>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
               <span className="text-gray-0 text-[15px] font-normal">결제 정보</span>

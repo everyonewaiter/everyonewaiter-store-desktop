@@ -14,3 +14,7 @@ export const getMinutesAgo = (time: string) => {
   const targetTime = dayjs(time);
   return now.diff(targetTime, "minute");
 };
+
+export const getFormattedTableNo = (tableNo: number) => {
+  return tableNo > 10000 ? `추가-${tableNo - 10000}` : `T-${tableNo}`;
+};

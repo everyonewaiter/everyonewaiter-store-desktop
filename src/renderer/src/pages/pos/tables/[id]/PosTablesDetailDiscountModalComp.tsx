@@ -7,6 +7,7 @@ import { Dialog } from "@renderer/components/Dialog";
 import { RadioGroup, RadioGroupFlex, RadioGroupItem } from "@renderer/components/Radio";
 import { useDiscountOrder } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { ModalProps } from "@renderer/types/overlay";
+import { getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailDiscountModalCompProps extends ModalProps {
@@ -74,7 +75,7 @@ function PosTablesDetailDiscountModalComp({
           <div className="flex flex-col gap-10">
             <div className="flex items-center justify-between">
               <h2 className="text-gray-0 text-2xl font-semibold">
-                {tableNo}번 테이블의 총 주문 금액
+                {getFormattedTableNo(tableNo)}의 총 주문 금액
               </h2>
               <span className="text-primary text-2xl font-semibold">
                 {totalOrderPrice.toLocaleString()}원

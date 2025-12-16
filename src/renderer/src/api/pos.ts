@@ -49,3 +49,13 @@ export const discountOrder = async (tableNo: number, discountPrice: number) => {
   const response = await api.post(`/pos/tables/${tableNo}/discount`, { discountPrice });
   return response.data;
 };
+
+export const moveTable = async (sourceTableNo: number, targetTableNo: number) => {
+  const response = await api.post(`/pos/tables/${sourceTableNo}/move/${targetTableNo}`);
+  return response.data;
+};
+
+export const updateMemo = async (tableNo: number, orderId: string, memo: string) => {
+  const response = await api.put(`/pos/tables/${tableNo}/orders/${orderId}/memo`, { memo });
+  return response.data;
+};

@@ -4,6 +4,8 @@ import {
   discountOrder,
   getMenus,
   getTableActivity,
+  moveTable,
+  updateMemo,
   updateOrder,
 } from "@renderer/api/pos";
 import { queryKey } from "@renderer/queries/key";
@@ -63,5 +65,31 @@ export const useDiscountOrder = () => {
   return useMutation({
     mutationFn: async ({ tableNo, discountPrice }: { tableNo: number; discountPrice: number }) =>
       await discountOrder(tableNo, discountPrice),
+  });
+};
+
+export const useChangeTable = () => {
+  return useMutation({
+    mutationFn: async ({
+      sourceTableNo,
+      targetTableNo,
+    }: {
+      sourceTableNo: number;
+      targetTableNo: number;
+    }) => await moveTable(sourceTableNo, targetTableNo),
+  });
+};
+
+export const useUpdateMemo = () => {
+  return useMutation({
+    mutationFn: async ({
+      tableNo,
+      orderId,
+      memo,
+    }: {
+      tableNo: number;
+      orderId: string;
+      memo: string;
+    }) => updateMemo(tableNo, orderId, memo),
   });
 };
