@@ -99,7 +99,6 @@ function PosTablesDetailDiscountModalComp({
                 <div className="flex w-full items-center gap-3">
                   <Input
                     placeholder="12,000"
-                    className="flex-1"
                     prefix={<MinusIcon width={20} height={20} />}
                     value={discountValue !== undefined ? discountValue.toLocaleString() : ""}
                     onChange={(e) => {
