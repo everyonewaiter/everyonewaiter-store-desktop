@@ -31,3 +31,8 @@ export const addOrder = async (tableNo: number, memo: string, orders: CreateOrde
   });
   return response.data;
 };
+
+export const updateMemo = async (tableNo: number, orderId: string, memo: string) => {
+  const response = await api.put(`/pos/tables/${tableNo}/orders/${orderId}/memo`, { memo });
+  return response.data;
+};

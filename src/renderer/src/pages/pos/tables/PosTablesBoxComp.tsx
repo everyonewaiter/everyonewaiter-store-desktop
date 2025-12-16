@@ -83,7 +83,7 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
           <span className={cn("text-sm font-normal", disabled ? "text-gray-300" : "text-gray-0")}>
             주문한 메뉴
           </span>
-          <p className={cn("text-xl font-semibold", disabled ? "text-gray-300" : "text-gray-0")}>
+          <div className={cn("text-xl font-semibold", disabled ? "text-gray-300" : "text-gray-0")}>
             {props.orderMenuCount > 0 ? (
               <div className="flex items-end gap-1.5">
                 <strong className="text-xl font-semibold">{props.orderMenuName}</strong>
@@ -96,7 +96,7 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
                 -
               </strong>
             )}
-          </p>
+          </div>
         </div>
         <div className="flex w-[140px] flex-col items-start gap-[11px]">
           <span className={cn("text-sm font-normal", disabled ? "text-gray-300" : "text-gray-0")}>
