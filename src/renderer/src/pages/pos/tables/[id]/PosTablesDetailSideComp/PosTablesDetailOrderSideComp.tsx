@@ -3,6 +3,7 @@ import { Button } from "@renderer/components";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderModalComp";
 import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
+import { getFormattedTableNo } from "@renderer/utils/format";
 import { overlay } from "overlay-kit";
 
 interface PosTablesDetailOrderSideCompProps {
@@ -16,7 +17,9 @@ function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompP
   return (
     <>
       <div className="flex items-center justify-between">
-        <h2 className="text-gray-0 text-[28px] font-semibold">{tableNo}번 테이블 주문 내역</h2>
+        <h2 className="text-gray-0 text-[28px] font-semibold">
+          {getFormattedTableNo(tableNo)}번 테이블 주문 내역
+        </h2>
       </div>
       <div className="scrollbar-hide min-h-0 flex-1 overflow-y-auto">
         <div className="flex w-full flex-col gap-2">

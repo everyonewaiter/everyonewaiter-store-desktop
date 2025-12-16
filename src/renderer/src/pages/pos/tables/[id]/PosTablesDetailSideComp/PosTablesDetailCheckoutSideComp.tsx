@@ -7,6 +7,7 @@ import {
   useUpdateOrder,
 } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { Order, OrderMenu } from "@renderer/types/domain";
+import { getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 import { overlay } from "overlay-kit";
 
@@ -51,7 +52,9 @@ function PosTablesDetailCheckoutSideComp({
   return (
     <>
       <div className="flex items-center justify-between">
-        <h2 className="text-gray-0 text-[28px] font-semibold">{tableNo}번 테이블</h2>
+        <h2 className="text-gray-0 text-[28px] font-semibold">
+          {getFormattedTableNo(tableNo)}번 테이블
+        </h2>
         {activity?.orders && activity?.orders.length > 0 && (
           <Button
             variant="outline"
