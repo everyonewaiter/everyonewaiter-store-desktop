@@ -24,8 +24,8 @@ function PosTablesChangeTableModalComp({
       { sourceTableNo: fromTableNo, targetTableNo: toTableNo },
       {
         onSuccess: () => {
-          props.close();
           onSuccess();
+          props.close();
         },
         onError: (error) => handleApiError(error),
       }
