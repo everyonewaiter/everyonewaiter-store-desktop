@@ -107,6 +107,7 @@ function PosTablesDetailCheckoutSideComp({
                   <PosTablesDetailDiscountModalComp
                     tableNo={tableNo}
                     totalOrderPrice={activity?.totalOrderPrice ?? 0}
+                    initialDiscount={activity?.discount ?? 0}
                     {...overlayProps}
                   />
                 ))

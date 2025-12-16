@@ -44,3 +44,8 @@ export const cancelOrder = async (tableNo: number, orderId: string) => {
   const response = await api.post(`/pos/tables/${tableNo}/orders/${orderId}/cancel`);
   return response.data;
 };
+
+export const discountOrder = async (tableNo: number, discountPrice: number) => {
+  const response = await api.post(`/pos/tables/${tableNo}/discount`, { discountPrice });
+  return response.data;
+};

@@ -1,4 +1,11 @@
-import { addOrder, cancelOrder, getMenus, getTableActivity, updateOrder } from "@renderer/api/pos";
+import {
+  addOrder,
+  cancelOrder,
+  discountOrder,
+  getMenus,
+  getTableActivity,
+  updateOrder,
+} from "@renderer/api/pos";
 import { queryKey } from "@renderer/queries/key";
 import { CreateOrderMenu } from "@renderer/types/domain";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -49,5 +56,12 @@ export const useCancelOrder = () => {
   return useMutation({
     mutationFn: async ({ tableNo, orderId }: { tableNo: number; orderId: string }) =>
       await cancelOrder(tableNo, orderId),
+  });
+};
+
+export const useDiscountOrder = () => {
+  return useMutation({
+    mutationFn: async ({ tableNo, discountPrice }: { tableNo: number; discountPrice: number }) =>
+      await discountOrder(tableNo, discountPrice),
   });
 };
