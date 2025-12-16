@@ -4,16 +4,19 @@ import duration from "dayjs/plugin/duration";
 
 dayjs.extend(duration);
 
+const calcElapsedTime = (orderedAt: string | null) => {
+  if (!orderedAt) return "";
+  return dayjs.duration(dayjs().diff(dayjs(orderedAt))).format("HH:mm:ss");
+};
+
 export const usePosTablesElapsedTime = (orderedAt: string | null) => {
-  const [elapsedTime, setElapsedTime] = useState("");
+  const [elapsedTime, setElapsedTime] = useState(() => calcElapsedTime(orderedAt));
 
   useEffect(() => {
     if (!orderedAt) return;
-    const ordered = dayjs(orderedAt);
 
     const interval = setInterval(() => {
-      const now = dayjs();
-      setElapsedTime(dayjs.duration(now.diff(ordered)).format("HH:mm:ss"));
+      setElapsedTime(calcElapsedTime(orderedAt));
     }, 1000);
 
     return () => clearInterval(interval);

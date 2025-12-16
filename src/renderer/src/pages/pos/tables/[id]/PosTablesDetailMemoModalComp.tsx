@@ -5,6 +5,7 @@ import {
   useUpdateMemo,
 } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { ModalProps } from "@renderer/types/overlay";
+import { getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailMemoModalCompProps extends ModalProps {
@@ -51,7 +52,9 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
         <div className="flex flex-col gap-5">
           <div className="flex items-center justify-between">
             <h2 className="text-gray-0 text-center text-2xl font-semibold">메모</h2>
-            <span className="text-gray-0 text-lg font-semibold">{tableNo}번 테이블</span>
+            <span className="text-gray-0 text-lg font-semibold">
+              {getFormattedTableNo(tableNo)}
+            </span>
           </div>
           {memos?.map((memo, index) => (
             <div className="relative flex flex-col gap-[5px]" key={memo}>

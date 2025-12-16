@@ -9,6 +9,7 @@ import PosTablesDetailPaymentModalComp from "@renderer/pages/pos/tables/[id]/Pos
 import { useGetTableActivity } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
 import { Order } from "@renderer/types/domain";
+import { getFormattedTableNo } from "@renderer/utils/format";
 import { overlay } from "overlay-kit";
 
 interface PosTablesDetailSideCompProps {
@@ -30,7 +31,7 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
     >
       <div className="flex items-center justify-between">
         <h2 className="text-gray-0 text-[28px] font-semibold">
-          {tableNo}번 테이블 {type === "order" && "주문 내역"}
+          {getFormattedTableNo(tableNo)} {type === "order" && "주문 내역"}
         </h2>
         {type === "checkout" && activity?.orderType === "PREPAID" && (
           <Button

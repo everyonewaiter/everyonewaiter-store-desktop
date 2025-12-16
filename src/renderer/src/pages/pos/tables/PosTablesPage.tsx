@@ -21,6 +21,7 @@ function PosTablesPage() {
           {...overlayProps}
           fromTableNo={Number(currentTableNo)}
           toTableNo={tableNo}
+          onSuccess={() => navigate(`/pos/tables`)}
         />
       ));
     } else {
@@ -49,11 +50,9 @@ function PosTablesPage() {
               key={table.posTableId}
               {...table}
               className={
-                currentTableNo && (table.tableNo !== Number(currentTableNo) || !table.hasOrder)
-                  ? "animate-wiggle"
-                  : ""
+                currentTableNo && table.tableNo !== Number(currentTableNo) ? "animate-wiggle" : ""
               }
-              disabled={table.tableNo === Number(currentTableNo)}
+              disabled={currentTableNo ? table.tableNo === Number(currentTableNo) : false}
               onClick={() => handleTableBoxClick(table.tableNo)}
             />
           ))}
