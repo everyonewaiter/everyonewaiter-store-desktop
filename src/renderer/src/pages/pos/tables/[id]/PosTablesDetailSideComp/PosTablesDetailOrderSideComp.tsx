@@ -42,7 +42,7 @@ function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompP
         <div className="h-0.5 w-full bg-gray-600" />
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
-            <span className="text-gray-0 text-2xl font-semibold">결제할 금액</span>
+            <span className="text-gray-0 text-2xl font-semibold">주문 금액</span>
             <span className="text-gray-0 text-4xl font-bold">
               {orders
                 ?.reduce((acc, cur) => acc + cur.totalPrice * cur.quantity, 0)
@@ -66,7 +66,7 @@ function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompP
           ))
         }
       >
-        주문 요청
+        주문하기
       </Button>
     </>
   );
