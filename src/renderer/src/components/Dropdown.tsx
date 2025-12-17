@@ -15,9 +15,11 @@ interface DropdownProps extends DropdownMenu.DropdownMenuProps {
   defaultText: string;
   disabled?: boolean;
   onChange?: (item: DropdownItem) => void;
+  value?: string;
 }
 
 function Dropdown({
+  value,
   dropdownItems,
   hasError,
   type = "default",
@@ -62,7 +64,10 @@ function Dropdown({
             {dropdownItems.map((dropdownItem) => (
               <DropdownMenu.Item
                 key={dropdownItem.id}
-                className="text-gray-0 flex h-9 min-w-full cursor-pointer items-center rounded-xl px-3 text-sm font-normal outline-none focus:bg-gray-700 md:rounded-lg"
+                className={cn(
+                  "text-gray-0 flex h-9 min-w-full cursor-pointer items-center rounded-xl px-3 text-sm font-normal outline-none md:rounded-lg",
+                  value === dropdownItem.id ? "bg-gray-700" : ""
+                )}
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedItem(dropdownItem);
