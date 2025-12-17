@@ -1,10 +1,16 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { api } from "@renderer/api";
 import { Button, Dropdown, Input } from "@renderer/components";
 import { Dialog } from "@renderer/components/Dialog";
+import { calculateTax, kscatApproval, paymentMethod } from "@renderer/modules/kscat";
+import PosTablesDetailPrintReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPrintReceiptModalComp";
+import { useGetDevice } from "@renderer/queries/useGetDevice";
+import { useGetStore } from "@renderer/queries/useGetStore";
 import { PaymentSchema, paymentSchema } from "@renderer/schemas/pos";
 import { OrderReceiptType, TableActivity } from "@renderer/types/domain";
+import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
 import cn from "@renderer/utils/cn";
 import {
@@ -14,6 +20,8 @@ import {
   getFormattedMenuName,
   getFormattedTableNo,
 } from "@renderer/utils/format";
+import { handleApiError } from "@renderer/utils/handle-api-error";
+import { overlay } from "overlay-kit";
 
 const cardInstallmentMonths = new Array(12)
   .fill(0)
@@ -46,6 +54,9 @@ function PosTablesDetailPaymentModalComp({
   activity,
   ...props
 }: PosTablesDetailPaymentModalCompProps) {
+  const { device } = useGetDevice();
+  const { store } = useGetStore(device?.storeId ?? "");
+
   const form = useForm<PaymentSchema>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
@@ -56,15 +67,6 @@ function PosTablesDetailPaymentModalComp({
     },
   });
 
-  const handlePayment = async () => {
-    console.log({
-      paymentAmount: form.watch("paymentAmount"), // 결제할 금액
-      cashReceiptType: form.watch("cashReceiptType"), // 현금 영수증 타입
-      cashReceiptNumber: form.watch("cashReceiptNumber").replaceAll("-", ""), // 휴대폰/사업자번호
-      installment: form.watch("installment").padStart(2, "0"), // 카드 할부 개월
-    });
-  };
-
   const cashReceiptInputLabel =
     form.watch("cashReceiptType") === "DEDUCTION" ? "휴대폰 번호" : "사업자번호";
 
@@ -72,6 +74,78 @@ function PosTablesDetailPaymentModalComp({
     form.setValue("cashReceiptNumber", "", { shouldValidate: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("cashReceiptType")]);
+
+  if (!store) {
+    return null;
+  }
+
+  const approvePayment = async (response?: KSCATApprovalResponse) => {
+    const amount = parseInt(form.watch("paymentAmount"));
+    const { vat, supplyAmount } = calculateTax(amount);
+    const canPrintReceipt = activity.remainingPaymentPrice === amount;
+
+    try {
+      await api.post(`/orders/payments/${activity.tableNo}/approve`, {
+        method: paymentType === "cash" ? "CASH" : "CARD",
+        amount,
+        approvalNo: response?.approvalNo ?? "",
+        installment: form.watch("installment").padStart(2, "0"),
+        cardNo: response?.cardNo ?? "",
+        issuerName: response?.issuerName ?? "",
+        purchaseName: response?.purchaseName ?? "",
+        merchantNo: response?.merchantNo ?? "",
+        tradeTime: response?.tradeTime ?? "",
+        tradeUniqueNo: response?.tradeUniqueNo ?? "",
+        vat,
+        supplyAmount,
+        cashReceiptNo: form.watch("cashReceiptNumber").replaceAll("-", ""),
+        cashReceiptType: form.watch("cashReceiptType"),
+      });
+
+      if (canPrintReceipt) {
+        overlay.open((overlayProps) => (
+          <PosTablesDetailPrintReceiptModalComp
+            posTableActivityId={activity.posTableActivityId}
+            {...overlayProps}
+          />
+        ));
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        handleApiError(error);
+      }
+    } finally {
+      props.close();
+    }
+  };
+
+  const handlePayment = async () => {
+    if (paymentType === "card") {
+      await kscatApproval({
+        deviceNo: store.setting.ksnetDeviceNo,
+        method: paymentMethod.CARD,
+        type: "0200",
+        amount: parseInt(form.watch("paymentAmount")),
+        installment: form.watch("installment").padStart(2, "0"),
+        successCallback: approvePayment,
+      });
+    }
+
+    if (paymentType === "cash" && form.watch("cashReceiptType") !== "NONE") {
+      await kscatApproval({
+        deviceNo: store.setting.ksnetDeviceNo,
+        method: paymentMethod.CASH,
+        type: "0200",
+        amount: parseInt(form.watch("paymentAmount")),
+        installment: form.watch("cashReceiptType") === "DEDUCTION" ? "00" : "01",
+        successCallback: approvePayment,
+      });
+    }
+
+    if (paymentType === "cash" && form.watch("cashReceiptType") === "NONE") {
+      await approvePayment();
+    }
+  };
 
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
