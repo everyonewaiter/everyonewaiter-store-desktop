@@ -27,6 +27,10 @@ function PosTablesDetailCheckoutSideComp({
   const { data: activity } = useGetTableActivity(tableNo);
   const { mutate: updateOrder } = useUpdateOrder();
 
+  const isCompleted =
+    (activity?.orderType === "POSTPAID" && activity?.remainingPaymentPrice === 0) ||
+    activity?.orderType === "PREPAID";
+
   const handleUpdateOrder = (type: "add" | "sub", order: Order, menu: OrderMenu) => {
     updateOrder(
       {
@@ -144,7 +148,7 @@ function PosTablesDetailCheckoutSideComp({
         </div>
       </div>
 
-      {activity?.orderType === "POSTPAID" && (
+      {activity?.orderType === "POSTPAID" && !isCompleted && (
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
@@ -178,10 +182,9 @@ function PosTablesDetailCheckoutSideComp({
           </Button>
         </div>
       )}
-      {(activity?.orderType === "POSTPAID" && activity?.remainingPaymentPrice === 0) ||
-        (activity?.orderType === "PREPAID" && (
-          <Button className="h-16 w-full rounded-xl text-xl font-semibold">테이블 완료</Button>
-        ))}
+      {isCompleted && (
+        <Button className="h-16 w-full rounded-xl text-xl font-semibold">테이블 완료</Button>
+      )}
     </>
   );
 }
