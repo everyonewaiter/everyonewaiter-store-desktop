@@ -111,6 +111,7 @@ function PosTablesDetailDiscountModalComp({
 
                       form.setValue("discountValue", numericValue ? String(numericValue) : "");
                     }}
+                    autoFocus
                   />
                   <span className="text-gray-0 text-xl font-semibold">
                     {discountType === "fixed" ? "원" : "%"}
