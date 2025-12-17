@@ -25,7 +25,7 @@ function PosTablesDetailDiscountModalComp({
   const form = useForm({
     defaultValues: {
       discountType: "fixed",
-      discountValue: initialDiscount,
+      discountValue: initialDiscount ? String(initialDiscount) : "",
     },
   });
 
@@ -47,9 +47,9 @@ function PosTablesDetailDiscountModalComp({
     if (prevDiscountTypeRef.current === discountType) return;
 
     if (discountType === "fixed") {
-      form.setValue("discountValue", initialDiscount);
+      form.setValue("discountValue", initialDiscount ? String(initialDiscount) : "");
     } else {
-      form.setValue("discountValue", 0);
+      form.setValue("discountValue", "");
     }
 
     prevDiscountTypeRef.current = discountType;
@@ -57,10 +57,10 @@ function PosTablesDetailDiscountModalComp({
 
   const handleDiscount = () => {
     const discountPrice =
-      discountType === "fixed" ? discountValue : (totalOrderPrice * discountValue) / 100;
+      discountType === "fixed" ? discountValue : (totalOrderPrice * Number(discountValue)) / 100;
 
     discountOrder(
-      { tableNo, discountPrice },
+      { tableNo, discountPrice: Number(discountPrice) },
       {
         onSuccess: () => props.close(),
         onError: (error) => handleApiError(error),
@@ -99,7 +99,7 @@ function PosTablesDetailDiscountModalComp({
                 <Label>할인할 금액 입력</Label>
                 <div className="flex w-full items-center gap-3">
                   <Input
-                    placeholder="12,000"
+                    placeholder="0"
                     prefix={<MinusIcon width={20} height={20} />}
                     value={discountValue !== undefined ? discountValue.toLocaleString() : ""}
                     onChange={(e) => {
@@ -109,7 +109,7 @@ function PosTablesDetailDiscountModalComp({
 
                       if (numericValue > max) return;
 
-                      form.setValue("discountValue", numericValue);
+                      form.setValue("discountValue", String(numericValue));
                     }}
                   />
                   <span className="text-gray-0 text-xl font-semibold">
@@ -127,8 +127,8 @@ function PosTablesDetailDiscountModalComp({
                 {(
                   totalOrderPrice -
                   (discountType === "fixed"
-                    ? discountValue
-                    : (totalOrderPrice * discountValue) / 100)
+                    ? Number(discountValue)
+                    : (totalOrderPrice * Number(discountValue)) / 100)
                 ).toLocaleString()}
                 원
               </strong>{" "}
