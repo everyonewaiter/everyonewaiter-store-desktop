@@ -141,7 +141,6 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               }
               break;
             case "ORDER":
-              queryClient.invalidateQueries({ queryKey: [queryKey.POS] });
               queryClient.invalidateQueries({ queryKey: [queryKey.HALL, queryKey.ORDER] });
               if (sseEvent.action === "CREATE" && device.purpose === "HALL") {
                 playOrderNotification();
