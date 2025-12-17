@@ -3,8 +3,8 @@ import { sendAuthCode } from "@renderer/api/device";
 import { Button, Input, Label } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import useDeviceAuthStore from "@renderer/pages/device/useDeviceAuthStore";
-import useDeviceFormatPhoneNumber from "@renderer/pages/device/useDeviceFormatPhoneNumber";
 import { DeviceSchema, phoneNumberSchema } from "@renderer/schemas/device";
+import { formatPhoneNumber } from "@renderer/utils/format";
 import { AxiosError } from "axios";
 import { useShallow } from "zustand/react/shallow";
 
@@ -15,7 +15,6 @@ interface DevicePhoneNumberFormCompProps {
 
 function DevicePhoneNumberFormComp({ remainingTime, setInitTime }: DevicePhoneNumberFormCompProps) {
   const form = useFormContext<DeviceSchema>();
-  const { handleChangePhoneNumber } = useDeviceFormatPhoneNumber(form);
 
   const { isSubmitted, setIsSubmitted } = useDeviceAuthStore(
     useShallow((state) => ({
@@ -67,7 +66,8 @@ function DevicePhoneNumberFormComp({ remainingTime, setInitTime }: DevicePhoneNu
           name="phoneNumber"
           control={form.control}
           rules={{
-            onChange: handleChangePhoneNumber,
+            onChange: (e) =>
+              form.setValue("phoneNumber", formatPhoneNumber(e), { shouldValidate: false }),
           }}
           render={({ field, fieldState }) => (
             <Input
