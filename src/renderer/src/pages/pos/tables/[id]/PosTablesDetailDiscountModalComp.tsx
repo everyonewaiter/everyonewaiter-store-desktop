@@ -101,7 +101,7 @@ function PosTablesDetailDiscountModalComp({
                   <Input
                     placeholder="0"
                     prefix={<MinusIcon width={20} height={20} />}
-                    value={discountValue !== undefined ? discountValue.toLocaleString() : ""}
+                    value={discountValue ? Number(discountValue).toLocaleString() : ""}
                     onChange={(e) => {
                       const numericValue = Number(e.target.value.replace(/,/g, "")) || 0;
 
@@ -109,7 +109,7 @@ function PosTablesDetailDiscountModalComp({
 
                       if (numericValue > max) return;
 
-                      form.setValue("discountValue", String(numericValue));
+                      form.setValue("discountValue", numericValue ? String(numericValue) : "");
                     }}
                   />
                   <span className="text-gray-0 text-xl font-semibold">
