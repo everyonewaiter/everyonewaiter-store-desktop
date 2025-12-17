@@ -35,6 +35,15 @@ function PosTablesDetailPaymentModalComp({
   activity,
   ...props
 }: PosTablesDetailPaymentModalCompProps) {
+  const handlePayment = async () => {
+    // TODO: 결제 로직에 필요한 데이터 가져올 수 있도록 변경
+    // TODO: 이 함수 구현은 아래 데이터를 console.log로 찍어주세요.
+    // 결제할 금액 (사용자 입력)
+    // 선택한 현금 영수증 타입
+    // 입력한 현금 영수증 휴대폰 번호 또는 사업자 번호
+    // 카드 할부 개월
+  };
+
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper width={648}>
@@ -46,6 +55,11 @@ function PosTablesDetailPaymentModalComp({
             <div className="flex flex-col gap-2">
               <span className="text-gray-0 text-[15px] font-normal">결제 정보</span>
               <h3 className="text-gray-0 text-2xl font-semibold">
+                {
+                  // TODO: orderMenus.length가 1인경우와 2이상인 경우 분기처리
+                  // 1인 경우 알리오 올리오
+                  // 2이상인 경우 알리오 올리오 외 n개
+                }
                 {activity.orders[0].orderMenus[0].name} 외{" "}
                 {activity.orders
                   .map((order) => order.orderMenus.length)
@@ -53,6 +67,11 @@ function PosTablesDetailPaymentModalComp({
                 개
               </h3>
             </div>
+            {
+              // TODO: 결제 금액을 수정할 수 있도록 입력창으로 변경
+              // 기본값 activity.remainingPaymentPrice
+              // 최대값 activity.remainingPaymentPrice
+            }
             <div className="flex flex-col gap-2">
               <span className="text-gray-0 text-[15px] font-normal">결제할 금액</span>
               <h3 className="text-gray-0 text-2xl font-semibold">
@@ -77,12 +96,21 @@ function PosTablesDetailPaymentModalComp({
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
+                  {
+                    // TODO: 선택된 receiptType에 따라 텍스트 변경
+                    // 신청안함 아래 span 및 input 숨기기
+                    // 개인소득공제 span 텍스트 휴대폰 번호, input placeholder 휴대폰 번호
+                    // 사업자증빙용 span 텍스트 사업자번호, input placeholder 사업자번호
+                  }
                   <span className="text-gray-0 text-[15px] font-normal">휴대폰 번호</span>
                   <Input placeholder="휴대폰 번호 / 사업자번호" className="w-full" />
                 </div>
               </>
             ) : (
               <div className="flex flex-col gap-2">
+                {
+                  // TODO: default값은 일시불로 설정
+                }
                 <span className="text-gray-0 text-[15px] font-normal">할부 개월</span>
                 <Dropdown
                   dropdownItems={cardInstallmentMonths}
@@ -97,6 +125,7 @@ function PosTablesDetailPaymentModalComp({
           primaryButton={{
             text: paymentType === "cash" ? "현금 결제하기" : "카드 결제하기",
             className: "h-16 rounded-xl bg-gray-0 text-xl !font-semibold",
+            onClick: handlePayment,
           }}
           secondaryButton={{ hide: true }}
         />
