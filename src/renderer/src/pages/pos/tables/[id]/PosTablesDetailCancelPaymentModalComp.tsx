@@ -9,22 +9,28 @@ interface PosTablesDetailCancelPaymentModalCompProps extends ModalProps {
   tableNo: number;
   activity: TableActivity;
   checkedOrders: Order[];
+  onDeleteAllOrders: () => void;
 }
 
 function PosTablesDetailCancelPaymentModalComp({
   tableNo,
   activity,
   checkedOrders,
+  onDeleteAllOrders,
   ...props
 }: PosTablesDetailCancelPaymentModalCompProps) {
   const { mutateAsync: cancelOrder, isPending } = useCancelOrder();
 
-  const orders = checkedOrders.length > 0 ? checkedOrders : activity.orders;
+  const isSelected = checkedOrders.length > 0;
+  const orders = isSelected ? checkedOrders : activity.orders;
   const menus = orders.map((order) => order.orderMenus).flat();
 
   const handleCancel = async () => {
     try {
       await Promise.all(orders.map((order) => cancelOrder({ tableNo, orderId: order.orderId })));
+      if (!isSelected || checkedOrders.length === activity.orders.length) {
+        onDeleteAllOrders();
+      }
       props.close();
     } catch (error) {
       handleApiError(error as Error);
@@ -43,7 +49,7 @@ function PosTablesDetailCancelPaymentModalComp({
               {orders.reduce((acc, order) => acc + order.price, 0).toLocaleString()}
             </span>
           </div>
-          {checkedOrders.length > 0 ? (
+          {isSelected ? (
             <span className="text-gray-0 text-center text-xl font-normal">
               <span className="font-semibold">
                 {menus.length > 1 ? `${menus[0].name} 외 ${menus.length - 1}개` : menus[0].name}

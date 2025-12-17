@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PosTablesDetailCancelPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelPaymentModalComp";
 import PosTablesDetailCheckoutSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailCheckoutSideComp";
 import PosTablesDetailOrderSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailOrderSideComp";
@@ -12,6 +13,7 @@ interface PosTablesDetailSideCompProps {
 }
 
 function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetailSideCompProps) {
+  const navigate = useNavigate();
   const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
 
   const { data: activity } = useGetTableActivity(tableNo);
@@ -22,6 +24,7 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
         tableNo={tableNo}
         checkedOrders={checkedOrders}
         activity={activity!}
+        onDeleteAllOrders={() => navigate(`/pos/tables`)}
         {...overlayProps}
       />
     ));
