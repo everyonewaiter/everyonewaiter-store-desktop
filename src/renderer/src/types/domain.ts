@@ -7,7 +7,7 @@ type OrderState = "ORDER" | "CANCEL";
 
 type StaffCallState = "INCOMPLETE" | "COMPLETE";
 
-type OrderReceiptType = "NONE" | "DEDUCTION" | "PROOF";
+export type OrderReceiptType = "NONE" | "DEDUCTION" | "PROOF";
 
 type MenuState = "DEFAULT" | "HIDE" | "SOLD_OUT";
 type MenuLabel = "BEST" | "NEW" | "DEFAULT" | "RECOMMEND";

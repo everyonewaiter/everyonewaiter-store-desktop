@@ -122,6 +122,7 @@ Dialog.Footer = function DialogFooter({
     text?: string;
     onClick?: () => void;
     hide?: boolean;
+    disabled?: boolean;
   };
   secondaryButton?: {
     disabled?: boolean;
