@@ -67,7 +67,7 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
             )}
           >
             <StopwatchIcon width={20} height={20} color="#222222" />
-            {elapsedTime || "00:00"}
+            {(props.hasOrder && elapsedTime) || "00:00:00"}
           </time>
         </div>
       </header>
