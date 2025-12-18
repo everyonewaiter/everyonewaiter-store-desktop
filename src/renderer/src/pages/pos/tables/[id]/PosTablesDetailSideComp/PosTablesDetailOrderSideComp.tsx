@@ -18,7 +18,7 @@ function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompP
     <>
       <div className="flex items-center justify-between">
         <h2 className="text-gray-0 text-[28px] font-semibold">
-          {getFormattedTableNo(tableNo)}번 테이블 주문 내역
+          {getFormattedTableNo(tableNo)}번 주문 내역
         </h2>
       </div>
       <div className="scrollbar-hide min-h-0 flex-1 overflow-y-auto">
