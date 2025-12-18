@@ -74,7 +74,13 @@ function PosTablesDetailCheckoutSideComp({
           <Button
             variant="outline"
             className="button-lg !text-medium !rounded-[8px] !text-base"
-            onClick={onCancelPayment}
+            onClick={
+              activity?.orderType === "POSTPAID"
+                ? onCancelPayment
+                : () => {
+                    // TODO: 선결제 테이블 결제 취소
+                  }
+            }
           >
             {activity?.orderType === "PREPAID"
               ? "결제 취소"
