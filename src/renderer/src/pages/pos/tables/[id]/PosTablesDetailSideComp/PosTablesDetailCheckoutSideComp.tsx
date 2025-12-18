@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@renderer/components";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailDiscountModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailDiscountModalComp";
@@ -24,6 +25,7 @@ function PosTablesDetailCheckoutSideComp({
   setCheckedOrders,
   onCancelPayment,
 }: PosTablesDetailCheckoutSideCompProps) {
+  const navigate = useNavigate();
   const { data: activity } = useGetTableActivity(tableNo);
   const { mutate: updateOrder } = useUpdateOrder();
 
@@ -32,6 +34,12 @@ function PosTablesDetailCheckoutSideComp({
     activity?.orderType === "PREPAID";
 
   const handleUpdateOrder = (type: "add" | "sub", order: Order, menu: OrderMenu) => {
+    const isLastMenu =
+      type === "sub" &&
+      menu.quantity === 1 &&
+      order.orderMenus.length === 1 &&
+      activity?.orders?.length === 1;
+
     updateOrder(
       {
         tableNo: order.tableNo,
@@ -49,6 +57,11 @@ function PosTablesDetailCheckoutSideComp({
       },
       {
         onError: (error) => handleApiError(error),
+        onSuccess: () => {
+          if (isLastMenu) {
+            navigate("/pos/tables");
+          }
+        },
       }
     );
   };
@@ -90,7 +103,9 @@ function PosTablesDetailCheckoutSideComp({
                   <OrderBox.Order
                     key={menu.orderMenuId}
                     orderMenu={menu}
-                    onUpdateOrder={(type) => handleUpdateOrder(type, order, menu)}
+                    onUpdateOrder={(type) => {
+                      handleUpdateOrder(type, order, menu);
+                    }}
                   />
                 ))}
               </OrderBox.Body>
