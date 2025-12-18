@@ -74,17 +74,10 @@ function PosTablesDetailCheckoutSideComp({
           <Button
             variant="outline"
             className="button-lg !text-medium !rounded-[8px] !text-base"
-            onClick={
-              activity?.orderType === "POSTPAID"
-                ? onCancelPayment
-                : () => {
-                    // TODO: 선결제 테이블 결제 취소
-                  }
-            }
+            onClick={onCancelPayment}
           >
-            {activity?.orderType === "PREPAID"
-              ? "결제 취소"
-              : `${checkedOrders.length > 0 ? "선택" : "전체"} 주문 취소`}
+            {activity?.orderType === "POSTPAID" &&
+              `${checkedOrders.length > 0 ? "선택" : "전체"} 주문 취소`}
           </Button>
         )}
       </div>
