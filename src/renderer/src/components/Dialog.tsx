@@ -121,6 +121,7 @@ Dialog.Footer = function DialogFooter({
     text?: string;
     onClick?: () => void;
     hide?: boolean;
+    disabled?: boolean;
   };
   secondaryButton?: {
     color?: ButtonColor;
@@ -162,6 +163,7 @@ Dialog.Footer = function DialogFooter({
               color={primaryButton?.color ?? "black"}
               className={cn(getButtonSize(), "w-full", primaryButton?.className ?? "")}
               onClick={primaryButton?.onClick}
+              disabled={primaryButton?.disabled}
             >
               {primaryButton?.text ?? "확인"}
             </Button>
