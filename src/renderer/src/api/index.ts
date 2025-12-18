@@ -44,7 +44,13 @@ api.interceptors.request.use(async (config) => {
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error)
+  async (error) => {
+    if (error.response?.status === 401) {
+      await window.storageAPI.deleteDeviceInfo();
+      window.location.href = "/";
+    }
+    return Promise.reject(error);
+  }
 );
 
 export const publicApi = axios.create({

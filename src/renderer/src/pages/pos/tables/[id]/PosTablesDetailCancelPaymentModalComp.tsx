@@ -1,17 +1,42 @@
 import { Dialog } from "@renderer/components/Dialog";
+import { useCancelOrder } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import { Order, TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 import { getFormattedTableNo } from "@renderer/utils/format";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailCancelPaymentModalCompProps extends ModalProps {
   tableNo: number;
-  cancelOrderPrice: number;
+  activity: TableActivity;
+  checkedOrders: Order[];
+  onDeleteAllOrders: () => void;
 }
 
 function PosTablesDetailCancelPaymentModalComp({
   tableNo,
-  cancelOrderPrice,
+  activity,
+  checkedOrders,
+  onDeleteAllOrders,
   ...props
 }: PosTablesDetailCancelPaymentModalCompProps) {
+  const { mutateAsync: cancelOrder, isPending } = useCancelOrder();
+
+  const isSelected = checkedOrders.length > 0;
+  const orders = isSelected ? checkedOrders : activity.orders;
+  const menus = orders.map((order) => order.orderMenus).flat();
+
+  const handleCancel = async () => {
+    try {
+      await Promise.all(orders.map((order) => cancelOrder({ tableNo, orderId: order.orderId })));
+      if (!isSelected || checkedOrders.length === activity.orders.length) {
+        onDeleteAllOrders();
+      }
+      props.close();
+    } catch (error) {
+      handleApiError(error as Error);
+    }
+  };
+
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper>
@@ -21,13 +46,30 @@ function PosTablesDetailCancelPaymentModalComp({
               {getFormattedTableNo(tableNo)}
             </span>
             <span className="text-primary text-3xl font-bold">
-              {cancelOrderPrice.toLocaleString()}
+              {orders.reduce((acc, order) => acc + order.price, 0).toLocaleString()}
             </span>
           </div>
-          <span className="text-gray-0 text-center text-xl font-normal">
-            결제를 취소하시겠습니까?
-          </span>
+          {isSelected ? (
+            <span className="text-gray-0 text-center text-xl font-normal">
+              <span className="font-semibold">
+                {menus.length > 1 ? `${menus[0].name} 외 ${menus.length - 1}개` : menus[0].name}
+              </span>
+              의 주문을 취소하시겠습니까?
+            </span>
+          ) : (
+            <span className="text-gray-0 text-center text-xl font-normal">
+              전체 주문을 취소하시겠습니까?
+            </span>
+          )}
         </div>
+        <Dialog.Footer
+          buttonSize="xl"
+          primaryButton={{
+            text: isPending ? "취소중..." : "취소하기",
+            onClick: handleCancel,
+            disabled: isPending,
+          }}
+        />
       </Dialog.Wrapper>
     </Dialog>
   );
