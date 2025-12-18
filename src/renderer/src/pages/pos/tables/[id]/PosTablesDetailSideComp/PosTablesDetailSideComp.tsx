@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PosTablesDetailCancelPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelPaymentModalComp";
+import PosTablesDetailCancelOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelOrderModalComp";
 import PosTablesDetailCheckoutSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailCheckoutSideComp";
 import PosTablesDetailOrderSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailOrderSideComp";
 import { useGetTableActivity } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
@@ -18,9 +18,9 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
 
   const { data: activity } = useGetTableActivity(tableNo);
 
-  const handleCancelPayment = () => {
+  const handleCancelOrder = () => {
     overlay.open((overlayProps) => (
-      <PosTablesDetailCancelPaymentModalComp
+      <PosTablesDetailCancelOrderModalComp
         tableNo={tableNo}
         checkedOrders={checkedOrders}
         activity={activity!}
@@ -41,7 +41,7 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
           tableNo={tableNo}
           checkedOrders={checkedOrders}
           setCheckedOrders={setCheckedOrders}
-          onCancelPayment={handleCancelPayment}
+          onCancelOrder={handleCancelOrder}
         />
       )}
     </aside>

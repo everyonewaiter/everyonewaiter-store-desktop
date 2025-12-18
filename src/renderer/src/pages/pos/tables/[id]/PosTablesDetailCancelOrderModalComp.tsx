@@ -5,20 +5,20 @@ import { ModalProps } from "@renderer/types/overlay";
 import { getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 
-interface PosTablesDetailCancelPaymentModalCompProps extends ModalProps {
+interface PosTablesDetailCancelOrderModalCompProps extends ModalProps {
   tableNo: number;
   activity: TableActivity;
   checkedOrders: Order[];
   onDeleteAllOrders: () => void;
 }
 
-function PosTablesDetailCancelPaymentModalComp({
+function PosTablesDetailCancelOrderModalComp({
   tableNo,
   activity,
   checkedOrders,
   onDeleteAllOrders,
   ...props
-}: PosTablesDetailCancelPaymentModalCompProps) {
+}: PosTablesDetailCancelOrderModalCompProps) {
   const { mutateAsync: cancelOrder, isPending } = useCancelOrder();
 
   const isSelected = checkedOrders.length > 0;
@@ -75,4 +75,4 @@ function PosTablesDetailCancelPaymentModalComp({
   );
 }
 
-export default PosTablesDetailCancelPaymentModalComp;
+export default PosTablesDetailCancelOrderModalComp;
