@@ -18,7 +18,7 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
 
   const { data: activity } = useGetTableActivity(tableNo);
 
-  const handleCancelPayment = () => {
+  const handleCancelOrder = () => {
     overlay.open((overlayProps) => (
       <PosTablesDetailCancelOrderModalComp
         tableNo={tableNo}
@@ -41,7 +41,7 @@ function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetail
           tableNo={tableNo}
           checkedOrders={checkedOrders}
           setCheckedOrders={setCheckedOrders}
-          onCancelPayment={handleCancelPayment}
+          onCancelOrder={handleCancelOrder}
         />
       )}
     </aside>

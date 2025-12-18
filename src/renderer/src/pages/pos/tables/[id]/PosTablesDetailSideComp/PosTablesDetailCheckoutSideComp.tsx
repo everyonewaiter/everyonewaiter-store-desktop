@@ -16,14 +16,14 @@ interface PosTablesDetailCheckoutSideCompProps {
   tableNo: number;
   checkedOrders: Order[];
   setCheckedOrders: (orders: Order[]) => void;
-  onCancelPayment: () => void;
+  onCancelOrder: () => void;
 }
 
 function PosTablesDetailCheckoutSideComp({
   tableNo,
   checkedOrders,
   setCheckedOrders,
-  onCancelPayment,
+  onCancelOrder,
 }: PosTablesDetailCheckoutSideCompProps) {
   const navigate = useNavigate();
   const { data: activity } = useGetTableActivity(tableNo);
@@ -74,7 +74,7 @@ function PosTablesDetailCheckoutSideComp({
           <Button
             variant="outline"
             className="button-lg !text-medium !rounded-[8px] !text-base"
-            onClick={onCancelPayment}
+            onClick={onCancelOrder}
           >
             {activity?.orderType === "POSTPAID" &&
               `${checkedOrders.length > 0 ? "선택" : "전체"} 주문 취소`}
