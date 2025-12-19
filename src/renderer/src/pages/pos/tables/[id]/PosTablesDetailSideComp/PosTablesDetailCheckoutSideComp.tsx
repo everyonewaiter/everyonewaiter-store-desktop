@@ -75,6 +75,11 @@ function PosTablesDetailCheckoutSideComp({
     }
   };
 
+  const previouslyPaidPrice =
+    (activity?.totalOrderPrice ?? 0) -
+    (activity?.discount ?? 0) -
+    (activity?.remainingPaymentPrice ?? 0);
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -150,9 +155,17 @@ function PosTablesDetailCheckoutSideComp({
             <div className="flex items-center justify-between">
               <span className="flex-1 text-lg font-normal text-gray-300">총 주문금액</span>
               <span className="text-xl font-medium text-gray-100">
-                {activity?.totalOrderPrice?.toLocaleString() ?? 0}원
+                {(activity?.totalOrderPrice ?? 0).toLocaleString()}원
               </span>
             </div>
+            {previouslyPaidPrice > 0 && (
+              <div className="flex items-center justify-between">
+                <span className="flex-1 text-lg font-normal text-gray-300">결제된 금액</span>
+                <span className="text-xl font-medium text-gray-100">
+                  {previouslyPaidPrice?.toLocaleString() ?? 0}원
+                </span>
+              </div>
+            )}
             <div className="flex items-center justify-between">
               <span className="flex-1 text-lg font-normal text-gray-300">할인된 금액</span>
               <span className="text-primary text-xl font-medium">
@@ -160,12 +173,14 @@ function PosTablesDetailCheckoutSideComp({
               </span>
             </div>
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-gray-0 text-2xl font-semibold">결제할 금액</span>
-            <span className="text-gray-0 text-4xl font-bold">
-              {activity?.remainingPaymentPrice?.toLocaleString() ?? 0}원
-            </span>
-          </div>
+          {(activity?.remainingPaymentPrice ?? 0) > 0 && (
+            <div className="flex items-center justify-between">
+              <span className="text-gray-0 text-2xl font-semibold">결제할 금액</span>
+              <span className="text-gray-0 text-4xl font-bold">
+                {activity?.remainingPaymentPrice?.toLocaleString() ?? 0}원
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
