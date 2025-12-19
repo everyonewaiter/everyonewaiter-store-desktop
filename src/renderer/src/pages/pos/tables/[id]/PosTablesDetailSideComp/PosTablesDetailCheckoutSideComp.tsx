@@ -84,14 +84,13 @@ function PosTablesDetailCheckoutSideComp({
     <>
       <div className="flex items-center justify-between">
         <h2 className="text-gray-0 text-[28px] font-semibold">{getFormattedTableNo(tableNo)}</h2>
-        {activity?.orders && activity?.orders.length > 0 && (
+        {activity?.orders && activity?.orders.length > 0 && activity?.orderType === "POSTPAID" && (
           <Button
             variant="outline"
             className="button-lg !text-medium !rounded-[8px] !text-base"
             onClick={onCancelOrder}
           >
-            {activity?.orderType === "POSTPAID" &&
-              `${checkedOrders.length > 0 ? "선택" : "전체"} 주문 취소`}
+            {checkedOrders.length > 0 ? "선택" : "전체"} 주문 취소
           </Button>
         )}
       </div>
@@ -128,7 +127,7 @@ function PosTablesDetailCheckoutSideComp({
       </div>
       <div className="flex flex-col gap-8">
         <div className="h-0.5 w-full bg-gray-600" />
-        {activity?.orders && activity?.orders.length > 0 && (
+        {activity?.orders && activity?.orders.length > 0 && activity?.orderType === "POSTPAID" && (
           <div className="flex items-center justify-between">
             <span className="flex-1 text-lg font-normal text-gray-300">할인</span>
             <Button
@@ -151,31 +150,35 @@ function PosTablesDetailCheckoutSideComp({
           </div>
         )}
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <span className="flex-1 text-lg font-normal text-gray-300">총 주문금액</span>
-              <span className="text-xl font-medium text-gray-100">
-                {(activity?.totalOrderPrice ?? 0).toLocaleString()}원
-              </span>
-            </div>
-            {previouslyPaidPrice > 0 && (
+          {activity?.orderType === "POSTPAID" && (
+            <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <span className="flex-1 text-lg font-normal text-gray-300">결제된 금액</span>
+                <span className="flex-1 text-lg font-normal text-gray-300">총 주문금액</span>
                 <span className="text-xl font-medium text-gray-100">
-                  {previouslyPaidPrice?.toLocaleString() ?? 0}원
+                  {(activity?.totalOrderPrice ?? 0).toLocaleString()}원
                 </span>
               </div>
-            )}
-            <div className="flex items-center justify-between">
-              <span className="flex-1 text-lg font-normal text-gray-300">할인된 금액</span>
-              <span className="text-primary text-xl font-medium">
-                {activity?.discount?.toLocaleString() ?? 0}원
-              </span>
+              {previouslyPaidPrice > 0 && (
+                <div className="flex items-center justify-between">
+                  <span className="flex-1 text-lg font-normal text-gray-300">결제된 금액</span>
+                  <span className="text-xl font-medium text-gray-100">
+                    {previouslyPaidPrice?.toLocaleString() ?? 0}원
+                  </span>
+                </div>
+              )}
+              <div className="flex items-center justify-between">
+                <span className="flex-1 text-lg font-normal text-gray-300">할인된 금액</span>
+                <span className="text-primary text-xl font-medium">
+                  {activity?.discount?.toLocaleString() ?? 0}원
+                </span>
+              </div>
             </div>
-          </div>
+          )}
           {(activity?.remainingPaymentPrice ?? 0) > 0 && (
             <div className="flex items-center justify-between">
-              <span className="text-gray-0 text-2xl font-semibold">결제할 금액</span>
+              <span className="text-gray-0 text-2xl font-semibold">
+                {activity?.orderType === "POSTPAID" ? "결제할" : "선결제된"} 금액
+              </span>
               <span className="text-gray-0 text-4xl font-bold">
                 {activity?.remainingPaymentPrice?.toLocaleString() ?? 0}원
               </span>
