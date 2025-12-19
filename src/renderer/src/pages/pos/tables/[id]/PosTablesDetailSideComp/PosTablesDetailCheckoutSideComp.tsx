@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { completeTable } from "@renderer/api/pos";
 import { Button } from "@renderer/components";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailDiscountModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailDiscountModalComp";
@@ -64,6 +65,14 @@ function PosTablesDetailCheckoutSideComp({
         },
       }
     );
+  };
+
+  const handleCompleteTable = async () => {
+    try {
+      await completeTable(tableNo).then(() => navigate("/pos/tables"));
+    } catch (error) {
+      handleApiError(error as Error);
+    }
   };
 
   return (
@@ -195,7 +204,12 @@ function PosTablesDetailCheckoutSideComp({
         </div>
       )}
       {isCompleted && (
-        <Button className="h-16 w-full rounded-xl text-xl font-semibold">테이블 완료</Button>
+        <Button
+          className="h-16 w-full rounded-xl text-xl font-semibold"
+          onClick={handleCompleteTable}
+        >
+          테이블 완료
+        </Button>
       )}
     </>
   );
