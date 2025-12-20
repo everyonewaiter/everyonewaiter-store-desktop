@@ -184,7 +184,6 @@ function PosTablesDetailCheckoutSideComp({
           </div>
         </div>
       </div>
-      ㅌ
       {orderType === "POSTPAID" && !isCompleted && (
         <div className="flex items-center gap-3">
           <Button
