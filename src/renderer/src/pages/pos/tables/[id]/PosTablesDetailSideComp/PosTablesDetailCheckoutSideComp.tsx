@@ -30,9 +30,10 @@ function PosTablesDetailCheckoutSideComp({
   const { data: activity } = useGetTableActivity(tableNo);
   const { mutate: updateOrder } = useUpdateOrder();
 
+  const orderType = activity?.orderType;
+
   const isCompleted =
-    (activity?.orderType === "POSTPAID" && activity?.remainingPaymentPrice === 0) ||
-    activity?.orderType === "PREPAID";
+    (orderType === "POSTPAID" && activity?.remainingPaymentPrice === 0) || orderType === "PREPAID";
 
   const handleUpdateOrder = (type: "add" | "sub", order: Order, menu: OrderMenu) => {
     const isLastMenu =
@@ -84,7 +85,7 @@ function PosTablesDetailCheckoutSideComp({
     <>
       <div className="flex items-center justify-between">
         <h2 className="text-gray-0 text-[28px] font-semibold">{getFormattedTableNo(tableNo)}</h2>
-        {activity?.orders && activity?.orders.length > 0 && activity?.orderType === "POSTPAID" && (
+        {activity?.orders && activity?.orders.length > 0 && orderType === "POSTPAID" && (
           <Button
             variant="outline"
             className="button-lg !text-medium !rounded-[8px] !text-base"
@@ -100,7 +101,7 @@ function PosTablesDetailCheckoutSideComp({
             <OrderBox key={order.orderId}>
               <OrderBox.Index
                 index={index}
-                hasCheckbox
+                hasCheckbox={orderType === "POSTPAID"}
                 checked={checkedOrders.some((o) => o.orderId === order.orderId)}
                 onCheckboxChange={(checked) => {
                   if (checked) {
@@ -115,9 +116,8 @@ function PosTablesDetailCheckoutSideComp({
                   <OrderBox.Order
                     key={menu.orderMenuId}
                     orderMenu={menu}
-                    onUpdateOrder={(type) => {
-                      handleUpdateOrder(type, order, menu);
-                    }}
+                    onUpdateOrder={(type) => handleUpdateOrder(type, order, menu)}
+                    hideUpdate={orderType === "PREPAID"}
                   />
                 ))}
               </OrderBox.Body>
@@ -127,7 +127,7 @@ function PosTablesDetailCheckoutSideComp({
       </div>
       <div className="flex flex-col gap-8">
         <div className="h-0.5 w-full bg-gray-600" />
-        {activity?.orders && activity?.orders.length > 0 && activity?.orderType === "POSTPAID" && (
+        {activity?.orders && activity?.orders.length > 0 && orderType === "POSTPAID" && (
           <div className="flex items-center justify-between">
             <span className="flex-1 text-lg font-normal text-gray-300">할인</span>
             <Button
@@ -150,7 +150,7 @@ function PosTablesDetailCheckoutSideComp({
           </div>
         )}
         <div className="flex flex-col gap-6">
-          {activity?.orderType === "POSTPAID" && (
+          {orderType === "POSTPAID" && (
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <span className="flex-1 text-lg font-normal text-gray-300">총 주문금액</span>
@@ -174,20 +174,18 @@ function PosTablesDetailCheckoutSideComp({
               </div>
             </div>
           )}
-          {(activity?.remainingPaymentPrice ?? 0) > 0 && (
-            <div className="flex items-center justify-between">
-              <span className="text-gray-0 text-2xl font-semibold">
-                {activity?.orderType === "POSTPAID" ? "결제할" : "선결제된"} 금액
-              </span>
-              <span className="text-gray-0 text-4xl font-bold">
-                {activity?.remainingPaymentPrice?.toLocaleString() ?? 0}원
-              </span>
-            </div>
-          )}
+          <div className="flex items-center justify-between">
+            <span className="text-gray-0 text-2xl font-semibold">
+              {orderType === "PREPAID" ? "선결제된 금액" : "결제할 금액"}
+            </span>
+            <span className="text-gray-0 text-4xl font-bold">
+              {activity?.remainingPaymentPrice?.toLocaleString() ?? 0}원
+            </span>
+          </div>
         </div>
       </div>
-
-      {activity?.orderType === "POSTPAID" && !isCompleted && (
+      ㅌ
+      {orderType === "POSTPAID" && !isCompleted && (
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
@@ -195,7 +193,7 @@ function PosTablesDetailCheckoutSideComp({
             onClick={() =>
               overlay.open((overlayProps) => (
                 <PosTablesDetailPaymentModalComp
-                  activity={activity}
+                  activity={activity!}
                   paymentType="cash"
                   {...overlayProps}
                 />
@@ -210,7 +208,7 @@ function PosTablesDetailCheckoutSideComp({
             onClick={() =>
               overlay.open((overlayProps) => (
                 <PosTablesDetailPaymentModalComp
-                  activity={activity}
+                  activity={activity!}
                   paymentType="card"
                   {...overlayProps}
                 />
