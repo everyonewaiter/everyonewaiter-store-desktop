@@ -134,16 +134,17 @@ function PosTablesDetailCheckoutSideComp({
               variant="outline"
               color="black"
               className="!border-gray-[#4F4F4F] h-10 rounded-lg bg-white px-5 text-[15px] font-medium text-[#4F4F4F]"
-              onClick={() =>
+              onClick={() => {
+                if (!activity) return;
                 overlay.open((overlayProps) => (
                   <PosTablesDetailDiscountModalComp
                     tableNo={tableNo}
-                    totalOrderPrice={activity?.totalOrderPrice ?? 0}
-                    initialDiscount={activity?.discount ?? 0}
+                    totalOrderPrice={activity.totalOrderPrice ?? 0}
+                    initialDiscount={activity.discount ?? 0}
                     {...overlayProps}
                   />
-                ))
-              }
+                ));
+              }}
             >
               할인수단 추가
             </Button>
@@ -189,30 +190,32 @@ function PosTablesDetailCheckoutSideComp({
           <Button
             variant="outline"
             className="h-16 w-full rounded-xl border !border-gray-200 text-xl font-semibold text-gray-200"
-            onClick={() =>
+            onClick={() => {
+              if (!activity) return;
               overlay.open((overlayProps) => (
                 <PosTablesDetailPaymentModalComp
-                  activity={activity!}
+                  activity={activity}
                   paymentType="cash"
                   {...overlayProps}
                 />
-              ))
-            }
+              ));
+            }}
           >
             현금 결제
           </Button>
           <Button
             color="black"
             className="h-16 w-full rounded-xl text-xl font-semibold"
-            onClick={() =>
+            onClick={() => {
+              if (!activity) return;
               overlay.open((overlayProps) => (
                 <PosTablesDetailPaymentModalComp
-                  activity={activity!}
+                  activity={activity}
                   paymentType="card"
                   {...overlayProps}
                 />
-              ))
-            }
+              ));
+            }}
           >
             카드 결제
           </Button>
