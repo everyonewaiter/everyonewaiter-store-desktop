@@ -156,7 +156,7 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               if (
                 sseEvent.hasData &&
                 sseEvent.action === "CREATE" &&
-                store?.setting.kitchenPrinterLocation === device.purpose
+                store?.setting.printerLocation === device.purpose
               ) {
                 openUsbPrinter().then((result) => {
                   if (result === 0) {
