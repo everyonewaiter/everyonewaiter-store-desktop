@@ -186,7 +186,7 @@ export interface Receipt {
   tableNo: number;
   memo: string;
   printNo: number;
-  receiptMenu: ReceiptMenu[];
+  receiptMenus: ReceiptMenu[];
 }
 
 export interface ReceiptMenu {

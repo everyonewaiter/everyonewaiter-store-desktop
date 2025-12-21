@@ -154,6 +154,7 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               break;
             case "RECEIPT":
               if (isReceiptPrinterLocationRef?.current) {
+                console.log("CALL");
                 printOrder(sseEvent.data as Receipt);
               }
               break;
