@@ -12,9 +12,10 @@ import { overlay } from "overlay-kit";
 interface PosPaymentsSideCompProps {
   store: Store;
   payment: OrderPayment;
+  setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function PosPaymentsSideComp({ store, payment }: PosPaymentsSideCompProps) {
+function PosPaymentsSideComp({ store, payment, setFetchCount }: PosPaymentsSideCompProps) {
   const [activity, setActivity] = useState<TableActivity | null>(null);
 
   useEffect(() => {
@@ -70,7 +71,12 @@ function PosPaymentsSideComp({ store, payment }: PosPaymentsSideCompProps) {
             disabled={!payment.posTableActivityId || !activity || !payment.cancellable}
             onClick={() =>
               overlay.open((overlayProps) => (
-                <PosPaymentsCancelPayModalComp store={store} payment={payment} {...overlayProps} />
+                <PosPaymentsCancelPayModalComp
+                  store={store}
+                  payment={payment}
+                  setFetchCount={setFetchCount}
+                  {...overlayProps}
+                />
               ))
             }
           >

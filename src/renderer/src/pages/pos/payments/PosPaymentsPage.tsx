@@ -22,6 +22,7 @@ function PosPaymentsPage() {
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
 
+  const [fetchCount, setFetchCount] = useState(0);
   const [payments, setPayments] = useState<OrderPayment[]>([]);
   const [selectedPayment, setSelectedPayment] = useState<OrderPayment | null>(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -30,11 +31,14 @@ function PosPaymentsPage() {
     const fetchPayments = () => {
       api
         .get(`/orders/payments?date=${dayjs(selectedDate).format("YYYYMMDD")}`)
-        .then(({ data }) => setPayments(data?.orderPayments ?? []));
+        .then(({ data }) => {
+          setPayments(data?.orderPayments ?? []);
+          setFetchCount(fetchCount + 1);
+        });
     };
 
     fetchPayments();
-  }, [selectedDate]);
+  }, [selectedDate, fetchCount]);
 
   if (!store) {
     return null;
@@ -95,7 +99,13 @@ function PosPaymentsPage() {
             </Table.Body>
           </Table>
         </div>
-        {selectedPayment && <PosPaymentsSideComp store={store} payment={selectedPayment} />}
+        {selectedPayment && (
+          <PosPaymentsSideComp
+            store={store}
+            payment={selectedPayment}
+            setFetchCount={setFetchCount}
+          />
+        )}
       </div>
     </div>
   );
