@@ -1,6 +1,7 @@
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import registerIpcHandlers from "@main/ipcHandlers";
-import { app, BrowserWindow, shell } from "electron";
+import { app, BrowserWindow, dialog, MessageBoxOptions, shell } from "electron";
+import { autoUpdater } from "electron-updater";
 import { join } from "path";
 
 function createWindow(): void {
@@ -26,6 +27,23 @@ function createWindow(): void {
     return { action: "deny" };
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  autoUpdater.on("update-downloaded", (_) => {
+    const option: MessageBoxOptions = {
+      type: "question",
+      buttons: ["업데이트", "나중에"],
+      defaultId: 0,
+      title: "UPDATER",
+      message: "프로그램 업데이트를 진행하시겠습니까?",
+    };
+
+    dialog.showMessageBox(mainWindow, option).then(function (res) {
+      if (res.response == 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+  });
+
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
     mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
@@ -43,6 +61,7 @@ app.whenReady().then(() => {
   registerIpcHandlers();
 
   createWindow();
+  autoUpdater.checkForUpdates();
 
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
