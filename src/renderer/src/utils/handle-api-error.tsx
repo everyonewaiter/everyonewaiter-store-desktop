@@ -11,8 +11,10 @@ export interface ApiErrorResponse {
 export function handleApiError(error: Error) {
   if (!isAxiosError<ApiErrorResponse>(error)) return;
 
-  const message = error.response?.data?.message;
+  handleError(error.response?.data?.message ?? "알 수 없는 오류가 발생했습니다.");
+}
 
+export function handleError(message: string) {
   overlay.closeAll();
 
   overlay.open((overlayProps) => {
