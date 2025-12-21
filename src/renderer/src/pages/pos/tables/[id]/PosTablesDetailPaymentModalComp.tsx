@@ -249,7 +249,7 @@ function PosTablesDetailPaymentModalComp({
           buttonSize="custom"
           primaryButton={{
             text: paymentType === "cash" ? "현금 결제하기" : "카드 결제하기",
-            className: "h-16 rounded-xl bg-gray-0 text-xl !font-semibold",
+            className: "w-full h-16 rounded-xl bg-gray-0 text-xl !font-semibold",
             onClick: handlePayment,
           }}
           secondaryButton={{ hide: true }}

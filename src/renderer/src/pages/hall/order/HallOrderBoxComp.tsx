@@ -1,4 +1,4 @@
-import { Button } from "@renderer/components";
+import { Button, CdnImage } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import HallOrderOptionComp from "@renderer/pages/hall/order/HallOrderOptionComp";
 import { useOrderMenuServe } from "@renderer/pages/hall/order/useHallOrderApi";
@@ -46,7 +46,11 @@ function HallOrderBoxComp({ orderId, storeId, orderMenu, isCompleted }: HallOrde
         {store && store.setting.showOrderMenuImage && (
           <div className="relative h-[130px] w-[130px] overflow-hidden rounded-xl">
             <div className="absolute inset-0 bg-[#F1F1F1] opacity-50" />
-            <img src={orderMenu.image} alt={orderMenu.name} />
+            <CdnImage
+              src={orderMenu.image}
+              alt={orderMenu.name}
+              className="h-full w-full object-cover"
+            />
           </div>
         )}
         <div className="flex w-full flex-col gap-2">
