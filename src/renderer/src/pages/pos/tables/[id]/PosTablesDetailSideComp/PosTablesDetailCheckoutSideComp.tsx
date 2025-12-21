@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { completeTable } from "@renderer/api/pos";
 import { Button } from "@renderer/components";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailDiscountModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailDiscountModalComp";
@@ -29,9 +30,10 @@ function PosTablesDetailCheckoutSideComp({
   const { data: activity } = useGetTableActivity(tableNo);
   const { mutate: updateOrder } = useUpdateOrder();
 
+  const orderType = activity?.orderType;
+
   const isCompleted =
-    (activity?.orderType === "POSTPAID" && activity?.remainingPaymentPrice === 0) ||
-    activity?.orderType === "PREPAID";
+    (orderType === "POSTPAID" && activity?.remainingPaymentPrice === 0) || orderType === "PREPAID";
 
   const handleUpdateOrder = (type: "add" | "sub", order: Order, menu: OrderMenu) => {
     const isLastMenu =
@@ -66,18 +68,30 @@ function PosTablesDetailCheckoutSideComp({
     );
   };
 
+  const handleCompleteTable = async () => {
+    try {
+      await completeTable(tableNo).then(() => navigate("/pos/tables"));
+    } catch (error) {
+      handleApiError(error as Error);
+    }
+  };
+
+  const previouslyPaidPrice =
+    (activity?.totalOrderPrice ?? 0) -
+    (activity?.discount ?? 0) -
+    (activity?.remainingPaymentPrice ?? 0);
+
   return (
     <>
       <div className="flex items-center justify-between">
         <h2 className="text-gray-0 text-[28px] font-semibold">{getFormattedTableNo(tableNo)}</h2>
-        {activity?.orders && activity?.orders.length > 0 && (
+        {activity?.orders && activity?.orders.length > 0 && orderType === "POSTPAID" && (
           <Button
             variant="outline"
             className="button-lg !text-medium !rounded-[8px] !text-base"
             onClick={onCancelOrder}
           >
-            {activity?.orderType === "POSTPAID" &&
-              `${checkedOrders.length > 0 ? "선택" : "전체"} 주문 취소`}
+            {checkedOrders.length > 0 ? "선택" : "전체"} 주문 취소
           </Button>
         )}
       </div>
@@ -87,7 +101,7 @@ function PosTablesDetailCheckoutSideComp({
             <OrderBox key={order.orderId}>
               <OrderBox.Index
                 index={index}
-                hasCheckbox
+                hasCheckbox={orderType === "POSTPAID"}
                 checked={checkedOrders.some((o) => o.orderId === order.orderId)}
                 onCheckboxChange={(checked) => {
                   if (checked) {
@@ -102,9 +116,8 @@ function PosTablesDetailCheckoutSideComp({
                   <OrderBox.Order
                     key={menu.orderMenuId}
                     orderMenu={menu}
-                    onUpdateOrder={(type) => {
-                      handleUpdateOrder(type, order, menu);
-                    }}
+                    onUpdateOrder={(type) => handleUpdateOrder(type, order, menu)}
+                    hideUpdate={orderType === "PREPAID"}
                   />
                 ))}
               </OrderBox.Body>
@@ -114,88 +127,107 @@ function PosTablesDetailCheckoutSideComp({
       </div>
       <div className="flex flex-col gap-8">
         <div className="h-0.5 w-full bg-gray-600" />
-        {activity?.orders && activity?.orders.length > 0 && (
+        {activity?.orders && activity?.orders.length > 0 && orderType === "POSTPAID" && (
           <div className="flex items-center justify-between">
             <span className="flex-1 text-lg font-normal text-gray-300">할인</span>
             <Button
               variant="outline"
               color="black"
               className="!border-gray-[#4F4F4F] h-10 rounded-lg bg-white px-5 text-[15px] font-medium text-[#4F4F4F]"
-              onClick={() =>
+              onClick={() => {
+                if (!activity) return;
                 overlay.open((overlayProps) => (
                   <PosTablesDetailDiscountModalComp
                     tableNo={tableNo}
-                    totalOrderPrice={activity?.totalOrderPrice ?? 0}
-                    initialDiscount={activity?.discount ?? 0}
+                    totalOrderPrice={activity.totalOrderPrice ?? 0}
+                    initialDiscount={activity.discount ?? 0}
                     {...overlayProps}
                   />
-                ))
-              }
+                ));
+              }}
             >
               할인수단 추가
             </Button>
           </div>
         )}
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <span className="flex-1 text-lg font-normal text-gray-300">총 주문금액</span>
-              <span className="text-xl font-medium text-gray-100">
-                {activity?.totalOrderPrice?.toLocaleString() ?? 0}원
-              </span>
+          {orderType === "POSTPAID" && (
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="flex-1 text-lg font-normal text-gray-300">총 주문금액</span>
+                <span className="text-xl font-medium text-gray-100">
+                  {(activity?.totalOrderPrice ?? 0).toLocaleString()}원
+                </span>
+              </div>
+              {previouslyPaidPrice > 0 && (
+                <div className="flex items-center justify-between">
+                  <span className="flex-1 text-lg font-normal text-gray-300">결제된 금액</span>
+                  <span className="text-xl font-medium text-gray-100">
+                    {previouslyPaidPrice?.toLocaleString() ?? 0}원
+                  </span>
+                </div>
+              )}
+              <div className="flex items-center justify-between">
+                <span className="flex-1 text-lg font-normal text-gray-300">할인된 금액</span>
+                <span className="text-primary text-xl font-medium">
+                  {activity?.discount?.toLocaleString() ?? 0}원
+                </span>
+              </div>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="flex-1 text-lg font-normal text-gray-300">할인된 금액</span>
-              <span className="text-primary text-xl font-medium">
-                {activity?.discount?.toLocaleString() ?? 0}원
-              </span>
-            </div>
-          </div>
+          )}
           <div className="flex items-center justify-between">
-            <span className="text-gray-0 text-2xl font-semibold">결제할 금액</span>
+            <span className="text-gray-0 text-2xl font-semibold">
+              {orderType === "PREPAID" ? "선결제된 금액" : "결제할 금액"}
+            </span>
             <span className="text-gray-0 text-4xl font-bold">
               {activity?.remainingPaymentPrice?.toLocaleString() ?? 0}원
             </span>
           </div>
         </div>
       </div>
-
-      {activity?.orderType === "POSTPAID" && !isCompleted && (
+      {orderType === "POSTPAID" && !isCompleted && (
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
             className="h-16 w-full rounded-xl border !border-gray-200 text-xl font-semibold text-gray-200"
-            onClick={() =>
+            onClick={() => {
+              if (!activity) return;
               overlay.open((overlayProps) => (
                 <PosTablesDetailPaymentModalComp
                   activity={activity}
                   paymentType="cash"
                   {...overlayProps}
                 />
-              ))
-            }
+              ));
+            }}
           >
             현금 결제
           </Button>
           <Button
             color="black"
             className="h-16 w-full rounded-xl text-xl font-semibold"
-            onClick={() =>
+            onClick={() => {
+              if (!activity) return;
               overlay.open((overlayProps) => (
                 <PosTablesDetailPaymentModalComp
                   activity={activity}
                   paymentType="card"
                   {...overlayProps}
                 />
-              ))
-            }
+              ));
+            }}
           >
             카드 결제
           </Button>
         </div>
       )}
       {isCompleted && (
-        <Button className="h-16 w-full rounded-xl text-xl font-semibold">테이블 완료</Button>
+        <Button
+          className="h-16 w-full rounded-xl text-xl font-semibold"
+          onClick={handleCompleteTable}
+        >
+          테이블 완료
+        </Button>
       )}
     </>
   );

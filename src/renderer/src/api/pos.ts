@@ -59,3 +59,8 @@ export const updateMemo = async (tableNo: number, orderId: string, memo: string)
   const response = await api.put(`/pos/tables/${tableNo}/orders/${orderId}/memo`, { memo });
   return response.data;
 };
+
+export const completeTable = async (tableNo: number) => {
+  const response = await api.post(`/pos/tables/${tableNo}/complete`);
+  return response.data;
+};

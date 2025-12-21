@@ -12,9 +12,11 @@ function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
 PosPaymentsOrderBoxComp.Order = function Order({
   orderMenu,
   onUpdateOrder,
+  hideUpdate = false,
 }: {
   orderMenu: OrderMenu | CreateOrderMenu;
   onUpdateOrder?: (type: "add" | "sub") => void;
+  hideUpdate?: boolean;
 }) {
   const { device } = useGetDevice();
   const { data: menus } = useGetMenus(device?.storeId ?? "");
@@ -87,24 +89,26 @@ PosPaymentsOrderBoxComp.Order = function Order({
             )}
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600"
-            onClick={() => onUpdateOrder?.("sub")}
-          >
-            <Icon width={24} height={24} className="text-gray-300" />
-          </button>
-          <strong className="text-gray-0 min-w-3 text-center text-lg font-semibold">
-            {normalized.quantity}
-          </strong>
-          <button
-            type="button"
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600"
-            onClick={() => onUpdateOrder?.("add")}
-          >
-            <PlusIcon width={24} height={24} className="text-gray-300" />
-          </button>
-        </div>
+        {!hideUpdate && (
+          <div className="flex items-center gap-3">
+            <button
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600"
+              onClick={() => onUpdateOrder?.("sub")}
+            >
+              <Icon width={24} height={24} className="text-gray-300" />
+            </button>
+            <strong className="text-gray-0 min-w-3 text-center text-lg font-semibold">
+              {normalized.quantity}
+            </strong>
+            <button
+              type="button"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-gray-600"
+              onClick={() => onUpdateOrder?.("add")}
+            >
+              <PlusIcon width={24} height={24} className="text-gray-300" />
+            </button>
+          </div>
+        )}
       </div>
       <PosPaymentsOrderBoxComp.Divider className="last:hidden" />
     </>
