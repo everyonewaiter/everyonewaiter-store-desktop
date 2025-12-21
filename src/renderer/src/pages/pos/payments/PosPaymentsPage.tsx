@@ -33,7 +33,7 @@ function PosPaymentsPage() {
         .get(`/orders/payments?date=${dayjs(selectedDate).format("YYYYMMDD")}`)
         .then(({ data }) => {
           setPayments(data?.orderPayments ?? []);
-          setFetchCount(fetchCount + 1);
+          setFetchCount((count) => count + 1);
         });
     };
 
