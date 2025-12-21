@@ -1,6 +1,6 @@
 import { Dialog } from "@renderer/components/Dialog";
 import { ColorName } from "@renderer/constants";
-import { closePrinter, openUsbPrinter, printReceiptWithActivity } from "@renderer/modules/printer";
+import { printReceiptWithActivity } from "@renderer/modules/printer";
 import { Store, TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 
@@ -27,28 +27,16 @@ function PosPaymentsOrderIncludeModalComp({
             color: ColorName.BLACK,
             text: "미포함",
             onClick: () => {
-              openUsbPrinter()
-                .then((result) => {
-                  if (result === 0) {
-                    printReceiptWithActivity(store, activity, false);
-                    closePrinter();
-                  }
-                })
-                .finally(() => props.close());
+              printReceiptWithActivity(store, activity, false);
+              props.close();
             },
           }}
           primaryButton={{
             color: ColorName.PRIMARY,
             text: "포함",
             onClick: () => {
-              openUsbPrinter()
-                .then((result) => {
-                  if (result === 0) {
-                    printReceiptWithActivity(store, activity, true);
-                    closePrinter();
-                  }
-                })
-                .finally(() => props.close());
+              printReceiptWithActivity(store, activity, true);
+              props.close();
             },
           }}
         />
