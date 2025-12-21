@@ -334,7 +334,7 @@ export const printReceiptWithActivity = (
 
       printLeftRightText(
         "카드 번호",
-        orderPayment.cardNo,
+        orderPayment.cardNo.trim(),
         TextAttribute.DEFAULT,
         TextSize.WIDTH0,
         TextSize.HEIGHT0
@@ -352,7 +352,7 @@ export const printReceiptWithActivity = (
 
       printLeftRightText(
         "승인 번호",
-        orderPayment.approvalNo,
+        orderPayment.approvalNo.trim(),
         TextAttribute.DEFAULT,
         TextSize.WIDTH0,
         TextSize.HEIGHT0
@@ -362,7 +362,7 @@ export const printReceiptWithActivity = (
 
     printLeftRightText(
       "승인 일시",
-      orderPayment.tradeTime,
+      orderPayment.createdAt,
       TextAttribute.DEFAULT,
       TextSize.WIDTH0,
       TextSize.HEIGHT0
