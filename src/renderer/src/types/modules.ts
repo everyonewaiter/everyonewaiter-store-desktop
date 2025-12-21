@@ -1,5 +1,5 @@
 import { paymentMethod, paymentType } from "@renderer/modules/kscat";
-import { valueOf } from "@renderer/utils";
+import { valueOf } from "@renderer/utils/type";
 
 export interface KSCATApprovalTelegram {
   deviceNo: string;

@@ -1,19 +1,21 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@renderer/api";
-import { Button, Dropdown, Input } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
 import { Dialog } from "@renderer/components/Dialog";
+import Dropdown from "@renderer/components/Dropdown";
+import Input from "@renderer/components/Input";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import { calculateTax, kscatApproval, paymentMethod } from "@renderer/modules/kscat";
 import PosTablesDetailPrintReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPrintReceiptModalComp";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
-import { useGetStore } from "@renderer/queries/useGetStore";
-import { PaymentSchema, paymentSchema } from "@renderer/schemas/pos";
 import { OrderReceiptType, TableActivity } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
 import cn from "@renderer/utils/cn";
 import { formatPrice, getFormattedMenuName, getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";
+import { PaymentSchema, paymentSchema } from "@renderer/utils/posSchema";
 import { overlay } from "overlay-kit";
 
 const cardInstallmentMonths = new Array(12)

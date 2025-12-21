@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
+import Button from "@renderer/components/Button/Button";
+import { ColorName } from "@renderer/constants/ui";
+import { useGetHallOrders } from "@renderer/hooks/useGetHallOrders";
+import { useGetHallStaffCalls } from "@renderer/hooks/useGetHallStaffCalls";
+import { useGetHallWaitings } from "@renderer/hooks/useGetHallWaitings";
 import WaitingActionButtons from "@renderer/pages/hall/waiting/HallWaitingActionButtonsComp";
 import HallWaitingInfoComp from "@renderer/pages/hall/waiting/HallWaitingInfoComp";
 import HallWaitingNumberingComp from "@renderer/pages/hall/waiting/HallWaitingNumberingComp";
-import { useGetHallOrders } from "@renderer/queries/useGetHallOrders";
-import { useGetHallStaffCalls } from "@renderer/queries/useGetHallStaffCalls";
-import { useGetHallWaitings } from "@renderer/queries/useGetHallWaitings";
 
 function HallWaitingPage() {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { api } from "@renderer/api";
 import { Dialog } from "@renderer/components/Dialog";
-import { ColorName } from "@renderer/constants";
+import { ColorName } from "@renderer/constants/ui";
 import { kscatApproval, paymentMethod, paymentType } from "@renderer/modules/kscat";
 import { OrderPayment, Store } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";

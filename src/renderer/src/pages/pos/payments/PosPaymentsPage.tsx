@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { api } from "@renderer/api";
-import { Button, DatePicker, Table } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
+import DatePicker from "@renderer/components/DatePicker";
+import Table from "@renderer/components/Table";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import PosPaymentsSideComp from "@renderer/pages/pos/payments/PosPaymentsSideComp";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
-import { useGetStore } from "@renderer/queries/useGetStore";
 import { OrderPayment } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import dayjs from "dayjs";

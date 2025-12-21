@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { FileCheckIcon, MoneyCoinIcon, ReturnIcon } from "@renderer/assets/icons";
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
-import { Button } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
+import Button from "@renderer/components/Button/Button";
+import { ColorName } from "@renderer/constants/ui";
 import { WEEK_NAME } from "@renderer/constants/week";
 import { useCurrentTime } from "@renderer/hooks/useCurrentTime";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";

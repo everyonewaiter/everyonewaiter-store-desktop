@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { BellRingingIcon, DoorOpenIcon, XCircleIcon } from "@renderer/assets/icons";
-import { Button } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
 import { ButtonColor, ButtonVariant } from "@renderer/components/Button/Button.types";
 import HallWaitingModalComp from "@renderer/pages/hall/waiting/HallWaitingModalComp";
 import { Waiting } from "@renderer/types/domain";

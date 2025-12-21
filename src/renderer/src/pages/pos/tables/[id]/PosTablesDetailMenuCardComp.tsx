@@ -1,4 +1,4 @@
-import { CdnImage } from "@renderer/components";
+import CdnImage from "@renderer/components/CdnImage";
 import PosTablesDetailMenuModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuModalComp";
 import { Menu } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";

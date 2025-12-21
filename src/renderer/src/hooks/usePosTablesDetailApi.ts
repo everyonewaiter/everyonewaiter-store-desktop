@@ -8,7 +8,7 @@ import {
   updateMemo,
   updateOrder,
 } from "@renderer/api/pos";
-import { queryKey } from "@renderer/queries/key";
+import { queryKey } from "@renderer/hooks/queryKey";
 import { CreateOrderMenu } from "@renderer/types/domain";
 import { useMutation, useQuery } from "@tanstack/react-query";
 

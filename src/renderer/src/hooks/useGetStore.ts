@@ -1,5 +1,5 @@
 import { publicApi } from "@renderer/api";
-import { queryKey } from "@renderer/queries/key";
+import { queryKey } from "@renderer/hooks/queryKey";
 import { Store } from "@renderer/types/domain";
 import { useQuery } from "@tanstack/react-query";
 

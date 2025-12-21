@@ -1,5 +1,5 @@
 import { PlusIcon } from "@renderer/assets/icons";
-import { Checkbox } from "@renderer/components";
+import Checkbox from "@renderer/components/Checkbox";
 import { SelectedOption } from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuModalComp";
 import { MenuOptionGroup } from "@renderer/types/domain";
 

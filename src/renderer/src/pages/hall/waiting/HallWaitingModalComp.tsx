@@ -1,11 +1,11 @@
 import { Dialog } from "@renderer/components/Dialog";
 import { WAITING_TYPE_TEXT } from "@renderer/constants/waiting";
-import HallWaitingInfoComp from "@renderer/pages/hall/waiting/HallWaitingInfoComp";
 import {
   useWaitingCancel,
   useWaitingComplete,
   useWaitingCustomerCall,
-} from "@renderer/pages/hall/waiting/useHallWaitingApi";
+} from "@renderer/hooks/useHallWaitingApi";
+import HallWaitingInfoComp from "@renderer/pages/hall/waiting/HallWaitingInfoComp";
 import { Waiting } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 import { getMinutesAgo } from "@renderer/utils/format";

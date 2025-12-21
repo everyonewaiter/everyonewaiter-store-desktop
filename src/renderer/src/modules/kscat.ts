@@ -1,7 +1,7 @@
+import { KSCATApprovalRequest, KSCATApprovalTelegram } from "@renderer/types/modules";
 import { handleError } from "@renderer/utils/handle-api-error";
 import { FindJSONtoString } from "@shared/utils/string";
 import $ from "jquery";
-import { KSCATApprovalRequest, KSCATApprovalTelegram } from "./../types/modules";
 
 export const paymentMethod = {
   CASH: "HK",

@@ -2,14 +2,14 @@ import { createContext, PropsWithChildren, useEffect, useRef } from "react";
 import EventSource, { EventSourceListener } from "react-native-sse";
 import orderNotificationSound from "@renderer/assets/sounds/order-notification.mp3";
 import waitingNotificationSound from "@renderer/assets/sounds/waiting-notification.mp3";
+import { queryKey } from "@renderer/hooks/queryKey";
+import useAudio from "@renderer/hooks/useAudio";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import useInterval from "@renderer/hooks/useInterval";
 import { printOrder } from "@renderer/modules/printer";
 import { usePrinter } from "@renderer/providers/printerProvider";
-import { queryKey } from "@renderer/queries/key";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
 import { Receipt } from "@renderer/types/domain";
 import makeSignature from "@renderer/utils/make-signature";
-import useAudio from "@renderer/utils/useAudio";
-import useInterval from "@renderer/utils/useInterval";
 import { useQueryClient } from "@tanstack/react-query";
 
 type SseEventName = "sse";

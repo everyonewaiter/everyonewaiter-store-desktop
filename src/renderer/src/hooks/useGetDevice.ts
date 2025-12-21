@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { api } from "@renderer/api";
-import { queryKey } from "@renderer/queries/key";
+import { queryKey } from "@renderer/hooks/queryKey";
 import { Device } from "@renderer/types/domain";
 import { storageKey } from "@shared/storage/key";
 import { useQuery } from "@tanstack/react-query";

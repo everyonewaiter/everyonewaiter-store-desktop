@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogoIcon, LogoTextIcon } from "@renderer/assets/logos";
-import { Button } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
+import Button from "@renderer/components/Button/Button";
+import { ColorName } from "@renderer/constants/ui";
+import { useGetHallOrders } from "@renderer/hooks/useGetHallOrders";
+import { useGetHallStaffCalls } from "@renderer/hooks/useGetHallStaffCalls";
+import { useGetHallWaitings } from "@renderer/hooks/useGetHallWaitings";
 import HallActionCompleteModalComp from "@renderer/pages/hall/order/HallActionCompleteModalComp";
 import HallOrderComp from "@renderer/pages/hall/order/HallOrderComp";
 import HallStaffCallComp from "@renderer/pages/hall/order/HallStaffCallComp";
-import { useGetHallOrders } from "@renderer/queries/useGetHallOrders";
-import { useGetHallStaffCalls } from "@renderer/queries/useGetHallStaffCalls";
-import { useGetHallWaitings } from "@renderer/queries/useGetHallWaitings";
 import { overlay } from "overlay-kit";
 
 function HallOrderPage() {

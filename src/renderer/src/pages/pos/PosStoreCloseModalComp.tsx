@@ -1,7 +1,7 @@
 import { Dialog } from "@renderer/components/Dialog";
-import { useControlStoreStatus } from "@renderer/queries/useControlStoreStatus";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
-import { useGetStore } from "@renderer/queries/useGetStore";
+import { useControlStoreStatus } from "@renderer/hooks/useControlStoreStatus";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import { ModalProps } from "@renderer/types/overlay";
 
 interface PosStoreCloseModalCompProps extends ModalProps {

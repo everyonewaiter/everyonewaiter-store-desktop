@@ -1,7 +1,7 @@
 import { DeleteIcon, MinusIcon, PlusIcon } from "@renderer/assets/icons";
-import { Checkbox } from "@renderer/components";
-import { useGetMenus } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
+import Checkbox from "@renderer/components/Checkbox";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetMenus } from "@renderer/hooks/usePosTablesDetailApi";
 import { CreateOrderMenu, OrderMenu } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 

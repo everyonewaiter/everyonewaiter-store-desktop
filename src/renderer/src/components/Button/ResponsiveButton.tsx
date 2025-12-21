@@ -6,7 +6,7 @@ import {
   ResponsiveButtonProps,
   ScreenSize,
 } from "@renderer/components/Button/Button.types";
-import { ColorName } from "@renderer/constants";
+import { ColorName } from "@renderer/constants/ui";
 import cn from "@renderer/utils/cn";
 
 function ResponsiveButton(

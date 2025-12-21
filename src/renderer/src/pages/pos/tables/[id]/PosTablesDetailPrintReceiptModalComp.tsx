@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { api } from "@renderer/api";
 import { Dialog } from "@renderer/components/Dialog";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import { printReceiptWithActivity } from "@renderer/modules/printer";
-import { useGetStore } from "@renderer/queries/useGetStore";
 import { TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { AlarmIcon, StopwatchIcon } from "@renderer/assets/icons";
 import { ORDER_TYPE_TEXT } from "@renderer/constants/pos";
-import { usePosTablesElapsedTime } from "@renderer/pages/pos/tables/usePosTablesElapsedTime";
+import { usePosTablesElapsedTime } from "@renderer/hooks/usePosTablesElapsedTime";
 import { Table } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { getFormattedTableNo } from "@renderer/utils/format";

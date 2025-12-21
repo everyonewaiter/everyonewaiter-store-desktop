@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useRef } from "react";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import { closePrinter, openUsbPrinter } from "@renderer/modules/printer";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
-import { useGetStore } from "@renderer/queries/useGetStore";
 
 interface PrinterContextValue {
   isConnectedRef: React.RefObject<boolean> | null;

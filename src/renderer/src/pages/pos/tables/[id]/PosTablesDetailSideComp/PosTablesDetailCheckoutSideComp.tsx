@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { completeTable } from "@renderer/api/pos";
-import { Button } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
+import { useGetTableActivity, useUpdateOrder } from "@renderer/hooks/usePosTablesDetailApi";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailDiscountModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailDiscountModalComp";
 import PosTablesDetailPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPaymentModalComp";
-import {
-  useGetTableActivity,
-  useUpdateOrder,
-} from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { Order, OrderMenu } from "@renderer/types/domain";
 import { getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";

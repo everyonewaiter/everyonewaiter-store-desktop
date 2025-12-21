@@ -1,5 +1,5 @@
-import { phoneNumberSchema } from "@renderer/schemas/device";
 import { OrderReceiptType } from "@renderer/types/domain";
+import { phoneNumberSchema } from "@renderer/utils/deviceSchema";
 import { z } from "zod";
 
 const receiptTypes: OrderReceiptType[] = ["NONE", "DEDUCTION", "PROOF"];

@@ -1,11 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { verifyAuthCode } from "@renderer/api/device";
-import { Button, Input } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
+import Button from "@renderer/components/Button/Button";
+import Input from "@renderer/components/Input";
+import { ColorName } from "@renderer/constants/ui";
+import useDeviceAuthStore from "@renderer/hooks/useDeviceAuthStore";
 import DeviceNoStoreModalComp from "@renderer/pages/device/DeviceNoStoreModalComp";
-import useDeviceAuthStore from "@renderer/pages/device/useDeviceAuthStore";
-import { codeSchema, DeviceSchema } from "@renderer/schemas/device";
 import { SimpleStore } from "@renderer/types/domain";
+import { codeSchema, DeviceSchema } from "@renderer/utils/deviceSchema";
 import { overlay } from "overlay-kit";
 import { useShallow } from "zustand/react/shallow";
 

@@ -3,16 +3,13 @@ import { Fragment } from "react/jsx-runtime";
 import { useNavigate, useParams } from "react-router-dom";
 import { NoteIcon, ReturnIcon, RotateIcon, SendIcon } from "@renderer/assets/icons";
 import { LogoTextIcon } from "@renderer/assets/logos";
-import { Button } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetMenus, useGetTableActivity } from "@renderer/hooks/usePosTablesDetailApi";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import PosTablesDetailMemoModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMemoModalComp";
 import PosTablesDetailMenuCardComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailMenuCardComp";
 import PosTablesDetailResendReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailResendReceiptModalComp";
-import {
-  useGetMenus,
-  useGetTableActivity,
-} from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
 import cn from "@renderer/utils/cn";
 import { overlay } from "overlay-kit";
 
