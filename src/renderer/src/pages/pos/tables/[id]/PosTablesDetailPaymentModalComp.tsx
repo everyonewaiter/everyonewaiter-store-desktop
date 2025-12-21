@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@renderer/api";
@@ -13,13 +12,7 @@ import { OrderReceiptType, TableActivity } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
 import cn from "@renderer/utils/cn";
-import {
-  formatBusinessNumber,
-  formatPhoneNumber,
-  formatPrice,
-  getFormattedMenuName,
-  getFormattedTableNo,
-} from "@renderer/utils/format";
+import { formatPrice, getFormattedMenuName, getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 import { overlay } from "overlay-kit";
 
@@ -62,18 +55,9 @@ function PosTablesDetailPaymentModalComp({
     defaultValues: {
       paymentAmount: String(activity.remainingPaymentPrice),
       cashReceiptType: "NONE",
-      cashReceiptNumber: "",
       installment: "0",
     },
   });
-
-  const cashReceiptInputLabel =
-    form.watch("cashReceiptType") === "DEDUCTION" ? "휴대폰 번호" : "사업자번호";
-
-  useEffect(() => {
-    form.setValue("cashReceiptNumber", "", { shouldValidate: false });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.watch("cashReceiptType")]);
 
   if (!store) {
     return null;
@@ -98,7 +82,7 @@ function PosTablesDetailPaymentModalComp({
         tradeUniqueNo: response?.tradeUniqueNo ?? "",
         vat,
         supplyAmount,
-        cashReceiptNo: form.watch("cashReceiptNumber").replaceAll("-", ""),
+        cashReceiptNo: response?.cardNo ?? "",
         cashReceiptType: form.watch("cashReceiptType"),
       });
 
@@ -181,7 +165,6 @@ function PosTablesDetailPaymentModalComp({
                 <h3 className="text-gray-0 text-2xl font-semibold">원</h3>
               </div>
             </div>
-
             {paymentType === "cash" ? (
               <>
                 <div className="flex flex-col gap-2">
@@ -205,29 +188,6 @@ function PosTablesDetailPaymentModalComp({
                     ))}
                   </div>
                 </div>
-                {form.watch("cashReceiptType") !== "NONE" && (
-                  <div className="flex flex-col gap-2">
-                    <span className="text-gray-0 text-[15px] font-normal">
-                      {cashReceiptInputLabel}
-                    </span>
-                    <Input
-                      placeholder={cashReceiptInputLabel}
-                      className="w-full"
-                      {...form.register("cashReceiptNumber", {
-                        onChange: (e) => {
-                          const format =
-                            form.watch("cashReceiptType") === "DEDUCTION"
-                              ? formatPhoneNumber
-                              : formatBusinessNumber;
-                          return form.setValue("cashReceiptNumber", format(e), {
-                            shouldValidate: false,
-                          });
-                        },
-                      })}
-                      fieldState={form.getFieldState("cashReceiptNumber")}
-                    />
-                  </div>
-                )}
               </>
             ) : (
               <div className="flex flex-col gap-2">

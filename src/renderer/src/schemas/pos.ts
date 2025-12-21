@@ -8,7 +8,6 @@ export const posSchema = z.object({
   phoneNumber: phoneNumberSchema,
   paymentAmount: z.string(),
   cashReceiptType: z.enum(receiptTypes),
-  cashReceiptNumber: z.string(),
   installment: z.string().refine((val) => {
     const num = parseInt(val, 10);
     return num >= 0 && num <= 12;
@@ -18,7 +17,6 @@ export const posSchema = z.object({
 export const paymentSchema = posSchema.pick({
   paymentAmount: true,
   cashReceiptType: true,
-  cashReceiptNumber: true,
   installment: true,
 });
 
