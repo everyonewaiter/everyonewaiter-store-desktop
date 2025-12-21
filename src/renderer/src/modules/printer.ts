@@ -360,6 +360,17 @@ export const printReceiptWithActivity = (
       window.printer.lineFeed();
     }
 
+    if (orderPayment.method === "CASH" && orderPayment.cashReceiptType !== "NONE") {
+      printLeftRightText(
+        "현금 영수증",
+        orderPayment.cashReceiptNo,
+        TextAttribute.DEFAULT,
+        TextSize.WIDTH0,
+        TextSize.HEIGHT0
+      );
+      window.printer.lineFeed();
+    }
+
     printLeftRightText(
       "승인 일시",
       orderPayment.createdAt,
