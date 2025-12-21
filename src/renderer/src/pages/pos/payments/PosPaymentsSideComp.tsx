@@ -59,22 +59,24 @@ function PosPaymentsSideComp({ store, payment }: PosPaymentsSideCompProps) {
         ))}
       </section>
       <footer className="flex h-16 items-center gap-3">
-        <Button
-          variant="outline"
-          color={payment.posTableActivityId ? ColorName.BLACK : ColorName.GREY}
-          className={cn(
-            "h-full w-fit rounded-xl px-8 font-semibold",
-            payment.posTableActivityId ? "text-gray-200" : "border-gray-500 text-gray-500"
-          )}
-          disabled={!payment.posTableActivityId || !activity || !payment.cancellable}
-          onClick={() =>
-            overlay.open((overlayProps) => (
-              <PosPaymentsCancelPayModalComp store={store} payment={payment} {...overlayProps} />
-            ))
-          }
-        >
-          결제 취소하기
-        </Button>
+        {payment.cancellable && (
+          <Button
+            variant="outline"
+            color={payment.posTableActivityId ? ColorName.BLACK : ColorName.GREY}
+            className={cn(
+              "h-full w-fit rounded-xl px-8 font-semibold",
+              payment.posTableActivityId ? "text-gray-200" : "border-gray-500 text-gray-500"
+            )}
+            disabled={!payment.posTableActivityId || !activity || !payment.cancellable}
+            onClick={() =>
+              overlay.open((overlayProps) => (
+                <PosPaymentsCancelPayModalComp store={store} payment={payment} {...overlayProps} />
+              ))
+            }
+          >
+            결제 취소하기
+          </Button>
+        )}
         <Button
           color={ColorName.BLACK}
           className={cn(
