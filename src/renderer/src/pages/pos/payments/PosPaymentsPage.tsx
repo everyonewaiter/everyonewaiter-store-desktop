@@ -31,10 +31,7 @@ function PosPaymentsPage() {
     const fetchPayments = () => {
       api
         .get(`/orders/payments?date=${dayjs(selectedDate).format("YYYYMMDD")}`)
-        .then(({ data }) => {
-          setPayments(data?.orderPayments ?? []);
-          setFetchCount((count) => count + 1);
-        });
+        .then(({ data }) => setPayments(data?.orderPayments ?? []));
     };
 
     fetchPayments();
