@@ -362,8 +362,8 @@ export const printReceiptWithActivity = (
 
     if (orderPayment.method === "CASH" && orderPayment.cashReceiptType !== "NONE") {
       printLeftRightText(
-        "현금 영수증",
-        orderPayment.cashReceiptNo,
+        orderPayment.cashReceiptType === "DEDUCTION" ? "소득 공제" : "지출 증빙",
+        orderPayment.cashReceiptNo.trim(),
         TextAttribute.DEFAULT,
         TextSize.WIDTH0,
         TextSize.HEIGHT0
