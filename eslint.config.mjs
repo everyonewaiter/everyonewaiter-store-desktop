@@ -5,12 +5,14 @@ import eslintPluginReactHooks from "eslint-plugin-react-hooks";
 import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import { defineConfig } from "eslint/config";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 
 export default defineConfig(
   { ignores: ["**/node_modules", "**/dist", "**/out"] },
   tseslint.configs.recommended,
   eslintPluginReact.configs.flat.recommended,
   eslintPluginReact.configs.flat["jsx-runtime"],
+  ...pluginQuery.configs["flat/recommended"],
   {
     settings: {
       react: {
