@@ -32,7 +32,6 @@ function PosTablesDetailPrintReceiptModalComp({
   const handlePrintReceipt = () => {
     if (store && activity) {
       printReceiptWithActivity(store, activity, true);
-      navigate("/pos/tables");
       props.close();
     }
   };
