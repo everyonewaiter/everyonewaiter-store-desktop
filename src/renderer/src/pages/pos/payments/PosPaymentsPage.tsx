@@ -102,6 +102,7 @@ function PosPaymentsPage() {
           <PosPaymentsSideComp
             store={store}
             payment={selectedPayment}
+            fetchCount={fetchCount}
             setFetchCount={setFetchCount}
           />
         )}
