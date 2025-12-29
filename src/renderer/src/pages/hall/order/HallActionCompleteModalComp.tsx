@@ -1,5 +1,5 @@
 import { Dialog } from "@renderer/components/Dialog";
-import { useOrderServe, useStaffCallComplete } from "@renderer/pages/hall/order/useHallOrderApi";
+import { useOrderServe, useStaffCallComplete } from "@renderer/hooks/useHallOrderApi";
 import { ModalProps } from "@renderer/types/overlay";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 import { UseMutateFunction } from "@tanstack/react-query";

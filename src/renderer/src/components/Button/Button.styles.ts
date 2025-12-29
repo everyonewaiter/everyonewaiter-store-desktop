@@ -1,4 +1,4 @@
-import { ColorName } from "@renderer/constants";
+import { ColorName } from "@renderer/constants/ui";
 import { cva } from "class-variance-authority";
 
 export const buttonVariants = cva(

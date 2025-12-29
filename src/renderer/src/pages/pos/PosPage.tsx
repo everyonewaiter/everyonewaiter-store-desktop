@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import posIframe from "@renderer/assets/images/pos-bg.mp4";
-import { Button } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
 import { WEEK_NAME } from "@renderer/constants/week";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import PosPaymentsSalesModalComp from "@renderer/pages/pos/payments/PosPaymentsSalesModalComp";
 import PosStoreCloseModalComp from "@renderer/pages/pos/PosStoreCloseModalComp";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
-import { useGetStore } from "@renderer/queries/useGetStore";
 import { StoreStatus } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import dayjs from "dayjs";

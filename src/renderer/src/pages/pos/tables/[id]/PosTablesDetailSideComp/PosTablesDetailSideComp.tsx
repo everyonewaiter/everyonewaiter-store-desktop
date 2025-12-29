@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetTableActivity } from "@renderer/hooks/usePosTablesDetailApi";
 import PosTablesDetailCancelOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelOrderModalComp";
 import PosTablesDetailCheckoutSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailCheckoutSideComp";
 import PosTablesDetailOrderSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailOrderSideComp";
-import { useGetTableActivity } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
 import { Order } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
 

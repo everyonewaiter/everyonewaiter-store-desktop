@@ -1,4 +1,4 @@
-import { DeviceSupport } from "@renderer/constants";
+import { DeviceSupport } from "@renderer/constants/device";
 import { z } from "zod";
 
 export const deviceSchema = z.object({

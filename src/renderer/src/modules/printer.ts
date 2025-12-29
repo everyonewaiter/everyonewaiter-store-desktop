@@ -334,7 +334,7 @@ export const printReceiptWithActivity = (
 
       printLeftRightText(
         "카드 번호",
-        orderPayment.cardNo,
+        orderPayment.cardNo.trim(),
         TextAttribute.DEFAULT,
         TextSize.WIDTH0,
         TextSize.HEIGHT0
@@ -352,7 +352,18 @@ export const printReceiptWithActivity = (
 
       printLeftRightText(
         "승인 번호",
-        orderPayment.approvalNo,
+        orderPayment.approvalNo.trim(),
+        TextAttribute.DEFAULT,
+        TextSize.WIDTH0,
+        TextSize.HEIGHT0
+      );
+      window.printer.lineFeed();
+    }
+
+    if (orderPayment.method === "CASH" && orderPayment.cashReceiptType !== "NONE") {
+      printLeftRightText(
+        orderPayment.cashReceiptType === "DEDUCTION" ? "소득 공제" : "지출 증빙",
+        orderPayment.cashReceiptNo.trim(),
         TextAttribute.DEFAULT,
         TextSize.WIDTH0,
         TextSize.HEIGHT0
@@ -362,7 +373,7 @@ export const printReceiptWithActivity = (
 
     printLeftRightText(
       "승인 일시",
-      orderPayment.tradeTime,
+      orderPayment.createdAt,
       TextAttribute.DEFAULT,
       TextSize.WIDTH0,
       TextSize.HEIGHT0
@@ -386,7 +397,7 @@ export const printReceiptWithActivity = (
 };
 
 export const printOrder = (receipt: Receipt) => {
-  if (receipt.receiptMenu.length === 0) {
+  if (receipt.receiptMenus.length === 0) {
     return;
   }
 
@@ -435,7 +446,7 @@ export const printOrder = (receipt: Receipt) => {
 
   divider();
 
-  for (const [loopIndex, receiptMenu] of receipt.receiptMenu.entries()) {
+  for (const [loopIndex, receiptMenu] of receipt.receiptMenus.entries()) {
     const printIndex = loopIndex + 1;
     const printMenuName = receiptMenu.name.replace(/ /g, "");
 

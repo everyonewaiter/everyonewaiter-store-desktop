@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@renderer/api";
-import { Button } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
+import Button from "@renderer/components/Button/Button";
+import { ColorName } from "@renderer/constants/ui";
 import PosPaymentsCancelPayModalComp from "@renderer/pages/pos/payments/PosPaymentsCancelPayModalComp";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosPaymentsOrderIncludeModalComp from "@renderer/pages/pos/payments/PosPaymentsOrderIncludeModalComp";
@@ -12,9 +12,10 @@ import { overlay } from "overlay-kit";
 interface PosPaymentsSideCompProps {
   store: Store;
   payment: OrderPayment;
+  setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function PosPaymentsSideComp({ store, payment }: PosPaymentsSideCompProps) {
+function PosPaymentsSideComp({ store, payment, setFetchCount }: PosPaymentsSideCompProps) {
   const [activity, setActivity] = useState<TableActivity | null>(null);
 
   useEffect(() => {
@@ -59,22 +60,29 @@ function PosPaymentsSideComp({ store, payment }: PosPaymentsSideCompProps) {
         ))}
       </section>
       <footer className="flex h-16 items-center gap-3">
-        <Button
-          variant="outline"
-          color={payment.posTableActivityId ? ColorName.BLACK : ColorName.GREY}
-          className={cn(
-            "h-full w-fit rounded-xl px-8 font-semibold",
-            payment.posTableActivityId ? "text-gray-200" : "border-gray-500 text-gray-500"
-          )}
-          disabled={!payment.posTableActivityId || !activity || !payment.cancellable}
-          onClick={() =>
-            overlay.open((overlayProps) => (
-              <PosPaymentsCancelPayModalComp store={store} payment={payment} {...overlayProps} />
-            ))
-          }
-        >
-          결제 취소하기
-        </Button>
+        {payment.cancellable && (
+          <Button
+            variant="outline"
+            color={payment.posTableActivityId ? ColorName.BLACK : ColorName.GREY}
+            className={cn(
+              "h-full w-fit rounded-xl px-8 font-semibold",
+              payment.posTableActivityId ? "text-gray-200" : "border-gray-500 text-gray-500"
+            )}
+            disabled={!payment.posTableActivityId || !activity || !payment.cancellable}
+            onClick={() =>
+              overlay.open((overlayProps) => (
+                <PosPaymentsCancelPayModalComp
+                  store={store}
+                  payment={payment}
+                  setFetchCount={setFetchCount}
+                  {...overlayProps}
+                />
+              ))
+            }
+          >
+            결제 취소하기
+          </Button>
+        )}
         <Button
           color={ColorName.BLACK}
           className={cn(

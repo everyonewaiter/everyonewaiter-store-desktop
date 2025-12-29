@@ -1,6 +1,6 @@
 import { DoubleArrowIcon } from "@renderer/assets/icons";
 import { Dialog } from "@renderer/components/Dialog";
-import { useChangeTable } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import { useChangeTable } from "@renderer/hooks/usePosTablesDetailApi";
 import { ModalProps } from "@renderer/types/overlay";
 import { getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";

@@ -116,7 +116,6 @@ Dialog.Footer = function DialogFooter({
   layout?: "balanced" | "unbalanced";
   buttonClassName?: string;
   primaryButton?: {
-    disabled?: boolean;
     color?: ButtonColor;
     className?: string;
     text?: string;
@@ -125,12 +124,12 @@ Dialog.Footer = function DialogFooter({
     disabled?: boolean;
   };
   secondaryButton?: {
-    disabled?: boolean;
     color?: ButtonColor;
     className?: string;
     text?: string;
     onClick?: () => void;
     hide?: boolean;
+    disabled?: boolean;
   };
   buttonSize?: ButtonSize;
 }) {

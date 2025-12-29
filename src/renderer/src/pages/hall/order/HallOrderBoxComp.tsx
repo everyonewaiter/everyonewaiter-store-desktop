@@ -1,8 +1,9 @@
-import { Button, CdnImage } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
+import Button from "@renderer/components/Button/Button";
+import CdnImage from "@renderer/components/CdnImage";
+import { ColorName } from "@renderer/constants/ui";
+import { useGetStore } from "@renderer/hooks/useGetStore";
+import { useOrderMenuServe } from "@renderer/hooks/useHallOrderApi";
 import HallOrderOptionComp from "@renderer/pages/hall/order/HallOrderOptionComp";
-import { useOrderMenuServe } from "@renderer/pages/hall/order/useHallOrderApi";
-import { useGetStore } from "@renderer/queries/useGetStore";
 import { OrderMenu, OrderMenuOption } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import { handleApiError } from "@renderer/utils/handle-api-error";

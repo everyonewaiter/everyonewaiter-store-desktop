@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { api } from "@renderer/api";
-import { Button, DatePicker, Table } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
+import DatePicker from "@renderer/components/DatePicker";
+import Table from "@renderer/components/Table";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import PosPaymentsSideComp from "@renderer/pages/pos/payments/PosPaymentsSideComp";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
-import { useGetStore } from "@renderer/queries/useGetStore";
 import { OrderPayment } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 import dayjs from "dayjs";
@@ -22,6 +24,7 @@ function PosPaymentsPage() {
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
 
+  const [fetchCount, setFetchCount] = useState(0);
   const [payments, setPayments] = useState<OrderPayment[]>([]);
   const [selectedPayment, setSelectedPayment] = useState<OrderPayment | null>(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -30,11 +33,11 @@ function PosPaymentsPage() {
     const fetchPayments = () => {
       api
         .get(`/orders/payments?date=${dayjs(selectedDate).format("YYYYMMDD")}`)
-        .then(({ data }) => setPayments(data?.payments ?? []));
+        .then(({ data }) => setPayments(data?.orderPayments ?? []));
     };
 
     fetchPayments();
-  }, [selectedDate]);
+  }, [selectedDate, fetchCount]);
 
   if (!store) {
     return null;
@@ -95,7 +98,13 @@ function PosPaymentsPage() {
             </Table.Body>
           </Table>
         </div>
-        {selectedPayment && <PosPaymentsSideComp store={store} payment={selectedPayment} />}
+        {selectedPayment && (
+          <PosPaymentsSideComp
+            store={store}
+            payment={selectedPayment}
+            setFetchCount={setFetchCount}
+          />
+        )}
       </div>
     </div>
   );

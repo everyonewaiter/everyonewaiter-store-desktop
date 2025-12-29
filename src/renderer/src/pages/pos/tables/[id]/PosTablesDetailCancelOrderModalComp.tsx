@@ -1,5 +1,5 @@
 import { Dialog } from "@renderer/components/Dialog";
-import { useCancelOrder } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import { useCancelOrder } from "@renderer/hooks/usePosTablesDetailApi";
 import { Order, TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 import { getFormattedTableNo } from "@renderer/utils/format";

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
+import { usePosTablesDetailOrderStore } from "@renderer/hooks/usePosTablesDetailOrderStore";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderModalComp";
-import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
 import { getFormattedTableNo } from "@renderer/utils/format";
 import { overlay } from "overlay-kit";
 

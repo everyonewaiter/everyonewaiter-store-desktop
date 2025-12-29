@@ -1,7 +1,7 @@
 import { buttonVariants } from "@renderer/components/Button/Button.styles";
-import { ColorName } from "@renderer/constants";
-import { BaseSize } from "@renderer/types";
-import { valueOf } from "@renderer/utils";
+import { ColorName } from "@renderer/constants/ui";
+import { BaseSize } from "@renderer/types/ui";
+import { valueOf } from "@renderer/utils/type";
 import { type VariantProps } from "class-variance-authority";
 
 type ScreenSize = BaseSize;
@@ -18,8 +18,7 @@ type ButtonColor = Extract<
 type ButtonVariant = VariantProps<typeof buttonVariants>;
 
 interface BaseButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color">,
-    ButtonVariant {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color">, ButtonVariant {
   asChild?: boolean;
 }
 

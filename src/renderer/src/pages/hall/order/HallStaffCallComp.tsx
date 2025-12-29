@@ -1,5 +1,5 @@
-import { Button } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
+import Button from "@renderer/components/Button/Button";
+import { ColorName } from "@renderer/constants/ui";
 import { StaffCall } from "@renderer/types/domain";
 
 interface HallStaffCallCompProps {

@@ -1,6 +1,6 @@
 import { api } from "@renderer/api";
 import { Dialog } from "@renderer/components/Dialog";
-import { ColorName } from "@renderer/constants";
+import { ColorName } from "@renderer/constants/ui";
 import { kscatApproval, paymentMethod, paymentType } from "@renderer/modules/kscat";
 import { OrderPayment, Store } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";
@@ -9,11 +9,13 @@ import { ModalProps } from "@renderer/types/overlay";
 interface PosPaymentsCancelPayModalCompProps extends ModalProps {
   store: Store;
   payment: OrderPayment;
+  setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function PosPaymentsCancelPayModalComp({
   store,
   payment,
+  setFetchCount,
   ...props
 }: PosPaymentsCancelPayModalCompProps) {
   const cancelPayment = async (response?: KSCATApprovalResponse) => {
@@ -22,6 +24,7 @@ function PosPaymentsCancelPayModalComp({
       tradeTime: response?.tradeTime ?? "",
       tradeUniqueNo: response?.tradeUniqueNo ?? "",
     });
+    setFetchCount((count) => count + 1);
     props.close();
   };
 

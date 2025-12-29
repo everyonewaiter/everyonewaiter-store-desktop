@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { Dialog } from "@renderer/components/Dialog";
-import {
-  useGetTableActivity,
-  useUpdateMemo,
-} from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
+import { useGetTableActivity, useUpdateMemo } from "@renderer/hooks/usePosTablesDetailApi";
 import { ModalProps } from "@renderer/types/overlay";
 import { getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";

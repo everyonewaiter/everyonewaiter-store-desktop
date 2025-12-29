@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { MinusIcon, PlusIcon } from "@renderer/assets/icons";
-import { Button, CdnImage } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
+import CdnImage from "@renderer/components/CdnImage";
 import { Dialog } from "@renderer/components/Dialog";
+import { usePosTablesDetailOrderStore } from "@renderer/hooks/usePosTablesDetailOrderStore";
 import PosTablesDetailOptionalOptionComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOptionalOptionComp";
 import PosTablesDetailRequiredOptionComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailRequiredOptionComp";
-import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
 import { Menu, OrderMenuOption } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 

@@ -1,5 +1,5 @@
 import { Dialog } from "@renderer/components/Dialog";
-import { ColorName } from "@renderer/constants";
+import { ColorName } from "@renderer/constants/ui";
 import { ModalProps } from "@renderer/types/overlay";
 
 interface DeviceNoStoreModalCompProps extends ModalProps {

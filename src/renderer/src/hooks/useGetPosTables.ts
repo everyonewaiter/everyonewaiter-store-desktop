@@ -1,5 +1,5 @@
 import { getPosTables } from "@renderer/api/pos";
-import { queryKey } from "@renderer/queries/key";
+import { queryKey } from "@renderer/hooks/queryKey";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetPosTables = () => {

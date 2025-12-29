@@ -1,4 +1,4 @@
-import { deviceSchema } from "@renderer/schemas/device";
+import { deviceSchema } from "@renderer/utils/deviceSchema";
 import z from "zod";
 import { create } from "zustand";
 

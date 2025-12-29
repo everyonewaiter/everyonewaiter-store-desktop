@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "@renderer/api";
-import { DatePicker } from "@renderer/components";
+import DatePicker from "@renderer/components/DatePicker";
 import { Dialog } from "@renderer/components/Dialog";
 import { Revenue } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";

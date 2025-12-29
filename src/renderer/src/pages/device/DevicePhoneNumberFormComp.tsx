@@ -1,9 +1,11 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { sendAuthCode } from "@renderer/api/device";
-import { Button, Input, Label } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
-import useDeviceAuthStore from "@renderer/pages/device/useDeviceAuthStore";
-import { DeviceSchema, phoneNumberSchema } from "@renderer/schemas/device";
+import Button from "@renderer/components/Button/Button";
+import Input from "@renderer/components/Input";
+import Label from "@renderer/components/Label";
+import { ColorName } from "@renderer/constants/ui";
+import useDeviceAuthStore from "@renderer/hooks/useDeviceAuthStore";
+import { DeviceSchema, phoneNumberSchema } from "@renderer/utils/deviceSchema";
 import { formatPhoneNumber } from "@renderer/utils/format";
 import { AxiosError } from "axios";
 import { useShallow } from "zustand/react/shallow";

@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Dropdown, Input, Label } from "@renderer/components";
-import { ColorName } from "@renderer/constants";
+import Button from "@renderer/components/Button/Button";
+import Dropdown from "@renderer/components/Dropdown";
+import Input from "@renderer/components/Input";
+import Label from "@renderer/components/Label";
+import { ColorName } from "@renderer/constants/ui";
+import useDeviceAuthStore from "@renderer/hooks/useDeviceAuthStore";
+import useDeviceRemainingTime from "@renderer/hooks/useDeviceRemainingTime";
+import useDeviceStore from "@renderer/hooks/useDeviceStore";
 import DeviceAuthNumberFormComp from "@renderer/pages/device/DeviceAuthNumberFormComp";
 import DevicePhoneNumberFormComp from "@renderer/pages/device/DevicePhoneNumberFormComp";
-import useDeviceAuthStore from "@renderer/pages/device/useDeviceAuthStore";
-import useDeviceRemainingTime from "@renderer/pages/device/useDeviceRemainingTime";
-import useDeviceStore from "@renderer/pages/device/useDeviceStore";
-import { deviceFormSchema, DeviceSchema } from "@renderer/schemas/device";
 import { SimpleStore } from "@renderer/types/domain";
+import { deviceFormSchema, DeviceSchema } from "@renderer/utils/deviceSchema";
 import { useShallow } from "zustand/react/shallow";
 
 function DeviceStep1Comp() {

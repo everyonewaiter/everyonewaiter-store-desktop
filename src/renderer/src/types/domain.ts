@@ -186,7 +186,7 @@ export interface Receipt {
   tableNo: number;
   memo: string;
   printNo: number;
-  receiptMenu: ReceiptMenu[];
+  receiptMenus: ReceiptMenu[];
 }
 
 export interface ReceiptMenu {
@@ -215,7 +215,7 @@ export interface Store {
 export interface Setting {
   ksnetDeviceNo: string;
   extraTableCount: number;
-  kitchenPrinterLocation: DevicePurpose;
+  printerLocation: DevicePurpose;
   showMenuPopup: boolean;
   showOrderTotalPrice: boolean;
   showOrderMenuImage: boolean;

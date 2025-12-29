@@ -1,26 +1,21 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@renderer/api";
-import { Button, Dropdown, Input } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
 import { Dialog } from "@renderer/components/Dialog";
+import Dropdown from "@renderer/components/Dropdown";
+import Input from "@renderer/components/Input";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import { calculateTax, kscatApproval, paymentMethod } from "@renderer/modules/kscat";
 import PosTablesDetailPrintReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPrintReceiptModalComp";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
-import { useGetStore } from "@renderer/queries/useGetStore";
-import { PaymentSchema, paymentSchema } from "@renderer/schemas/pos";
 import { OrderReceiptType, TableActivity } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
 import cn from "@renderer/utils/cn";
-import {
-  formatBusinessNumber,
-  formatPhoneNumber,
-  formatPrice,
-  getFormattedMenuName,
-  getFormattedTableNo,
-} from "@renderer/utils/format";
+import { formatPrice, getFormattedMenuName, getFormattedTableNo } from "@renderer/utils/format";
 import { handleApiError } from "@renderer/utils/handle-api-error";
+import { PaymentSchema, paymentSchema } from "@renderer/utils/posSchema";
 import { overlay } from "overlay-kit";
 
 const cardInstallmentMonths = new Array(12)
@@ -62,18 +57,9 @@ function PosTablesDetailPaymentModalComp({
     defaultValues: {
       paymentAmount: String(activity.remainingPaymentPrice),
       cashReceiptType: "NONE",
-      cashReceiptNumber: "",
       installment: "0",
     },
   });
-
-  const cashReceiptInputLabel =
-    form.watch("cashReceiptType") === "DEDUCTION" ? "휴대폰 번호" : "사업자번호";
-
-  useEffect(() => {
-    form.setValue("cashReceiptNumber", "", { shouldValidate: false });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.watch("cashReceiptType")]);
 
   if (!store) {
     return null;
@@ -98,7 +84,7 @@ function PosTablesDetailPaymentModalComp({
         tradeUniqueNo: response?.tradeUniqueNo ?? "",
         vat,
         supplyAmount,
-        cashReceiptNo: form.watch("cashReceiptNumber").replaceAll("-", ""),
+        cashReceiptNo: response?.cardNo ?? "",
         cashReceiptType: form.watch("cashReceiptType"),
       });
 
@@ -181,7 +167,6 @@ function PosTablesDetailPaymentModalComp({
                 <h3 className="text-gray-0 text-2xl font-semibold">원</h3>
               </div>
             </div>
-
             {paymentType === "cash" ? (
               <>
                 <div className="flex flex-col gap-2">
@@ -205,29 +190,6 @@ function PosTablesDetailPaymentModalComp({
                     ))}
                   </div>
                 </div>
-                {form.watch("cashReceiptType") !== "NONE" && (
-                  <div className="flex flex-col gap-2">
-                    <span className="text-gray-0 text-[15px] font-normal">
-                      {cashReceiptInputLabel}
-                    </span>
-                    <Input
-                      placeholder={cashReceiptInputLabel}
-                      className="w-full"
-                      {...form.register("cashReceiptNumber", {
-                        onChange: (e) => {
-                          const format =
-                            form.watch("cashReceiptType") === "DEDUCTION"
-                              ? formatPhoneNumber
-                              : formatBusinessNumber;
-                          return form.setValue("cashReceiptNumber", format(e), {
-                            shouldValidate: false,
-                          });
-                        },
-                      })}
-                      fieldState={form.getFieldState("cashReceiptNumber")}
-                    />
-                  </div>
-                )}
               </>
             ) : (
               <div className="flex flex-col gap-2">
@@ -249,7 +211,7 @@ function PosTablesDetailPaymentModalComp({
           buttonSize="custom"
           primaryButton={{
             text: paymentType === "cash" ? "현금 결제하기" : "카드 결제하기",
-            className: "h-16 rounded-xl bg-gray-0 text-xl !font-semibold",
+            className: "w-full h-16 rounded-xl bg-gray-0 text-xl !font-semibold",
             onClick: handlePayment,
           }}
           secondaryButton={{ hide: true }}

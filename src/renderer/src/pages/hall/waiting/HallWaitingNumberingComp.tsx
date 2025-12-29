@@ -1,4 +1,4 @@
-import { useGetHallWaitings } from "@renderer/queries/useGetHallWaitings";
+import { useGetHallWaitings } from "@renderer/hooks/useGetHallWaitings";
 import cn from "@renderer/utils/cn";
 
 interface HallWaitingNumberingCompProps {

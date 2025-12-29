@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Dialog } from "@renderer/components/Dialog";
-import { useAddOrder } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailApi";
-import { usePosTablesDetailOrderStore } from "@renderer/pages/pos/tables/[id]/usePosTablesDetailOrderStore";
+import { useAddOrder } from "@renderer/hooks/usePosTablesDetailApi";
+import { usePosTablesDetailOrderStore } from "@renderer/hooks/usePosTablesDetailOrderStore";
 import { ModalProps } from "@renderer/types/overlay";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 

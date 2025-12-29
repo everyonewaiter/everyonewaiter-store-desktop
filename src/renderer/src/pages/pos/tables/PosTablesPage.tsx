@@ -1,10 +1,10 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ReturnIcon } from "@renderer/assets/icons";
-import { Button } from "@renderer/components";
+import Button from "@renderer/components/Button/Button";
+import { useGetPosTables } from "@renderer/hooks/useGetPosTables";
 import PosHeaderComp from "@renderer/pages/pos/PosHeaderComp";
 import PosTablesBoxComp from "@renderer/pages/pos/tables/PosTablesBoxComp";
 import PosTablesChangeTableModalComp from "@renderer/pages/pos/tables/PosTablesChangeTableModalComp";
-import { useGetPosTables } from "@renderer/queries/useGetPosTables";
 import { overlay } from "overlay-kit";
 
 function PosTablesPage() {

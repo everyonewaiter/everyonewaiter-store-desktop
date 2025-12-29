@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogoIcon, LogoSquaredIcon, LogoTextIcon } from "@renderer/assets/logos";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
 
 function DeviceLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();

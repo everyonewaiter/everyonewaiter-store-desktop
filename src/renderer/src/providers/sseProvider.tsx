@@ -2,14 +2,14 @@ import { createContext, PropsWithChildren, useEffect, useRef } from "react";
 import EventSource, { EventSourceListener } from "react-native-sse";
 import orderNotificationSound from "@renderer/assets/sounds/order-notification.mp3";
 import waitingNotificationSound from "@renderer/assets/sounds/waiting-notification.mp3";
-import { closePrinter, openUsbPrinter, printOrder } from "@renderer/modules/printer";
-import { queryKey } from "@renderer/queries/key";
-import { useGetDevice } from "@renderer/queries/useGetDevice";
-import { useGetStore } from "@renderer/queries/useGetStore";
+import { queryKey } from "@renderer/hooks/queryKey";
+import useAudio from "@renderer/hooks/useAudio";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import useInterval from "@renderer/hooks/useInterval";
+import { printOrder } from "@renderer/modules/printer";
+import { usePrinter } from "@renderer/providers/printerProvider";
 import { Receipt } from "@renderer/types/domain";
 import makeSignature from "@renderer/utils/make-signature";
-import useAudio from "@renderer/utils/useAudio";
-import useInterval from "@renderer/utils/useInterval";
 import { useQueryClient } from "@tanstack/react-query";
 
 type SseEventName = "sse";
@@ -46,7 +46,7 @@ const SseContext = createContext(null);
 const SseProvider = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();
   const { device } = useGetDevice();
-  const { store } = useGetStore(device?.storeId ?? "");
+  const { isReceiptPrinterLocationRef } = usePrinter();
 
   const { play: playOrderNotification } = useAudio(orderNotificationSound);
   const { play: playWaitingNotification } = useAudio(waitingNotificationSound);
@@ -153,17 +153,9 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               }
               break;
             case "RECEIPT":
-              if (
-                sseEvent.hasData &&
-                sseEvent.action === "CREATE" &&
-                store?.setting.kitchenPrinterLocation === device.purpose
-              ) {
-                openUsbPrinter().then((result) => {
-                  if (result === 0) {
-                    printOrder(sseEvent.data as Receipt);
-                    closePrinter();
-                  }
-                });
+              if (isReceiptPrinterLocationRef?.current) {
+                console.log("CALL");
+                printOrder(sseEvent.data as Receipt);
               }
               break;
             case "POS":
@@ -188,7 +180,13 @@ const SseProvider = ({ children }: PropsWithChildren) => {
       eventSourceRef.current = null;
       isConnectedRef.current = false;
     };
-  }, [device, store, queryClient, playWaitingNotification, playOrderNotification]);
+  }, [
+    device,
+    queryClient,
+    playWaitingNotification,
+    playOrderNotification,
+    isReceiptPrinterLocationRef,
+  ]);
 
   return <SseContext.Provider value={null}>{children}</SseContext.Provider>;
 };
