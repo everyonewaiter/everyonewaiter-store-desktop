@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { api } from "@renderer/api";
 import { queryKey } from "@renderer/hooks/queryKey";
 import { Device } from "@renderer/types/domain";
@@ -7,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 
 export const useGetDevice = () => {
+  const prevPurposeRef = useRef<string | null>(null);
+
   const { data, error, isSuccess, isError, isPending } = useQuery({
     queryKey: [queryKey.DEVICE],
     queryFn: async (): Promise<Device> => {
@@ -24,6 +26,16 @@ export const useGetDevice = () => {
           window.storageAPI.store(storageKey.DEVICE_TYPE, data.purpose),
         ]);
       })();
+
+      // purpose 변경 감지 및 리다이렉트
+      if (prevPurposeRef.current !== null && prevPurposeRef.current !== data.purpose) {
+        const currentPath = globalThis.window.location.hash;
+        const targetPath = `#/${data.purpose.toLowerCase()}`;
+        if (currentPath !== targetPath) {
+          globalThis.window.location.href = targetPath;
+        }
+      }
+      prevPurposeRef.current = data.purpose;
     }
   }, [isSuccess, data]);
 

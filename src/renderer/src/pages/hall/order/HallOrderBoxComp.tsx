@@ -15,7 +15,12 @@ interface HallOrderBoxCompProps {
   isCompleted?: boolean;
 }
 
-function HallOrderBoxComp({ orderId, storeId, orderMenu, isCompleted }: HallOrderBoxCompProps) {
+function HallOrderBoxComp({
+  orderId,
+  storeId,
+  orderMenu,
+  isCompleted,
+}: Readonly<HallOrderBoxCompProps>) {
   const { store } = useGetStore(storeId);
   const { mutate: mutateOrderMenuServe } = useOrderMenuServe();
 
@@ -43,14 +48,14 @@ function HallOrderBoxComp({ orderId, storeId, orderMenu, isCompleted }: HallOrde
         orderMenu.served ? "bg-[#F1F1F1]" : ""
       )}
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
         {store && store.setting.showOrderMenuImage && (
-          <div className="relative h-[130px] w-[130px] overflow-hidden rounded-xl">
-            <div className="absolute inset-0 bg-[#F1F1F1] opacity-50" />
+          <div className="relative overflow-hidden rounded-xl">
+            {isCompleted && <div className="absolute inset-0 bg-[#F1F1F1] opacity-50" />}
             <CdnImage
               src={orderMenu.image}
               alt={orderMenu.name}
-              className="h-full w-full object-cover"
+              className="h-60 w-full object-cover"
             />
           </div>
         )}
