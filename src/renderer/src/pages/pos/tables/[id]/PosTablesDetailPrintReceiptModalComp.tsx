@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { api } from "@renderer/api";
 import { Dialog } from "@renderer/components/Dialog";
 import { useGetStore } from "@renderer/hooks/useGetStore";
@@ -15,8 +14,6 @@ function PosTablesDetailPrintReceiptModalComp({
   posTableActivityId,
   ...props
 }: PosTablesDetailPrintReceiptModalCompProps) {
-  const navigate = useNavigate();
-
   const [activity, setActivity] = useState<TableActivity | null>(null);
   const { store } = useGetStore(activity?.storeId ?? "");
 
@@ -48,11 +45,6 @@ function PosTablesDetailPrintReceiptModalComp({
             text: "출력하기",
             onClick: handlePrintReceipt,
             disabled: !activity || !store,
-          }}
-          secondaryButton={{
-            onClick: () => {
-              navigate("/pos/tables");
-            },
           }}
         />
       </Dialog.Wrapper>

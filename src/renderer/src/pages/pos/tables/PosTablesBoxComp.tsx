@@ -16,7 +16,7 @@ interface PosTablesBoxCompProps extends Table {
 function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesBoxCompProps) {
   const orderedAt = useMemo(() => {
     return typeof props.orderedAt === "string"
-      ? props.orderedAt?.split(" ")[1].slice(0, 5)
+      ? props.orderedAt?.split(" ")[1]?.slice(0, 5)
       : "00:00";
   }, [props.orderedAt]);
 
