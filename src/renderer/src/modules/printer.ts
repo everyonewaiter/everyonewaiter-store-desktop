@@ -138,9 +138,10 @@ export const printReceiptWithPayment = (store: Store, orderPayment: OrderPayment
   );
   window.printer.lineFeed();
 
+  const prefix = orderPayment.state === "CANCEL" ? "-" : "";
   printLeftRightText(
     "승인 금액",
-    `${orderPayment.amount.toLocaleString()}원`,
+    `${prefix}${orderPayment.amount.toLocaleString()}원`,
     TextAttribute.DEFAULT,
     TextSize.WIDTH0,
     TextSize.HEIGHT0
@@ -293,7 +294,7 @@ export const printReceiptWithActivity = (
 
     printLeftRightText(
       "받을 금액",
-      `${tableActivity.totalPaymentPrice.toLocaleString()}원`,
+      `${(tableActivity.totalOrderPrice - tableActivity.discount).toLocaleString()}원`,
       TextAttribute.BOLD,
       TextSize.WIDTH0,
       TextSize.HEIGHT1
@@ -380,9 +381,10 @@ export const printReceiptWithActivity = (
     );
     window.printer.lineFeed();
 
+    const prefix = orderPayment.state === "CANCEL" ? "-" : "";
     printLeftRightText(
       "승인 금액",
-      `${orderPayment.amount.toLocaleString()}원`,
+      `${prefix}${orderPayment.amount.toLocaleString()}원`,
       TextAttribute.DEFAULT,
       TextSize.WIDTH0,
       TextSize.HEIGHT0

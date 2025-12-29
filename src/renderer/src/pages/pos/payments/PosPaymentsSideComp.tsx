@@ -12,10 +12,16 @@ import { overlay } from "overlay-kit";
 interface PosPaymentsSideCompProps {
   store: Store;
   payment: OrderPayment;
+  fetchCount: number;
   setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function PosPaymentsSideComp({ store, payment, setFetchCount }: PosPaymentsSideCompProps) {
+function PosPaymentsSideComp({
+  store,
+  payment,
+  fetchCount,
+  setFetchCount,
+}: PosPaymentsSideCompProps) {
   const [activity, setActivity] = useState<TableActivity | null>(null);
 
   useEffect(() => {
@@ -26,7 +32,7 @@ function PosPaymentsSideComp({ store, payment, setFetchCount }: PosPaymentsSideC
     };
 
     fetchActivity();
-  }, [payment]);
+  }, [payment, fetchCount]);
 
   return (
     <aside
@@ -83,25 +89,27 @@ function PosPaymentsSideComp({ store, payment, setFetchCount }: PosPaymentsSideC
             결제 취소하기
           </Button>
         )}
-        <Button
-          color={ColorName.BLACK}
-          className={cn(
-            "h-full w-full rounded-xl px-8 font-semibold text-white",
-            payment.posTableActivityId ? "bg-gray-0" : "bg-gray-500"
-          )}
-          disabled={!payment.posTableActivityId || !activity}
-          onClick={() =>
-            overlay.open((overlayProps) => (
-              <PosPaymentsOrderIncludeModalComp
-                store={store}
-                activity={activity!}
-                {...overlayProps}
-              />
-            ))
-          }
-        >
-          영수증 출력하기
-        </Button>
+        {activity && (
+          <Button
+            color={ColorName.BLACK}
+            className={cn(
+              "h-full w-full rounded-xl px-8 font-semibold text-white",
+              payment.posTableActivityId ? "bg-gray-0" : "bg-gray-500"
+            )}
+            disabled={!payment.posTableActivityId}
+            onClick={() =>
+              overlay.open((overlayProps) => (
+                <PosPaymentsOrderIncludeModalComp
+                  store={store}
+                  activity={activity}
+                  {...overlayProps}
+                />
+              ))
+            }
+          >
+            영수증 출력하기
+          </Button>
+        )}
       </footer>
     </aside>
   );
