@@ -293,7 +293,7 @@ export const printReceiptWithActivity = (
 
     printLeftRightText(
       "받을 금액",
-      `${tableActivity.totalPaymentPrice.toLocaleString()}원`,
+      `${(tableActivity.totalOrderPrice - tableActivity.discount).toLocaleString()}원`,
       TextAttribute.BOLD,
       TextSize.WIDTH0,
       TextSize.HEIGHT1
