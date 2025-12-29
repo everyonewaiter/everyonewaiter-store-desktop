@@ -63,10 +63,10 @@ function PosPage() {
           </time>
           <h1 className="text-5xl font-bold text-white">안녕하세요, {storeName}입니다.</h1>
         </header>
-        <nav className="flex w-[659px] flex-col gap-4">
+        <nav className="flex w-[659px] flex-col items-center gap-4">
           <Button
             color="black"
-            className="bg-gray-0 h-30 rounded-2xl border-none text-3xl font-bold text-white"
+            className="bg-gray-0 h-30 w-full rounded-2xl border-none text-3xl font-bold text-white"
             onClick={() => {
               if (storeStatus === "CLOSE") {
                 overlay.open((overlayProps) => (
@@ -81,14 +81,14 @@ function PosPage() {
           </Button>
           <Button
             variant="outline"
-            className="h-18 rounded-2xl border-white text-2xl font-bold text-white"
+            className="h-18 w-full rounded-2xl border-white text-2xl font-bold text-white"
             onClick={() => navigate("payments")}
           >
             결제내역
           </Button>
           <Button
             variant="outline"
-            className="h-18 rounded-2xl border-white text-2xl font-bold text-white"
+            className="h-18 w-full rounded-2xl border-white text-2xl font-bold text-white"
             onClick={() =>
               overlay.open((overlayProps) => <PosPaymentsSalesModalComp {...overlayProps} />)
             }
