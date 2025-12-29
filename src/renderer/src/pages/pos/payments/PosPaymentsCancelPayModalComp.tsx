@@ -9,12 +9,14 @@ import { ModalProps } from "@renderer/types/overlay";
 interface PosPaymentsCancelPayModalCompProps extends ModalProps {
   store: Store;
   payment: OrderPayment;
+  setSelectedPayment: React.Dispatch<React.SetStateAction<OrderPayment | null>>;
   setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function PosPaymentsCancelPayModalComp({
   store,
   payment,
+  setSelectedPayment,
   setFetchCount,
   ...props
 }: PosPaymentsCancelPayModalCompProps) {
@@ -25,6 +27,7 @@ function PosPaymentsCancelPayModalComp({
       tradeUniqueNo: response?.tradeUniqueNo ?? "",
     });
     setFetchCount((count) => count + 1);
+    setSelectedPayment(null);
     props.close();
   };
 

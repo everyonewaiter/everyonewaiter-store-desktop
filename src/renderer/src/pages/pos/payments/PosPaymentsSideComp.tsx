@@ -12,14 +12,14 @@ import { overlay } from "overlay-kit";
 interface PosPaymentsSideCompProps {
   store: Store;
   payment: OrderPayment;
-  fetchCount: number;
+  setSelectedPayment: React.Dispatch<React.SetStateAction<OrderPayment | null>>;
   setFetchCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function PosPaymentsSideComp({
   store,
   payment,
-  fetchCount,
+  setSelectedPayment,
   setFetchCount,
 }: PosPaymentsSideCompProps) {
   const [activity, setActivity] = useState<TableActivity | null>(null);
@@ -32,7 +32,7 @@ function PosPaymentsSideComp({
     };
 
     fetchActivity();
-  }, [payment, fetchCount]);
+  }, [payment]);
 
   return (
     <aside
@@ -80,6 +80,7 @@ function PosPaymentsSideComp({
                 <PosPaymentsCancelPayModalComp
                   store={store}
                   payment={payment}
+                  setSelectedPayment={setSelectedPayment}
                   setFetchCount={setFetchCount}
                   {...overlayProps}
                 />
