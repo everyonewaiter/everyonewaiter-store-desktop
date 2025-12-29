@@ -1,4 +1,4 @@
-import { Button } from "@renderer/components";
+import { Button, CdnImage } from "@renderer/components";
 import { ColorName } from "@renderer/constants";
 import HallOrderOptionComp from "@renderer/pages/hall/order/HallOrderOptionComp";
 import { useOrderMenuServe } from "@renderer/pages/hall/order/useHallOrderApi";
@@ -14,7 +14,12 @@ interface HallOrderBoxCompProps {
   isCompleted?: boolean;
 }
 
-function HallOrderBoxComp({ orderId, storeId, orderMenu, isCompleted }: HallOrderBoxCompProps) {
+function HallOrderBoxComp({
+  orderId,
+  storeId,
+  orderMenu,
+  isCompleted,
+}: Readonly<HallOrderBoxCompProps>) {
   const { store } = useGetStore(storeId);
   const { mutate: mutateOrderMenuServe } = useOrderMenuServe();
 
@@ -42,11 +47,15 @@ function HallOrderBoxComp({ orderId, storeId, orderMenu, isCompleted }: HallOrde
         orderMenu.served ? "bg-[#F1F1F1]" : ""
       )}
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
         {store && store.setting.showOrderMenuImage && (
-          <div className="relative h-[130px] w-[130px] overflow-hidden rounded-xl">
-            <div className="absolute inset-0 bg-[#F1F1F1] opacity-50" />
-            <img src={orderMenu.image} alt={orderMenu.name} />
+          <div className="relative h-42 overflow-hidden rounded-xl">
+            {isCompleted && <div className="absolute inset-0 bg-[#F1F1F1] opacity-50" />}
+            <CdnImage
+              src={orderMenu.image}
+              alt={orderMenu.name}
+              className="h-full w-full object-cover"
+            />
           </div>
         )}
         <div className="flex w-full flex-col gap-2">
