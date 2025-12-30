@@ -87,7 +87,9 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
           <div className={cn("text-xl font-semibold", disabled ? "text-gray-300" : "text-gray-0")}>
             {props.orderMenuCount > 0 ? (
               <div className="flex items-end gap-1.5">
-                <strong className="text-xl font-semibold">{props.orderMenuName}</strong>
+                <strong className="text-xl font-semibold">
+                  {props.orderMenuName?.replaceAll(" ", "")}
+                </strong>
                 {props.orderMenuCount > 1 && (
                   <span className="text-s mb-0.5">외 {props.orderMenuCount - 1}개</span>
                 )}
