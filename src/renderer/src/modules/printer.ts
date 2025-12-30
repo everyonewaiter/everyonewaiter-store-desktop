@@ -470,6 +470,7 @@ export const printOrder = (receipt: Receipt) => {
       );
       window.printer.lineFeed();
     }
+    window.printer.lineFeed();
   }
 
   window.printer.cutPaper();
