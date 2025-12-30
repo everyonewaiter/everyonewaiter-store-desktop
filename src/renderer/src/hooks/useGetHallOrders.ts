@@ -12,5 +12,5 @@ export const useGetHallOrders = () => {
     },
   });
 
-  return { orders: data ?? { served: [], unserved: [] } };
+  return { orders: { served: data?.served?.reverse() ?? [], unserved: data?.unserved ?? [] } };
 };
