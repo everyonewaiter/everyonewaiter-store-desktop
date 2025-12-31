@@ -27,6 +27,7 @@ function DeviceStep2Comp() {
   const navigate = useNavigate();
 
   const form = useForm<DeviceInfoSchema>({
+    reValidateMode: "onChange",
     resolver: zodResolver(deviceInfoSchema),
     defaultValues: {
       deviceType: "HALL",
@@ -119,7 +120,16 @@ function DeviceStep2Comp() {
       <div className="flex flex-col md:gap-6 lg:gap-8">
         <div className="flex flex-col gap-1">
           <Label>기기 이름</Label>
-          <Input placeholder="기기 이름을 입력하세요." {...form.register("deviceName")} />
+          <Input
+            placeholder="기기 이름을 입력하세요."
+            {...form.register("deviceName")}
+            className={cn(form.formState.errors.deviceName && "border-status-error")}
+          />
+          {form.formState.errors.deviceName && (
+            <p className="text-status-error ml-1 text-xs">
+              {form.formState.errors.deviceName.message}
+            </p>
+          )}
         </div>
         <Button
           type="submit"
