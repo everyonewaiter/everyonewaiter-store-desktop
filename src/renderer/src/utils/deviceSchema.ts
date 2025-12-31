@@ -14,7 +14,11 @@ export const deviceSchema = z.object({
     .regex(/^\d{6}$/, "인증번호는 6자리만 입력 가능합니다."),
   storeId: z.string().trim().min(1, "매장을 선택해주세요.").or(z.literal("")),
   deviceType: z.enum(Object.keys(DeviceSupport)),
-  deviceName: z.string().regex(/^(홀|POS)-\d{12}$/, "기기 이름 형식이 맞지 않습니다."),
+  deviceName: z
+    .string()
+    .trim()
+    .min(1, "기기 이름을 입력해주세요.")
+    .max(20, "기기 이름은 20자 이하로 입력해주세요."),
 });
 
 export const deviceFormSchema = deviceSchema.pick({ phoneNumber: true, code: true, storeId: true });
