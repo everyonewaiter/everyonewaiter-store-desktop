@@ -5,7 +5,10 @@ import Button from "@renderer/components/Button/Button";
 import { ColorName } from "@renderer/constants/ui";
 import { WEEK_NAME } from "@renderer/constants/week";
 import { useCurrentTime } from "@renderer/hooks/useCurrentTime";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetStore } from "@renderer/hooks/useGetStore";
 import PosStoreCloseModalComp from "@renderer/pages/pos/PosStoreCloseModalComp";
+import cn from "@renderer/utils/cn";
 import { overlay } from "overlay-kit";
 
 function PosHeaderComp() {
@@ -13,6 +16,15 @@ function PosHeaderComp() {
   const navigate = useNavigate();
 
   const { date } = useCurrentTime();
+
+  const { device } = useGetDevice();
+  const { store } = useGetStore(device?.storeId ?? "");
+
+  const handleStoreStatusClick = () => {
+    overlay.open((overlayProps) => (
+      <PosStoreCloseModalComp {...overlayProps} onSuccess={() => navigate("/pos")} />
+    ));
+  };
 
   return (
     <header className="flex w-full flex-col gap-8 px-15 pt-10">
@@ -52,19 +64,25 @@ function PosHeaderComp() {
             </Button>
           )}
           <Button
-            className="text-gray-0 gap-3 rounded-[40px] border-[#6BD876] bg-[#E1F7E4] py-2.5 pr-4 pl-3 text-base font-normal hover:bg-[#E1F7E4]"
-            onClick={() =>
-              overlay.open((overlayProps) => (
-                <PosStoreCloseModalComp {...overlayProps} onSuccess={() => navigate("/pos")} />
-              ))
-            }
+            className={cn(
+              "gap-3 rounded-[40px] py-2.5 pr-4 pl-3 text-base font-normal",
+              store?.status === "OPEN"
+                ? "text-gray-0 border-[#6BD876] bg-[#E1F7E4] hover:bg-[#E1F7E4]"
+                : "border-gray-400 bg-gray-600 text-gray-300 hover:bg-gray-600"
+            )}
+            onClick={handleStoreStatusClick}
           >
-            <div className="bg-status-success h-[23px] w-[23px] rounded-full" />
-            영업 중
+            <div
+              className={cn(
+                "h-[23px] w-[23px] rounded-full",
+                store?.status === "OPEN" ? "bg-status-success" : "bg-gray-400"
+              )}
+            />
+            {store?.status === "OPEN" ? "영업 중" : "영업 마감"}
           </Button>
         </nav>
       </div>
-      <hr className="h-[1px] w-full bg-gray-600" />
+      <hr className="h-px w-full bg-gray-600" />
     </header>
   );
 }
