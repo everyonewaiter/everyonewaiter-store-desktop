@@ -4,11 +4,13 @@ import { useGetStore } from "@renderer/hooks/useGetStore";
 import { closePrinter, openUsbPrinter } from "@renderer/modules/printer";
 
 interface PrinterContextValue {
+  lastPrintNoRef: React.RefObject<number> | null;
   isConnectedRef: React.RefObject<boolean> | null;
   isReceiptPrinterLocationRef: React.RefObject<boolean> | null;
 }
 
 const PrinterContext = createContext<PrinterContextValue>({
+  lastPrintNoRef: null,
   isConnectedRef: null,
   isReceiptPrinterLocationRef: null,
 });
@@ -28,6 +30,7 @@ const PrinterProvider = ({ children }: PropsWithChildren) => {
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
 
+  const lastPrintNoRef = useRef(0);
   const isConnectedRef = useRef(false);
   const isReceiptPrinterLocationRef = useRef(false);
 
@@ -61,7 +64,9 @@ const PrinterProvider = ({ children }: PropsWithChildren) => {
   }, [device, store]);
 
   return (
-    <PrinterContext.Provider value={{ isConnectedRef, isReceiptPrinterLocationRef }}>
+    <PrinterContext.Provider
+      value={{ lastPrintNoRef, isConnectedRef, isReceiptPrinterLocationRef }}
+    >
       {children}
     </PrinterContext.Provider>
   );

@@ -46,7 +46,7 @@ const SseContext = createContext(null);
 const SseProvider = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();
   const { device } = useGetDevice();
-  const { isReceiptPrinterLocationRef } = usePrinter();
+  const { lastPrintNoRef, isReceiptPrinterLocationRef } = usePrinter();
 
   const { play: playOrderNotification } = useAudio(orderNotificationSound);
   const { play: playWaitingNotification } = useAudio(waitingNotificationSound);
@@ -153,9 +153,13 @@ const SseProvider = ({ children }: PropsWithChildren) => {
               }
               break;
             case "RECEIPT":
-              if (isReceiptPrinterLocationRef?.current) {
-                console.log("CALL");
+              if (
+                isReceiptPrinterLocationRef?.current &&
+                lastPrintNoRef &&
+                lastPrintNoRef.current < (sseEvent.data as Receipt).printNo
+              ) {
                 printOrder(sseEvent.data as Receipt);
+                lastPrintNoRef.current = (sseEvent.data as Receipt).printNo;
               }
               break;
             case "POS":
