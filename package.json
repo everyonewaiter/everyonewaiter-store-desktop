@@ -1,6 +1,6 @@
 {
   "name": "everyonewaiter-store-desktop",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Everyone Waiter Store Desktop Application",
   "main": "./out/main/index.js",
   "author": "everyonewaiter.com",
