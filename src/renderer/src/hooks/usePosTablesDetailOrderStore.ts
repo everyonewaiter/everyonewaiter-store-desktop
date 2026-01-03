@@ -41,7 +41,13 @@ export const usePosTablesDetailOrderStore = create<State>((set) => ({
       // NOTE: 일치하는 메뉴가 있으면 quantity 합산
       if (targetIndex !== -1) {
         const target = orders[targetIndex];
-        orders[targetIndex] = { ...target, quantity: target.quantity + menu.quantity };
+        const unitPrice = target.totalPrice / target.quantity;
+        const newQuantity = target.quantity + menu.quantity;
+        orders[targetIndex] = {
+          ...target,
+          quantity: newQuantity,
+          totalPrice: unitPrice * newQuantity,
+        };
         return { orders };
       }
 
@@ -65,7 +71,12 @@ export const usePosTablesDetailOrderStore = create<State>((set) => ({
       }
 
       const newQty = action === "add" ? target.quantity + 1 : target.quantity - 1;
-      orders[orderIndex] = { ...target, quantity: newQty };
+      const unitPrice = target.totalPrice / target.quantity;
+      orders[orderIndex] = {
+        ...target,
+        quantity: newQty,
+        totalPrice: unitPrice * newQty,
+      };
 
       return { orders };
     });
