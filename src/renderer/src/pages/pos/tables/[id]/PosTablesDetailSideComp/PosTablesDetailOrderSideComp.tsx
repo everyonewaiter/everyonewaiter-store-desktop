@@ -44,10 +44,7 @@ function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompP
           <div className="flex items-center justify-between">
             <span className="text-gray-0 text-2xl font-semibold">주문 금액</span>
             <span className="text-gray-0 text-4xl font-bold">
-              {orders
-                ?.reduce((acc, cur) => acc + cur.totalPrice * cur.quantity, 0)
-                ?.toLocaleString()}
-              원
+              {orders?.reduce((acc, cur) => acc + cur.totalPrice, 0)?.toLocaleString()}원
             </span>
           </div>
         </div>
