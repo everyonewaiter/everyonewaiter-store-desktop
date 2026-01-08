@@ -137,7 +137,7 @@ PosPaymentsOrderBoxComp.Index = function Number({
 PosPaymentsOrderBoxComp.Divider = function Divider({ className }: { className?: string }) {
   return (
     <div className={cn("w-full", className)}>
-      <div className="h-[1px] w-full bg-gray-600" />
+      <div className="h-px w-full bg-gray-600" />
     </div>
   );
 };
