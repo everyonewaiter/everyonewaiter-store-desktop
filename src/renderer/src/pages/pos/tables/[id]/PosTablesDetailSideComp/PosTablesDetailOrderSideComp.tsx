@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "@renderer/components/Button/Button";
+import { useGetDevice } from "@renderer/hooks/useGetDevice";
+import { useGetMenus } from "@renderer/hooks/usePosTablesDetailApi";
 import { usePosTablesDetailOrderStore } from "@renderer/hooks/usePosTablesDetailOrderStore";
 import OrderBox from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosTablesDetailOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailOrderModalComp";
@@ -12,7 +14,26 @@ interface PosTablesDetailOrderSideCompProps {
 
 function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompProps) {
   const navigate = useNavigate();
+  const { device } = useGetDevice();
+  const { data: categories } = useGetMenus(device?.storeId ?? "");
   const { orders, updateMenuQuantity } = usePosTablesDetailOrderStore();
+
+  const allMenus = categories?.categories?.flatMap((category) => category.menus) ?? [];
+
+  const calculateTotalPrice = () => {
+    return (
+      orders?.reduce((acc, cur) => {
+        const selectedMenu = allMenus?.find((menu) => String(menu.menuId) === String(cur.menuId));
+        const selectedOptions = cur.menuOptionGroups.flatMap((group) => group.orderOptions);
+
+        return (
+          acc +
+          ((selectedMenu?.price ?? 0) + selectedOptions.reduce((a, b) => a + b.price, 0)) *
+            cur.quantity
+        );
+      }, 0) ?? 0
+    );
+  };
 
   return (
     <>
@@ -44,10 +65,7 @@ function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompP
           <div className="flex items-center justify-between">
             <span className="text-gray-0 text-2xl font-semibold">주문 금액</span>
             <span className="text-gray-0 text-4xl font-bold">
-              {orders
-                ?.reduce((acc, cur) => acc + cur.totalPrice * cur.quantity, 0)
-                ?.toLocaleString()}
-              원
+              {calculateTotalPrice().toLocaleString()}원
             </span>
           </div>
         </div>

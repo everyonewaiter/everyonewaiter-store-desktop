@@ -250,7 +250,6 @@ export interface CreateOrder {
       name: string;
       orderOptions: OrderMenuOption[];
     }[];
-    totalPrice: number;
   }[];
 }
 

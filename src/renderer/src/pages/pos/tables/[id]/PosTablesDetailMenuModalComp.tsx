@@ -83,7 +83,6 @@ function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuMod
             ?.name ?? "",
         orderOptions: group.orderOptions,
       })),
-      totalPrice: totalPrice(),
     });
     props.close();
   };
