@@ -5,6 +5,7 @@ import { useGetStore } from "@renderer/hooks/useGetStore";
 import { printReceiptWithActivity } from "@renderer/modules/printer";
 import { TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailPrintReceiptModalCompProps extends ModalProps {
   posTableActivityId: string;
@@ -19,8 +20,12 @@ function PosTablesDetailPrintReceiptModalComp({
 
   useEffect(() => {
     const fetchActivity = async () => {
-      const { data } = await api.get(`/pos/tables/activities/${posTableActivityId}`);
-      setActivity(data);
+      try {
+        const { data } = await api.get(`/pos/tables/activities/${posTableActivityId}`);
+        setActivity(data);
+      } catch (error) {
+        handleApiError(error as Error);
+      }
     };
 
     fetchActivity();
