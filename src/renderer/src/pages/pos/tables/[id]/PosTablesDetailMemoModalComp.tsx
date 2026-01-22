@@ -27,20 +27,19 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
   const handleUpdateMemos = async () => {
     if (!activity?.orders) return;
 
-    for (let index = 0; index < memos.length; index++) {
-      const memo = updatedMemos[index] ?? memos[index] ?? "";
+    try {
+      for (let index = 0; index < memos.length; index++) {
+        const memo = updatedMemos[index] ?? memos[index] ?? "";
 
-      if (!activity?.orders[index] || activity?.orders[index].memo === memo) continue;
+        if (!activity?.orders[index] || activity?.orders[index].memo === memo) continue;
 
-      await updateMemo(
-        { tableNo, orderId: activity?.orders[index].orderId, memo },
-        {
-          onError: (error) => handleApiError(error),
-        }
-      );
+        await updateMemo({ tableNo, orderId: activity?.orders[index].orderId, memo });
+      }
+      setIsEditing(false);
+      props.close();
+    } catch (error) {
+      handleApiError(error as Error);
     }
-    setIsEditing(false);
-    props.close();
   };
 
   return (

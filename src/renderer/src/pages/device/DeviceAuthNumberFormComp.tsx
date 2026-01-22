@@ -7,6 +7,7 @@ import useDeviceAuthStore from "@renderer/hooks/useDeviceAuthStore";
 import DeviceNoStoreModalComp from "@renderer/pages/device/DeviceNoStoreModalComp";
 import { SimpleStore } from "@renderer/types/domain";
 import { codeSchema, DeviceSchema } from "@renderer/utils/deviceSchema";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 import { overlay } from "overlay-kit";
 import { useShallow } from "zustand/react/shallow";
 
@@ -36,31 +37,35 @@ function DeviceAuthNumberFormComp({
 
     const { phoneNumber, code } = form.watch();
 
-    const response = await verifyAuthCode(phoneNumber.replaceAll("-", ""), code);
-    const { stores } = response.data;
+    try {
+      const response = await verifyAuthCode(phoneNumber.replaceAll("-", ""), code);
+      const { stores } = response.data;
 
-    if (stores.length === 0) {
-      overlay.open((overlayProps) => (
-        <DeviceNoStoreModalComp
-          {...overlayProps}
-          resetForm={() => {
-            form.reset();
-            setIsSubmitted({
-              phoneNumber: false,
-              code: false,
-              storeId: false,
-            });
-            resetInterval();
-          }}
-        />
-      ));
-    } else {
-      setStores(stores);
-      if (stores.length === 1) {
-        form.setValue("storeId", stores[0].storeId);
+      if (stores.length === 0) {
+        overlay.open((overlayProps) => (
+          <DeviceNoStoreModalComp
+            {...overlayProps}
+            resetForm={() => {
+              form.reset();
+              setIsSubmitted({
+                phoneNumber: false,
+                code: false,
+                storeId: false,
+              });
+              resetInterval();
+            }}
+          />
+        ));
+      } else {
+        setStores(stores);
+        if (stores.length === 1) {
+          form.setValue("storeId", stores[0].storeId);
+        }
+        setIsSubmitted({ code: true });
+        resetInterval();
       }
-      setIsSubmitted({ code: true });
-      resetInterval();
+    } catch (error) {
+      handleApiError(error as Error);
     }
   };
 

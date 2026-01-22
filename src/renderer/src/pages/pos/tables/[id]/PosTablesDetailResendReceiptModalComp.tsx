@@ -15,10 +15,8 @@ function PosTablesDetailResendReceiptModalComp({
   const handleResendReceipt = async () => {
     try {
       await api.post(`/pos/tables/${tableNo}/resend-receipt`);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        handleApiError(error);
-      }
+    } catch (error) {
+      handleApiError(error as Error);
     }
   };
 
