@@ -125,9 +125,7 @@ function PosTablesDetailPaymentModalComp({
         await approvePayment();
       }
     } catch (error) {
-      if (error instanceof Error) {
-        handleApiError(error);
-      }
+      handleApiError(error as Error);
     } finally {
       props.close();
     }
