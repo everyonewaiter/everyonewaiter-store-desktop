@@ -1,5 +1,4 @@
 import { KSCATApprovalRequest, KSCATApprovalTelegram } from "@renderer/types/modules";
-import { handleError } from "@renderer/utils/handle-api-error";
 import { FindJSONtoString } from "@shared/utils/string";
 import $ from "jquery";
 
@@ -85,7 +84,7 @@ export const kscatApproval = async ({
     data: { REQ: requestTelegram },
     success: async (data) => {
       if (FindJSONtoString("RES", data) != "0000") {
-        handleError(FindJSONtoString("MSG", data));
+        throw new Error(FindJSONtoString("MSG", data));
       } else {
         // 정상 승인인 경우
         if (FindJSONtoString("STATUS", data) == "O") {

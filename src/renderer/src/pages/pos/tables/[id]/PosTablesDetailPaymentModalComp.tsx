@@ -66,35 +66,63 @@ function PosTablesDetailPaymentModalComp({
   }
 
   const approvePayment = async (response?: KSCATApprovalResponse) => {
-    const amount = parseInt(form.watch("paymentAmount"));
+    const amount = Number.parseInt(form.watch("paymentAmount"));
     const { vat, supplyAmount } = calculateTax(amount);
     const canPrintReceipt = activity.remainingPaymentPrice === amount;
 
-    try {
-      await api.post(`/orders/payments/${activity.tableNo}/approve`, {
-        method: paymentType === "cash" ? "CASH" : "CARD",
-        amount,
-        approvalNo: response?.approvalNo ?? "",
-        installment: form.watch("installment").padStart(2, "0"),
-        cardNo: response?.cardNo ?? "",
-        issuerName: response?.issuerName ?? "",
-        purchaseName: response?.purchaseName ?? "",
-        merchantNo: response?.merchantNo ?? "",
-        tradeTime: response?.tradeTime ?? "",
-        tradeUniqueNo: response?.tradeUniqueNo ?? "",
-        vat,
-        supplyAmount,
-        cashReceiptNo: response?.cardNo ?? "",
-        cashReceiptType: form.watch("cashReceiptType"),
-      });
+    await api.post(`/orders/payments/${activity.tableNo}/approve`, {
+      method: paymentType === "cash" ? "CASH" : "CARD",
+      amount,
+      approvalNo: response?.approvalNo ?? "",
+      installment: form.watch("installment").padStart(2, "0"),
+      cardNo: response?.cardNo ?? "",
+      issuerName: response?.issuerName ?? "",
+      purchaseName: response?.purchaseName ?? "",
+      merchantNo: response?.merchantNo ?? "",
+      tradeTime: response?.tradeTime ?? "",
+      tradeUniqueNo: response?.tradeUniqueNo ?? "",
+      vat,
+      supplyAmount,
+      cashReceiptNo: response?.cardNo ?? "",
+      cashReceiptType: form.watch("cashReceiptType"),
+    });
 
-      if (canPrintReceipt) {
-        overlay.open((overlayProps) => (
-          <PosTablesDetailPrintReceiptModalComp
-            posTableActivityId={activity.posTableActivityId}
-            {...overlayProps}
-          />
-        ));
+    if (canPrintReceipt) {
+      overlay.open((overlayProps) => (
+        <PosTablesDetailPrintReceiptModalComp
+          posTableActivityId={activity.posTableActivityId}
+          {...overlayProps}
+        />
+      ));
+    }
+  };
+
+  const handlePayment = async () => {
+    try {
+      if (paymentType === "card") {
+        await kscatApproval({
+          deviceNo: store.setting.ksnetDeviceNo,
+          method: paymentMethod.CARD,
+          type: "0200",
+          amount: Number.parseInt(form.watch("paymentAmount")),
+          installment: form.watch("installment").padStart(2, "0"),
+          successCallback: approvePayment,
+        });
+      }
+
+      if (paymentType === "cash" && form.watch("cashReceiptType") !== "NONE") {
+        await kscatApproval({
+          deviceNo: store.setting.ksnetDeviceNo,
+          method: paymentMethod.CASH,
+          type: "0200",
+          amount: Number.parseInt(form.watch("paymentAmount")),
+          installment: form.watch("cashReceiptType") === "DEDUCTION" ? "00" : "01",
+          successCallback: approvePayment,
+        });
+      }
+
+      if (paymentType === "cash" && form.watch("cashReceiptType") === "NONE") {
+        await approvePayment();
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -102,34 +130,6 @@ function PosTablesDetailPaymentModalComp({
       }
     } finally {
       props.close();
-    }
-  };
-
-  const handlePayment = async () => {
-    if (paymentType === "card") {
-      await kscatApproval({
-        deviceNo: store.setting.ksnetDeviceNo,
-        method: paymentMethod.CARD,
-        type: "0200",
-        amount: parseInt(form.watch("paymentAmount")),
-        installment: form.watch("installment").padStart(2, "0"),
-        successCallback: approvePayment,
-      });
-    }
-
-    if (paymentType === "cash" && form.watch("cashReceiptType") !== "NONE") {
-      await kscatApproval({
-        deviceNo: store.setting.ksnetDeviceNo,
-        method: paymentMethod.CASH,
-        type: "0200",
-        amount: parseInt(form.watch("paymentAmount")),
-        installment: form.watch("cashReceiptType") === "DEDUCTION" ? "00" : "01",
-        successCallback: approvePayment,
-      });
-    }
-
-    if (paymentType === "cash" && form.watch("cashReceiptType") === "NONE") {
-      await approvePayment();
     }
   };
 
