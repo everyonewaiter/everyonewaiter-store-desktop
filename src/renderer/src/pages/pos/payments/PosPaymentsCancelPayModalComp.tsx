@@ -5,6 +5,7 @@ import { kscatApproval, paymentMethod, paymentType } from "@renderer/modules/ksc
 import { OrderPayment, Store } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosPaymentsCancelPayModalCompProps extends ModalProps {
   store: Store;
@@ -21,14 +22,18 @@ function PosPaymentsCancelPayModalComp({
   ...props
 }: PosPaymentsCancelPayModalCompProps) {
   const cancelPayment = async (response?: KSCATApprovalResponse) => {
-    await api.post(`/orders/payments/${payment.orderPaymentId}/cancel`, {
-      approvalNo: response?.approvalNo ?? "",
-      tradeTime: response?.tradeTime ?? "",
-      tradeUniqueNo: response?.tradeUniqueNo ?? "",
-    });
-    setFetchCount((count) => count + 1);
-    setSelectedPayment(null);
-    props.close();
+    try {
+      await api.post(`/orders/payments/${payment.orderPaymentId}/cancel`, {
+        approvalNo: response?.approvalNo ?? "",
+        tradeTime: response?.tradeTime ?? "",
+        tradeUniqueNo: response?.tradeUniqueNo ?? "",
+      });
+      setFetchCount((count) => count + 1);
+      setSelectedPayment(null);
+      props.close();
+    } catch (error) {
+      handleApiError(error as Error);
+    }
   };
 
   const handleCancelPayment = async () => {

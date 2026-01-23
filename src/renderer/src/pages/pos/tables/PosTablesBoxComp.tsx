@@ -22,13 +22,26 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
 
   const { elapsedTime } = usePosTablesElapsedTime(props.orderedAt);
 
+  const getBorderColorByOrderType = () => {
+    if (disabled) return "border-none";
+    if (props.orderType === "POSTPAID") return "border-primary";
+    if (props.orderType === "PREPAID") return "border-[#2E8CFF]";
+    return "border-gray-500";
+  };
+
+  const getBackgroundColorByOrderType = () => {
+    if (disabled) return "bg-gray-500/60 text-gray-300";
+    if (props.orderType === "POSTPAID") return "bg-primary/10 text-primary";
+    if (props.orderType === "PREPAID") return "bg-[#2E8CFF]/10 text-[#2E8CFF]";
+    return "bg-gray-700 text-gray-300";
+  };
+
   return (
     <button
       className={cn(
-        "flex aspect-[432/320] flex-col items-start justify-between rounded-3xl border-2 border-gray-500 p-7",
-        props.hasOrder && props.orderType === "POSTPAID" ? "border-primary" : "",
-        props.hasOrder && props.orderType === "PREPAID" ? "border-[#2E8CFF]" : "",
-        disabled ? "cursor-default border-none bg-gray-500/60" : "cursor-pointer",
+        "flex aspect-432/320 flex-col items-start justify-between rounded-3xl border-2 p-7",
+        getBorderColorByOrderType(),
+        disabled ? "cursor-default bg-gray-500/60" : "cursor-pointer",
         className
       )}
       onClick={() => (disabled ? null : onClick())}
@@ -36,14 +49,8 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
       <header className="flex w-full items-center justify-between">
         <div
           className={cn(
-            "flex h-9 items-center justify-center rounded-3xl bg-gray-700 px-4 py-1 text-[15px] font-normal text-gray-300",
-            !disabled && props.hasOrder && props.orderType === "POSTPAID"
-              ? "bg-primary/10 text-primary"
-              : "",
-            !disabled && props.hasOrder && props.orderType === "PREPAID"
-              ? "bg-[#2E8CFF]/10 text-[#2E8CFF]"
-              : "",
-            disabled && "bg-gray-500/60 text-gray-300"
+            "flex h-9 items-center justify-center rounded-3xl px-4 py-1 text-[15px] font-normal",
+            getBackgroundColorByOrderType()
           )}
         >
           {props.hasOrder
@@ -53,8 +60,8 @@ function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesB
         <div className="flex items-center gap-2">
           <time
             className={cn(
-              "text-gray-0 flex h-9 items-center justify-center gap-1.5 rounded-3xl px-4 py-1 text-[15px] font-normal",
-              disabled ? "text-gray-300" : "bg-gray-700"
+              "flex h-9 items-center justify-center gap-1.5 rounded-3xl px-4 py-1 text-[15px] font-normal",
+              disabled ? "text-gray-300" : "text-gray-0 bg-gray-700"
             )}
           >
             <AlarmIcon width={20} height={20} color="#222222" />

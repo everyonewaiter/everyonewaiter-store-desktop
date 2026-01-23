@@ -3,6 +3,7 @@ import { useControlStoreStatus } from "@renderer/hooks/useControlStoreStatus";
 import { useGetDevice } from "@renderer/hooks/useGetDevice";
 import { useGetStore } from "@renderer/hooks/useGetStore";
 import { ModalProps } from "@renderer/types/overlay";
+import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosStoreCloseModalCompProps extends ModalProps {
   onSuccess?: () => void;
@@ -25,13 +26,18 @@ function PosStoreCloseModalComp({ onSuccess, ...props }: PosStoreCloseModalCompP
             color: "primary",
             text: store?.status === "CLOSE" ? "오픈하기" : "마감하기",
             onClick: async () => {
-              if (store?.status === "CLOSE") {
-                await openStore.mutateAsync();
-              } else {
-                await closeStore.mutateAsync();
+              try {
+                if (store?.status === "CLOSE") {
+                  await openStore.mutateAsync();
+                } else {
+                  await closeStore.mutateAsync();
+                }
+                props.close();
+                onSuccess?.();
+              } catch (error) {
+                props.close();
+                handleApiError(error as Error);
               }
-              props.close();
-              onSuccess?.();
             },
           }}
         />
