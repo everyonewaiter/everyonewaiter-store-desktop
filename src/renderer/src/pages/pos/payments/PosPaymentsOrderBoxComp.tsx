@@ -116,7 +116,7 @@ PosPaymentsOrderBoxComp.Order = function Order({
   );
 };
 
-PosPaymentsOrderBoxComp.Index = function Number({
+PosPaymentsOrderBoxComp.Index = function Index({
   index,
   hasCheckbox = false,
   checked = false,

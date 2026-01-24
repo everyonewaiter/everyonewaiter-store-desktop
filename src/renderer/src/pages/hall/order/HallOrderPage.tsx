@@ -9,6 +9,7 @@ import { useGetHallWaitings } from "@renderer/hooks/useGetHallWaitings";
 import HallActionCompleteModalComp from "@renderer/pages/hall/order/HallActionCompleteModalComp";
 import HallOrderComp from "@renderer/pages/hall/order/HallOrderComp";
 import HallStaffCallComp from "@renderer/pages/hall/order/HallStaffCallComp";
+import { StaffCall } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
 
 function HallOrderPage() {
@@ -23,6 +24,18 @@ function HallOrderPage() {
     { isServed: false, label: "주문", count: orders.unserved.length },
     { isServed: true, label: "완료", count: orders.served.length },
   ];
+
+  const handleCompleteCall = (staffCall: StaffCall) => {
+    overlay.open((overlayProps) => (
+      <HallActionCompleteModalComp
+        type="call"
+        tableNo={staffCall.tableNo}
+        resourceId={staffCall.staffCallId}
+        staffCallText={staffCall.name}
+        {...overlayProps}
+      />
+    ));
+  };
 
   return (
     <div className="min-h-dvh w-full bg-gray-700">
@@ -71,17 +84,7 @@ function HallOrderPage() {
                 <HallStaffCallComp
                   key={staffCall.staffCallId}
                   staffCall={staffCall}
-                  onClick={() =>
-                    overlay.open((overlayProps) => (
-                      <HallActionCompleteModalComp
-                        type="call"
-                        tableNo={staffCall.tableNo}
-                        resourceId={staffCall.staffCallId}
-                        staffCallText={staffCall.name}
-                        {...overlayProps}
-                      />
-                    ))
-                  }
+                  onClick={() => handleCompleteCall(staffCall)}
                 />
               ))}
             </div>

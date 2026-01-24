@@ -9,7 +9,7 @@ interface PosStoreCloseModalCompProps extends ModalProps {
   onSuccess?: () => void;
 }
 
-function PosStoreCloseModalComp({ onSuccess, ...props }: PosStoreCloseModalCompProps) {
+function PosStoreCloseModalComp({ onSuccess, ...props }: Readonly<PosStoreCloseModalCompProps>) {
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
   const { openStore, closeStore } = useControlStoreStatus();

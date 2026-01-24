@@ -14,6 +14,17 @@ interface HallOrderCompProps {
 function HallOrderComp({ order }: Readonly<HallOrderCompProps>) {
   const isCompleted = order.served;
 
+  const handleCompleteAll = () => {
+    overlay.open((overlayProps) => (
+      <HallActionCompleteModalComp
+        type="order"
+        tableNo={order.tableNo}
+        resourceId={order.orderId}
+        {...overlayProps}
+      />
+    ));
+  };
+
   return (
     <div className="flex h-full w-full flex-row gap-6">
       <div className="flex flex-[0.2] flex-col rounded-3xl border border-gray-600 p-6">
@@ -58,16 +69,7 @@ function HallOrderComp({ order }: Readonly<HallOrderCompProps>) {
               <Button
                 color={ColorName.BLACK}
                 className="button-lg absolute bottom-0 w-full"
-                onClick={() =>
-                  overlay.open((overlayProps) => (
-                    <HallActionCompleteModalComp
-                      type="order"
-                      tableNo={order.tableNo}
-                      resourceId={order.orderId}
-                      {...overlayProps}
-                    />
-                  ))
-                }
+                onClick={handleCompleteAll}
               >
                 전체 완료
               </Button>
@@ -85,7 +87,7 @@ function HallOrderComp({ order }: Readonly<HallOrderCompProps>) {
           {order.orderMenus.length > 0 && (
             <div className="grid-auto-rows-[1fr] grid w-full gap-x-2.5 gap-y-4 md:grid-cols-3 lg:grid-cols-4">
               {order.orderMenus
-                .sort((a, b) => Number(a.served) - Number(b.served))
+                .toSorted((a, b) => Number(a.served) - Number(b.served))
                 .map((orderMenu) => (
                   <HallOrderBoxComp
                     key={orderMenu.orderMenuId}

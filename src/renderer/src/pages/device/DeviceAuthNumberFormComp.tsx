@@ -77,7 +77,7 @@ function DeviceAuthNumberFormComp({
           className="pr-14!"
           {...form.register("code", {
             onChange: (e) =>
-              form.setValue("code", e.target.value.replace(/[^0-9]/g, ""), {
+              form.setValue("code", e.target.value.replaceAll(/\D/g, ""), {
                 shouldValidate: false,
               }),
           })}
