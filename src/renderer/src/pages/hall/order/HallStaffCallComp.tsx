@@ -17,7 +17,7 @@ function HallStaffCallComp({ staffCall, onClick }: Readonly<HallStaffCallCompPro
             {String(staffCall.tableNo).padStart(2, "0")}
           </strong>
         </div>
-        <div className="flex h-[126px] w-full items-center justify-center rounded-xl border border-gray-600 text-lg font-semibold">
+        <div className="flex h-[126px] w-full items-center justify-center rounded-xl border border-gray-600 text-xl font-semibold">
           {staffCall.name}
         </div>
       </div>
