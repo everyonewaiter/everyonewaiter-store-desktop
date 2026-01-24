@@ -4,7 +4,7 @@ import HallActionCompleteModalComp from "@renderer/pages/hall/order/HallActionCo
 import HallOrderBoxComp from "@renderer/pages/hall/order/HallOrderBoxComp";
 import { Order } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
-import { getFormattedTime } from "@renderer/utils/format";
+import { getFormattedTableNo, getFormattedTime } from "@renderer/utils/format";
 import { overlay } from "overlay-kit";
 
 interface HallOrderCompProps {
@@ -46,9 +46,9 @@ function HallOrderComp({ order }: Readonly<HallOrderCompProps>) {
           </div>
           {isCompleted ? (
             <div className="flex h-full flex-col items-center justify-center">
-              <span className="text-gray-0 text-lg font-medium">테이블 번호</span>
+              <span className="text-gray-0 text-lg font-medium">테이블</span>
               <strong className="text-gray-0 pt-3 text-4xl font-bold">
-                {String(order.tableNo).padStart(2, "0")}
+                {getFormattedTableNo(order.tableNo)}
               </strong>
             </div>
           ) : (
@@ -62,9 +62,9 @@ function HallOrderComp({ order }: Readonly<HallOrderCompProps>) {
               >
                 {order.category === "INITIAL" ? "주문" : "추가"}
               </Button>
-              <span className="text-gray-0 pt-6 text-lg font-medium">테이블 번호</span>
+              <span className="text-gray-0 pt-6 text-lg font-medium">테이블</span>
               <strong className="text-gray-0 pt-3 text-4xl font-bold">
-                {String(order.tableNo).padStart(2, "0")}
+                {getFormattedTableNo(order.tableNo)}
               </strong>
               <Button
                 color={ColorName.BLACK}
