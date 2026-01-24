@@ -9,7 +9,10 @@ interface PosTablesDetailMemoModalCompProps extends ModalProps {
   tableNo: number;
 }
 
-function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemoModalCompProps) {
+function PosTablesDetailMemoModalComp({
+  tableNo,
+  ...props
+}: Readonly<PosTablesDetailMemoModalCompProps>) {
   const [isEditing, setIsEditing] = useState(false);
 
   const { data: activity } = useGetTableActivity(tableNo);
@@ -20,6 +23,14 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
   const handleClose = () => {
     setIsEditing(false);
     props.close();
+  };
+
+  const handleMemoChange = (index: number, value: string) => {
+    setUpdatedMemos((prev) => {
+      const newMemos = memos.map((m, i) => prev[i] ?? m ?? "");
+      newMemos[index] = value;
+      return newMemos;
+    });
   };
 
   const { mutateAsync: updateMemo } = useUpdateMemo();
@@ -60,13 +71,7 @@ function PosTablesDetailMemoModalComp({ tableNo, ...props }: PosTablesDetailMemo
                 readOnly={!isEditing}
                 placeholder="메모가 없습니다."
                 value={updatedMemos[index] ?? memo ?? ""}
-                onChange={(e) => {
-                  setUpdatedMemos((prev) => {
-                    const newMemos = memos.map((m, i) => prev[i] ?? m ?? "");
-                    newMemos[index] = e.target.value;
-                    return newMemos;
-                  });
-                }}
+                onChange={(e) => handleMemoChange(index, e.target.value)}
                 maxLength={10}
               />
               <span className="absolute right-4 bottom-3 text-right text-sm text-gray-300">

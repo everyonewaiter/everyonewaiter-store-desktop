@@ -21,8 +21,27 @@ function PosPaymentsSideComp({
   payment,
   setSelectedPayment,
   setFetchCount,
-}: PosPaymentsSideCompProps) {
+}: Readonly<PosPaymentsSideCompProps>) {
   const [activity, setActivity] = useState<TableActivity | null>(null);
+
+  const handleCancelPayment = () => {
+    overlay.open((overlayProps) => (
+      <PosPaymentsCancelPayModalComp
+        store={store}
+        payment={payment}
+        setSelectedPayment={setSelectedPayment}
+        setFetchCount={setFetchCount}
+        {...overlayProps}
+      />
+    ));
+  };
+
+  const handlePrintReceipt = () => {
+    if (!activity) return;
+    overlay.open((overlayProps) => (
+      <PosPaymentsOrderIncludeModalComp store={store} activity={activity} {...overlayProps} />
+    ));
+  };
 
   useEffect(() => {
     const fetchActivity = () => {
@@ -75,17 +94,7 @@ function PosPaymentsSideComp({
               payment.posTableActivityId ? "text-gray-200" : "border-gray-500 text-gray-500"
             )}
             disabled={!payment.posTableActivityId || !activity || !payment.cancellable}
-            onClick={() =>
-              overlay.open((overlayProps) => (
-                <PosPaymentsCancelPayModalComp
-                  store={store}
-                  payment={payment}
-                  setSelectedPayment={setSelectedPayment}
-                  setFetchCount={setFetchCount}
-                  {...overlayProps}
-                />
-              ))
-            }
+            onClick={handleCancelPayment}
           >
             결제 취소하기
           </Button>
@@ -98,15 +107,7 @@ function PosPaymentsSideComp({
               payment.posTableActivityId ? "bg-gray-0" : "bg-gray-500"
             )}
             disabled={!payment.posTableActivityId}
-            onClick={() =>
-              overlay.open((overlayProps) => (
-                <PosPaymentsOrderIncludeModalComp
-                  store={store}
-                  activity={activity}
-                  {...overlayProps}
-                />
-              ))
-            }
+            onClick={handlePrintReceipt}
           >
             영수증 출력하기
           </Button>

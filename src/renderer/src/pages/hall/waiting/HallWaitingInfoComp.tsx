@@ -11,7 +11,7 @@ interface HallWaitingInfoCompProps {
   isModal?: boolean;
 }
 
-function HallWaitingInfoComp({ waiting, isModal }: HallWaitingInfoCompProps) {
+function HallWaitingInfoComp({ waiting, isModal }: Readonly<HallWaitingInfoCompProps>) {
   const [minutesAgo, setMinutesAgo] = useState(getMinutesAgo(waiting.createdAt));
 
   useInterval(() => {
@@ -35,7 +35,7 @@ function HallWaitingInfoComp({ waiting, isModal }: HallWaitingInfoCompProps) {
           </span>
           {waiting.infant > 0 && (
             <>
-              <span className="bg-gray-0 h-4 w-[1px] flex-shrink-0" />
+              <span className="bg-gray-0 h-4 w-px shrink-0" />
               <span className="flex gap-1">
                 <BabyIcon className="h-6 w-6" />
                 아동 {waiting.infant}

@@ -6,7 +6,6 @@ import PrinterProvider from "@renderer/providers/printerProvider";
 import SseProvider from "@renderer/providers/sseProvider";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { OverlayProvider } from "overlay-kit";
 import "@renderer/assets/main.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -14,9 +13,7 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <PrinterProvider>
         <SseProvider>
-          <OverlayProvider>
-            <App />
-          </OverlayProvider>
+          <App />
         </SseProvider>
       </PrinterProvider>
       <ReactQueryDevtools initialIsOpen={false} />

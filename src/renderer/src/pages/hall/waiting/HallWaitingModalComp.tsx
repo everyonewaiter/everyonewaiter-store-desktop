@@ -18,7 +18,7 @@ interface HallWaitingModalCompProps extends ModalProps {
   waiting: Waiting;
 }
 
-function HallWaitingModalComp({ type, waiting, ...props }: HallWaitingModalCompProps) {
+function HallWaitingModalComp({ type, waiting, ...props }: Readonly<HallWaitingModalCompProps>) {
   const { mutate: mutateComplete } = useWaitingComplete();
   const { mutate: mutateCustomerCall } = useWaitingCustomerCall();
   const { mutate: mutateCancel } = useWaitingCancel();

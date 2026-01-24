@@ -21,7 +21,7 @@ function PosTablesDetailDiscountModalComp({
   totalOrderPrice,
   initialDiscount,
   ...props
-}: PosTablesDetailDiscountModalCompProps) {
+}: Readonly<PosTablesDetailDiscountModalCompProps>) {
   const form = useForm({
     defaultValues: {
       discountType: "fixed",
@@ -103,7 +103,7 @@ function PosTablesDetailDiscountModalComp({
                     prefix={<MinusIcon width={20} height={20} />}
                     value={discountValue ? Number(discountValue).toLocaleString() : ""}
                     onChange={(e) => {
-                      const numericValue = Number(e.target.value.replace(/,/g, "")) || 0;
+                      const numericValue = Number(e.target.value.replaceAll(",", "")) || 0;
 
                       const max = discountType === "fixed" ? totalOrderPrice : 100;
 

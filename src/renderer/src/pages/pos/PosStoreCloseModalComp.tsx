@@ -9,10 +9,25 @@ interface PosStoreCloseModalCompProps extends ModalProps {
   onSuccess?: () => void;
 }
 
-function PosStoreCloseModalComp({ onSuccess, ...props }: PosStoreCloseModalCompProps) {
+function PosStoreCloseModalComp({ onSuccess, ...props }: Readonly<PosStoreCloseModalCompProps>) {
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
   const { openStore, closeStore } = useControlStoreStatus();
+
+  const handleStore = () => {
+    try {
+      if (store?.status === "CLOSE") {
+        openStore.mutate();
+      } else {
+        closeStore.mutate();
+      }
+      props.close();
+      onSuccess?.();
+    } catch (error) {
+      props.close();
+      handleApiError(error as Error);
+    }
+  };
 
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
@@ -25,20 +40,7 @@ function PosStoreCloseModalComp({ onSuccess, ...props }: PosStoreCloseModalCompP
           primaryButton={{
             color: "primary",
             text: store?.status === "CLOSE" ? "오픈하기" : "마감하기",
-            onClick: async () => {
-              try {
-                if (store?.status === "CLOSE") {
-                  await openStore.mutateAsync();
-                } else {
-                  await closeStore.mutateAsync();
-                }
-                props.close();
-                onSuccess?.();
-              } catch (error) {
-                props.close();
-                handleApiError(error as Error);
-              }
-            },
+            onClick: () => handleStore(),
           }}
         />
       </Dialog.Wrapper>

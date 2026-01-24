@@ -9,6 +9,7 @@ import { useGetHallWaitings } from "@renderer/hooks/useGetHallWaitings";
 import HallActionCompleteModalComp from "@renderer/pages/hall/order/HallActionCompleteModalComp";
 import HallOrderComp from "@renderer/pages/hall/order/HallOrderComp";
 import HallStaffCallComp from "@renderer/pages/hall/order/HallStaffCallComp";
+import { StaffCall } from "@renderer/types/domain";
 import { overlay } from "overlay-kit";
 
 function HallOrderPage() {
@@ -24,6 +25,18 @@ function HallOrderPage() {
     { isServed: true, label: "완료", count: orders.served.length },
   ];
 
+  const handleCompleteCall = (staffCall: StaffCall) => {
+    overlay.open((overlayProps) => (
+      <HallActionCompleteModalComp
+        type="call"
+        tableNo={staffCall.tableNo}
+        resourceId={staffCall.staffCallId}
+        staffCallText={staffCall.name}
+        {...overlayProps}
+      />
+    ));
+  };
+
   return (
     <div className="min-h-dvh w-full bg-gray-700">
       <header className="flex flex-row items-center justify-between bg-white px-15 pt-10 pb-8">
@@ -34,7 +47,7 @@ function HallOrderPage() {
         <div className="relative">
           <Button
             color={ColorName.GREY}
-            className="button-xl !bg-gray-300 !text-white"
+            className="button-xl bg-gray-300! text-white!"
             onClick={() => navigate("/waiting")}
           >
             웨이팅 관리 이동
@@ -51,7 +64,7 @@ function HallOrderPage() {
               key={tab.label}
               color={served === tab.isServed ? ColorName.BLACK : ColorName.GREY}
               variant={served === tab.isServed ? "default" : "outline"}
-              className="button-xl !px-8 not-focus:!border-gray-500"
+              className="button-xl px-8! not-focus:border-gray-500!"
               onClick={() => setServed(tab.isServed)}
             >
               {tab.label} {tab.count}건
@@ -71,17 +84,7 @@ function HallOrderPage() {
                 <HallStaffCallComp
                   key={staffCall.staffCallId}
                   staffCall={staffCall}
-                  onClick={() =>
-                    overlay.open((overlayProps) => (
-                      <HallActionCompleteModalComp
-                        type="call"
-                        tableNo={staffCall.tableNo}
-                        resourceId={staffCall.staffCallId}
-                        staffCallText={staffCall.name}
-                        {...overlayProps}
-                      />
-                    ))
-                  }
+                  onClick={() => handleCompleteCall(staffCall)}
                 />
               ))}
             </div>

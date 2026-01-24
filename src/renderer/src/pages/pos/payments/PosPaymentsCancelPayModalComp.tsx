@@ -20,7 +20,7 @@ function PosPaymentsCancelPayModalComp({
   setSelectedPayment,
   setFetchCount,
   ...props
-}: PosPaymentsCancelPayModalCompProps) {
+}: Readonly<PosPaymentsCancelPayModalCompProps>) {
   const cancelPayment = async (response?: KSCATApprovalResponse) => {
     try {
       await api.post(`/orders/payments/${payment.orderPaymentId}/cancel`, {
@@ -36,11 +36,7 @@ function PosPaymentsCancelPayModalComp({
     }
   };
 
-  const handleCancelPayment = async () => {
-    if (!payment.cancellable) {
-      return;
-    }
-
+  const handlePayment = async () => {
     if (payment.method === "CARD") {
       await kscatApproval({
         deviceNo: store.setting.ksnetDeviceNo,
@@ -70,6 +66,14 @@ function PosPaymentsCancelPayModalComp({
     if (payment.method === "CASH" && payment.cashReceiptType === "NONE") {
       await cancelPayment();
     }
+  };
+
+  const handleCancelPayment = () => {
+    if (!payment.cancellable) {
+      return;
+    }
+
+    handlePayment();
   };
 
   return (

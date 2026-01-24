@@ -5,7 +5,7 @@ interface HallWaitingNumberingCompProps {
   index: number;
 }
 
-function HallWaitingNumberingComp({ index }: HallWaitingNumberingCompProps) {
+function HallWaitingNumberingComp({ index }: Readonly<HallWaitingNumberingCompProps>) {
   const { waitings } = useGetHallWaitings();
 
   return (

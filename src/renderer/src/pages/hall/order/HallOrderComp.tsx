@@ -4,15 +4,26 @@ import HallActionCompleteModalComp from "@renderer/pages/hall/order/HallActionCo
 import HallOrderBoxComp from "@renderer/pages/hall/order/HallOrderBoxComp";
 import { Order } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
-import { getFormattedTime } from "@renderer/utils/format";
+import { getFormattedTableNo, getFormattedTime } from "@renderer/utils/format";
 import { overlay } from "overlay-kit";
 
 interface HallOrderCompProps {
   order: Order;
 }
 
-function HallOrderComp({ order }: HallOrderCompProps) {
+function HallOrderComp({ order }: Readonly<HallOrderCompProps>) {
   const isCompleted = order.served;
+
+  const handleCompleteAll = () => {
+    overlay.open((overlayProps) => (
+      <HallActionCompleteModalComp
+        type="order"
+        tableNo={order.tableNo}
+        resourceId={order.orderId}
+        {...overlayProps}
+      />
+    ));
+  };
 
   return (
     <div className="flex h-full w-full flex-row gap-6">
@@ -35,9 +46,9 @@ function HallOrderComp({ order }: HallOrderCompProps) {
           </div>
           {isCompleted ? (
             <div className="flex h-full flex-col items-center justify-center">
-              <span className="text-gray-0 text-lg font-medium">테이블 번호</span>
+              <span className="text-gray-0 text-lg font-medium">테이블</span>
               <strong className="text-gray-0 pt-3 text-4xl font-bold">
-                {String(order.tableNo).padStart(2, "0")}
+                {getFormattedTableNo(order.tableNo)}
               </strong>
             </div>
           ) : (
@@ -45,29 +56,20 @@ function HallOrderComp({ order }: HallOrderCompProps) {
               <Button
                 variant="outline"
                 className={cn(
-                  "button-sm pointer-events-none !rounded-4xl !text-sm",
-                  order.category === "INITIAL" ? "" : "!border-[#00B603] !text-[#00B603]"
+                  "button-sm pointer-events-none rounded-4xl! text-sm!",
+                  order.category === "INITIAL" ? "" : "border-[#00B603]! text-[#00B603]!"
                 )}
               >
                 {order.category === "INITIAL" ? "주문" : "추가"}
               </Button>
-              <span className="text-gray-0 pt-6 text-lg font-medium">테이블 번호</span>
+              <span className="text-gray-0 pt-6 text-lg font-medium">테이블</span>
               <strong className="text-gray-0 pt-3 text-4xl font-bold">
-                {String(order.tableNo).padStart(2, "0")}
+                {getFormattedTableNo(order.tableNo)}
               </strong>
               <Button
                 color={ColorName.BLACK}
                 className="button-lg absolute bottom-0 w-full"
-                onClick={() =>
-                  overlay.open((overlayProps) => (
-                    <HallActionCompleteModalComp
-                      type="order"
-                      tableNo={order.tableNo}
-                      resourceId={order.orderId}
-                      {...overlayProps}
-                    />
-                  ))
-                }
+                onClick={handleCompleteAll}
               >
                 전체 완료
               </Button>
@@ -85,7 +87,7 @@ function HallOrderComp({ order }: HallOrderCompProps) {
           {order.orderMenus.length > 0 && (
             <div className="grid-auto-rows-[1fr] grid w-full gap-x-2.5 gap-y-4 md:grid-cols-3 lg:grid-cols-4">
               {order.orderMenus
-                .sort((a, b) => Number(a.served) - Number(b.served))
+                .toSorted((a, b) => Number(a.served) - Number(b.served))
                 .map((orderMenu) => (
                   <HallOrderBoxComp
                     key={orderMenu.orderMenuId}

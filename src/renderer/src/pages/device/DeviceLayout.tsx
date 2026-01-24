@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogoIcon, LogoSquaredIcon, LogoTextIcon } from "@renderer/assets/logos";
 import { useGetDevice } from "@renderer/hooks/useGetDevice";
 
-function DeviceLayout({ children }: { children: React.ReactNode }) {
+function DeviceLayout({ children }: Readonly<PropsWithChildren>) {
   const navigate = useNavigate();
   const { device, isSuccess } = useGetDevice();
 
@@ -23,7 +23,7 @@ function DeviceLayout({ children }: { children: React.ReactNode }) {
           <LogoIcon className="md:h-10 md:w-10 lg:h-15 lg:w-15" />
           <LogoTextIcon className="md:h-[19px] lg:h-[25px]" />
         </button>
-        <div className="h-[1px] w-full bg-gray-500" />
+        <div className="h-px w-full bg-gray-500" />
       </header>
       <div className="flex items-center justify-center md:h-[calc(100dvh-73px)] lg:h-[calc(100dvh-113px)]">
         <div className="flex flex-col bg-white md:w-[364px] md:gap-6 md:rounded-3xl md:p-5 lg:w-[544px] lg:gap-12 lg:rounded-4xl lg:p-8">

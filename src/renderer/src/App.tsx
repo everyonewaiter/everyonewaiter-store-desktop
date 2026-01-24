@@ -6,19 +6,22 @@ import PosPaymentsPage from "@renderer/pages/pos/payments/PosPaymentsPage";
 import PosPage from "@renderer/pages/pos/PosPage";
 import PosTablesDetailPage from "@renderer/pages/pos/tables/[id]/PosTablesDetailPage";
 import PosTablesPage from "@renderer/pages/pos/tables/PosTablesPage";
+import { OverlayProvider } from "overlay-kit";
 
 function App() {
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={<DevicePage />} />
-        <Route path="/hall" element={<HallOrderPage />} />
-        <Route path="/waiting" element={<HallWaitingPage />} />
-        <Route path="/pos" element={<PosPage />} />
-        <Route path="/pos/tables" element={<PosTablesPage />} />
-        <Route path="/pos/payments" element={<PosPaymentsPage />} />
-        <Route path="/pos/tables/:id" element={<PosTablesDetailPage />} />
-      </Routes>
+      <OverlayProvider>
+        <Routes>
+          <Route path="/" element={<DevicePage />} />
+          <Route path="/hall" element={<HallOrderPage />} />
+          <Route path="/waiting" element={<HallWaitingPage />} />
+          <Route path="/pos" element={<PosPage />} />
+          <Route path="/pos/tables" element={<PosTablesPage />} />
+          <Route path="/pos/payments" element={<PosPaymentsPage />} />
+          <Route path="/pos/tables/:id" element={<PosTablesDetailPage />} />
+        </Routes>
+      </OverlayProvider>
     </HashRouter>
   );
 }

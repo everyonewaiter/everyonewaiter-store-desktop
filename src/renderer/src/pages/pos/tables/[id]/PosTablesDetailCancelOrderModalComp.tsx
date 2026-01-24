@@ -18,12 +18,12 @@ function PosTablesDetailCancelOrderModalComp({
   checkedOrders,
   onDeleteAllOrders,
   ...props
-}: PosTablesDetailCancelOrderModalCompProps) {
+}: Readonly<PosTablesDetailCancelOrderModalCompProps>) {
   const { mutateAsync: cancelOrder, isPending } = useCancelOrder();
 
   const isSelected = checkedOrders.length > 0;
   const orders = isSelected ? checkedOrders : activity.orders;
-  const menus = orders.map((order) => order.orderMenus).flat();
+  const menus = orders.flatMap((order) => order.orderMenus);
 
   const handleCancel = async () => {
     try {
@@ -51,9 +51,9 @@ function PosTablesDetailCancelOrderModalComp({
           </div>
           {isSelected ? (
             <span className="text-gray-0 text-center text-xl font-normal">
-              <span className="font-semibold">
+              <strong className="font-semibold">
                 {menus.length > 1 ? `${menus[0].name} 외 ${menus.length - 1}개` : menus[0].name}
-              </span>
+              </strong>
               의 주문을 취소하시겠습니까?
             </span>
           ) : (
