@@ -59,11 +59,11 @@ function HallOrderBoxComp({
             />
           </div>
         )}
-        <div className="flex w-full flex-col gap-2">
-          <div className="flex w-full items-center justify-between">
+        <div className="flex w-full flex-col gap-3">
+          <div className="flex w-full items-start gap-3">
             <span
               className={cn(
-                "text-2xl font-semibold",
+                "text-3xl leading-normal font-semibold",
                 orderMenu.served ? "text-gray-300 line-through" : "text-gray-100"
               )}
             >
@@ -71,7 +71,7 @@ function HallOrderBoxComp({
             </span>
             <span
               className={cn(
-                "text-xl font-semibold",
+                "shrink-0 text-3xl leading-normal font-semibold whitespace-nowrap",
                 orderMenu.served ? "text-gray-300" : "text-gray-100"
               )}
             >

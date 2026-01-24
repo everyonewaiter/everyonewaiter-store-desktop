@@ -15,7 +15,7 @@ function HallOrderOptionComp({ orderOption, isServed }: HallOrderOptionCompProps
         isServed ? "text-gray-300" : "text-[#2E7BB3]"
       )}
     >
-      <div className="flex items-center">
+      <div className="flex items-center text-[22px] font-medium">
         <PlusIcon className="size-6" />
         {orderOption.name}
       </div>
