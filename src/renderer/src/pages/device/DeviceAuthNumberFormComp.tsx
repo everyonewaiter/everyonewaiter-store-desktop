@@ -21,7 +21,7 @@ function DeviceAuthNumberFormComp({
   remainingTime,
   resetInterval,
   setStores,
-}: DeviceAuthNumberFormCompProps) {
+}: Readonly<DeviceAuthNumberFormCompProps>) {
   const form = useFormContext<DeviceSchema>();
 
   const { isSubmitted, setIsSubmitted } = useDeviceAuthStore(
@@ -74,10 +74,10 @@ function DeviceAuthNumberFormComp({
       <div className="group relative w-full md:h-9 lg:h-12">
         <Input
           placeholder="인증번호를 입력해주세요."
-          className="!pr-14"
+          className="pr-14!"
           {...form.register("code", {
             onChange: (e) =>
-              form.setValue("code", e.target.value.replace(/[^0-9]/g, ""), {
+              form.setValue("code", e.target.value.replaceAll(/\D/g, ""), {
                 shouldValidate: false,
               }),
           })}

@@ -11,7 +11,7 @@ interface PosTablesDetailResendReceiptModalCompProps extends ModalProps {
 function PosTablesDetailResendReceiptModalComp({
   tableNo,
   ...props
-}: PosTablesDetailResendReceiptModalCompProps) {
+}: Readonly<PosTablesDetailResendReceiptModalCompProps>) {
   const handleResendReceipt = async () => {
     try {
       await api.post(`/pos/tables/${tableNo}/resend-receipt`);

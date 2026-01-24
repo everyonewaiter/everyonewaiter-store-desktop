@@ -15,7 +15,10 @@ interface DevicePhoneNumberFormCompProps {
   setInitTime: () => void;
 }
 
-function DevicePhoneNumberFormComp({ remainingTime, setInitTime }: DevicePhoneNumberFormCompProps) {
+function DevicePhoneNumberFormComp({
+  remainingTime,
+  setInitTime,
+}: Readonly<DevicePhoneNumberFormCompProps>) {
   const form = useFormContext<DeviceSchema>();
 
   const { isSubmitted, setIsSubmitted } = useDeviceAuthStore(

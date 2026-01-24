@@ -12,7 +12,7 @@ interface PosTablesDetailOrderSideCompProps {
   tableNo: number;
 }
 
-function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompProps) {
+function PosTablesDetailOrderSideComp({ tableNo }: Readonly<PosTablesDetailOrderSideCompProps>) {
   const navigate = useNavigate();
   const { device } = useGetDevice();
   const { data: categories } = useGetMenus(device?.storeId ?? "");
@@ -33,6 +33,18 @@ function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompP
         );
       }, 0) ?? 0
     );
+  };
+
+  const handleOrder = () => {
+    overlay.open((overlayProps) => (
+      <PosTablesDetailOrderModalComp
+        {...overlayProps}
+        onSuccess={() => {
+          navigate("/pos/tables");
+          overlayProps.close();
+        }}
+      />
+    ));
   };
 
   return (
@@ -70,20 +82,7 @@ function PosTablesDetailOrderSideComp({ tableNo }: PosTablesDetailOrderSideCompP
           </div>
         </div>
       </div>
-      <Button
-        className="h-16 w-full rounded-xl text-xl font-semibold"
-        onClick={() =>
-          overlay.open((overlayProps) => (
-            <PosTablesDetailOrderModalComp
-              {...overlayProps}
-              onSuccess={() => {
-                navigate("/pos/tables");
-                overlayProps.close();
-              }}
-            />
-          ))
-        }
-      >
+      <Button className="h-16 w-full rounded-xl text-xl font-semibold" onClick={handleOrder}>
         주문하기
       </Button>
     </>

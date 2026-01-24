@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { DeleteIcon, MinusIcon, PlusIcon } from "@renderer/assets/icons";
 import Checkbox from "@renderer/components/Checkbox";
 import { useGetDevice } from "@renderer/hooks/useGetDevice";
@@ -5,7 +6,7 @@ import { useGetMenus } from "@renderer/hooks/usePosTablesDetailApi";
 import { CreateOrderMenu, OrderMenu } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
 
-function PosPaymentsOrderBoxComp({ children }: { children: React.ReactNode }) {
+function PosPaymentsOrderBoxComp({ children }: Readonly<PropsWithChildren>) {
   return <div className="flex flex-col gap-3">{children}</div>;
 }
 
@@ -115,7 +116,7 @@ PosPaymentsOrderBoxComp.Order = function Order({
   );
 };
 
-PosPaymentsOrderBoxComp.Index = function Number({
+PosPaymentsOrderBoxComp.Index = function Index({
   index,
   hasCheckbox = false,
   checked = false,

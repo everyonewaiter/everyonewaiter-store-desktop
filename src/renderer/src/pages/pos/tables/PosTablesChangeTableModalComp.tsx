@@ -16,7 +16,7 @@ function PosTablesChangeTableModalComp({
   toTableNo,
   onSuccess,
   ...props
-}: PosTablesChangeTableModalCompProps) {
+}: Readonly<PosTablesChangeTableModalCompProps>) {
   const { mutate: changeTable } = useChangeTable();
 
   const handleMoveTable = () => {

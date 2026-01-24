@@ -22,7 +22,7 @@ function PosTablesDetailCheckoutSideComp({
   checkedOrders,
   setCheckedOrders,
   onCancelOrder,
-}: PosTablesDetailCheckoutSideCompProps) {
+}: Readonly<PosTablesDetailCheckoutSideCompProps>) {
   const navigate = useNavigate();
   const { data: activity } = useGetTableActivity(tableNo);
   const { mutate: updateOrder } = useUpdateOrder();
@@ -78,6 +78,28 @@ function PosTablesDetailCheckoutSideComp({
     (activity?.discount ?? 0) -
     (activity?.remainingPaymentPrice ?? 0);
 
+  const handlePay = (paymentType: "cash" | "card") => {
+    if (!activity) return;
+    overlay.open((overlayProps) => (
+      <PosTablesDetailPaymentModalComp
+        activity={activity}
+        paymentType={paymentType}
+        {...overlayProps}
+      />
+    ));
+  };
+  const handleAddDiscount = () => {
+    if (!activity) return;
+    overlay.open((overlayProps) => (
+      <PosTablesDetailDiscountModalComp
+        tableNo={tableNo}
+        totalOrderPrice={activity.totalOrderPrice ?? 0}
+        initialDiscount={activity.discount ?? 0}
+        {...overlayProps}
+      />
+    ));
+  };
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -85,7 +107,7 @@ function PosTablesDetailCheckoutSideComp({
         {activity?.orders && activity?.orders.length > 0 && orderType === "POSTPAID" && (
           <Button
             variant="outline"
-            className="button-lg !text-medium !rounded-[8px] !text-base"
+            className="button-lg text-medium! rounded-[8px]! text-base!"
             onClick={onCancelOrder}
           >
             {checkedOrders.length > 0 ? "선택" : "전체"} 주문 취소
@@ -131,17 +153,7 @@ function PosTablesDetailCheckoutSideComp({
               variant="outline"
               color="black"
               className="!border-gray-[#4F4F4F] h-10 rounded-lg bg-white px-5 text-[15px] font-medium text-[#4F4F4F]"
-              onClick={() => {
-                if (!activity) return;
-                overlay.open((overlayProps) => (
-                  <PosTablesDetailDiscountModalComp
-                    tableNo={tableNo}
-                    totalOrderPrice={activity.totalOrderPrice ?? 0}
-                    initialDiscount={activity.discount ?? 0}
-                    {...overlayProps}
-                  />
-                ));
-              }}
+              onClick={handleAddDiscount}
             >
               할인수단 추가
             </Button>
@@ -186,33 +198,15 @@ function PosTablesDetailCheckoutSideComp({
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
-            className="h-16 w-full rounded-xl border !border-gray-200 text-xl font-semibold text-gray-200"
-            onClick={() => {
-              if (!activity) return;
-              overlay.open((overlayProps) => (
-                <PosTablesDetailPaymentModalComp
-                  activity={activity}
-                  paymentType="cash"
-                  {...overlayProps}
-                />
-              ));
-            }}
+            className="h-16 w-full rounded-xl border border-gray-200! text-xl font-semibold text-gray-200"
+            onClick={() => handlePay("cash")}
           >
             현금 결제
           </Button>
           <Button
             color="black"
             className="h-16 w-full rounded-xl text-xl font-semibold"
-            onClick={() => {
-              if (!activity) return;
-              overlay.open((overlayProps) => (
-                <PosTablesDetailPaymentModalComp
-                  activity={activity}
-                  paymentType="card"
-                  {...overlayProps}
-                />
-              ));
-            }}
+            onClick={() => handlePay("card")}
           >
             카드 결제
           </Button>

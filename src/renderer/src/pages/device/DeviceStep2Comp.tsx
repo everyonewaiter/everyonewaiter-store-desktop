@@ -61,10 +61,10 @@ function DeviceStep2Comp() {
 
         try {
           await Promise.all([
-            window.storageAPI.store(storageKey.DEVICE_ID, deviceId),
-            window.storageAPI.store(storageKey.STORE_ID, deviceData?.storeId as string),
-            window.storageAPI.store(storageKey.DEVICE_SECRET_KEY, secretKey),
-            window.storageAPI.store(storageKey.DEVICE_TYPE, data.deviceType),
+            globalThis.window.storageAPI.store(storageKey.DEVICE_ID, deviceId),
+            globalThis.window.storageAPI.store(storageKey.STORE_ID, deviceData?.storeId as string),
+            globalThis.window.storageAPI.store(storageKey.DEVICE_SECRET_KEY, secretKey),
+            globalThis.window.storageAPI.store(storageKey.DEVICE_TYPE, data.deviceType),
           ]);
           navigate(`/${data.deviceType.toLowerCase()}`, { replace: true });
         } catch (storageError) {

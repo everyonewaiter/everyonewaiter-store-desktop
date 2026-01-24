@@ -24,6 +24,25 @@ function PosPage() {
   const storeStatus = store?.status;
   const storeName = store?.name;
 
+  const handleStoreStatusClick = (isCurrentStatus: boolean) => {
+    if (isCurrentStatus) return;
+    overlay.open((overlayProps) => <PosStoreCloseModalComp {...overlayProps} />);
+  };
+
+  const handleGoPosTables = () => {
+    if (storeStatus === "CLOSE") {
+      overlay.open((overlayProps) => (
+        <PosStoreCloseModalComp {...overlayProps} onSuccess={() => navigate("tables")} />
+      ));
+    } else {
+      navigate("tables");
+    }
+  };
+
+  const handleGoPosSales = () => {
+    overlay.open((overlayProps) => <PosPaymentsSalesModalComp {...overlayProps} />);
+  };
+
   return (
     <main className="flex h-dvh w-dvw items-center justify-center">
       <div className="absolute top-0 left-0 h-full w-full bg-black/40" />
@@ -42,10 +61,7 @@ function PosPage() {
                     : "cursor-pointer text-gray-300 hover:text-white"
                 )}
                 disabled={isCurrentStatus}
-                onClick={() => {
-                  if (isCurrentStatus) return;
-                  overlay.open((overlayProps) => <PosStoreCloseModalComp {...overlayProps} />);
-                }}
+                onClick={() => handleStoreStatusClick(isCurrentStatus)}
               >
                 {STATUS_TEXT[statusEng]}
               </button>
@@ -67,15 +83,7 @@ function PosPage() {
           <Button
             color="black"
             className="bg-gray-0 h-30 w-full rounded-2xl border-none text-3xl font-bold text-white"
-            onClick={() => {
-              if (storeStatus === "CLOSE") {
-                overlay.open((overlayProps) => (
-                  <PosStoreCloseModalComp {...overlayProps} onSuccess={() => navigate("tables")} />
-                ));
-              } else {
-                navigate("tables");
-              }
-            }}
+            onClick={handleGoPosTables}
           >
             POS
           </Button>
@@ -89,9 +97,7 @@ function PosPage() {
           <Button
             variant="outline"
             className="h-18 w-full rounded-2xl border-white text-2xl font-bold text-white"
-            onClick={() =>
-              overlay.open((overlayProps) => <PosPaymentsSalesModalComp {...overlayProps} />)
-            }
+            onClick={handleGoPosSales}
           >
             매출액
           </Button>

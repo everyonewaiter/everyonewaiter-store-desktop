@@ -23,7 +23,7 @@ function HallWaitingPage() {
           <div className="relative">
             <Button
               color={ColorName.GREY}
-              className="button-xl !bg-gray-300 !text-white"
+              className="button-xl bg-gray-300! text-white!"
               onClick={() => navigate("/hall")}
             >
               홀 관리 이동
@@ -33,7 +33,7 @@ function HallWaitingPage() {
             </div>
           </div>
         </div>
-        <div className="h-[1px] w-full bg-gray-400" />
+        <div className="h-px w-full bg-gray-400" />
       </header>
       <div className="flex flex-col gap-2 py-8 md:px-12 lg:px-15">
         {waitings.map((waiting, index) => (

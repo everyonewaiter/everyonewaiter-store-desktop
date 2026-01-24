@@ -13,7 +13,7 @@ function PosTablesDetailOptionalOptionComp({
   options,
   selectedOptions,
   setSelectedOptions,
-}: PosTablesDetailOptionalOptionCompProps) {
+}: Readonly<PosTablesDetailOptionalOptionCompProps>) {
   const isCheckboxSelected = (option: SelectedOption) =>
     selectedOptions.some(
       (selected) =>
