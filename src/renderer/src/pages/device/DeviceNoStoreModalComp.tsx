@@ -6,7 +6,7 @@ interface DeviceNoStoreModalCompProps extends ModalProps {
   resetForm: () => void;
 }
 
-function DeviceNoStoreModalComp({ ...props }: DeviceNoStoreModalCompProps) {
+function DeviceNoStoreModalComp(props: Readonly<DeviceNoStoreModalCompProps>) {
   const handleClose = () => {
     props.resetForm();
     props.close();
