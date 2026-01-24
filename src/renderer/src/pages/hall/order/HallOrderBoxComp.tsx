@@ -96,9 +96,9 @@ function HallOrderBoxComp({
           color={ColorName.BLACK}
           variant="outline"
           className={cn(
-            "button-lg w-full !text-lg !font-medium",
+            "button-lg w-full text-lg! font-medium!",
             orderMenu.served
-              ? "border-gray-300 text-gray-300 hover:!bg-transparent hover:!text-gray-300"
+              ? "border-gray-300 text-gray-300 hover:bg-transparent! hover:text-gray-300!"
               : ""
           )}
           onClick={handleClick}

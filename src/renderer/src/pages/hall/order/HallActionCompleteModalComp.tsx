@@ -18,7 +18,7 @@ function HallActionCompleteModalComp({
   resourceId,
   staffCallText,
   ...props
-}: HallActionCompleteModalCompProps) {
+}: Readonly<HallActionCompleteModalCompProps>) {
   const { mutate: mutateOrderServe } = useOrderServe();
   const { mutate: mutateStaffCallComplete } = useStaffCallComplete();
 

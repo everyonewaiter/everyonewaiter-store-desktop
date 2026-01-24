@@ -7,7 +7,7 @@ interface HallOrderOptionCompProps {
   isServed: boolean;
 }
 
-function HallOrderOptionComp({ orderOption, isServed }: HallOrderOptionCompProps) {
+function HallOrderOptionComp({ orderOption, isServed }: Readonly<HallOrderOptionCompProps>) {
   return (
     <div
       className={cn(

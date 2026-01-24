@@ -7,9 +7,9 @@ interface HallStaffCallCompProps {
   onClick: () => void;
 }
 
-function HallStaffCallComp({ staffCall, onClick }: HallStaffCallCompProps) {
+function HallStaffCallComp({ staffCall, onClick }: Readonly<HallStaffCallCompProps>) {
   return (
-    <div className="flex w-[308px] flex-shrink-0 flex-col gap-3 rounded-3xl border border-gray-600 p-6">
+    <div className="flex w-[308px] shrink-0 flex-col gap-3 rounded-3xl border border-gray-600 p-6">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-between">
           <span className="text-gray-0 text-2xl font-semibold">테이블 번호</span>

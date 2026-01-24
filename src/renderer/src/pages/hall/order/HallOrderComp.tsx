@@ -11,7 +11,7 @@ interface HallOrderCompProps {
   order: Order;
 }
 
-function HallOrderComp({ order }: HallOrderCompProps) {
+function HallOrderComp({ order }: Readonly<HallOrderCompProps>) {
   const isCompleted = order.served;
 
   return (
@@ -45,8 +45,8 @@ function HallOrderComp({ order }: HallOrderCompProps) {
               <Button
                 variant="outline"
                 className={cn(
-                  "button-sm pointer-events-none !rounded-4xl !text-sm",
-                  order.category === "INITIAL" ? "" : "!border-[#00B603] !text-[#00B603]"
+                  "button-sm pointer-events-none rounded-4xl! text-sm!",
+                  order.category === "INITIAL" ? "" : "border-[#00B603]! text-[#00B603]!"
                 )}
               >
                 {order.category === "INITIAL" ? "주문" : "추가"}

@@ -34,7 +34,7 @@ function HallOrderPage() {
         <div className="relative">
           <Button
             color={ColorName.GREY}
-            className="button-xl !bg-gray-300 !text-white"
+            className="button-xl bg-gray-300! text-white!"
             onClick={() => navigate("/waiting")}
           >
             웨이팅 관리 이동
@@ -51,7 +51,7 @@ function HallOrderPage() {
               key={tab.label}
               color={served === tab.isServed ? ColorName.BLACK : ColorName.GREY}
               variant={served === tab.isServed ? "default" : "outline"}
-              className="button-xl !px-8 not-focus:!border-gray-500"
+              className="button-xl px-8! not-focus:border-gray-500!"
               onClick={() => setServed(tab.isServed)}
             >
               {tab.label} {tab.count}건

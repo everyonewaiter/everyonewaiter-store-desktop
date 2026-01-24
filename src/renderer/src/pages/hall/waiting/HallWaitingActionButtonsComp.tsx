@@ -43,13 +43,13 @@ interface WaitingActionButtonsCompProps {
   waiting: Waiting;
 }
 
-function HallWaitingActionButtonsComp({ waiting }: WaitingActionButtonsCompProps) {
+function HallWaitingActionButtonsComp({ waiting }: Readonly<WaitingActionButtonsCompProps>) {
   return (
     <nav className="flex md:w-30 md:flex-col md:gap-3 lg:w-auto lg:flex-row lg:items-center lg:gap-5">
       {HALL_WAITING_ACTIONS.map((action, index) => (
         <Button
           key={action.label}
-          className="flex cursor-pointer flex-col gap-0.5 md:min-h-14 md:rounded-2xl md:!px-6 md:!py-4 lg:h-30 lg:min-h-0 lg:w-30 lg:rounded-[20px] lg:!px-0 lg:!py-0"
+          className="flex cursor-pointer flex-col gap-0.5 md:min-h-14 md:rounded-2xl md:px-6! md:py-4! lg:h-30 lg:min-h-0 lg:w-30 lg:rounded-[20px] lg:p-0!"
           style={{ color: action.textColor }}
           {...action}
           onClick={() => {
