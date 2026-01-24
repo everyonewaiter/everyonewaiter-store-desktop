@@ -20,7 +20,7 @@ function PosPaymentsCancelPayModalComp({
   setSelectedPayment,
   setFetchCount,
   ...props
-}: PosPaymentsCancelPayModalCompProps) {
+}: Readonly<PosPaymentsCancelPayModalCompProps>) {
   const cancelPayment = async (response?: KSCATApprovalResponse) => {
     try {
       await api.post(`/orders/payments/${payment.orderPaymentId}/cancel`, {

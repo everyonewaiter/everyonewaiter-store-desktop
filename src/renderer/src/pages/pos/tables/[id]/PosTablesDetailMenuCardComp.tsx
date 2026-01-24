@@ -7,16 +7,15 @@ interface PosTablesDetailMenuCardCompProps {
   menu: Menu;
 }
 
-function PosTablesDetailMenuCardComp({ menu }: PosTablesDetailMenuCardCompProps) {
+function PosTablesDetailMenuCardComp({ menu }: Readonly<PosTablesDetailMenuCardCompProps>) {
+  const handleMenuClick = () =>
+    overlay.open((overlayProps) => <PosTablesDetailMenuModalComp {...overlayProps} menu={menu} />);
+
   return (
     <button
       type="button"
-      className="relative aspect-[270/340] cursor-pointer overflow-hidden rounded-3xl border-[1.5px] border-gray-600"
-      onClick={() =>
-        overlay.open((overlayProps) => (
-          <PosTablesDetailMenuModalComp {...overlayProps} menu={menu} />
-        ))
-      }
+      className="relative aspect-270/340 cursor-pointer overflow-hidden rounded-3xl border-[1.5px] border-gray-600"
+      onClick={handleMenuClick}
     >
       {menu.state === "SOLD_OUT" && (
         <div className="absolute z-50 flex h-full w-full items-center justify-center bg-black/70 text-2xl font-semibold text-white">

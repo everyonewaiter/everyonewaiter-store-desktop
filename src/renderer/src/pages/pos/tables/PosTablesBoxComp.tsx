@@ -13,7 +13,12 @@ interface PosTablesBoxCompProps extends Table {
   disabled?: boolean;
 }
 
-function PosTablesBoxComp({ onClick, className, disabled, ...props }: PosTablesBoxCompProps) {
+function PosTablesBoxComp({
+  onClick,
+  className,
+  disabled,
+  ...props
+}: Readonly<PosTablesBoxCompProps>) {
   const orderedAt = useMemo(() => {
     return typeof props.orderedAt === "string"
       ? props.orderedAt?.split(" ")[1]?.slice(0, 5)

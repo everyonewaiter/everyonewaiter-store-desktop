@@ -12,7 +12,10 @@ interface PosTablesDetailSideCompProps {
   tableNo: number;
 }
 
-function PosTablesDetailSideComp({ type = "checkout", tableNo }: PosTablesDetailSideCompProps) {
+function PosTablesDetailSideComp({
+  type = "checkout",
+  tableNo,
+}: Readonly<PosTablesDetailSideCompProps>) {
   const navigate = useNavigate();
   const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
 

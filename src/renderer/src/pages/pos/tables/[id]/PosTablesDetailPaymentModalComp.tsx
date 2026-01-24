@@ -48,7 +48,7 @@ function PosTablesDetailPaymentModalComp({
   paymentType,
   activity,
   ...props
-}: PosTablesDetailPaymentModalCompProps) {
+}: Readonly<PosTablesDetailPaymentModalCompProps>) {
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
 
@@ -166,29 +166,27 @@ function PosTablesDetailPaymentModalComp({
               </div>
             </div>
             {paymentType === "cash" ? (
-              <>
-                <div className="flex flex-col gap-2">
-                  <span className="text-gray-0 text-[15px] font-normal">현금영수증 발행</span>
-                  <div className="flex items-center gap-3">
-                    {cashReceiptTypes.map((receiptType) => (
-                      <Button
-                        key={receiptType.value}
-                        variant="outline"
-                        color="grey"
-                        className={cn(
-                          "button-lg flex-1 border border-gray-500 text-base !font-medium text-gray-200",
-                          form.watch("cashReceiptType") === receiptType.value
-                            ? "border-primary text-primary"
-                            : ""
-                        )}
-                        onClick={() => form.setValue("cashReceiptType", receiptType.value)}
-                      >
-                        {receiptType.label}
-                      </Button>
-                    ))}
-                  </div>
+              <div className="flex flex-col gap-2">
+                <span className="text-gray-0 text-[15px] font-normal">현금영수증 발행</span>
+                <div className="flex items-center gap-3">
+                  {cashReceiptTypes.map((receiptType) => (
+                    <Button
+                      key={receiptType.value}
+                      variant="outline"
+                      color="grey"
+                      className={cn(
+                        "button-lg flex-1 border border-gray-500 text-base font-medium! text-gray-200",
+                        form.watch("cashReceiptType") === receiptType.value
+                          ? "border-primary text-primary"
+                          : ""
+                      )}
+                      onClick={() => form.setValue("cashReceiptType", receiptType.value)}
+                    >
+                      {receiptType.label}
+                    </Button>
+                  ))}
                 </div>
-              </>
+              </div>
             ) : (
               <div className="flex flex-col gap-2">
                 <span className="text-gray-0 text-[15px] font-normal">할부 개월</span>

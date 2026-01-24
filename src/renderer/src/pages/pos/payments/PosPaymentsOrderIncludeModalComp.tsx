@@ -13,7 +13,7 @@ function PosPaymentsOrderIncludeModalComp({
   store,
   activity,
   ...props
-}: PosPaymentsOrderIncludeModalCompProps) {
+}: Readonly<PosPaymentsOrderIncludeModalCompProps>) {
   return (
     <Dialog open={props.isOpen} onOpenChange={props.close}>
       <Dialog.Wrapper gap={32}>

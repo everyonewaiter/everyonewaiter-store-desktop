@@ -12,7 +12,7 @@ interface PosTablesDetailOrderModalCompProps extends ModalProps {
 function PosTablesDetailOrderModalComp({
   onSuccess,
   ...props
-}: PosTablesDetailOrderModalCompProps) {
+}: Readonly<PosTablesDetailOrderModalCompProps>) {
   const { orders, tableNo, resetOrders } = usePosTablesDetailOrderStore();
   const { mutate: addOrder } = useAddOrder();
 

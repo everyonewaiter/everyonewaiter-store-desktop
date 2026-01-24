@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 
 interface PosPaymentsSalesModalCompProps extends ModalProps {}
 
-function PosPaymentsSalesModalComp({ ...props }: PosPaymentsSalesModalCompProps) {
+function PosPaymentsSalesModalComp({ ...props }: Readonly<PosPaymentsSalesModalCompProps>) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [revenue, setRevenue] = useState<Revenue | null>(null);
 

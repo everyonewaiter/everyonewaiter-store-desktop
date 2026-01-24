@@ -13,7 +13,7 @@ export default function PosTablesDetailRequiredOptionComp({
   options,
   selectedOptions,
   setSelectedOptions,
-}: PosTablesDetailRequiredOptionCompProps) {
+}: Readonly<PosTablesDetailRequiredOptionCompProps>) {
   const handleSelectedRadio = (value: string, optionGroup: MenuOptionGroup) => {
     const selectedOption = optionGroup.menuOptions.find((opt) => opt.name === value);
     if (selectedOption) {

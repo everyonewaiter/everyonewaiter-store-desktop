@@ -15,7 +15,7 @@ interface PosTablesDetailPrintReceiptModalCompProps extends ModalProps {
 function PosTablesDetailPrintReceiptModalComp({
   posTableActivityId,
   ...props
-}: PosTablesDetailPrintReceiptModalCompProps) {
+}: Readonly<PosTablesDetailPrintReceiptModalCompProps>) {
   const [activity, setActivity] = useState<TableActivity | null>(null);
   const { store } = useGetStore(activity?.storeId ?? "");
   const navigate = useNavigate();

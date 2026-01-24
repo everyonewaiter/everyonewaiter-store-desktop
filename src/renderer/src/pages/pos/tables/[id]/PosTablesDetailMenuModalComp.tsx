@@ -25,7 +25,10 @@ interface PosTablesDetailMenuModalCompProps extends ModalProps {
   menu: Menu;
 }
 
-function PosTablesDetailMenuModalComp({ menu, ...props }: PosTablesDetailMenuModalCompProps) {
+function PosTablesDetailMenuModalComp({
+  menu,
+  ...props
+}: Readonly<PosTablesDetailMenuModalCompProps>) {
   const requiredOptions = menu.menuOptionGroups.filter((group) => group.type === "MANDATORY");
   const optionalOptions = menu.menuOptionGroups.filter((group) => group.type === "OPTIONAL");
 

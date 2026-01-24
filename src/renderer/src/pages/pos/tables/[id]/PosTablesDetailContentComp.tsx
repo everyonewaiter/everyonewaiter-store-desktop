@@ -133,7 +133,7 @@ function PosTablesDetailContentComp() {
               {action.icon}
               {action.label}
             </button>
-            {index !== floating.length - 1 && <div className="h-5 w-[1px] bg-gray-600" />}
+            {index !== floating.length - 1 && <div className="h-5 w-px bg-gray-600" />}
           </Fragment>
         ))}
       </nav>
