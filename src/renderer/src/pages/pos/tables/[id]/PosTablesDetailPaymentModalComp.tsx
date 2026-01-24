@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@renderer/api";
@@ -49,6 +50,8 @@ function PosTablesDetailPaymentModalComp({
   activity,
   ...props
 }: Readonly<PosTablesDetailPaymentModalCompProps>) {
+  const [isPending, setIsPending] = useState(false);
+
   const { device } = useGetDevice();
   const { store } = useGetStore(device?.storeId ?? "");
 
@@ -99,6 +102,8 @@ function PosTablesDetailPaymentModalComp({
 
   const handlePayment = async () => {
     try {
+      setIsPending(true);
+
       if (paymentType === "card") {
         await kscatApproval({
           deviceNo: store.setting.ksnetDeviceNo,
@@ -127,6 +132,7 @@ function PosTablesDetailPaymentModalComp({
     } catch (error) {
       handleApiError(error as Error);
     } finally {
+      setIsPending(false);
       props.close();
     }
   };
@@ -209,6 +215,7 @@ function PosTablesDetailPaymentModalComp({
             text: paymentType === "cash" ? "현금 결제하기" : "카드 결제하기",
             className: "w-full h-16 rounded-xl bg-gray-0 text-xl !font-semibold",
             onClick: handlePayment,
+            disabled: isPending,
           }}
           secondaryButton={{ hide: true }}
         />
