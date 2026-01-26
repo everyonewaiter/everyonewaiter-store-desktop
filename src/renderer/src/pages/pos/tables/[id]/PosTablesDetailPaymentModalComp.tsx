@@ -15,8 +15,9 @@ import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
 import cn from "@renderer/utils/cn";
 import { formatPrice, getFormattedMenuName, getFormattedTableNo } from "@renderer/utils/format";
-import { handleApiError } from "@renderer/utils/handle-api-error";
+import { ApiErrorResponse, handleError } from "@renderer/utils/handle-api-error";
 import { PaymentSchema, paymentSchema } from "@renderer/utils/posSchema";
+import { isAxiosError } from "axios";
 import { overlay } from "overlay-kit";
 
 const cardInstallmentMonths = new Array(12)
@@ -130,7 +131,11 @@ function PosTablesDetailPaymentModalComp({
         await approvePayment();
       }
     } catch (error) {
-      handleApiError(error as Error);
+      if (isAxiosError<ApiErrorResponse>(error)) {
+        handleError(error.response?.data?.message ?? "알 수 없는 오류가 발생했습니다.");
+      } else {
+        handleError((error as Error).message);
+      }
     } finally {
       setIsPending(false);
       props.close();
