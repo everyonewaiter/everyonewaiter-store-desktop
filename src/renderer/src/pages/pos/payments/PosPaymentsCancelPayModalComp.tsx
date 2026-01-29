@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { api } from "@renderer/api";
 import { Dialog } from "@renderer/components/Dialog";
 import { ColorName } from "@renderer/constants/ui";
 import { kscatApproval, paymentMethod, paymentType } from "@renderer/modules/kscat";
-import { OrderPayment, Store } from "@renderer/types/domain";
+import { OrderPayment, Store, TableActivity } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
-import { handleApiError } from "@renderer/utils/handle-api-error";
+import { ApiErrorResponse, handleError } from "@renderer/utils/handle-api-error";
+import { isAxiosError } from "axios";
 
 interface PosPaymentsCancelPayModalCompProps extends ModalProps {
   store: Store;
+  activity: TableActivity;
   payment: OrderPayment;
   setSelectedPayment: React.Dispatch<React.SetStateAction<OrderPayment | null>>;
   setFetchCount: React.Dispatch<React.SetStateAction<number>>;
@@ -16,55 +19,66 @@ interface PosPaymentsCancelPayModalCompProps extends ModalProps {
 
 function PosPaymentsCancelPayModalComp({
   store,
+  activity,
   payment,
   setSelectedPayment,
   setFetchCount,
   ...props
 }: Readonly<PosPaymentsCancelPayModalCompProps>) {
+  const [isPending, setIsPending] = useState(false);
+
   const cancelPayment = async (response?: KSCATApprovalResponse) => {
-    try {
-      await api.post(`/orders/payments/${payment.orderPaymentId}/cancel`, {
-        approvalNo: response?.approvalNo ?? "",
-        tradeTime: response?.tradeTime ?? "",
-        tradeUniqueNo: response?.tradeUniqueNo ?? "",
-      });
-      setFetchCount((count) => count + 1);
-      setSelectedPayment(null);
-      props.close();
-    } catch (error) {
-      handleApiError(error as Error);
-    }
+    await api.post(`/orders/payments/${activity.tableNo}/${payment.orderPaymentId}/cancel`, {
+      approvalNo: response?.approvalNo ?? "",
+      tradeTime: response?.tradeTime ?? "",
+      tradeUniqueNo: response?.tradeUniqueNo ?? "",
+    });
+    setFetchCount((count) => count + 1);
+    setSelectedPayment(null);
+    props.close();
   };
 
   const handlePayment = async () => {
-    if (payment.method === "CARD") {
-      await kscatApproval({
-        deviceNo: store.setting.ksnetDeviceNo,
-        method: paymentMethod.CARD,
-        type: paymentType.CANCEL,
-        amount: payment.amount,
-        installment: payment.installment,
-        successCallback: cancelPayment,
-        approvalNo: payment.approvalNo,
-        approvalDate: payment.tradeTime,
-      });
-    }
+    try {
+      setIsPending(true);
 
-    if (payment.method === "CASH" && payment.cashReceiptType !== "NONE") {
-      await kscatApproval({
-        deviceNo: store.setting.ksnetDeviceNo,
-        method: paymentMethod.CASH,
-        type: paymentType.CANCEL,
-        amount: payment.amount,
-        installment: payment.cashReceiptType === "DEDUCTION" ? "10" : "11",
-        successCallback: cancelPayment,
-        approvalNo: payment.approvalNo,
-        approvalDate: payment.tradeTime,
-      });
-    }
+      if (payment.method === "CARD") {
+        await kscatApproval({
+          deviceNo: store.setting.ksnetDeviceNo,
+          method: paymentMethod.CARD,
+          type: paymentType.CANCEL,
+          amount: payment.amount,
+          installment: payment.installment,
+          successCallback: cancelPayment,
+          approvalNo: payment.approvalNo,
+          approvalDate: payment.tradeTime,
+        });
+      }
 
-    if (payment.method === "CASH" && payment.cashReceiptType === "NONE") {
-      await cancelPayment();
+      if (payment.method === "CASH" && payment.cashReceiptType !== "NONE") {
+        await kscatApproval({
+          deviceNo: store.setting.ksnetDeviceNo,
+          method: paymentMethod.CASH,
+          type: paymentType.CANCEL,
+          amount: payment.amount,
+          installment: payment.cashReceiptType === "DEDUCTION" ? "10" : "11",
+          successCallback: cancelPayment,
+          approvalNo: payment.approvalNo,
+          approvalDate: payment.tradeTime,
+        });
+      }
+
+      if (payment.method === "CASH" && payment.cashReceiptType === "NONE") {
+        await cancelPayment();
+      }
+    } catch (error) {
+      if (isAxiosError<ApiErrorResponse>(error)) {
+        handleError(error.response?.data?.message ?? "알 수 없는 오류가 발생했습니다.");
+      } else {
+        handleError((error as Error).message);
+      }
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -91,6 +105,7 @@ function PosPaymentsCancelPayModalComp({
             color: ColorName.PRIMARY,
             text: "취소하기",
             onClick: handleCancelPayment,
+            disabled: isPending,
           }}
         />
       </Dialog.Wrapper>

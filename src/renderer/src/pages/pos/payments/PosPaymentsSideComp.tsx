@@ -24,10 +24,22 @@ function PosPaymentsSideComp({
 }: Readonly<PosPaymentsSideCompProps>) {
   const [activity, setActivity] = useState<TableActivity | null>(null);
 
+  useEffect(() => {
+    const fetchActivity = () => {
+      api
+        .get(`/pos/tables/activities/${payment.posTableActivityId}`)
+        .then(({ data }) => setActivity(data));
+    };
+
+    fetchActivity();
+  }, [payment]);
+
   const handleCancelPayment = () => {
+    if (!activity) return;
     overlay.open((overlayProps) => (
       <PosPaymentsCancelPayModalComp
         store={store}
+        activity={activity}
         payment={payment}
         setSelectedPayment={setSelectedPayment}
         setFetchCount={setFetchCount}
@@ -42,16 +54,6 @@ function PosPaymentsSideComp({
       <PosPaymentsOrderIncludeModalComp store={store} activity={activity} {...overlayProps} />
     ));
   };
-
-  useEffect(() => {
-    const fetchActivity = () => {
-      api
-        .get(`/pos/tables/activities/${payment.posTableActivityId}`)
-        .then(({ data }) => setActivity(data));
-    };
-
-    fetchActivity();
-  }, [payment]);
 
   return (
     <aside
@@ -85,7 +87,7 @@ function PosPaymentsSideComp({
         ))}
       </section>
       <footer className="flex h-16 items-center gap-3">
-        {payment.cancellable && (
+        {activity && payment.cancellable && (
           <Button
             variant="outline"
             color={payment.posTableActivityId ? ColorName.BLACK : ColorName.GREY}
