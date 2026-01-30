@@ -10,7 +10,7 @@ import { useGetDevice } from "@renderer/hooks/useGetDevice";
 import { useGetStore } from "@renderer/hooks/useGetStore";
 import { calculateTax, kscatApproval, paymentMethod } from "@renderer/modules/kscat";
 import PosTablesDetailPrintReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPrintReceiptModalComp";
-import { OrderReceiptType, TableActivity } from "@renderer/types/domain";
+import { OrderPayment, OrderReceiptType, TableActivity } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
 import cn from "@renderer/utils/cn";
@@ -44,11 +44,15 @@ const cashReceiptTypes: { label: string; value: OrderReceiptType }[] = [
 interface PosTablesDetailPaymentModalCompProps extends ModalProps {
   paymentType: "cash" | "card";
   activity: TableActivity;
+  isRepayment?: boolean;
+  payment?: OrderPayment;
 }
 
 function PosTablesDetailPaymentModalComp({
   paymentType,
   activity,
+  isRepayment = false,
+  payment,
   ...props
 }: Readonly<PosTablesDetailPaymentModalCompProps>) {
   const [isPending, setIsPending] = useState(false);
@@ -68,6 +72,37 @@ function PosTablesDetailPaymentModalComp({
   if (!store) {
     return null;
   }
+
+  /**
+   * 재결제 로직
+   */
+  const repayPayment = async () => {
+    const amount = Number.parseInt(form.watch("paymentAmount"));
+    const { vat, supplyAmount } = calculateTax(amount);
+    const canPrintReceipt = activity.remainingPaymentPrice === amount;
+
+    await api.post(
+      `/orders/payments/${activity.tableNo}/${activity.posTableActivityId}/repayment`,
+      {
+        method: paymentType.toUpperCase(),
+        installment: form.watch("installment").padStart(2, "0"),
+        cashReceiptType: form.watch("cashReceiptType"),
+        amount,
+        vat,
+        supplyAmount,
+        ...payment,
+      }
+    );
+
+    if (canPrintReceipt) {
+      overlay.open((overlayProps) => (
+        <PosTablesDetailPrintReceiptModalComp
+          posTableActivityId={activity.posTableActivityId}
+          {...overlayProps}
+        />
+      ));
+    }
+  };
 
   const approvePayment = async (response?: KSCATApprovalResponse) => {
     const amount = Number.parseInt(form.watch("paymentAmount"));
@@ -101,41 +136,51 @@ function PosTablesDetailPaymentModalComp({
     }
   };
 
+  /**
+   * 결제 로직 분리
+   * @returns 결제 로직 실행
+   */
+  const runPaymentFlow = async () => {
+    if (paymentType === "card") {
+      await kscatApproval({
+        deviceNo: store.setting.ksnetDeviceNo,
+        method: paymentMethod.CARD,
+        type: "0200",
+        amount: Number.parseInt(form.watch("paymentAmount")),
+        installment: form.watch("installment").padStart(2, "0"),
+        successCallback: isRepayment ? repayPayment : approvePayment,
+      });
+      return;
+    }
+    const cashReceiptType = form.watch("cashReceiptType");
+    if (cashReceiptType !== "NONE") {
+      await kscatApproval({
+        deviceNo: store.setting.ksnetDeviceNo,
+        method: paymentMethod.CASH,
+        type: "0200",
+        amount: Number.parseInt(form.watch("paymentAmount")),
+        installment: cashReceiptType === "DEDUCTION" ? "00" : "01",
+        successCallback: isRepayment ? repayPayment : approvePayment,
+      });
+      return;
+    }
+    await (isRepayment ? repayPayment : approvePayment)();
+  };
+
+  const handlePaymentError = (error: unknown) => {
+    if (isAxiosError<ApiErrorResponse>(error)) {
+      handleError(error.response?.data?.message ?? "알 수 없는 오류가 발생했습니다.");
+    } else {
+      handleError((error as Error).message);
+    }
+  };
+
   const handlePayment = async () => {
     try {
       setIsPending(true);
-
-      if (paymentType === "card") {
-        await kscatApproval({
-          deviceNo: store.setting.ksnetDeviceNo,
-          method: paymentMethod.CARD,
-          type: "0200",
-          amount: Number.parseInt(form.watch("paymentAmount")),
-          installment: form.watch("installment").padStart(2, "0"),
-          successCallback: approvePayment,
-        });
-      }
-
-      if (paymentType === "cash" && form.watch("cashReceiptType") !== "NONE") {
-        await kscatApproval({
-          deviceNo: store.setting.ksnetDeviceNo,
-          method: paymentMethod.CASH,
-          type: "0200",
-          amount: Number.parseInt(form.watch("paymentAmount")),
-          installment: form.watch("cashReceiptType") === "DEDUCTION" ? "00" : "01",
-          successCallback: approvePayment,
-        });
-      }
-
-      if (paymentType === "cash" && form.watch("cashReceiptType") === "NONE") {
-        await approvePayment();
-      }
+      await runPaymentFlow();
     } catch (error) {
-      if (isAxiosError<ApiErrorResponse>(error)) {
-        handleError(error.response?.data?.message ?? "알 수 없는 오류가 발생했습니다.");
-      } else {
-        handleError((error as Error).message);
-      }
+      handlePaymentError(error);
     } finally {
       setIsPending(false);
       props.close();
@@ -148,6 +193,7 @@ function PosTablesDetailPaymentModalComp({
         <div className="flex flex-col gap-10">
           <h2 className="text-gray-0 text-2xl font-semibold">
             {getFormattedTableNo(activity.tableNo)}
+            {isRepayment && " 재결제"}
           </h2>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
@@ -217,7 +263,7 @@ function PosTablesDetailPaymentModalComp({
         <Dialog.Footer
           buttonSize="custom"
           primaryButton={{
-            text: paymentType === "cash" ? "현금 결제하기" : "카드 결제하기",
+            text: `${paymentType === "cash" ? "현금" : "카드"} ${isRepayment ? "재" : ""}결제하기`,
             className: "w-full h-16 rounded-xl bg-gray-0 text-xl !font-semibold",
             onClick: handlePayment,
             disabled: isPending,
