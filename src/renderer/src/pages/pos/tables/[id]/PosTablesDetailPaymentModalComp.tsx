@@ -85,12 +85,19 @@ function PosTablesDetailPaymentModalComp({
       `/orders/payments/${activity.tableNo}/${activity.posTableActivityId}/repayment`,
       {
         method: paymentType.toUpperCase(),
-        installment: form.watch("installment").padStart(2, "0"),
-        cashReceiptType: form.watch("cashReceiptType"),
         amount,
+        approvalNo: payment?.approvalNo ?? "",
+        installment: form.watch("installment").padStart(2, "0"),
+        cardNo: payment?.cardNo ?? "",
+        issuerName: payment?.issuerName ?? "",
+        purchaseName: payment?.purchaseName ?? "",
+        merchantNo: payment?.merchantNo ?? "",
+        tradeTime: payment?.tradeTime ?? "",
+        tradeUniqueNo: payment?.tradeUniqueNo ?? "",
         vat,
         supplyAmount,
-        ...payment,
+        cashReceiptNo: payment?.cashReceiptNo ?? "",
+        cashReceiptType: payment?.cashReceiptType ?? "NONE",
       }
     );
 
@@ -98,6 +105,7 @@ function PosTablesDetailPaymentModalComp({
       overlay.open((overlayProps) => (
         <PosTablesDetailPrintReceiptModalComp
           posTableActivityId={activity.posTableActivityId}
+          onlyClose
           {...overlayProps}
         />
       ));
