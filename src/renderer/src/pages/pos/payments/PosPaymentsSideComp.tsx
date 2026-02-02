@@ -142,26 +142,29 @@ function PosPaymentsSideComp({
             결제 취소하기
           </Button>
         )}
-        {!payment?.cancellable && !activity?.totalPaymentPrice && (
-          <>
-            <Button
-              variant="outline"
-              color={ColorName.BLACK}
-              className="h-full w-fit rounded-xl px-8 font-semibold text-gray-200"
-              onClick={() => handleRepayment("cash")}
-            >
-              현금 재결제
-            </Button>
-            <Button
-              variant="outline"
-              color={ColorName.BLACK}
-              className="h-full w-fit rounded-xl px-8 font-semibold text-gray-200"
-              onClick={() => handleRepayment("card")}
-            >
-              카드 재결제
-            </Button>
-          </>
-        )}
+        {!payment?.cancellable &&
+          payment.state === "CANCEL" &&
+          activity &&
+          activity.remainingPaymentPrice > 0 && (
+            <>
+              <Button
+                variant="outline"
+                color={ColorName.BLACK}
+                className="h-full w-fit rounded-xl px-8 font-semibold text-gray-200"
+                onClick={() => handleRepayment("cash")}
+              >
+                현금 재결제
+              </Button>
+              <Button
+                variant="outline"
+                color={ColorName.BLACK}
+                className="h-full w-fit rounded-xl px-8 font-semibold text-gray-200"
+                onClick={() => handleRepayment("card")}
+              >
+                카드 재결제
+              </Button>
+            </>
+          )}
         <Button
           color={ColorName.BLACK}
           className="bg-gray-0 h-full w-full rounded-xl px-8 font-semibold text-white"
