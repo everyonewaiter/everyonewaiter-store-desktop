@@ -10,7 +10,7 @@ import { useGetDevice } from "@renderer/hooks/useGetDevice";
 import { useGetStore } from "@renderer/hooks/useGetStore";
 import { calculateTax, kscatApproval, paymentMethod } from "@renderer/modules/kscat";
 import PosTablesDetailPrintReceiptModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPrintReceiptModalComp";
-import { OrderPayment, OrderReceiptType, TableActivity } from "@renderer/types/domain";
+import { OrderReceiptType, TableActivity } from "@renderer/types/domain";
 import { KSCATApprovalResponse } from "@renderer/types/modules";
 import { ModalProps } from "@renderer/types/overlay";
 import cn from "@renderer/utils/cn";
@@ -45,14 +45,12 @@ interface PosTablesDetailPaymentModalCompProps extends ModalProps {
   paymentType: "cash" | "card";
   activity: TableActivity;
   isRepayment?: boolean;
-  payment?: OrderPayment;
 }
 
 function PosTablesDetailPaymentModalComp({
   paymentType,
   activity,
   isRepayment = false,
-  payment,
   ...props
 }: Readonly<PosTablesDetailPaymentModalCompProps>) {
   const [isPending, setIsPending] = useState(false);
@@ -76,7 +74,7 @@ function PosTablesDetailPaymentModalComp({
   /**
    * 재결제 로직
    */
-  const repayPayment = async () => {
+  const repayPayment = async (response?: KSCATApprovalResponse) => {
     const amount = Number.parseInt(form.watch("paymentAmount"));
     const { vat, supplyAmount } = calculateTax(amount);
     const canPrintReceipt = activity.remainingPaymentPrice === amount;
@@ -84,20 +82,20 @@ function PosTablesDetailPaymentModalComp({
     await api.post(
       `/orders/payments/${activity.tableNo}/${activity.posTableActivityId}/repayment`,
       {
-        method: paymentType.toUpperCase(),
+        method: paymentType === "cash" ? "CASH" : "CARD",
         amount,
-        approvalNo: payment?.approvalNo ?? "",
+        approvalNo: response ?? "",
         installment: form.watch("installment").padStart(2, "0"),
-        cardNo: payment?.cardNo ?? "",
-        issuerName: payment?.issuerName ?? "",
-        purchaseName: payment?.purchaseName ?? "",
-        merchantNo: payment?.merchantNo ?? "",
-        tradeTime: payment?.tradeTime ?? "",
-        tradeUniqueNo: payment?.tradeUniqueNo ?? "",
+        cardNo: response?.cardNo ?? "",
+        issuerName: response?.issuerName ?? "",
+        purchaseName: response?.purchaseName ?? "",
+        merchantNo: response?.merchantNo ?? "",
+        tradeTime: response?.tradeTime ?? "",
+        tradeUniqueNo: response?.tradeUniqueNo ?? "",
         vat,
         supplyAmount,
-        cashReceiptNo: payment?.cashReceiptNo ?? "",
-        cashReceiptType: payment?.cashReceiptType ?? "NONE",
+        cashReceiptNo: response?.cardNo ?? "",
+        cashReceiptType: form.watch("cashReceiptType"),
       }
     );
 
