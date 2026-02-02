@@ -10,10 +10,12 @@ import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface PosTablesDetailPrintReceiptModalCompProps extends ModalProps {
   posTableActivityId: string;
+  onlyClose?: boolean;
 }
 
 function PosTablesDetailPrintReceiptModalComp({
   posTableActivityId,
+  onlyClose = false,
   ...props
 }: Readonly<PosTablesDetailPrintReceiptModalCompProps>) {
   const [activity, setActivity] = useState<TableActivity | null>(null);
@@ -37,7 +39,10 @@ function PosTablesDetailPrintReceiptModalComp({
     if (store && activity) {
       printReceiptWithActivity(store, activity, true);
       props.close();
-      navigate("/pos/tables");
+
+      if (!onlyClose) {
+        navigate("/pos/tables");
+      }
     }
   };
 
@@ -58,7 +63,9 @@ function PosTablesDetailPrintReceiptModalComp({
             text: "닫기",
             onClick: () => {
               props.close();
-              navigate("/pos/tables");
+              if (!onlyClose) {
+                navigate("/pos/tables");
+              }
             },
           }}
         />
