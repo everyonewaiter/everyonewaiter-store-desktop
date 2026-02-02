@@ -84,7 +84,7 @@ function PosTablesDetailPaymentModalComp({
       {
         method: paymentType === "cash" ? "CASH" : "CARD",
         amount,
-        approvalNo: response ?? "",
+        approvalNo: response?.approvalNo ?? "",
         installment: form.watch("installment").padStart(2, "0"),
         cardNo: response?.cardNo ?? "",
         issuerName: response?.issuerName ?? "",
