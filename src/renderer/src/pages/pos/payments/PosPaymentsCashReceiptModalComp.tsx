@@ -43,7 +43,7 @@ function PosPaymentsCashReceiptModalComp({
   const form = useForm<PaymentSchema>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
-      paymentAmount: String(activity.remainingPaymentPrice),
+      paymentAmount: String(payment.amount),
       cashReceiptType: "DEDUCTION",
     },
   });
@@ -60,16 +60,16 @@ function PosPaymentsCashReceiptModalComp({
         deviceNo: store.setting.ksnetDeviceNo,
         method: paymentMethod.CASH,
         type: "0200",
-        amount: Number.parseInt(form.watch("paymentAmount")),
+        amount: payment.amount,
         installment: cashReceiptType === "DEDUCTION" ? "00" : "01",
         successCallback: async (response) => {
           await api.post(
-            `/orders/payments/${activity?.tableNo}/${payment.orderPaymentId}/issue-cash-receipt`,
+            `/orders/payments/${activity.tableNo}/${payment.orderPaymentId}/issue-cash-receipt`,
             {
               approvalNo: response.approvalNo,
               tradeTime: response.tradeTime,
               tradeUniqueNo: response.tradeUniqueNo,
-              cashReceiptNo: response?.cardNo ?? "",
+              cashReceiptNo: response.cardNo,
               cashReceiptType: cashReceiptType,
             }
           );
@@ -94,9 +94,9 @@ function PosPaymentsCashReceiptModalComp({
           <h2 className="text-gray-0 text-2xl font-semibold">현금영수증 발행</h2>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
-              <span className="text-gray-0 text-[15px] font-normal">결제할 금액</span>
+              <span className="text-gray-0 text-[15px] font-normal">현금영수증 처리할 금액</span>
               <h3 className="text-gray-0 text-2xl font-semibold">
-                {activity.remainingPaymentPrice.toLocaleString()} 원
+                {payment.amount.toLocaleString()} 원
               </h3>
             </div>
             <div className="flex flex-col gap-2">
