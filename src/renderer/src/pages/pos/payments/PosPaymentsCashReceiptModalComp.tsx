@@ -10,8 +10,9 @@ import { kscatApproval, paymentMethod } from "@renderer/modules/kscat";
 import { OrderPayment, OrderReceiptType, TableActivity } from "@renderer/types/domain";
 import { ModalProps } from "@renderer/types/overlay";
 import cn from "@renderer/utils/cn";
-import { handleApiError } from "@renderer/utils/handle-api-error";
+import { ApiErrorResponse, handleError } from "@renderer/utils/handle-api-error";
 import { PaymentSchema, paymentSchema } from "@renderer/utils/posSchema";
+import { isAxiosError } from "axios";
 
 const cashReceiptTypes: { label: string; value: OrderReceiptType }[] = [
   {
@@ -76,7 +77,11 @@ function PosPaymentsCashReceiptModalComp({
         },
       });
     } catch (error) {
-      handleApiError(error as Error);
+      if (isAxiosError<ApiErrorResponse>(error)) {
+        handleError(error.response?.data?.message ?? "알 수 없는 오류가 발생했습니다.");
+      } else {
+        handleError((error as Error).message);
+      }
     } finally {
       setIsPending(false);
     }
