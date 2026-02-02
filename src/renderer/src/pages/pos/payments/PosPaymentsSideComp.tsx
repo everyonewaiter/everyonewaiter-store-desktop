@@ -3,12 +3,12 @@ import { api } from "@renderer/api";
 import Button from "@renderer/components/Button/Button";
 import { ColorName } from "@renderer/constants/ui";
 import PosPaymentsCancelPayModalComp from "@renderer/pages/pos/payments/PosPaymentsCancelPayModalComp";
+import PosPaymentsCashReceiptModalComp from "@renderer/pages/pos/payments/PosPaymentsCashReceiptModalComp";
 import PosPaymentsOrderBoxComp from "@renderer/pages/pos/payments/PosPaymentsOrderBoxComp";
 import PosPaymentsOrderIncludeModalComp from "@renderer/pages/pos/payments/PosPaymentsOrderIncludeModalComp";
 import PosTablesDetailPaymentModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailPaymentModalComp";
 import { OrderPayment, Store, TableActivity } from "@renderer/types/domain";
 import cn from "@renderer/utils/cn";
-import { handleApiError } from "@renderer/utils/handle-api-error";
 import { overlay } from "overlay-kit";
 
 interface PosPaymentsSideCompProps {
@@ -76,20 +76,10 @@ function PosPaymentsSideComp({
    * 현금 결제 후 현금영수증 발급
    */
   const handlePrintCashReceiptAfterPayCash = async () => {
-    try {
-      await api.post(
-        `/orders/payments/${activity?.tableNo}/${payment.posTableActivityId}/issue-cash-receipt`,
-        {
-          approvalNo: payment.approvalNo,
-          tradeTime: payment.tradeTime,
-          tradeUniqueNo: payment.tradeUniqueNo,
-          cashReceiptNo: payment.cashReceiptNo,
-          cashReceiptType: payment.cashReceiptType,
-        }
-      );
-    } catch (error) {
-      handleApiError(error as Error);
-    }
+    if (!activity) return;
+    overlay.open((overlayProps) => (
+      <PosPaymentsCashReceiptModalComp activity={activity} payment={payment} {...overlayProps} />
+    ));
   };
 
   return (
@@ -141,27 +131,18 @@ function PosPaymentsSideComp({
         ))}
       </section>
       <footer className="flex h-16 items-center gap-3">
-        {payment?.cancellable ? (
-          <>
-            <Button
-              variant="outline"
-              color={payment.posTableActivityId ? ColorName.BLACK : ColorName.GREY}
-              className="h-full w-fit rounded-xl px-8 font-semibold"
-              disabled={!payment.posTableActivityId}
-              onClick={handleCancelPayment}
-            >
-              결제 취소하기
-            </Button>
-            <Button
-              color={ColorName.BLACK}
-              className="h-full w-full rounded-xl px-8 font-semibold text-white"
-              disabled={!payment.posTableActivityId}
-              onClick={handlePrintReceipt}
-            >
-              영수증 출력하기
-            </Button>
-          </>
-        ) : (
+        {payment?.cancellable && (
+          <Button
+            variant="outline"
+            color={payment.posTableActivityId ? ColorName.BLACK : ColorName.GREY}
+            className="h-full w-fit rounded-xl px-8 font-semibold"
+            disabled={!payment.posTableActivityId}
+            onClick={handleCancelPayment}
+          >
+            결제 취소하기
+          </Button>
+        )}
+        {!payment?.cancellable && !activity?.totalPaymentPrice && (
           <>
             <Button
               variant="outline"
@@ -179,15 +160,16 @@ function PosPaymentsSideComp({
             >
               카드 재결제
             </Button>
-            <Button
-              color={ColorName.BLACK}
-              className="bg-gray-0 h-full w-full rounded-xl px-8 font-semibold text-white"
-              onClick={handlePrintReceipt}
-            >
-              영수증 출력하기
-            </Button>
           </>
         )}
+        <Button
+          color={ColorName.BLACK}
+          className="bg-gray-0 h-full w-full rounded-xl px-8 font-semibold text-white"
+          disabled={!payment.posTableActivityId}
+          onClick={handlePrintReceipt}
+        >
+          영수증 출력하기
+        </Button>
       </footer>
     </aside>
   );
