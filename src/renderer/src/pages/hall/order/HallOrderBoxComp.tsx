@@ -60,7 +60,7 @@ function HallOrderBoxComp({
           </div>
         )}
         <div className="flex w-full flex-col gap-3">
-          <div className="flex w-full items-start gap-3">
+          <div className="flex w-full items-start justify-between gap-3">
             <span
               className={cn(
                 "text-3xl leading-normal font-semibold",
