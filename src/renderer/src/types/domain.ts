@@ -37,6 +37,7 @@ export interface Table {
   storeId: string;
   tableNo: number;
   hasOrder: boolean;
+  hasPendingOrder: boolean;
   orderType: OrderPaymentType;
   orderedAt: string | null;
   orderMenuName: string | null;
@@ -163,6 +164,7 @@ export interface TableActivity {
   posTableId: string;
   tableNo: number;
   orderType: OrderPaymentType;
+  hasPendingOrder: boolean;
   totalOrderPrice: number;
   totalPaymentPrice: number;
   discount: number;
