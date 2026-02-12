@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetTableActivity } from "@renderer/hooks/usePosTablesDetailApi";
 import PosTablesDetailCancelOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelOrderModalComp";
+import PosTablesDetailApprovalSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailApprovalSideComp";
 import PosTablesDetailCheckoutSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailCheckoutSideComp";
 import PosTablesDetailOrderSideComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailSideComp/PosTablesDetailOrderSideComp";
 import { Order } from "@renderer/types/domain";
@@ -18,8 +19,21 @@ function PosTablesDetailSideComp({
 }: Readonly<PosTablesDetailSideCompProps>) {
   const navigate = useNavigate();
   const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
+  const [hasApproved, setHasApproved] = useState(false);
 
   const { data: activity } = useGetTableActivity(tableNo);
+
+  const detailType = useMemo(
+    () =>
+      hasApproved
+        ? "checkout"
+        : activity?.hasPendingOrder
+          ? "approval"
+          : type === "order"
+            ? "order"
+            : "checkout",
+    [hasApproved, type, activity?.hasPendingOrder]
+  );
 
   const handleCancelOrder = () => {
     if (!activity) return;
@@ -39,8 +53,14 @@ function PosTablesDetailSideComp({
       className="sticky top-0 right-0 flex h-dvh flex-[0.3375] flex-col gap-8 overflow-y-hidden rounded-tl-[40px] rounded-bl-[40px] pt-10 pr-4 pb-8 pl-8"
       style={{ boxShadow: "-2px 0px 20px 0px rgba(0, 0, 0, 0.08)" }}
     >
-      {type === "order" && <PosTablesDetailOrderSideComp tableNo={tableNo} />}
-      {type === "checkout" && (
+      {detailType === "approval" && (
+        <PosTablesDetailApprovalSideComp
+          tableNo={tableNo}
+          onApproval={() => setHasApproved(true)}
+        />
+      )}
+      {detailType === "order" && <PosTablesDetailOrderSideComp tableNo={tableNo} />}
+      {detailType === "checkout" && (
         <PosTablesDetailCheckoutSideComp
           tableNo={tableNo}
           checkedOrders={checkedOrders}

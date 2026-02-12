@@ -29,6 +29,8 @@ function PosTablesBoxComp({
 
   const getBorderColorByOrderType = () => {
     if (disabled) return "border-none";
+    if (props.hasPendingOrder) return "border-[#00C030] bg-[#00C030]/5";
+    if (!props.hasOrder) return "border-gray-500";
     if (props.orderType === "POSTPAID") return "border-primary";
     if (props.orderType === "PREPAID") return "border-[#2E8CFF]";
     return "border-gray-500";
@@ -36,9 +38,18 @@ function PosTablesBoxComp({
 
   const getBackgroundColorByOrderType = () => {
     if (disabled) return "bg-gray-500/60 text-gray-300";
+    if (props.hasPendingOrder) return "bg-[#00C030]/10 text-[#00C030]";
+    if (!props.hasOrder) return "bg-gray-700 text-gray-300";
     if (props.orderType === "POSTPAID") return "bg-primary/10 text-primary";
     if (props.orderType === "PREPAID") return "bg-[#2E8CFF]/10 text-[#2E8CFF]";
     return "bg-gray-700 text-gray-300";
+  };
+
+  const getText = () => {
+    if (props.hasOrder && props.orderMenuName && !props.hasPendingOrder) {
+      return ORDER_TYPE_TEXT[props.orderType as keyof typeof ORDER_TYPE_TEXT];
+    }
+    return "대기";
   };
 
   return (
@@ -58,9 +69,7 @@ function PosTablesBoxComp({
             getBackgroundColorByOrderType()
           )}
         >
-          {props.hasOrder
-            ? ORDER_TYPE_TEXT[props.orderType as keyof typeof ORDER_TYPE_TEXT]
-            : "대기"}
+          {getText()}
         </div>
         <div className="flex items-center gap-2">
           <time

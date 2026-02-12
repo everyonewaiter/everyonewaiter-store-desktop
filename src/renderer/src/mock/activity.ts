@@ -1,0 +1,45 @@
+import { TableActivity } from "@renderer/types/domain";
+
+export const activityMock: TableActivity = {
+  posTableActivityId: "1",
+  storeId: "1",
+  posTableId: "1",
+  tableNo: 1,
+  orderType: "POSTPAID",
+  hasPendingOrder: true,
+  totalOrderPrice: 10000,
+  totalPaymentPrice: 10000,
+  discount: 1000,
+  remainingPaymentPrice: 1000,
+  active: true,
+  orders: [
+    {
+      orderId: "1",
+      storeId: "1",
+      category: "INITIAL",
+      type: "POSTPAID",
+      state: "ORDER",
+      tableNo: 1,
+      price: 10000,
+      memo: "테스트 메뉴",
+      served: false,
+      servedTime: "",
+      orderMenus: [
+        {
+          orderMenuId: "1",
+          name: "테스트 메뉴",
+          price: 10000,
+          quantity: 1,
+          image: "https://via.placeholder.com/150",
+          served: false,
+          servedTime: "",
+          printEnabled: true,
+          orderOptionGroups: [],
+        },
+      ],
+      createdAt: "2026-01-01 10:00:00",
+      updatedAt: "2026-01-01 10:00:00",
+    },
+  ],
+  orderPayments: [],
+};
