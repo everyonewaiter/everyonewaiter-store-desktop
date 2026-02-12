@@ -108,7 +108,7 @@ function HallOrderPage() {
           </div>
           <div
             className={cn(
-              "relative transition-opacity duration-200 ease-out",
+              "relative transition-opacity duration-600 ease-out",
               isSticky ? "opacity-100" : "opacity-0"
             )}
           >
