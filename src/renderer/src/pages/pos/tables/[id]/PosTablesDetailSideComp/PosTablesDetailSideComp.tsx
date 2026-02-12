@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetTableActivity } from "@renderer/hooks/usePosTablesDetailApi";
 import PosTablesDetailCancelOrderModalComp from "@renderer/pages/pos/tables/[id]/PosTablesDetailCancelOrderModalComp";
@@ -19,8 +19,21 @@ function PosTablesDetailSideComp({
 }: Readonly<PosTablesDetailSideCompProps>) {
   const navigate = useNavigate();
   const [checkedOrders, setCheckedOrders] = useState<Order[]>([]);
+  const [hasApproved, setHasApproved] = useState(false);
 
   const { data: activity } = useGetTableActivity(tableNo);
+
+  const detailType = useMemo(
+    () =>
+      hasApproved
+        ? "checkout"
+        : activity?.hasPendingOrder
+          ? "approval"
+          : type === "order"
+            ? "order"
+            : "checkout",
+    [hasApproved, type, activity?.hasPendingOrder]
+  );
 
   const handleCancelOrder = () => {
     if (!activity) return;
@@ -40,11 +53,14 @@ function PosTablesDetailSideComp({
       className="sticky top-0 right-0 flex h-dvh flex-[0.3375] flex-col gap-8 overflow-y-hidden rounded-tl-[40px] rounded-bl-[40px] pt-10 pr-4 pb-8 pl-8"
       style={{ boxShadow: "-2px 0px 20px 0px rgba(0, 0, 0, 0.08)" }}
     >
-      {activity?.hasPendingOrder && <PosTablesDetailApprovalSideComp tableNo={tableNo} />}
-      {!activity?.hasPendingOrder && type === "order" && (
-        <PosTablesDetailOrderSideComp tableNo={tableNo} />
+      {detailType === "approval" && (
+        <PosTablesDetailApprovalSideComp
+          tableNo={tableNo}
+          onApproval={() => setHasApproved(true)}
+        />
       )}
-      {!activity?.hasPendingOrder && type === "checkout" && (
+      {detailType === "order" && <PosTablesDetailOrderSideComp tableNo={tableNo} />}
+      {detailType === "checkout" && (
         <PosTablesDetailCheckoutSideComp
           tableNo={tableNo}
           checkedOrders={checkedOrders}

@@ -10,10 +10,12 @@ import { overlay } from "overlay-kit";
 
 interface PosTablesDetailApprovalSideCompProps {
   tableNo: number;
+  onApproval: () => void;
 }
 
 function PosTablesDetailApprovalSideComp({
   tableNo,
+  onApproval,
 }: Readonly<PosTablesDetailApprovalSideCompProps>) {
   const navigate = useNavigate();
   const { device } = useGetDevice();
@@ -53,13 +55,14 @@ function PosTablesDetailApprovalSideComp({
               color: "primary",
               text: "거부하기",
               onClick: () => {
+                // TODO: 거부 api 호출 후 아래 코드 실행
                 overlayProps.close();
                 navigate("/pos/tables");
-                handleReject();
+                handleShowRejectDialog();
               },
             }}
             secondaryButton={{
-              onClick: () => overlayProps.close(),
+              onClick: overlayProps.close,
             }}
           />
         </Dialog.Wrapper>
@@ -67,7 +70,7 @@ function PosTablesDetailApprovalSideComp({
     ));
   };
 
-  const handleReject = () => {
+  const handleShowRejectDialog = () => {
     setTimeout(() => {
       overlay.open((overlayProps) => (
         <Dialog open={overlayProps.isOpen} onOpenChange={overlayProps.close}>
@@ -79,6 +82,28 @@ function PosTablesDetailApprovalSideComp({
               <span className="text-gray-0 text-lg font-medium">
                 해당 테이블에 돌아가 재주문을 요청해주세요.
               </span>
+            </Dialog.Title>
+            <Dialog.Footer>
+              <Dialog.Close className="button-xl w-full cursor-pointer bg-gray-700 text-gray-300">
+                확인
+              </Dialog.Close>
+            </Dialog.Footer>
+          </Dialog.Wrapper>
+        </Dialog>
+      ));
+    }, 100);
+  };
+
+  const handleShowApprovalDialog = () => {
+    setTimeout(() => {
+      overlay.open((overlayProps) => (
+        <Dialog open={overlayProps.isOpen} onOpenChange={overlayProps.close}>
+          <Dialog.Wrapper>
+            <Dialog.Title>
+              <h2 className="text-primary text-xl font-semibold">
+                T-{tableNo}의 결제가 완료되었습니다.
+              </h2>
+              <span className="text-gray-0 text-lg font-medium">메뉴 조리를 시작합니다.</span>
             </Dialog.Title>
             <Dialog.Footer>
               <Dialog.Close className="button-xl w-full cursor-pointer bg-gray-700 text-gray-300">
@@ -139,8 +164,8 @@ function PosTablesDetailApprovalSideComp({
           color="primary"
           className="h-16 w-full rounded-xl text-xl font-semibold"
           onClick={() => {
-            // TODO: 승인 로직 구현 (-> CheckoutSide로 바뀌어야함)
-            // TODO: 결제 한 이후에는 테이블 목록으로 가 모달 띄우기
+            onApproval();
+            handleShowApprovalDialog();
           }}
         >
           승인
