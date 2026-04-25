@@ -91,6 +91,7 @@ function HallOrderComp({ order }: Readonly<HallOrderCompProps>) {
                 .map((orderMenu) => (
                   <HallOrderBoxComp
                     key={orderMenu.orderMenuId}
+                    tableNo={order.tableNo}
                     orderId={order.orderId}
                     storeId={order.storeId}
                     orderMenu={orderMenu}

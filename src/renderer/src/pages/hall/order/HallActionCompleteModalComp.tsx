@@ -19,8 +19,9 @@ function HallActionCompleteModalComp({
   staffCallText,
   ...props
 }: Readonly<HallActionCompleteModalCompProps>) {
-  const { mutate: mutateOrderServe } = useOrderServe();
-  const { mutate: mutateStaffCallComplete } = useStaffCallComplete();
+  const { mutate: mutateOrderServe, isPending: isPendingOrderServe } = useOrderServe();
+  const { mutate: mutateStaffCallComplete, isPending: isPendingStaffCallComplete } =
+    useStaffCallComplete();
 
   const title = type === "order" ? "모든 주문" : "호출";
   const subtitle =
@@ -29,7 +30,7 @@ function HallActionCompleteModalComp({
       : `손님의 요청이 처리되었는지 다시 한 번 확인해 주세요.\n완료 후에는 호출 기록이 사라집니다.`;
 
   const handleClick = () => {
-    let mutate: UseMutateFunction<AxiosResponse, Error, string>;
+    let mutate: UseMutateFunction<AxiosResponse, Error, { tableNo: number; resourceId: string }>;
     switch (type) {
       case "order":
         mutate = mutateOrderServe;
@@ -41,10 +42,13 @@ function HallActionCompleteModalComp({
         throw new Error("Invalid order type");
     }
 
-    mutate(resourceId, {
-      onError: (error) => handleApiError(error),
-      onSettled: () => props.close(),
-    });
+    mutate(
+      { tableNo, resourceId },
+      {
+        onError: (error) => handleApiError(error),
+        onSettled: () => props.close(),
+      }
+    );
   };
 
   return (
@@ -73,7 +77,11 @@ function HallActionCompleteModalComp({
         </div>
         <Dialog.Footer
           buttonSize="lg"
-          primaryButton={{ text: type === "call" ? "완료" : "전체 완료", onClick: handleClick }}
+          primaryButton={{
+            text: type === "call" ? "완료" : "전체 완료",
+            onClick: handleClick,
+            disabled: isPendingOrderServe || isPendingStaffCallComplete,
+          }}
         />
       </Dialog.Wrapper>
     </Dialog>

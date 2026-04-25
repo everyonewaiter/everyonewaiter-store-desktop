@@ -9,6 +9,7 @@ import cn from "@renderer/utils/cn";
 import { handleApiError } from "@renderer/utils/handle-api-error";
 
 interface HallOrderBoxCompProps {
+  tableNo: number;
   orderId: string;
   storeId: string;
   orderMenu: OrderMenu;
@@ -16,13 +17,14 @@ interface HallOrderBoxCompProps {
 }
 
 function HallOrderBoxComp({
+  tableNo,
   orderId,
   storeId,
   orderMenu,
   isCompleted,
 }: Readonly<HallOrderBoxCompProps>) {
   const { store } = useGetStore(storeId);
-  const { mutate: mutateOrderMenuServe } = useOrderMenuServe();
+  const { mutate: mutateOrderMenuServe, isPending } = useOrderMenuServe();
 
   const orderOptions: (OrderMenuOption & { orderOptionGroupId: string })[] =
     orderMenu.orderOptionGroups.flatMap((orderOptionGroup) =>
@@ -34,7 +36,7 @@ function HallOrderBoxComp({
 
   const handleClick = () => {
     mutateOrderMenuServe(
-      { orderId: orderId, orderMenuId: orderMenu.orderMenuId },
+      { tableNo: tableNo, orderId: orderId, orderMenuId: orderMenu.orderMenuId },
       {
         onError: (error) => handleApiError(error),
       }
@@ -102,6 +104,7 @@ function HallOrderBoxComp({
               : ""
           )}
           onClick={handleClick}
+          disabled={isPending}
         >
           {orderMenu.served ? "되돌리기" : "완료"}
         </Button>
